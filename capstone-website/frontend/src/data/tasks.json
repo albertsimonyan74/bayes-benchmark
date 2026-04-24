@@ -1,0 +1,2256 @@
+[
+  {
+    "task_id": "BETA_BINOM_01",
+    "task_type": "BETA_BINOM",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "beta-binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_mean": 0.5714285714285714,
+      "ci_lower": 0.31577760291406304,
+      "ci_upper": 0.807767558198712,
+      "predictive_pmf_k_m": 0.29411764705882354
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "beta-binomial",
+    "inputs_str": "{\"alpha\": 2, \"beta\": 2, \"x\": 6, \"n\": 10, \"k\": 3, \"m\": 5}"
+  },
+  {
+    "task_id": "GAMMA_POISSON_01",
+    "task_type": "GAMMA_POISSON",
+    "tier": 1,
+    "difficulty": "intermediate",
+    "description": "gamma-poisson",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_mean": 1.4,
+      "ci_lower": 0.5628726103039734,
+      "ci_upper": 2.611894804503737,
+      "predictive_pmf_y": 0.21706350340395264
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamma-poisson",
+    "inputs_str": "{\"alpha\": 1.0, \"rate\": 1.0, \"counts\": [2, 0, 3, 1], \"y\": 2}"
+  },
+  {
+    "task_id": "NORMAL_GAMMA_01",
+    "task_type": "NORMAL_GAMMA",
+    "tier": 1,
+    "difficulty": "advanced",
+    "description": "normal-gamma",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_mean_mu": 1.0,
+      "ci_mu_lower": 0.0704200146670858,
+      "ci_mu_upper": 1.9295799853329143,
+      "posterior_mean_tau": 1.2307692307692308
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "normal-gamma",
+    "inputs_str": "{\"mu0\": 0.0, \"kappa0\": 1.0, \"alpha0\": 2.0, \"beta0\": 2.0, \"data\": [1.0, 2.0, 1.5, 0.5]}"
+  },
+  {
+    "task_id": "DIRICHLET_01",
+    "task_type": "DIRICHLET",
+    "tier": 1,
+    "difficulty": "intermediate",
+    "description": "dirichlet-multinomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "p1_mean": 0.6111111111111112,
+      "p2_mean": 0.3333333333333333,
+      "p3_mean": 0.05555555555555555,
+      "predictive_pmf_counts": 0.3473684210526328
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "dirichlet-multinomial",
+    "inputs_str": "{\"alpha\": [1, 1, 1], \"counts\": [10, 5, 0], \"pred_counts\": [2, 1, 0]}"
+  },
+  {
+    "task_id": "DISC_MEDIAN_01",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "discrete posterior median",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_median": 3.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_posterior_median",
+    "inputs_str": "{\"values\": [1, 2, 3, 4, 5], \"probs\": [0.1, 0.2, 0.3, 0.25, 0.15]}"
+  },
+  {
+    "task_id": "DISC_MEDIAN_02",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "discrete posterior median",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_median": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_posterior_median",
+    "inputs_str": "{\"values\": [0.5, 1.0, 1.5, 2.0], \"probs\": [0.3, 0.4, 0.2, 0.1]}"
+  },
+  {
+    "task_id": "DISC_MEDIAN_03",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "discrete posterior median",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_median": 20.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_posterior_median",
+    "inputs_str": "{\"values\": [10, 20, 30], \"probs\": [0.1, 0.5, 0.4]}"
+  },
+  {
+    "task_id": "DISC_MEDIAN_04",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "discrete posterior median",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_median": 4.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_posterior_median",
+    "inputs_str": "{\"values\": [2, 4, 6, 8], \"probs\": [0.25, 0.25, 0.25, 0.25]}"
+  },
+  {
+    "task_id": "DISC_MEDIAN_05",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "discrete posterior median",
+    "category": "numeric",
+    "numeric_targets": {
+      "posterior_median": 5.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_posterior_median",
+    "inputs_str": "{\"values\": [1, 3, 5, 7, 9], \"probs\": [0.05, 0.2, 0.5, 0.2, 0.05]}"
+  },
+  {
+    "task_id": "UNIFORM_MLE_01",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "uniform mle",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle_theta": 4.7
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_mle",
+    "inputs_str": "{\"data\": [1.2, 3.4, 2.1, 4.7, 0.9]}"
+  },
+  {
+    "task_id": "UNIFORM_MLE_02",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "uniform mle",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle_theta": 3.8
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_mle",
+    "inputs_str": "{\"data\": [0.5, 1.8, 3.2, 2.9, 1.1, 3.8]}"
+  },
+  {
+    "task_id": "UNIFORM_MLE_03",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "uniform mle",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle_theta": 9.2
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_mle",
+    "inputs_str": "{\"data\": [7.1, 2.3, 5.8, 9.2, 4.6]}"
+  },
+  {
+    "task_id": "UNIFORM_MLE_04",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "uniform mle",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle_theta": 0.9
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_mle",
+    "inputs_str": "{\"data\": [0.3, 0.7, 0.5, 0.9, 0.4, 0.8, 0.6]}"
+  },
+  {
+    "task_id": "UNIFORM_MLE_05",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "uniform mle",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle_theta": 15.7
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_mle",
+    "inputs_str": "{\"data\": [12.5, 8.3, 15.7, 11.2, 9.8, 14.1]}"
+  },
+  {
+    "task_id": "BINOM_FLAT_01",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "binomial flat prior",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 4.0,
+      "beta_post": 8.0,
+      "posterior_mean": 0.3333333333333333
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "binomial_flat_prior",
+    "inputs_str": "{\"x\": 3, \"n\": 10, \"prior\": \"Beta(1,1) = Uniform(0,1)\"}"
+  },
+  {
+    "task_id": "BINOM_FLAT_02",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "binomial flat prior",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 8.0,
+      "beta_post": 4.0,
+      "posterior_mean": 0.6666666666666666
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "binomial_flat_prior",
+    "inputs_str": "{\"x\": 7, \"n\": 10, \"prior\": \"Beta(1,1) = Uniform(0,1)\"}"
+  },
+  {
+    "task_id": "BINOM_FLAT_03",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "binomial flat prior",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 1.0,
+      "beta_post": 6.0,
+      "posterior_mean": 0.14285714285714285
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "binomial_flat_prior",
+    "inputs_str": "{\"x\": 0, \"n\": 5, \"prior\": \"Beta(1,1) = Uniform(0,1)\"}"
+  },
+  {
+    "task_id": "BINOM_FLAT_04",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "binomial flat prior",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 16.0,
+      "beta_post": 6.0,
+      "posterior_mean": 0.7272727272727273
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "binomial_flat_prior",
+    "inputs_str": "{\"x\": 15, \"n\": 20, \"prior\": \"Beta(1,1) = Uniform(0,1)\"}"
+  },
+  {
+    "task_id": "BINOM_FLAT_05",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "description": "binomial flat prior",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 5.0,
+      "beta_post": 5.0,
+      "posterior_mean": 0.5
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "binomial_flat_prior",
+    "inputs_str": "{\"x\": 4, \"n\": 8, \"prior\": \"Beta(1,1) = Uniform(0,1)\"}"
+  },
+  {
+    "task_id": "MINIMAX_01",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "minimax comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "max_risk_hat1": 0.5,
+      "max_risk_hat2": 1.0,
+      "minimax_value": 0.5
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "minimax_comparison",
+    "inputs_str": "{\"theta_grid\": [0, 1, 2], \"hat1_risks\": [0.0, 0.5, 0.0], \"hat2_risks\": [1.0, 0.0, 1.0]}"
+  },
+  {
+    "task_id": "MINIMAX_02",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "minimax comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "max_risk_hat1": 0.3,
+      "max_risk_hat2": 0.8,
+      "minimax_value": 0.3
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "minimax_comparison",
+    "inputs_str": "{\"theta_grid\": [0, 1, 2], \"hat1_risks\": [0.3, 0.3, 0.3], \"hat2_risks\": [0.1, 0.8, 0.1]}"
+  },
+  {
+    "task_id": "MINIMAX_03",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "minimax comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "max_risk_hat1": 0.5,
+      "max_risk_hat2": 0.4,
+      "minimax_value": 0.4
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "minimax_comparison",
+    "inputs_str": "{\"theta_grid\": [0, 1, 2], \"hat1_risks\": [0.5, 0.5, 0.5], \"hat2_risks\": [0.0, 0.4, 0.0]}"
+  },
+  {
+    "task_id": "MINIMAX_04",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "minimax comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "max_risk_hat1": 0.6,
+      "max_risk_hat2": 0.4,
+      "minimax_value": 0.4
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "minimax_comparison",
+    "inputs_str": "{\"theta_grid\": [0, 1, 2], \"hat1_risks\": [0.2, 0.6, 0.2], \"hat2_risks\": [0.4, 0.4, 0.4]}"
+  },
+  {
+    "task_id": "MINIMAX_05",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "minimax comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "max_risk_hat1": 0.4,
+      "max_risk_hat2": 0.3,
+      "minimax_value": 0.3
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "minimax_comparison",
+    "inputs_str": "{\"theta_grid\": [0, 1, 2], \"hat1_risks\": [0.1, 0.4, 0.1], \"hat2_risks\": [0.3, 0.3, 0.3]}"
+  },
+  {
+    "task_id": "BAYES_RISK_01",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "discrete bayes risk",
+    "category": "numeric",
+    "numeric_targets": {
+      "bayes_risk": 0.38
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_bayes_risk",
+    "inputs_str": "{\"risk_values\": [0.5, 0.3], \"prior_probs\": [0.4, 0.6]}"
+  },
+  {
+    "task_id": "BAYES_RISK_02",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "discrete bayes risk",
+    "category": "numeric",
+    "numeric_targets": {
+      "bayes_risk": 0.53
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_bayes_risk",
+    "inputs_str": "{\"risk_values\": [1.0, 0.5, 0.2], \"prior_probs\": [0.3, 0.3, 0.4]}"
+  },
+  {
+    "task_id": "BAYES_RISK_03",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "discrete bayes risk",
+    "category": "numeric",
+    "numeric_targets": {
+      "bayes_risk": 0.5
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_bayes_risk",
+    "inputs_str": "{\"risk_values\": [0.8, 0.2], \"prior_probs\": [0.5, 0.5]}"
+  },
+  {
+    "task_id": "BAYES_RISK_04",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "discrete bayes risk",
+    "category": "numeric",
+    "numeric_targets": {
+      "bayes_risk": 0.25
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_bayes_risk",
+    "inputs_str": "{\"risk_values\": [0.0, 0.5, 0.5, 0.0], \"prior_probs\": [0.25, 0.25, 0.25, 0.25]}"
+  },
+  {
+    "task_id": "BAYES_RISK_05",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "discrete bayes risk",
+    "category": "numeric",
+    "numeric_targets": {
+      "bayes_risk": 0.35000000000000003
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "discrete_bayes_risk",
+    "inputs_str": "{\"risk_values\": [0.9, 0.1, 0.4], \"prior_probs\": [0.2, 0.5, 0.3]}"
+  },
+  {
+    "task_id": "BIAS_VAR_01",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bias variance decomp",
+    "category": "numeric",
+    "numeric_targets": {
+      "bias": -0.16666666666666666,
+      "var_d2": 0.01984126984126984,
+      "mse_d2": 0.047619047619047616
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bias_variance_decomp",
+    "inputs_str": "{\"n\": 5, \"theta\": 1.0}"
+  },
+  {
+    "task_id": "BIAS_VAR_02",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bias variance decomp",
+    "category": "numeric",
+    "numeric_targets": {
+      "bias": -0.18181818181818182,
+      "var_d2": 0.027548209366391185,
+      "mse_d2": 0.06060606060606061
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bias_variance_decomp",
+    "inputs_str": "{\"n\": 10, \"theta\": 2.0}"
+  },
+  {
+    "task_id": "BIAS_VAR_03",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bias variance decomp",
+    "category": "numeric",
+    "numeric_targets": {
+      "bias": -0.14285714285714285,
+      "var_d2": 0.01855287569573284,
+      "mse_d2": 0.03896103896103896
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bias_variance_decomp",
+    "inputs_str": "{\"n\": 20, \"theta\": 3.0}"
+  },
+  {
+    "task_id": "BIAS_VAR_04",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bias variance decomp",
+    "category": "numeric",
+    "numeric_targets": {
+      "bias": -0.4444444444444444,
+      "var_d2": 0.1580246913580247,
+      "mse_d2": 0.35555555555555557
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bias_variance_decomp",
+    "inputs_str": "{\"n\": 8, \"theta\": 4.0}"
+  },
+  {
+    "task_id": "BIAS_VAR_05",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bias variance decomp",
+    "category": "numeric",
+    "numeric_targets": {
+      "bias": -0.3125,
+      "var_d2": 0.0861672794117647,
+      "mse_d2": 0.18382352941176472
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bias_variance_decomp",
+    "inputs_str": "{\"n\": 15, \"theta\": 5.0}"
+  },
+  {
+    "task_id": "FISHER_INFO_01",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "fisher information",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 47.61904761904762
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "fisher_information",
+    "inputs_str": "{\"dist\": \"binomial\", \"theta\": 0.3, \"n\": 10}"
+  },
+  {
+    "task_id": "FISHER_INFO_02",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "fisher information",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 80.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "fisher_information",
+    "inputs_str": "{\"dist\": \"binomial\", \"theta\": 0.5, \"n\": 20}"
+  },
+  {
+    "task_id": "FISHER_INFO_03",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "fisher information",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 1.25
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "fisher_information",
+    "inputs_str": "{\"dist\": \"poisson\", \"theta\": 4.0, \"n\": 5}"
+  },
+  {
+    "task_id": "FISHER_INFO_04",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "fisher information",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 15.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "fisher_information",
+    "inputs_str": "{\"dist\": \"normal\", \"theta\": 2.0, \"n\": 15}"
+  },
+  {
+    "task_id": "FISHER_INFO_05",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "fisher information",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 4.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "fisher_information",
+    "inputs_str": "{\"dist\": \"poisson\", \"theta\": 2.0, \"n\": 8}"
+  },
+  {
+    "task_id": "RC_BOUND_01",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "rao cramer bound",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 47.61904761904762,
+      "rc_bound": 0.020999999999999998
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "rao_cramer_bound",
+    "inputs_str": "{\"dist\": \"binomial\", \"theta\": 0.3, \"n\": 10}"
+  },
+  {
+    "task_id": "RC_BOUND_02",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "rao cramer bound",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 80.0,
+      "rc_bound": 0.0125
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "rao_cramer_bound",
+    "inputs_str": "{\"dist\": \"binomial\", \"theta\": 0.5, \"n\": 20}"
+  },
+  {
+    "task_id": "RC_BOUND_03",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "rao cramer bound",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 5.0,
+      "rc_bound": 0.2
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "rao_cramer_bound",
+    "inputs_str": "{\"dist\": \"poisson\", \"theta\": 4.0, \"n\": 20}"
+  },
+  {
+    "task_id": "RC_BOUND_04",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "rao cramer bound",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 10.0,
+      "rc_bound": 0.1
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "rao_cramer_bound",
+    "inputs_str": "{\"dist\": \"normal\", \"theta\": 1.0, \"n\": 10}"
+  },
+  {
+    "task_id": "RC_BOUND_05",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "description": "rao cramer bound",
+    "category": "numeric",
+    "numeric_targets": {
+      "fisher_info": 4.0,
+      "rc_bound": 0.25
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "rao_cramer_bound",
+    "inputs_str": "{\"dist\": \"poisson\", \"theta\": 2.0, \"n\": 8}"
+  },
+  {
+    "task_id": "OPT_SCALED_01",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "optimal scaled estimator",
+    "category": "numeric",
+    "numeric_targets": {
+      "c_opt": 1.1666666666666667,
+      "mse_opt": 0.027777777777777776
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "optimal_scaled_estimator",
+    "inputs_str": "{\"n\": 5, \"theta\": 1.0}"
+  },
+  {
+    "task_id": "OPT_SCALED_02",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "optimal scaled estimator",
+    "category": "numeric",
+    "numeric_targets": {
+      "c_opt": 1.0909090909090908,
+      "mse_opt": 0.03305785123966942
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "optimal_scaled_estimator",
+    "inputs_str": "{\"n\": 10, \"theta\": 2.0}"
+  },
+  {
+    "task_id": "OPT_SCALED_03",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "optimal scaled estimator",
+    "category": "numeric",
+    "numeric_targets": {
+      "c_opt": 1.0476190476190477,
+      "mse_opt": 0.02040816326530612
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "optimal_scaled_estimator",
+    "inputs_str": "{\"n\": 20, \"theta\": 3.0}"
+  },
+  {
+    "task_id": "OPT_SCALED_04",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "optimal scaled estimator",
+    "category": "numeric",
+    "numeric_targets": {
+      "c_opt": 1.1111111111111112,
+      "mse_opt": 0.19753086419753085
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "optimal_scaled_estimator",
+    "inputs_str": "{\"n\": 8, \"theta\": 4.0}"
+  },
+  {
+    "task_id": "OPT_SCALED_05",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "optimal scaled estimator",
+    "category": "numeric",
+    "numeric_targets": {
+      "c_opt": 1.0625,
+      "mse_opt": 0.09765625
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "optimal_scaled_estimator",
+    "inputs_str": "{\"n\": 15, \"theta\": 5.0}"
+  },
+  {
+    "task_id": "MSE_COMPARE_01",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mse comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "mse_d1": 0.06666666666666667,
+      "mse_d2": 0.047619047619047616,
+      "mse_dc": 0.027777777777777776
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mse_comparison",
+    "inputs_str": "{\"n\": 5, \"theta\": 1.0}"
+  },
+  {
+    "task_id": "MSE_COMPARE_02",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mse comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "mse_d1": 0.13333333333333333,
+      "mse_d2": 0.06060606060606061,
+      "mse_dc": 0.03305785123966942
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mse_comparison",
+    "inputs_str": "{\"n\": 10, \"theta\": 2.0}"
+  },
+  {
+    "task_id": "MSE_COMPARE_03",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mse comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "mse_d1": 0.15,
+      "mse_d2": 0.03896103896103896,
+      "mse_dc": 0.02040816326530612
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mse_comparison",
+    "inputs_str": "{\"n\": 20, \"theta\": 3.0}"
+  },
+  {
+    "task_id": "MSE_COMPARE_04",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mse comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "mse_d1": 0.6666666666666666,
+      "mse_d2": 0.35555555555555557,
+      "mse_dc": 0.19753086419753085
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mse_comparison",
+    "inputs_str": "{\"n\": 8, \"theta\": 4.0}"
+  },
+  {
+    "task_id": "MSE_COMPARE_05",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mse comparison",
+    "category": "numeric",
+    "numeric_targets": {
+      "mse_d1": 0.5555555555555556,
+      "mse_d2": 0.18382352941176472,
+      "mse_dc": 0.09765625
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mse_comparison",
+    "inputs_str": "{\"n\": 15, \"theta\": 5.0}"
+  },
+  {
+    "task_id": "MARKOV_01",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "markov stationary",
+    "category": "numeric",
+    "numeric_targets": {
+      "pi_0": 0.5591397849462366,
+      "pi_1": 0.22580645161290316,
+      "pi_2": 0.2150537634408602
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "markov_stationary",
+    "inputs_str": "{\"P\": [[0.5, 0.25, 0.25], [0.6666666666666666, 0.0, 0.3333333333333333], [0.6, 0.4, 0.0]]}"
+  },
+  {
+    "task_id": "MARKOV_02",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "gamblers ruin",
+    "category": "numeric",
+    "numeric_targets": {
+      "ruin_prob": 0.7,
+      "win_prob": 0.30000000000000004
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamblers_ruin",
+    "inputs_str": "{\"p\": 0.5, \"i\": 3, \"M\": 10}"
+  },
+  {
+    "task_id": "MARKOV_03",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "gamblers ruin",
+    "category": "numeric",
+    "numeric_targets": {
+      "ruin_prob": 0.8836363636363636,
+      "win_prob": 0.11636363636363645
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamblers_ruin",
+    "inputs_str": "{\"p\": 0.4, \"i\": 5, \"M\": 10}"
+  },
+  {
+    "task_id": "MARKOV_04",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "markov n step",
+    "category": "numeric",
+    "numeric_targets": {
+      "P2_1_2": 0.16666666666666666
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "markov_n_step",
+    "inputs_str": "{\"P\": [[0.5, 0.25, 0.25], [0.6666666666666666, 0.0, 0.3333333333333333], [0.6, 0.4, 0.0]], \"n\": 2, \"i\": 1, \"j\": 2}"
+  },
+  {
+    "task_id": "MARKOV_05",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "markov stationary 2state",
+    "category": "numeric",
+    "numeric_targets": {
+      "pi_0": 0.5714285714285714,
+      "pi_1": 0.4285714285714286
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "markov_stationary_2state",
+    "inputs_str": "{\"P\": [[0.7, 0.3], [0.4, 0.6]]}"
+  },
+  {
+    "task_id": "ORDER_STAT_01",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "order statistic pdf",
+    "category": "numeric",
+    "numeric_targets": {
+      "order_stat_pdf": 1.728000000000001
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "order_statistic_pdf",
+    "inputs_str": "{\"y\": 0.4, \"k\": 3, \"n\": 5}"
+  },
+  {
+    "task_id": "ORDER_STAT_02",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "order statistic pdf",
+    "category": "numeric",
+    "numeric_targets": {
+      "order_stat_pdf": 2.048000000000001
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "order_statistic_pdf",
+    "inputs_str": "{\"y\": 0.2, \"k\": 1, \"n\": 4}"
+  },
+  {
+    "task_id": "ORDER_STAT_03",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "min order statistic cdf",
+    "category": "numeric",
+    "numeric_targets": {
+      "min_cdf": 0.8319300000000001
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "min_order_statistic_cdf",
+    "inputs_str": "{\"x\": 0.3, \"n\": 5}"
+  },
+  {
+    "task_id": "ORDER_STAT_04",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "min order statistic cdf",
+    "category": "numeric",
+    "numeric_targets": {
+      "min_cdf": 0.99609375
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "min_order_statistic_cdf",
+    "inputs_str": "{\"x\": 0.5, \"n\": 8}"
+  },
+  {
+    "task_id": "ORDER_STAT_05",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "uniform range distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "range_beta_alpha": 4.0,
+      "range_beta_beta": 2.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_range_distribution",
+    "inputs_str": "{\"n\": 5}"
+  },
+  {
+    "task_id": "REGRESSION_01",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ols regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "A_hat": 0.0500000000000016,
+      "B_hat": 1.9899999999999998,
+      "s2": 0.03566666666666691,
+      "B_lower": 1.7999392904005407,
+      "B_upper": 2.180060709599459
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ols_regression",
+    "inputs_str": "{\"x\": [1.0, 2.0, 3.0, 4.0, 5.0], \"y\": [2.1, 3.9, 6.2, 7.8, 10.1]}"
+  },
+  {
+    "task_id": "REGRESSION_02",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ols regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "A_hat": 0.9285714285714288,
+      "B_hat": 2.0285714285714285,
+      "s2": 0.021428571428571346,
+      "B_lower": 1.931416088477392,
+      "B_upper": 2.125726768665465
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ols_regression",
+    "inputs_str": "{\"x\": [0.0, 1.0, 2.0, 3.0, 4.0, 5.0], \"y\": [1.0, 2.8, 5.1, 6.9, 9.2, 11.0]}"
+  },
+  {
+    "task_id": "REGRESSION_03",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ols regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "A_hat": 0.16999999999999993,
+      "B_hat": 1.675,
+      "s2": 0.10766666666666665,
+      "B_lower": 1.509890628951027,
+      "B_upper": 1.840109371048973
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ols_regression",
+    "inputs_str": "{\"x\": [2.0, 4.0, 6.0, 8.0, 10.0], \"y\": [3.5, 7.2, 9.8, 13.5, 17.1]}"
+  },
+  {
+    "task_id": "REGRESSION_04",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ols regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "A_hat": 3.0649999999999995,
+      "B_hat": 1.8350000000000002,
+      "s2": 0.05433333333333316,
+      "B_lower": 1.7177091147609125,
+      "B_upper": 1.952290885239088
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ols_regression",
+    "inputs_str": "{\"x\": [1.0, 3.0, 5.0, 7.0, 9.0], \"y\": [5.0, 8.5, 12.0, 16.2, 19.5]}"
+  },
+  {
+    "task_id": "REGRESSION_05",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ols regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "A_hat": 5.299999999999997,
+      "B_hat": 1.99,
+      "s2": 0.1333333333333324,
+      "B_lower": 1.9532522753792585,
+      "B_upper": 2.0267477246207415
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ols_regression",
+    "inputs_str": "{\"x\": [10.0, 20.0, 30.0, 40.0, 50.0], \"y\": [25.0, 45.5, 65.0, 84.5, 105.0]}"
+  },
+  {
+    "task_id": "BOX_MULLER_01",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "box muller transform",
+    "category": "numeric",
+    "numeric_targets": {
+      "z1": -0.021207522909263758,
+      "z2": 1.1249607799618835,
+      "x1": 49.89396238545368,
+      "x2": 55.624803899809415
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "box_muller_transform",
+    "inputs_str": "{\"U\": 0.531, \"V\": 0.253, \"mu\": 50.0, \"sigma\": 5.0}"
+  },
+  {
+    "task_id": "BOX_MULLER_02",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "box muller transform",
+    "category": "numeric",
+    "numeric_targets": {
+      "z1": -1.7941225779941015,
+      "z2": 2.197166472418474e-16,
+      "x1": -1.7941225779941015,
+      "x2": 2.197166472418474e-16
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "box_muller_transform",
+    "inputs_str": "{\"U\": 0.2, \"V\": 0.5, \"mu\": 0.0, \"sigma\": 1.0}"
+  },
+  {
+    "task_id": "BOX_MULLER_03",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "box muller transform",
+    "category": "numeric",
+    "numeric_targets": {
+      "z1": 0.6136617324034359,
+      "z2": 0.4458513464005416,
+      "x1": 11.227323464806872,
+      "x2": 10.891702692801083
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "box_muller_transform",
+    "inputs_str": "{\"U\": 0.75, \"V\": 0.1, \"mu\": 10.0, \"sigma\": 2.0}"
+  },
+  {
+    "task_id": "BOX_MULLER_04",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "box muller transform",
+    "category": "numeric",
+    "numeric_targets": {
+      "z1": -4.49643798197451e-16,
+      "z2": -2.4477468306808166,
+      "x1": -4.49643798197451e-16,
+      "x2": -2.4477468306808166
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "box_muller_transform",
+    "inputs_str": "{\"U\": 0.05, \"V\": 0.75, \"mu\": 0.0, \"sigma\": 1.0}"
+  },
+  {
+    "task_id": "BOX_MULLER_05",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "box muller transform",
+    "category": "numeric",
+    "numeric_targets": {
+      "z1": -0.141852275112305,
+      "z2": 0.43657641182399615,
+      "x1": 97.87221587331543,
+      "x2": 106.54864617735994
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "box_muller_transform",
+    "inputs_str": "{\"U\": 0.9, \"V\": 0.3, \"mu\": 100.0, \"sigma\": 15.0}"
+  },
+  {
+    "task_id": "HPD_01",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd credible interval",
+    "category": "numeric",
+    "numeric_targets": {
+      "hpd_lower": 0.21757733531973342,
+      "hpd_upper": 0.7929603178709547
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "hpd_credible_interval",
+    "inputs_str": "{\"alpha\": 5, \"beta\": 5, \"level\": 0.95}"
+  },
+  {
+    "task_id": "HPD_02",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd credible interval",
+    "category": "numeric",
+    "numeric_targets": {
+      "hpd_lower": 0.007408346347955803,
+      "hpd_upper": 0.43013908985602756
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "hpd_credible_interval",
+    "inputs_str": "{\"alpha\": 2, \"beta\": 8, \"level\": 0.95}"
+  },
+  {
+    "task_id": "HPD_03",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd credible interval",
+    "category": "numeric",
+    "numeric_targets": {
+      "hpd_lower": 5.638329190267618e-07,
+      "hpd_upper": 0.2591706455934424
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "hpd_credible_interval",
+    "inputs_str": "{\"alpha\": 1, \"beta\": 10, \"level\": 0.95}"
+  },
+  {
+    "task_id": "HPD_04",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd credible interval",
+    "category": "numeric",
+    "numeric_targets": {
+      "hpd_lower": 0.632333433544232,
+      "hpd_upper": 0.9929955499399226
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "hpd_credible_interval",
+    "inputs_str": "{\"alpha\": 10, \"beta\": 2, \"level\": 0.95}"
+  },
+  {
+    "task_id": "HPD_05",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd credible interval",
+    "category": "numeric",
+    "numeric_targets": {
+      "hpd_lower": 0.07343709635063403,
+      "hpd_upper": 0.5150159228810426
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "hpd_credible_interval",
+    "inputs_str": "{\"alpha\": 3, \"beta\": 7, \"level\": 0.9}"
+  },
+  {
+    "task_id": "BAYES_FACTOR_01",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor beta binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_BF": 0.32841760423869104,
+      "BF": 1.388768806950624
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayes_factor_beta_binomial",
+    "inputs_str": "{\"x\": 3, \"n\": 10, \"M1\": \"Beta(1,1)\", \"M2\": \"Beta(0.5,0.5)\"}"
+  },
+  {
+    "task_id": "BAYES_FACTOR_02",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor beta binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_BF": 0.4182739333605525,
+      "BF": 1.5193368144417092
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayes_factor_beta_binomial",
+    "inputs_str": "{\"x\": 8, \"n\": 15, \"M1\": \"Beta(1,1)\", \"M2\": \"Beta(0.5,0.5)\"}"
+  },
+  {
+    "task_id": "BAYES_FACTOR_03",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor beta binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_BF": 0.2922421160145827,
+      "BF": 1.3394272751774277
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayes_factor_beta_binomial",
+    "inputs_str": "{\"x\": 5, \"n\": 20, \"M1\": \"Beta(1,1)\", \"M2\": \"Beta(0.5,0.5)\"}"
+  },
+  {
+    "task_id": "BAYES_FACTOR_04",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor beta binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_BF": 0.2106345685823081,
+      "BF": 1.2344611617338888
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayes_factor_beta_binomial",
+    "inputs_str": "{\"x\": 2, \"n\": 10, \"M1\": \"Beta(1,1)\", \"M2\": \"Beta(0.5,0.5)\"}"
+  },
+  {
+    "task_id": "BAYES_FACTOR_05",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor beta binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_BF": 0.4315880284320812,
+      "BF": 1.5397006715839445
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayes_factor_beta_binomial",
+    "inputs_str": "{\"x\": 12, \"n\": 25, \"M1\": \"Beta(1,1)\", \"M2\": \"Beta(0.5,0.5)\"}"
+  },
+  {
+    "task_id": "JEFFREYS_01",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "jeffreys prior binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 3.5,
+      "beta_post": 7.5,
+      "posterior_mean": 0.3181818181818182
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "jeffreys_prior_binomial",
+    "inputs_str": "{\"x\": 3, \"n\": 10, \"prior\": \"Beta(0.5, 0.5) Jeffreys\"}"
+  },
+  {
+    "task_id": "JEFFREYS_02",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "jeffreys prior binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 7.5,
+      "beta_post": 5.5,
+      "posterior_mean": 0.5769230769230769
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "jeffreys_prior_binomial",
+    "inputs_str": "{\"x\": 7, \"n\": 12, \"prior\": \"Beta(0.5, 0.5) Jeffreys\"}"
+  },
+  {
+    "task_id": "JEFFREYS_03",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "jeffreys prior binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 2.5,
+      "beta_post": 6.5,
+      "posterior_mean": 0.2777777777777778
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "jeffreys_prior_binomial",
+    "inputs_str": "{\"x\": 2, \"n\": 8, \"prior\": \"Beta(0.5, 0.5) Jeffreys\"}"
+  },
+  {
+    "task_id": "JEFFREYS_04",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "jeffreys prior binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 10.5,
+      "beta_post": 5.5,
+      "posterior_mean": 0.65625
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "jeffreys_prior_binomial",
+    "inputs_str": "{\"x\": 10, \"n\": 15, \"prior\": \"Beta(0.5, 0.5) Jeffreys\"}"
+  },
+  {
+    "task_id": "JEFFREYS_05",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "jeffreys prior binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha_post": 4.5,
+      "beta_post": 2.5,
+      "posterior_mean": 0.6428571428571429
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "jeffreys_prior_binomial",
+    "inputs_str": "{\"x\": 4, \"n\": 6, \"prior\": \"Beta(0.5, 0.5) Jeffreys\"}"
+  },
+  {
+    "task_id": "PPC_01",
+    "task_type": "PPC",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "posterior predictive check",
+    "category": "numeric",
+    "numeric_targets": {
+      "p_value": 0.6004,
+      "passed": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "posterior_predictive_check",
+    "inputs_str": "{\"alpha_post\": 7.0, \"beta_post\": 5.0, \"n_obs\": 10, \"x_obs\": 6, \"n_rep\": 5000}"
+  },
+  {
+    "task_id": "PPC_02",
+    "task_type": "PPC",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "posterior predictive check",
+    "category": "numeric",
+    "numeric_targets": {
+      "p_value": 0.5992,
+      "passed": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "posterior_predictive_check",
+    "inputs_str": "{\"alpha_post\": 4.0, \"beta_post\": 8.0, \"n_obs\": 15, \"x_obs\": 5, \"n_rep\": 5000}"
+  },
+  {
+    "task_id": "PPC_03",
+    "task_type": "PPC",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "posterior predictive check",
+    "category": "numeric",
+    "numeric_targets": {
+      "p_value": 0.0048,
+      "passed": 0.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "posterior_predictive_check",
+    "inputs_str": "{\"alpha_post\": 7.0, \"beta_post\": 5.0, \"n_obs\": 10, \"x_obs\": 0, \"n_rep\": 5000}"
+  },
+  {
+    "task_id": "PPC_04",
+    "task_type": "PPC",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "posterior predictive check",
+    "category": "numeric",
+    "numeric_targets": {
+      "p_value": 1.0,
+      "passed": 0.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "posterior_predictive_check",
+    "inputs_str": "{\"alpha_post\": 4.0, \"beta_post\": 8.0, \"n_obs\": 15, \"x_obs\": 15, \"n_rep\": 5000}"
+  },
+  {
+    "task_id": "PPC_05",
+    "task_type": "PPC",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "posterior predictive check",
+    "category": "numeric",
+    "numeric_targets": {
+      "p_value": 0.551,
+      "passed": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "posterior_predictive_check",
+    "inputs_str": "{\"alpha_post\": 6.0, \"beta_post\": 6.0, \"n_obs\": 20, \"x_obs\": 10, \"n_rep\": 5000}"
+  },
+  {
+    "task_id": "BAYES_REG_01",
+    "task_type": "BAYES_REG",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "bayesian linear regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "intercept_post": 0.553275976881757,
+      "slope_post": 2.0744861627854227
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayesian_linear_regression",
+    "inputs_str": "{\"x\": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], \"y\": [2.448331, 4.637488, 6.609097, 9.133488, 10.87571, 13.063242, 15.421521, 17.428968, 19.237592, 20.774616]}"
+  },
+  {
+    "task_id": "BAYES_REG_02",
+    "task_type": "BAYES_REG",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "bayesian linear regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "intercept_post": 3.526876060741021,
+      "slope_post": 0.4522139258445472
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayesian_linear_regression",
+    "inputs_str": "{\"x\": [0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0], \"y\": [2.640332, 5.203675, 6.396868, 6.317236, 7.414134, 7.51045, 8.085879, 9.099639, 10.001569, 12.929205, 12.943708]}"
+  },
+  {
+    "task_id": "BAYES_REG_03",
+    "task_type": "BAYES_REG",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "bayesian linear regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "intercept_post": 0.9318950682018112,
+      "slope_post": 3.9906931741071965
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayesian_linear_regression",
+    "inputs_str": "{\"x\": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0], \"y\": [7.149282, 9.486567, 10.060222, 15.575991, 19.42654, 28.724838, 26.113549, 34.75159, 36.24636, 42.043708, "
+  },
+  {
+    "task_id": "BAYES_REG_04",
+    "task_type": "BAYES_REG",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "bayesian linear regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "intercept_post": 1.3399429467941992,
+      "slope_post": -0.9401606065559729
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayesian_linear_regression",
+    "inputs_str": "{\"x\": [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0], \"y\": [1.086326, 0.144531, -0.605806, -0.385073, -2.830348, -3.820829, -4.314095, -3.889817, -6.733961, -7.557385]}"
+  },
+  {
+    "task_id": "BAYES_REG_05",
+    "task_type": "BAYES_REG",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "bayesian linear regression",
+    "category": "numeric",
+    "numeric_targets": {
+      "intercept_post": 4.954639501411265,
+      "slope_post": 2.0461852910312963
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "bayesian_linear_regression",
+    "inputs_str": "{\"x\": [1.0, 3.0, 5.0, 7.0, 9.0, 11.0, 13.0], \"y\": [7.729572, 10.283912, 16.004009, 16.919058, 25.498833, 26.713603, 31.801523]}"
+  },
+  {
+    "task_id": "MLE_MAP_01",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "mle vs map binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle": 0.6,
+      "map": 0.5833333333333334,
+      "posterior_mean": 0.5714285714285714,
+      "shrinkage": 0.1666666666666661
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_vs_map_binomial",
+    "inputs_str": "{\"x\": 6, \"n\": 10, \"alpha\": 2, \"beta\": 2}"
+  },
+  {
+    "task_id": "MLE_MAP_02",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "mle vs map binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle": 0.2,
+      "map": 0.2,
+      "posterior_mean": 0.23529411764705882,
+      "shrinkage": -0.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_vs_map_binomial",
+    "inputs_str": "{\"x\": 3, \"n\": 15, \"alpha\": 1, \"beta\": 1}"
+  },
+  {
+    "task_id": "MLE_MAP_03",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "mle vs map binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle": 0.6,
+      "map": 0.5833333333333334,
+      "posterior_mean": 0.5769230769230769,
+      "shrinkage": 0.1666666666666661
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_vs_map_binomial",
+    "inputs_str": "{\"x\": 12, \"n\": 20, \"alpha\": 3, \"beta\": 3}"
+  },
+  {
+    "task_id": "MLE_MAP_04",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "mle vs map binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle": 0.2,
+      "map": 0.2,
+      "posterior_mean": 0.23529411764705882,
+      "shrinkage": -0.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_vs_map_binomial",
+    "inputs_str": "{\"x\": 2, \"n\": 10, \"alpha\": 2, \"beta\": 5}"
+  },
+  {
+    "task_id": "MLE_MAP_05",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "mle vs map binomial",
+    "category": "numeric",
+    "numeric_targets": {
+      "mle": 0.6666666666666666,
+      "map": 0.6875,
+      "posterior_mean": 0.6666666666666666,
+      "shrinkage": 0.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_vs_map_binomial",
+    "inputs_str": "{\"x\": 8, \"n\": 12, \"alpha\": 4, \"beta\": 2}"
+  },
+  {
+    "task_id": "CI_CREDIBLE_01",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "ci vs credible normal",
+    "category": "numeric",
+    "numeric_targets": {
+      "freq_lower": 4.599225986076149,
+      "freq_upper": 5.4757485266527315,
+      "bayes_lower": 4.5968180254381,
+      "bayes_upper": 5.473121517519301
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ci_vs_credible_normal",
+    "inputs_str": "{\"mu0\": 0.0, \"tau0_sq\": 100.0, \"sigma_sq\": 1.0, \"n\": 20, \"data\": [5.345584, 5.821618, 5.330437, 3.696843, 5.905356, 5.446375, 4.463047, 5.581118, 5.364572, 5.294132, 5.028422, 5.546713, 4.263546, 4.83"
+  },
+  {
+    "task_id": "CI_CREDIBLE_02",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "ci vs credible normal",
+    "category": "numeric",
+    "numeric_targets": {
+      "freq_lower": 4.51203252644282,
+      "freq_upper": 5.388555067019402,
+      "bayes_lower": 4.082401362402237,
+      "bayes_upper": 4.918132813472509
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ci_vs_credible_normal",
+    "inputs_str": "{\"mu0\": 0.0, \"tau0_sq\": 0.5, \"sigma_sq\": 1.0, \"n\": 20, \"data\": [5.189053, 4.477252, 4.586936, 2.558533, 6.799707, 6.144166, 4.674577, 5.773807, 5.281211, 4.446177, 5.977567, 4.689443, 4.671176, 4.2078"
+  },
+  {
+    "task_id": "CI_CREDIBLE_03",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "ci vs credible normal",
+    "category": "numeric",
+    "numeric_targets": {
+      "freq_lower": 3.9641245553171855,
+      "freq_upper": 5.717169636470349,
+      "bayes_lower": 4.440821840545259,
+      "bayes_upper": 5.452942890050587
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ci_vs_credible_normal",
+    "inputs_str": "{\"mu0\": 5.0, \"tau0_sq\": 0.1, \"sigma_sq\": 2.0, \"n\": 10, \"data\": [7.886296, 1.385744, 5.591281, 4.197053, 4.359857, 4.6951, 2.143308, 4.671998, 3.776404, 9.699431]}"
+  },
+  {
+    "task_id": "CI_CREDIBLE_04",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "ci vs credible normal",
+    "category": "numeric",
+    "numeric_targets": {
+      "freq_lower": 3.9375125789711847,
+      "freq_upper": 4.949633628476513,
+      "bayes_lower": 3.9218585660289493,
+      "bayes_upper": 4.927298875531277
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ci_vs_credible_normal",
+    "inputs_str": "{\"mu0\": 3.0, \"tau0_sq\": 5.0, \"sigma_sq\": 1.0, \"n\": 15, \"data\": [3.848209, 4.325283, 6.163724, 5.159148, 2.858603, 4.494797, 3.876536, 4.648632, 2.891812, 4.741772, 4.735381, 6.075626, 4.816645, 5.0105"
+  },
+  {
+    "task_id": "CI_CREDIBLE_05",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "ci vs credible normal",
+    "category": "numeric",
+    "numeric_targets": {
+      "freq_lower": -1.0401545950609168,
+      "freq_upper": 0.7128904860922461,
+      "bayes_lower": -1.0389527742294784,
+      "bayes_upper": 0.7123418870351963
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "ci_vs_credible_normal",
+    "inputs_str": "{\"mu0\": 0.0, \"tau0_sq\": 100.0, \"sigma_sq\": 1.0, \"n\": 5, \"data\": [-0.801931, -1.324359, -0.248362, 0.420445, 1.136047]}"
+  },
+  {
+    "task_id": "LOG_ML_01",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "log marginal likelihood",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_ml": -7.745002803515839
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "log_marginal_likelihood",
+    "inputs_str": "{\"model\": \"Beta-Binomial\", \"alpha\": 1.0, \"beta\": 1.0, \"x\": 6, \"n\": 10}"
+  },
+  {
+    "task_id": "LOG_ML_02",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "log marginal likelihood",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_ml": -8.295049140435111
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "log_marginal_likelihood",
+    "inputs_str": "{\"model\": \"Beta-Binomial\", \"alpha\": 2.0, \"beta\": 3.0, \"x\": 4, \"n\": 12}"
+  },
+  {
+    "task_id": "LOG_ML_03",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "log marginal likelihood",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_ml": -11.96036977563056
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "log_marginal_likelihood",
+    "inputs_str": "{\"model\": \"Beta-Binomial\", \"alpha\": 0.5, \"beta\": 0.5, \"x\": 8, \"n\": 15}"
+  },
+  {
+    "task_id": "LOG_ML_04",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "log marginal likelihood",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_ml": -7.782995418781033
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "log_marginal_likelihood",
+    "inputs_str": "{\"model\": \"Gamma-Poisson\", \"alpha\": 2.0, \"beta\": 1.0, \"data\": [1, 2, 3, 2, 1]}"
+  },
+  {
+    "task_id": "LOG_ML_05",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "log marginal likelihood",
+    "category": "numeric",
+    "numeric_targets": {
+      "log_ml": -7.582324723318883
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "log_marginal_likelihood",
+    "inputs_str": "{\"model\": \"Gamma-Poisson\", \"alpha\": 3.0, \"beta\": 2.0, \"data\": [2, 4, 1, 3]}"
+  },
+  {
+    "task_id": "GAMBLER_01",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "gamblers ruin",
+    "category": "numeric",
+    "numeric_targets": {
+      "ruin_prob": 0.2677240285487709,
+      "win_prob": 0.732275971451229
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamblers_ruin",
+    "inputs_str": "{\"p\": 0.6, \"i\": 3, \"M\": 8}"
+  },
+  {
+    "task_id": "GAMBLER_02",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "gamblers ruin",
+    "category": "numeric",
+    "numeric_targets": {
+      "ruin_prob": 0.5333333333333333,
+      "win_prob": 0.4666666666666667
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamblers_ruin",
+    "inputs_str": "{\"p\": 0.5, \"i\": 7, \"M\": 15}"
+  },
+  {
+    "task_id": "GAMBLER_03",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "gamblers ruin",
+    "category": "numeric",
+    "numeric_targets": {
+      "ruin_prob": 0.9990707331944839,
+      "win_prob": 0.0009292668055160824
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "gamblers_ruin",
+    "inputs_str": "{\"p\": 0.3, \"i\": 2, \"M\": 10}"
+  },
+  {
+    "task_id": "STATIONARY_01",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "stationary distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "pi_0": 0.30967741935483845,
+      "pi_1": 0.406451612903226,
+      "pi_2": 0.28387096774193565
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "stationary_distribution",
+    "inputs_str": "{\"P\": [[0.2, 0.5, 0.3], [0.4, 0.2, 0.4], [0.3, 0.6, 0.1]]}"
+  },
+  {
+    "task_id": "STATIONARY_02",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "stationary distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "pi_0": 0.6666666666666666,
+      "pi_1": 0.3333333333333334
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "stationary_distribution",
+    "inputs_str": "{\"P\": [[0.9, 0.1], [0.2, 0.8]]}"
+  },
+  {
+    "task_id": "STATIONARY_03",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "stationary distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "pi_0": 0.25619834710743805,
+      "pi_1": 0.22038567493112937,
+      "pi_2": 0.36501377410468316,
+      "pi_3": 0.1584022038567494
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "stationary_distribution",
+    "inputs_str": "{\"P\": [[0.5, 0.25, 0.25, 0.0], [0.2, 0.4, 0.3, 0.1], [0.1, 0.1, 0.6, 0.2], [0.3, 0.2, 0.1, 0.4]]}"
+  },
+  {
+    "task_id": "RANGE_DIST_01",
+    "task_type": "RANGE_DIST",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "uniform range distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha": 3.0,
+      "beta": 2.0,
+      "verified": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_range_distribution",
+    "inputs_str": "{\"n\": 4}"
+  },
+  {
+    "task_id": "RANGE_DIST_02",
+    "task_type": "RANGE_DIST",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "uniform range distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha": 7.0,
+      "beta": 2.0,
+      "verified": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_range_distribution",
+    "inputs_str": "{\"n\": 8}"
+  },
+  {
+    "task_id": "RANGE_DIST_03",
+    "task_type": "RANGE_DIST",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "uniform range distribution",
+    "category": "numeric",
+    "numeric_targets": {
+      "alpha": 11.0,
+      "beta": 2.0,
+      "verified": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "uniform_range_distribution",
+    "inputs_str": "{\"n\": 12}"
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_01",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mle efficiency",
+    "category": "numeric",
+    "numeric_targets": {
+      "rc_bound": 0.007999999999999998,
+      "efficiency_ratio": 1.0,
+      "is_efficient": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_efficiency",
+    "inputs_str": "{\"dist\": \"binomial\", \"theta\": 0.4, \"n\": 30}"
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_02",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mle efficiency",
+    "category": "numeric",
+    "numeric_targets": {
+      "rc_bound": 0.15000000000000002,
+      "efficiency_ratio": 1.0,
+      "is_efficient": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_efficiency",
+    "inputs_str": "{\"dist\": \"poisson\", \"theta\": 3.0, \"n\": 20}"
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_03",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "description": "mle efficiency",
+    "category": "numeric",
+    "numeric_targets": {
+      "rc_bound": 0.06666666666666667,
+      "efficiency_ratio": 1.0,
+      "is_efficient": 1.0
+    },
+    "rubric_keys": [],
+    "reference_answer": "",
+    "notes_topic": "mle_efficiency",
+    "inputs_str": "{\"dist\": \"normal\", \"theta\": 2.0, \"n\": 15}"
+  },
+  {
+    "task_id": "CONCEPTUAL_01",
+    "task_type": "CONCEPTUAL",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "p value vs posterior",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "p-value is not posterior probability",
+      "requires prior on H0",
+      "Bayes theorem needed",
+      "posterior P(H0|data) depends on prior"
+    ],
+    "reference_answer": "No. p=P(data|H0), not P(H0|data). Converting requires a prior via Bayes theorem. P(H0|data) depends on the prior probability of H0.",
+    "notes_topic": "p_value_vs_posterior",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_02",
+    "task_type": "CONCEPTUAL",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "hpd vs equal tail",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "HPD shortest interval containing given probability",
+      "equal-tail cuts equal probability from each tail",
+      "differ when posterior is asymmetric/skewed",
+      "example with skewed distribution like Beta(1,5)"
+    ],
+    "reference_answer": "HPD is the shortest interval with the required probability mass. Equal-tail intervals cut equal mass from each tail. They coincide for symmetric unimodal posteriors but differ for skewed ones. Example: Beta(1,10) \u2014 HPD starts at 0, equal-tail does not.",
+    "notes_topic": "hpd_vs_equal_tail",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_03",
+    "task_type": "CONCEPTUAL",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "bayes factor interpretation",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "BF is ratio of marginal likelihoods",
+      "BF=15 is strong evidence for H1 (Kass-Raftery scale)",
+      "p-value is one-sided tail probability under H0",
+      "BF incorporates prior predictive comparison"
+    ],
+    "reference_answer": "BF10=15 means the data are 15 times more likely under H1 than H0. On the Kass-Raftery scale this is strong evidence for H1. Unlike a p-value, the Bayes factor compares predictive performance of two models and does not depend on stopping rules.",
+    "notes_topic": "bayes_factor_interpretation",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_04",
+    "task_type": "CONCEPTUAL",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "jeffreys prior invariance",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "invariant under reparametrization",
+      "uniform on theta != uniform on log-odds",
+      "Jeffreys = Beta(0.5,0.5) for Binomial",
+      "sqrt of Fisher information"
+    ],
+    "reference_answer": "Jeffreys prior p(theta) \u221d sqrt(I(theta)) is invariant under reparametrisation: applying it to any monotone transform of theta gives the same prior. For Binomial: I(theta)=1/(theta(1-theta)), so p(theta) \u221d theta^{-1/2}(1-theta)^{-1/2} = Beta(0.5, 0.5). A uniform prior on theta is not uniform on log-odds.",
+    "notes_topic": "jeffreys_prior_invariance",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_05",
+    "task_type": "CONCEPTUAL",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "credible vs confidence interval",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "credible: P(theta in [0.3,0.7]|data)=0.95",
+      "confidence: 95% of such intervals contain true theta",
+      "credible interval makes direct probability statement about parameter",
+      "confidence interval is statement about procedure"
+    ],
+    "reference_answer": "Credible interval: given the prior and data, P(theta in [0.3,0.7]) = 0.95. This is a direct probability statement about the parameter. Frequentist CI: if we repeated the experiment, 95% of CIs computed this way would contain the true theta \u2014 a statement about the procedure, not about this specific interval.",
+    "notes_topic": "credible_vs_confidence_interval",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_06",
+    "task_type": "CONCEPTUAL",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "prior influence large n",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "likelihood dominates prior with large n",
+      "posterior proportional to prior times likelihood",
+      "data overwhelms prior asymptotically",
+      "Bernstein-von Mises: posterior concentrates around MLE"
+    ],
+    "reference_answer": "The posterior is proportional to prior \u00d7 likelihood. For small n the prior contributes substantially; for large n the likelihood dominates. The Bernstein-von Mises theorem guarantees that as n\u2192\u221e the posterior concentrates around the MLE regardless of the prior (under regularity conditions).",
+    "notes_topic": "prior_influence_large_n",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_07",
+    "task_type": "CONCEPTUAL",
+    "tier": 2,
+    "difficulty": "basic",
+    "description": "mle map posterior mean",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "MLE=0.5 (x/n)",
+      "MAP=(x+alpha-1)/(n+alpha+beta-2)=2/4=0.5",
+      "posterior mean=(x+alpha)/(n+alpha+beta)=3/6=0.5",
+      "MAP minimizes 0-1 loss, posterior mean minimizes MSE"
+    ],
+    "reference_answer": "MLE = x/n = 0.5. MAP = (1+2-1)/(2+2+2-2) = 2/4 = 0.5. Posterior mean = (1+2)/(2+2+2) = 3/6 = 0.5. For this symmetric case all three coincide. Posterior mean minimises MSE (quadratic loss); MAP minimises 0-1 loss; MLE ignores the prior.",
+    "notes_topic": "mle_map_posterior_mean",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_08",
+    "task_type": "CONCEPTUAL",
+    "tier": 3,
+    "difficulty": "advanced",
+    "description": "exchangeability de finetti",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "exchangeable: joint dist invariant to permutation",
+      "weaker than iid",
+      "de Finetti: exchangeable sequence = mixture of iid",
+      "justifies use of prior distribution"
+    ],
+    "reference_answer": "A sequence X1,...,Xn is exchangeable if its joint distribution is invariant under permutation of indices. This is weaker than i.i.d. De Finetti's theorem: any exchangeable sequence can be represented as a mixture of i.i.d. distributions. This provides the theoretical justification for the Bayesian model where observations are conditionally i.i.d. given theta, with theta having a prior distribution.",
+    "notes_topic": "exchangeability_de_finetti",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_09",
+    "task_type": "CONCEPTUAL",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "description": "conjugate prior advantages",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "closed-form posterior \u2014 no numerical integration",
+      "posterior in same family as prior",
+      "limitation: may not reflect true prior beliefs",
+      "inappropriate when prior is multimodal or has sharp constraints"
+    ],
+    "reference_answer": "Advantages: the posterior is in the same parametric family as the prior, giving a closed-form update with no numerical integration. Easy to interpret; hyperparameters have pseudo-count interpretations. Limitations: the conjugate family may not represent genuine prior beliefs (e.g. cannot express bimodal prior), and forces a specific distributional shape. Better alternatives: MCMC or variational methods for complex priors.",
+    "notes_topic": "conjugate_prior_advantages",
+    "inputs_str": "{}"
+  },
+  {
+    "task_id": "CONCEPTUAL_10",
+    "task_type": "CONCEPTUAL",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "description": "ppc interpretation",
+    "category": "conceptual",
+    "numeric_targets": {},
+    "rubric_keys": [
+      "p-value near 0 or 1 indicates model misfit",
+      "0.02 means observed statistic is extreme under model",
+      "model may be misspecified",
+      "consider alternative models or relaxed assumptions"
+    ],
+    "reference_answer": "A Bayesian p-value of 0.02 means the observed test statistic falls in the lower 2% of the posterior predictive distribution \u2014 the data are surprisingly extreme under the fitted model, indicating potential model misspecification. The analyst should examine which aspect of the data the model fails to capture, consider a more flexible likelihood, or relax distributional assumptions.",
+    "notes_topic": "ppc_interpretation",
+    "inputs_str": "{}"
+  }
+]

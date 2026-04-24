@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Bayesian Benchmark — DS 299</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="global-cursor"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (function() {
+        var cursor = document.getElementById('global-cursor');
+        var visible = false;
+        var hovering = false;
+
+        function updatePos(e) {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top  = e.clientY + 'px';
+          if (!visible) {
+            cursor.classList.add('visible');
+            visible = true;
+          }
+        }
+
+        function onEnter(e) {
+          var t = e.target;
+          if (t.matches('a, button, [data-hover], label, [role="button"]') ||
+              t.closest('a, button, [data-hover], [role="button"]')) {
+            if (!hovering) { cursor.classList.add('hovering'); hovering = true; }
+          }
+        }
+
+        function onLeave(e) {
+          var t = e.relatedTarget;
+          if (!t || !(t.matches('a, button, [data-hover], label, [role="button"]') ||
+                      t.closest('a, button, [data-hover], [role="button"]'))) {
+            if (hovering) { cursor.classList.remove('hovering'); hovering = false; }
+          }
+        }
+
+        function onDocLeave() {
+          cursor.classList.remove('visible');
+          visible = false;
+        }
+
+        window.addEventListener('mousemove',       updatePos, { passive: true });
+        document.addEventListener('mouseover',      onEnter,   { passive: true });
+        document.addEventListener('mouseout',       onLeave,   { passive: true });
+        document.addEventListener('mouseleave',     onDocLeave, { passive: true });
+      })();
+    </script>
+  </body>
+</html>

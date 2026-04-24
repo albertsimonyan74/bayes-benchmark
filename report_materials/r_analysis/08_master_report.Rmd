@@ -1,0 +1,1000 @@
+---
+title: "Benchmarking LLMs on Bayesian Statistical Reasoning"
+subtitle: "Preliminary Results (4/5 Models)"
+author: "DS 299 Capstone"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    self_contained: true
+    theme: flatly
+    highlight: null
+    mathjax: default
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    includes:
+      in_header: null
+---
+
+```{css, echo=FALSE}
+/* ── Dark theme ──────────────────────────────────────────── */
+body {
+  background-color: #0A0F1E;
+  color: #E8F4F8;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #00FFE0;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+h1.title { font-size: 2.2em; text-align: center; margin-bottom: 0.2em; }
+h3.subtitle { color: #7FFFD4; text-align: center; margin-top: 0; }
+h4.author, h4.date { color: #8899BB; text-align: center; }
+
+a { color: #00FFE0; }
+a:hover { color: #7FFFD4; }
+
+/* Horizontal rule */
+hr { border-color: #1E2A50; }
+
+/* Code blocks */
+pre, code {
+  background-color: #12193A !important;
+  color: #A78BFA !important;
+  border: 1px solid #1E2A50;
+  border-radius: 4px;
+}
+pre { padding: 10px; overflow-x: auto; }
+
+/* Table of contents */
+#TOC {
+  background-color: #0D1535;
+  border: 1px solid #1E2A50;
+  border-radius: 6px;
+  padding: 12px;
+}
+#TOC a { color: #7FFFD4 !important; }
+#TOC a:hover { color: #00FFE0 !important; }
+#TOC li.active > a { color: #00FFE0 !important; font-weight: bold; }
+
+/* Info boxes */
+.info-box {
+  background-color: #12193A;
+  border-left: 4px solid #00FFE0;
+  padding: 12px 16px;
+  margin: 14px 0;
+  border-radius: 0 4px 4px 0;
+}
+.warn-box {
+  background-color: #1A1020;
+  border-left: 4px solid #FF6B6B;
+  padding: 12px 16px;
+  margin: 14px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Callout numbers */
+.metric-card {
+  display: inline-block;
+  background: #12193A;
+  border: 1px solid #1E2A50;
+  border-radius: 8px;
+  padding: 10px 18px;
+  margin: 6px;
+  text-align: center;
+  min-width: 130px;
+}
+.metric-val { font-size: 1.9em; color: #00FFE0; font-weight: bold; }
+.metric-lbl { font-size: 0.78em; color: #8899BB; }
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #A78BFA;
+  padding: 8px 14px;
+  background: #0D1535;
+  color: #C8D8E8;
+  margin: 12px 0;
+}
+
+/* Scrollable table in appendix */
+.dataTables_wrapper {
+  color: #E8F4F8 !important;
+  background: #0A0F1E !important;
+}
+table.dataTable {
+  background: #0A0F1E !important;
+  color: #E8F4F8 !important;
+}
+table.dataTable thead th {
+  background: #0D1535 !important;
+  color: #00FFE0 !important;
+  border-bottom: 1px solid #1E2A50 !important;
+}
+table.dataTable tbody tr:hover { background: #12193A !important; }
+.dataTables_filter input, .dataTables_length select {
+  background: #12193A !important;
+  color: #E8F4F8 !important;
+  border: 1px solid #1E2A50 !important;
+}
+.paginate_button { color: #7FFFD4 !important; }
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+
+# ── Bootstrap packages ────────────────────────────────────────────────────────
+pkgs <- c("dplyr", "ggplot2", "plotly", "htmlwidgets", "DT", "knitr",
+          "scales", "tidyr", "gt", "ggridges", "tibble", "forcats",
+          "patchwork", "stringr", "viridis", "ggrepel")
+for (pkg in pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE))
+    install.packages(pkg, repos = "https://cloud.r-project.org")
+}
+
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(htmlwidgets)
+library(DT)
+library(knitr)
+library(scales)
+library(tidyr)
+library(gt)
+library(ggridges)
+library(tibble)
+library(forcats)
+library(patchwork)
+library(stringr)
+library(viridis)
+library(ggrepel)
+
+# ── Palette ───────────────────────────────────────────────────────────────────
+PALETTE <- c(
+  claude   = "#00CED1",
+  chatgpt  = "#7FFFD4",
+  mistral  = "#A78BFA",
+  deepseek = "#4A90D9",
+  gemini   = "#FF6B6B"
+)
+DARK_BG    <- "#0A0F1E"
+DARK_PANEL <- "#12193A"
+TEXT_CLR   <- "#E8F4F8"
+ACCENT     <- "#00FFE0"
+TIER_COLORS <- c("1" = "#00FFE0", "2" = "#7FFFD4", "3" = "#A78BFA", "4" = "#FF6B6B")
+
+dark_theme <- theme_minimal(base_size = 12) +
+  theme(
+    plot.background   = element_rect(fill = DARK_BG,    color = NA),
+    panel.background  = element_rect(fill = DARK_PANEL, color = NA),
+    panel.grid.major  = element_line(color = "#1E2A50"),
+    panel.grid.minor  = element_blank(),
+    axis.text         = element_text(color = TEXT_CLR),
+    axis.title        = element_text(color = TEXT_CLR),
+    plot.title        = element_text(color = ACCENT, size = 14, face = "bold", hjust = 0.5),
+    plot.subtitle     = element_text(color = TEXT_CLR, size = 9,  hjust = 0.5),
+    legend.background = element_rect(fill = DARK_BG, color = NA),
+    legend.text       = element_text(color = TEXT_CLR),
+    legend.title      = element_text(color = TEXT_CLR),
+    strip.text        = element_text(color = ACCENT, face = "bold"),
+    strip.background  = element_rect(fill = "#0D1535", color = NA),
+    plot.caption      = element_text(color = TEXT_CLR, size = 7)
+  )
+
+# ── Load data ─────────────────────────────────────────────────────────────────
+RDS_PATH <- "data/benchmark_clean.rds"
+if (!file.exists(RDS_PATH)) source("00_load_data.R")
+df <- readRDS(RDS_PATH)
+
+df_complete <- df %>% filter(model_family != "gemini")
+MODELS      <- c("claude", "chatgpt", "mistral", "deepseek")
+```
+
+---
+
+# Executive Summary
+
+<div class="info-box">
+This report presents preliminary benchmark results from **DS 299 Capstone**, evaluating five large language models on **136 Bayesian statistical reasoning tasks** across 31 task types and 4 difficulty tiers.
+**Note:** Gemini results are partial (76/136 tasks) due to daily API quota exhaustion. All analyses in this report use the **4 complete models**: Claude, ChatGPT, Mistral, DeepSeek.
+</div>
+
+```{r exec-summary-cards}
+model_summ <- df_complete %>%
+  group_by(model_family) %>%
+  summarise(
+    avg    = round(mean(final_score, na.rm = TRUE), 3),
+    passes = sum(pass, na.rm = TRUE),
+    rate   = round(mean(pass, na.rm = TRUE), 3),
+    .groups = "drop"
+  )
+
+best_model <- model_summ %>% slice_max(avg, n = 1) %>% pull(model_family)
+best_score <- model_summ %>% slice_max(avg, n = 1) %>% pull(avg)
+avg_pass   <- round(mean(model_summ$rate), 3)
+total_runs <- nrow(df_complete)
+```
+
+<div style="display:flex; flex-wrap:wrap; gap:8px; margin: 18px 0;">
+<div class="metric-card"><div class="metric-val">`r total_runs`</div><div class="metric-lbl">Total Runs (4 models)</div></div>
+<div class="metric-card"><div class="metric-val">136</div><div class="metric-lbl">Tasks per Model</div></div>
+<div class="metric-card"><div class="metric-val">31</div><div class="metric-lbl">Task Types</div></div>
+<div class="metric-card"><div class="metric-val">`r stringr::str_to_title(best_model)`</div><div class="metric-lbl">Top Model</div></div>
+<div class="metric-card"><div class="metric-val">`r best_score`</div><div class="metric-lbl">Best Avg Score</div></div>
+<div class="metric-card"><div class="metric-val">`r scales::percent(avg_pass)`</div><div class="metric-lbl">Grand Avg Pass Rate</div></div>
+</div>
+
+**Key findings:**
+
+- **Claude** leads on overall average score (`r best_score`), followed closely by Mistral and ChatGPT
+- **RANGE_DIST**, **JEFFREYS**, and **GAMBLER** task types show highest pass rates (>85%)
+- **REGRESSION**, **BAYES_REG**, and **DIRICHLET** tasks are consistently hardest across all models
+- Tier has a modest negative effect on score; LOESS trends show slight degradation from Tier 1→4
+- Latency varies substantially: Claude averages ~18s, DeepSeek ~8s per task
+
+---
+
+# Data Overview
+
+```{r data-overview}
+overview_tbl <- df %>%
+  group_by(model_family) %>%
+  summarise(
+    n_runs      = n(),
+    avg_score   = round(mean(final_score, na.rm = TRUE), 3),
+    pass_rate   = round(mean(pass, na.rm = TRUE), 3),
+    avg_lat_ms  = round(mean(latency_ms, na.rm = TRUE), 0),
+    complete    = if_else(model_family[1] == "gemini", "Partial (76/136)", "Complete"),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(avg_score))
+
+knitr::kable(
+  overview_tbl,
+  col.names = c("Model", "Runs", "Avg Score", "Pass Rate", "Avg Latency (ms)", "Status"),
+  caption   = "Dataset summary. Gemini partial due to free-tier daily quota exhaustion."
+)
+```
+
+```{r difficulty-breakdown}
+diff_tbl <- df_complete %>%
+  group_by(difficulty) %>%
+  summarise(
+    n = n(), avg = round(mean(final_score, na.rm = TRUE), 3),
+    .groups = "drop"
+  )
+knitr::kable(diff_tbl,
+  col.names = c("Difficulty", "n Tasks (×4 models)", "Avg Score"),
+  caption   = "Score by difficulty level (complete models only)."
+)
+```
+
+---
+
+# Model Performance
+
+## Heatmap: Task Type × Model
+
+```{r heatmap, fig.width=11, fig.height=9}
+hm_data <- df_complete %>%
+  group_by(task_type, model_family) %>%
+  summarise(avg_score = mean(final_score, na.rm = TRUE), .groups = "drop")
+
+task_order <- hm_data %>%
+  group_by(task_type) %>%
+  summarise(overall = mean(avg_score), .groups = "drop") %>%
+  arrange(overall) %>% pull(task_type)
+
+hm_data <- hm_data %>%
+  mutate(
+    task_type    = factor(task_type, levels = task_order),
+    model_family = factor(model_family, levels = MODELS),
+    label        = sprintf("%.2f", avg_score)
+  )
+
+p_hm <- ggplot(hm_data, aes(x = model_family, y = task_type, fill = avg_score)) +
+  geom_tile(color = DARK_BG, linewidth = 0.4) +
+  geom_text(aes(label = label), color = "white", size = 2.6, fontface = "bold") +
+  scale_fill_viridis(option = "plasma", name = "Avg Score", limits = c(0, 1)) +
+  labs(title = "LLM Performance on Bayesian Reasoning Tasks",
+       x = "Model", y = NULL) +
+  dark_theme +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1),
+        axis.text.y = element_text(size = 8))
+ggplotly(p_hm) %>%
+  layout(paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
+         font = list(color = TEXT_CLR))
+```
+
+## Performance by Tier
+
+```{r tier-radar}
+tier_agg <- df_complete %>%
+  group_by(model_family, tier) %>%
+  summarise(
+    avg_score = mean(final_score, na.rm = TRUE),
+    se_score  = sd(final_score, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    tier_label = paste0("Tier ", tier),
+    ci_lo = pmax(avg_score - 1.96*se_score, 0),
+    ci_hi = pmin(avg_score + 1.96*se_score, 1)
+  )
+
+fig_radar <- plot_ly(type = "scatterpolar", mode = "lines+markers")
+for (mdl in MODELS) {
+  row_data <- tier_agg %>% filter(model_family == mdl) %>% arrange(tier)
+  scores   <- c(row_data$avg_score, row_data$avg_score[1])
+  labels   <- c(row_data$tier_label, row_data$tier_label[1])
+  fig_radar <- fig_radar %>% add_trace(
+    r = scores, theta = labels, name = mdl,
+    line = list(color = PALETTE[mdl], width = 2.5),
+    marker = list(color = PALETTE[mdl], size = 8),
+    fill = "toself",
+    fillcolor = paste0(substr(PALETTE[mdl],1,7),"33")
+  )
+}
+fig_radar %>% layout(
+  title  = list(text = "Tier Performance Radar", font = list(color = ACCENT)),
+  polar  = list(bgcolor = DARK_PANEL,
+    radialaxis = list(visible = TRUE, range = c(0,1), color = TEXT_CLR,
+                      gridcolor = "#1E2A50", tickvals = seq(0,1,0.2)),
+    angularaxis = list(color = TEXT_CLR, tickfont = list(size = 12))),
+  paper_bgcolor = DARK_BG, legend = list(font = list(color = TEXT_CLR)),
+  font = list(color = TEXT_CLR)
+)
+```
+
+---
+
+# Score Distributions
+
+```{r distributions, fig.width=10, fig.height=6}
+df_ridges <- df_complete %>%
+  mutate(model_family = factor(model_family,
+    levels = rev(MODELS),
+    labels = rev(stringr::str_to_title(MODELS))))
+
+medians <- df_ridges %>%
+  group_by(model_family) %>%
+  summarise(med = median(final_score, na.rm = TRUE), .groups = "drop")
+
+pal_named <- setNames(PALETTE[MODELS], stringr::str_to_title(MODELS))
+
+p_ridges <- ggplot(df_ridges, aes(x = final_score, y = model_family, fill = model_family)) +
+  geom_density_ridges(alpha = 0.70, scale = 1.2,
+    quantile_lines = TRUE, quantiles = 2,
+    color = "white", linewidth = 0.4,
+    jittered_points = TRUE, point_shape = "|", point_size = 1.5,
+    point_alpha = 0.4, point_color = "white") +
+  geom_vline(xintercept = 0.5, linetype = "dashed",
+             color = ACCENT, linewidth = 0.8) +
+  geom_label(data = medians, aes(x = med, y = model_family,
+    label = sprintf("med=%.3f", med)),
+    fill = DARK_BG, color = TEXT_CLR, size = 3,
+    hjust = -0.05, vjust = -0.9, label.size = 0.2, inherit.aes = FALSE) +
+  scale_fill_manual(values = pal_named, guide = "none") +
+  scale_x_continuous(limits = c(-0.02, 1.05), breaks = seq(0,1,0.25)) +
+  labs(title = "Score Distributions by Model",
+       x = "Final Score", y = NULL,
+       subtitle = "Dashed = pass threshold (0.5)") +
+  dark_theme + theme(panel.grid.major.y = element_blank())
+
+p_ridges
+```
+
+The violin/strip interactive version:
+
+```{r dist-plotly}
+df_plotly <- df_complete %>%
+  mutate(model_family = factor(model_family, levels = MODELS))
+
+fig_dist <- plot_ly()
+for (mdl in MODELS) {
+  sub <- df_plotly %>% filter(model_family == mdl)
+  fig_dist <- fig_dist %>% add_trace(
+    type = "violin", x = sub$final_score, name = mdl,
+    box = list(visible = TRUE), meanline = list(visible = TRUE, color = "white"),
+    points = "all", jitter = 0.3, pointpos = 0,
+    marker = list(color = PALETTE[mdl], size = 3, opacity = 0.4),
+    line = list(color = PALETTE[mdl]),
+    fillcolor = paste0(substr(PALETTE[mdl],1,7),"55"),
+    orientation = "h"
+  )
+}
+fig_dist %>%
+  add_segments(x=0.5, xend=0.5, y=-0.5, yend=3.5,
+    line=list(color=ACCENT, dash="dash", width=2), showlegend=FALSE) %>%
+  layout(
+    title = list(text="Score Distributions (Interactive)",
+                 font=list(color=ACCENT)),
+    xaxis = list(title="Final Score", color=TEXT_CLR, range=c(-0.05,1.05)),
+    yaxis = list(color=TEXT_CLR),
+    paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
+    font = list(color=TEXT_CLR), violinmode="group"
+  )
+```
+
+---
+
+# Task-Level Analysis
+
+```{r scatter, fig.width=13, fig.height=5}
+task_types_v  <- sort(unique(df_complete$task_type))
+task_colors   <- setNames(grDevices::rainbow(length(task_types_v), s=0.85, v=0.9),
+                           task_types_v)
+
+df_scat <- df_complete %>%
+  mutate(model_family = factor(model_family, levels = MODELS,
+                                labels = stringr::str_to_title(MODELS)))
+
+set.seed(42)
+p_scat <- ggplot(df_scat,
+  aes(x = jitter(tier, amount=0.15), y = final_score,
+      color = task_type)) +
+  geom_point(alpha = 0.6, size = 1.2) +
+  geom_smooth(aes(x = tier, y = final_score, group=1),
+    method="loess", formula=y~x, color=ACCENT, linewidth=1.1,
+    se=TRUE, fill="#00FFE033", alpha=0.25, inherit.aes=FALSE) +
+  geom_hline(yintercept=0.5, linetype="dashed",
+             color="white", linewidth=0.5, alpha=0.5) +
+  scale_color_manual(values=task_colors, name="Task Type") +
+  scale_x_continuous(breaks=1:4, labels=paste("Tier",1:4)) +
+  scale_y_continuous(limits=c(-0.05,1.05), breaks=seq(0,1,0.25)) +
+  facet_wrap(~model_family, nrow=1) +
+  labs(title="Score vs. Tier by Model",
+       subtitle="LOESS trend — each point is one task run",
+       x="Tier", y="Final Score") +
+  guides(color = guide_legend(ncol=2, override.aes=list(size=2.5))) +
+  dark_theme +
+  theme(legend.position="bottom", legend.key.size=unit(0.45,"lines"),
+        legend.text=element_text(size=6.5), axis.text.x=element_text(size=8))
+ggplotly(p_scat) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL,
+         font=list(color=TEXT_CLR))
+```
+
+---
+
+# Failure Patterns
+
+```{r failure-panel, fig.width=14, fig.height=6}
+tier_map <- df_complete %>%
+  group_by(task_type) %>%
+  summarise(tier = as.character(round(median(tier, na.rm=TRUE))), .groups="drop")
+
+fail_data <- df_complete %>%
+  group_by(task_type) %>%
+  summarise(n_total=n(), n_fail=sum(!pass,na.rm=TRUE),
+            fail_rate=n_fail/n_total, .groups="drop") %>%
+  left_join(tier_map, by="task_type") %>%
+  arrange(desc(fail_rate)) %>%
+  mutate(task_type = fct_reorder(task_type, -fail_rate),
+         label = paste0(n_fail,"/",n_total))
+
+pA_fail <- ggplot(fail_data, aes(x=fail_rate, y=task_type, fill=tier)) +
+  geom_col(width=0.72, alpha=0.9) +
+  geom_text(aes(label=label), hjust=-0.07, size=2.5, color=TEXT_CLR, fontface="bold") +
+  geom_vline(xintercept=0.5, linetype="dashed", color=ACCENT, linewidth=0.7) +
+  scale_fill_manual(values=TIER_COLORS, name="Tier") +
+  scale_x_continuous(limits=c(0,1.15), labels=percent_format(accuracy=1)) +
+  labs(title="A — Failure Rate by Task Type", x="Fail Rate", y=NULL) +
+  dark_theme + theme(axis.text.y=element_text(size=7.5))
+
+worst10 <- fail_data %>% slice_head(n=10) %>% pull(task_type) %>% as.character()
+worst_data <- df_complete %>%
+  filter(task_type %in% worst10) %>%
+  group_by(task_type, model_family) %>%
+  summarise(avg_score=mean(final_score,na.rm=TRUE), .groups="drop") %>%
+  mutate(task_type=factor(task_type,levels=worst10),
+         model_family=factor(model_family,levels=MODELS))
+
+pB_fail <- ggplot(worst_data,
+  aes(x=task_type, y=avg_score, fill=model_family)) +
+  geom_col(position=position_dodge(0.78), width=0.70, alpha=0.92) +
+  geom_hline(yintercept=0.5, linetype="dashed", color=ACCENT, linewidth=0.7) +
+  scale_fill_manual(values=PALETTE, name="Model") +
+  scale_y_continuous(limits=c(0,1), labels=percent_format(accuracy=1)) +
+  labs(title="B — Scores on 10 Worst Task Types", x=NULL, y="Avg Score") +
+  dark_theme +
+  theme(axis.text.x=element_text(angle=38, hjust=1, size=8))
+
+combined_fail <- pA_fail + pB_fail + plot_layout(widths=c(1, 1.3)) +
+  plot_annotation(theme=theme(plot.background=element_rect(fill=DARK_BG,color=NA)))
+combined_fail
+```
+
+---
+
+# Model Comparison Table
+
+```{r gt-table}
+tier_scores <- df_complete %>%
+  group_by(model_family, tier) %>%
+  summarise(avg=round(mean(final_score,na.rm=TRUE),3), .groups="drop") %>%
+  pivot_wider(names_from=tier, values_from=avg, names_prefix="Tier ") %>%
+  rename_with(~ .x, starts_with("Tier "))
+
+best_worst <- df_complete %>%
+  group_by(model_family, task_type) %>%
+  summarise(avg=mean(final_score,na.rm=TRUE), .groups="drop") %>%
+  group_by(model_family) %>%
+  summarise(best=task_type[which.max(avg)], worst=task_type[which.min(avg)],
+            .groups="drop")
+
+tbl_data <- df_complete %>%
+  group_by(model_family) %>%
+  summarise(overall=round(mean(final_score,na.rm=TRUE),3),
+            pass_rate=round(mean(pass,na.rm=TRUE),3),
+            avg_lat=round(mean(latency_ms,na.rm=TRUE),0),
+            .groups="drop") %>%
+  left_join(tier_scores, by="model_family") %>%
+  left_join(best_worst,  by="model_family") %>%
+  mutate(
+    Model = stringr::str_to_title(model_family),
+    pass_f = scales::percent(pass_rate, accuracy=0.1)
+  ) %>%
+  arrange(desc(overall)) %>%
+  select(Model, `Overall`=overall,
+         `Tier 1`, `Tier 2`, `Tier 3`, `Tier 4`,
+         `Pass Rate`=pass_f, `Latency (ms)`=avg_lat,
+         `Best Task`=best, `Worst Task`=worst)
+
+score_cols <- c("Overall","Tier 1","Tier 2","Tier 3","Tier 4")
+
+gt(tbl_data) %>%
+  tab_header(title=md("**Model Comparison — Bayesian Benchmark**"),
+             subtitle="DS 299 Capstone  ·  4 Complete Models") %>%
+  tab_spanner(label="By Tier", columns=c(`Tier 1`,`Tier 2`,`Tier 3`,`Tier 4`)) %>%
+  data_color(
+    columns = all_of(score_cols),
+    fn = function(x) {
+      ifelse(is.na(x), "#333344",
+        scales::col_numeric(
+          palette=c("#1A0A2E","#16213E","#0D4F3C","#1DBF73","#7FFFD4"),
+          domain=c(0,1))(x))
+    }
+  ) %>%
+  fmt_number(columns=`Latency (ms)`, decimals=0, use_seps=TRUE) %>%
+  fmt_number(columns=all_of(score_cols), decimals=3) %>%
+  tab_source_note(md("**n=136 tasks per model.** Pass ≥ 0.5. N=0.60, M=0.20, A=0.20.")) %>%
+  opt_table_font(font=list(google_font("IBM Plex Mono"), default_fonts())) %>%
+  tab_options(
+    table.background.color="#0A0F1E",
+    column_labels.border.bottom.color=ACCENT,
+    heading.border.bottom.color=ACCENT,
+    table_body.hlines.color="#1E2A50"
+  ) %>%
+  tab_style(style=list(cell_fill(color="#0D1535"),
+                       cell_text(color=ACCENT, weight="bold")),
+            locations=cells_column_labels()) %>%
+  tab_style(style=list(cell_fill(color="#0D1535"),
+                       cell_text(color=ACCENT, weight="bold", size=px(15))),
+            locations=cells_title("title")) %>%
+  tab_style(style=list(cell_text(color=TEXT_CLR)),
+            locations=cells_body())
+```
+
+---
+
+# Latency Analysis
+
+```{r latency, fig.width=9, fig.height=6}
+model_agg <- df_complete %>%
+  group_by(model_family) %>%
+  summarise(
+    avg_score   = mean(final_score, na.rm=TRUE),
+    se_score    = sd(final_score,   na.rm=TRUE) / sqrt(n()),
+    avg_latency = mean(latency_ms,  na.rm=TRUE),
+    se_latency  = sd(latency_ms,    na.rm=TRUE) / sqrt(n()),
+    pass_count  = sum(pass,         na.rm=TRUE),
+    pass_rate   = mean(pass,        na.rm=TRUE),
+    .groups     = "drop"
+  ) %>%
+  mutate(
+    score_lo = avg_score  - 1.96*se_score,
+    score_hi = avg_score  + 1.96*se_score,
+    lat_lo   = avg_latency - 1.96*se_latency,
+    lat_hi   = avg_latency + 1.96*se_latency,
+    color    = PALETTE[model_family],
+    label    = stringr::str_to_title(model_family)
+  )
+
+mid_lat   <- mean(model_agg$avg_latency)
+mid_score <- mean(model_agg$avg_score)
+
+fig_lat <- plot_ly(model_agg) %>%
+  add_segments(x=~mid_lat, xend=~mid_lat, y=0.4, yend=0.85,
+    line=list(color="#3A4A70", dash="dot", width=1.5), showlegend=FALSE) %>%
+  add_segments(x=min(model_agg$avg_latency)*0.8,
+               xend=max(model_agg$avg_latency)*1.2,
+               y=~mid_score, yend=~mid_score,
+    line=list(color="#3A4A70", dash="dot", width=1.5), showlegend=FALSE) %>%
+  add_trace(
+    x=~avg_latency, y=~avg_score,
+    type="scatter", mode="markers+text",
+    text=~label, textposition="top center",
+    textfont=list(color=~color, size=12),
+    marker=list(size=~sqrt(pass_count)*3, color=~color, opacity=0.88,
+                line=list(color="white",width=1.5)),
+    error_x=list(type="data", array=model_agg$se_latency*1.96,
+                 color=model_agg$color, thickness=1.5, width=4),
+    error_y=list(type="data", array=model_agg$se_score*1.96,
+                 color=model_agg$color, thickness=1.5, width=4),
+    hoverinfo="text",
+    hovertext=~paste0("<b>",label,"</b>",
+      "<br>Score: ",round(avg_score,3),
+      "<br>Latency: ",round(avg_latency,0)," ms",
+      "<br>Pass: ",round(pass_rate*100,1),"%"),
+    showlegend=FALSE
+  ) %>%
+  layout(
+    title=list(text="Latency vs. Accuracy", font=list(color=ACCENT,size=16)),
+    xaxis=list(title="Avg Latency (ms)", color=TEXT_CLR, tickformat=",.0f"),
+    yaxis=list(title="Avg Score", color=TEXT_CLR, range=c(0.40,0.82)),
+    paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL,
+    font=list(color=TEXT_CLR),
+    annotations=list(
+      list(x=mid_lat*0.72, y=mid_score+0.04, text="Fast & Accurate",
+           font=list(color="#00FFE0",size=10), showarrow=FALSE),
+      list(x=mid_lat*1.28, y=mid_score+0.04, text="Slow & Accurate",
+           font=list(color="#7FFFD4",size=10), showarrow=FALSE),
+      list(x=mid_lat*0.72, y=mid_score-0.04, text="Fast & Inaccurate",
+           font=list(color="#A78BFA",size=10), showarrow=FALSE),
+      list(x=mid_lat*1.28, y=mid_score-0.04, text="Slow & Inaccurate",
+           font=list(color="#FF6B6B",size=10), showarrow=FALSE)
+    )
+  )
+fig_lat
+```
+
+---
+
+# Extended Visualizations
+
+## Grouped Performance by Task Type and Tier
+
+```{r grouped-bar, fig.width=14, fig.height=8}
+PALETTE2 <- c(chatgpt="#10A37F", deepseek="#4D9FFF", mistral="#FF7043", claude="#CC785C")
+COMPLETE  <- c("claude", "chatgpt", "deepseek", "mistral")
+
+task_summary <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  group_by(model_family, tier, task_type) %>%
+  summarise(
+    mean_score = mean(final_score, na.rm=TRUE),
+    sd_score   = sd(final_score,   na.rm=TRUE),
+    .groups    = "drop"
+  ) %>%
+  mutate(
+    sd_score  = tidyr::replace_na(sd_score, 0),
+    ymin      = pmax(0, mean_score - sd_score),
+    ymax      = pmin(1, mean_score + sd_score),
+    tier_lab  = paste0("Tier ", tier),
+    model_family = factor(model_family, levels=COMPLETE)
+  )
+
+tier_order <- task_summary %>%
+  group_by(tier, task_type) %>%
+  summarise(overall=mean(mean_score), .groups="drop") %>%
+  arrange(tier, desc(overall))
+
+task_summary <- task_summary %>%
+  mutate(task_type=factor(task_type, levels=rev(unique(tier_order$task_type))))
+
+p_gb <- ggplot(task_summary,
+               aes(x=task_type, y=mean_score, fill=model_family, group=model_family)) +
+  geom_col(position=position_dodge(0.8), width=0.72, alpha=0.88) +
+  geom_errorbar(aes(ymin=ymin, ymax=ymax),
+                position=position_dodge(0.8), width=0.28,
+                color="white", alpha=0.65, linewidth=0.4) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="#FFD700", linewidth=0.6, alpha=0.8) +
+  facet_wrap(~tier_lab, scales="free_x", ncol=2) +
+  scale_fill_manual(values=PALETTE2, name="Model") +
+  scale_y_continuous(limits=c(0,1.05), labels=percent_format(1), breaks=seq(0,1,0.25)) +
+  coord_flip() +
+  labs(title="Model Performance by Task Type and Difficulty Tier",
+       subtitle="Bars = mean score ±1 SD · Dashed = pass threshold (0.50)",
+       x=NULL, y="Average Score") +
+  dark_theme +
+  theme(strip.text=element_text(color=ACCENT, face="bold"),
+        axis.text.y=element_text(size=7))
+
+ggplotly(p_gb) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL, font=list(color=TEXT_CLR))
+```
+
+## Cumulative Score Distribution (ECDF)
+
+```{r ecdf, fig.width=10, fig.height=6}
+ecdf_data <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  mutate(model_family=factor(model_family, levels=COMPLETE)) %>%
+  group_by(model_family) %>%
+  arrange(final_score, .by_group=TRUE) %>%
+  mutate(ecdf_y=seq_along(final_score)/n()) %>%
+  ungroup()
+
+p_ecdf <- ggplot(ecdf_data, aes(x=final_score, color=model_family)) +
+  geom_ribbon(aes(ymin=0, ymax=ecdf_y, fill=model_family), alpha=0.07, color=NA) +
+  geom_step(aes(y=ecdf_y), linewidth=0.9, alpha=0.9) +
+  geom_vline(xintercept=c(0.5,0.6,0.8), linetype="dashed",
+             color="#FFD700", linewidth=0.5, alpha=0.7) +
+  annotate("text", x=c(0.52,0.62,0.82), y=0.08,
+           label=c("50%","60%","80%"), color="#FFD700", size=3, hjust=0, fontface="italic") +
+  scale_color_manual(values=PALETTE2, name="Model") +
+  scale_fill_manual (values=PALETTE2, guide="none") +
+  scale_x_continuous(limits=c(0,1.02), breaks=seq(0,1,0.2), labels=percent_format(1)) +
+  scale_y_continuous(limits=c(0,1.02), breaks=seq(0,1,0.25), labels=percent_format(1)) +
+  labs(title="Cumulative Score Distribution (ECDF)",
+       subtitle="Dashed lines = 0.5 / 0.6 / 0.8 score thresholds",
+       x="Final Score", y="Cumulative Proportion of Tasks") +
+  dark_theme
+
+ggplotly(p_ecdf) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL, font=list(color=TEXT_CLR))
+```
+
+## Task Coverage Treemap
+
+```{r treemap, fig.width=12, fig.height=7}
+if (requireNamespace("treemapify", quietly=TRUE)) {
+  library(treemapify)
+  task_tree <- df_complete %>%
+    filter(model_family %in% COMPLETE) %>%
+    group_by(tier, task_type) %>%
+    summarise(avg_score=mean(final_score,na.rm=TRUE),
+              n_tasks=n()/length(COMPLETE), .groups="drop") %>%
+    mutate(tier_lab=paste0("Tier ", tier))
+
+  p_tm <- ggplot(task_tree,
+                 aes(area=n_tasks, fill=avg_score, label=task_type, subgroup=tier_lab)) +
+    geom_treemap(color=DARK_BG, size=1.5) +
+    geom_treemap_subgroup_border(color="#00FFE066", size=3) +
+    geom_treemap_subgroup_text(place="topleft", grow=FALSE, reflow=TRUE,
+      color=ACCENT, alpha=0.9, fontface="bold", size=10) +
+    geom_treemap_text(color="white", alpha=0.85, size=8, place="centre", reflow=TRUE) +
+    scale_fill_gradient2(low="#FF4757", mid="#FFD700", high="#00FFE0",
+                         midpoint=0.5, limits=c(0,1), name="Avg Score",
+                         labels=percent_format(1)) +
+    labs(title="Task Coverage Treemap — Avg Score by Task Type",
+         subtitle="Area ∝ number of tasks · Colour = average model score") +
+    theme(plot.background=element_rect(fill=DARK_BG, color=NA),
+          legend.background=element_rect(fill=DARK_BG, color=NA),
+          legend.text=element_text(color=TEXT_CLR),
+          legend.title=element_text(color=ACCENT, face="bold"),
+          plot.title=element_text(color=ACCENT, face="bold", size=13, hjust=0.5),
+          plot.subtitle=element_text(color=TEXT_CLR, size=8.5, hjust=0.5))
+  p_tm
+} else {
+  cat("treemapify not installed — run `install.packages('treemapify')`")
+}
+```
+
+## Model × Model Correlation
+
+```{r correlation, fig.width=10, fig.height=5}
+wide_model <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  select(task_id, model_family, final_score) %>%
+  tidyr::pivot_wider(names_from=model_family, values_from=final_score)
+
+cor_mat <- cor(wide_model[, COMPLETE], use="pairwise.complete.obs")
+
+cor_long <- as.data.frame(as.table(cor_mat)) %>%
+  rename(x=Var1, y=Var2, corr=Freq) %>%
+  mutate(x=factor(x, levels=COMPLETE), y=factor(y, levels=rev(COMPLETE)),
+         label=sprintf("%.2f", corr))
+
+p_cor <- ggplot(cor_long, aes(x, y, fill=corr)) +
+  geom_tile(color=DARK_BG, linewidth=0.8) +
+  geom_text(aes(label=label), size=5, color="white", fontface="bold") +
+  scale_fill_gradient2(low="#FF4757", mid="#0D1426", high="#00FFE0",
+                       midpoint=0, limits=c(-1,1), name="r",
+                       guide=guide_colorbar(barheight=6, barwidth=0.8)) +
+  coord_fixed() +
+  labs(title="Model × Model Score Correlation",
+       subtitle="Pairwise Pearson on per-task final scores", x=NULL, y=NULL) +
+  dark_theme + theme(panel.grid=element_blank())
+
+ggplotly(p_cor) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL, font=list(color=TEXT_CLR))
+```
+
+## Pass Rate Heatmap — Tier × Model
+
+```{r pass-rate-heat, fig.width=8, fig.height=5}
+pass_heat <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  group_by(tier, model_family) %>%
+  summarise(n_pass=sum(final_score>=0.5,na.rm=TRUE), n_total=n(),
+            rate=n_pass/n_total, .groups="drop") %>%
+  mutate(tier_lab=factor(paste0("Tier ",tier), levels=rev(paste0("Tier ",1:4))),
+         model_family=factor(model_family, levels=COMPLETE),
+         cell_lbl=sprintf("%d/%d\n(%.0f%%)", n_pass, n_total, rate*100))
+
+p_ph <- ggplot(pass_heat, aes(x=model_family, y=tier_lab, fill=rate)) +
+  geom_tile(color=DARK_BG, linewidth=1) +
+  geom_text(aes(label=cell_lbl), color="white", size=4, lineheight=1.3, fontface="bold") +
+  scale_fill_gradient2(low="#FF4757", mid="#FFD700", high="#00FFE0",
+                       midpoint=0.5, limits=c(0,1), name="Pass Rate",
+                       labels=percent_format(1)) +
+  scale_x_discrete(position="top") +
+  labs(title="Pass Rate: Tier × Model",
+       subtitle="Cells: tasks passed / total (threshold = 0.50)", x=NULL, y=NULL) +
+  dark_theme + theme(panel.grid=element_blank(),
+                     axis.text.x=element_text(face="bold", size=11))
+
+ggplotly(p_ph) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL, font=list(color=TEXT_CLR))
+```
+
+## Score by Difficulty Level
+
+```{r difficulty-line, fig.width=9, fig.height=6}
+DIFF_ORD <- c("basic","intermediate","advanced")
+diff_sum2 <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  mutate(difficulty=factor(difficulty, levels=DIFF_ORD)) %>%
+  group_by(model_family, difficulty) %>%
+  summarise(mean_score=mean(final_score,na.rm=TRUE),
+            se=sd(final_score,na.rm=TRUE)/sqrt(n()), .groups="drop") %>%
+  mutate(diff_num=as.integer(difficulty))
+
+p_diff <- ggplot(diff_sum2, aes(x=diff_num, y=mean_score, color=model_family)) +
+  geom_ribbon(aes(ymin=mean_score-se, ymax=mean_score+se, fill=model_family),
+              alpha=0.12, color=NA, show.legend=FALSE) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="#FFD700",
+             linewidth=0.6, alpha=0.7) +
+  geom_line(linewidth=1.1, alpha=0.9) +
+  geom_point(size=3.5, shape=21, aes(fill=model_family),
+             color="white", stroke=0.6, show.legend=FALSE) +
+  geom_text(aes(label=sprintf("%.2f",mean_score)), vjust=-1.2, size=3.2, fontface="bold") +
+  scale_color_manual(values=PALETTE2, name="Model") +
+  scale_fill_manual (values=PALETTE2, guide="none") +
+  scale_x_continuous(breaks=1:3, labels=DIFF_ORD, limits=c(0.5,3.5)) +
+  scale_y_continuous(limits=c(0,1.08), labels=percent_format(1), breaks=seq(0,1,0.25)) +
+  labs(title="Score by Difficulty Level",
+       subtitle="Mean ± SE ribbon · Dashed = pass threshold",
+       x="Difficulty", y="Average Score") +
+  dark_theme
+
+ggplotly(p_diff) %>%
+  layout(paper_bgcolor=DARK_BG, plot_bgcolor=DARK_PANEL, font=list(color=TEXT_CLR))
+```
+
+## Bar Chart Race — Final Frame
+
+```{r bar-race-frame, fig.width=9, fig.height=5}
+tt_ord2 <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  group_by(task_type, tier) %>%
+  summarise(overall=mean(final_score,na.rm=TRUE), .groups="drop") %>%
+  arrange(tier, overall) %>%
+  pull(task_type)
+
+final_race <- df_complete %>%
+  filter(model_family %in% COMPLETE) %>%
+  group_by(model_family) %>%
+  summarise(cum_avg=mean(final_score,na.rm=TRUE), .groups="drop") %>%
+  mutate(model_family=factor(model_family, levels=COMPLETE))
+
+p_race_final <- ggplot(final_race,
+                       aes(x=reorder(model_family,-cum_avg), y=cum_avg, fill=model_family)) +
+  geom_col(width=0.72, alpha=0.9, color=NA) +
+  geom_text(aes(label=sprintf("%.3f",cum_avg)), hjust=-0.12, size=5,
+            color=TEXT_CLR, fontface="bold") +
+  geom_hline(yintercept=0.5, linetype="dashed", color="#FFD700",
+             linewidth=0.7, alpha=0.8) +
+  coord_flip(clip="off") +
+  scale_fill_manual(values=PALETTE2, guide="none") +
+  scale_y_continuous(limits=c(0,1.12), labels=percent_format(1)) +
+  labs(title="Overall Average Score — Final Standings",
+       subtitle="Dashed = pass threshold (0.50)",
+       x=NULL, y="Average Score") +
+  dark_theme +
+  theme(panel.grid.major.y=element_blank(),
+        plot.margin=margin(16,60,16,16))
+
+p_race_final
+```
+
+<div class="info-box">
+**Animated version:** `figures/15_bar_race.gif` — cumulative score per model as each task type is revealed in order.
+</div>
+
+---
+
+# Appendix — Full Run Data
+
+All `r nrow(df_complete)` task runs (4 complete models). Use the search box to filter.
+
+```{r appendix-table}
+dt_data <- df_complete %>%
+  select(
+    run_id, model_family, task_id, task_type, tier, difficulty,
+    final_score, numeric_score, structure_score, assumption_score,
+    pass, answer_found, latency_ms, error
+  ) %>%
+  mutate(
+    final_score      = round(final_score, 3),
+    numeric_score    = round(numeric_score, 3),
+    structure_score  = round(structure_score, 3),
+    assumption_score = round(assumption_score, 3),
+    latency_ms       = round(latency_ms, 0),
+    pass             = as.character(pass),
+    answer_found     = as.character(answer_found),
+    error            = ifelse(is.na(error), "", error)
+  )
+
+DT::datatable(
+  dt_data,
+  rownames  = FALSE,
+  filter    = "top",
+  extensions = "Buttons",
+  options   = list(
+    pageLength  = 25,
+    scrollX     = TRUE,
+    dom         = "Blfrtip",
+    buttons     = c("copy", "csv", "excel"),
+    columnDefs  = list(
+      list(width = "80px",  targets = c(0)),
+      list(width = "70px",  targets = c(4, 5)),
+      list(width = "90px",  targets = c(6, 7, 8, 9)),
+      list(width = "65px",  targets = c(10, 11))
+    ),
+    initComplete = DT::JS(
+      "function(settings, json) {",
+      "  $(this.api().table().header()).css({'background-color':'#0D1535','color':'#00FFE0'});",
+      "}"
+    )
+  ),
+  class = "display compact"
+) %>%
+  DT::formatStyle(
+    "pass",
+    backgroundColor = DT::styleEqual(c("TRUE","FALSE"), c("#0D4F3C","#3D1020")),
+    color           = DT::styleEqual(c("TRUE","FALSE"), c("#7FFFD4","#FF6B6B"))
+  ) %>%
+  DT::formatStyle(
+    "final_score",
+    background = DT::styleColorBar(c(0,1), "#00CED133"),
+    backgroundSize = "100% 88%",
+    backgroundRepeat = "no-repeat",
+    backgroundPosition = "center"
+  )
+```
+
+---
+
+*Report generated on `r Sys.Date()` · DS 299 Capstone · Powered by R + ggplot2 + plotly*
+
+---
+
+# References
+
+Bolstad, W. M. (2007). *Introduction to Bayesian Statistics* (2nd ed.). Wiley.
+
+Bishop, C. M. (2006). *Pattern Recognition and Machine Learning*. Springer.
+
+Hoff, P. D. (2009). *A First Course in Bayesian Statistical Methods*. Springer.
+
+Carlin, B. P., & Louis, T. A. (2008). *Bayesian Methods for Data Analysis* (3rd ed.). Chapman & Hall/CRC.
+
+Ghosh, J. K., Delampady, M., & Samanta, T. (2006). *An Introduction to Bayesian Analysis: Theory and Methods*. Springer.
+
+Lee, P. M. (2012). *Bayesian Statistics: An Introduction* (4th ed.). Wiley.
+
+Goldstein, M., & Wooff, D. (2007). *Bayes Linear Statistics: Theory and Methods*. Wiley.

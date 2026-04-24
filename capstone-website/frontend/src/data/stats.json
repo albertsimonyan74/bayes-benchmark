@@ -1,0 +1,16 @@
+{
+  "total_tasks": 136,
+  "total_models": 4,
+  "total_task_types": 31,
+  "total_lectures": 40,
+  "tier_counts": {
+    "1": 9,
+    "2": 45,
+    "3": 69,
+    "4": 13
+  },
+  "category_counts": {
+    "numeric": 126,
+    "conceptual": 10
+  }
+}

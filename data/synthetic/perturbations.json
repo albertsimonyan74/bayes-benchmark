@@ -1,0 +1,2666 @@
+[
+  {
+    "task_id": "BINOM_FLAT_01_rephrase",
+    "base_task_id": "BINOM_FLAT_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_01_rephrase  |  Tier 1  |  Basic]\n\nA coin is flipped n = 10 times and heads is observed x = 3 times.\nAssume no prior knowledge about the bias θ, modelled as a Uniform(0, 1) = Beta(1, 1) prior.\n\n(a) Derive the posterior distribution of θ after observing the data.\n(b) Compute the posterior mean of θ.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 4.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 8.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.3333333333333333,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Same numbers, coin-flip framing instead of generic Bernoulli trials."
+  },
+  {
+    "task_id": "BINOM_FLAT_01_numerical",
+    "base_task_id": "BINOM_FLAT_01",
+    "perturbation_type": "numerical",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_01_numerical  |  Tier 1  |  Basic]\n\nYou observe x = 5 successes in n = 12 Bernoulli trials.\nThe prior on θ is Uniform(0, 1) = Beta(1, 1)  (a flat / diffuse prior).\n\n(a) State the posterior distribution of θ given the data.\n(b) Compute the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 6.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 8.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.42857142857142855,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "x=5, n=12 instead of x=3, n=10; posterior Beta(6,8), mean=3/7."
+  },
+  {
+    "task_id": "BINOM_FLAT_01_semantic",
+    "base_task_id": "BINOM_FLAT_01",
+    "perturbation_type": "semantic",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_01_semantic  |  Tier 1  |  Basic]\n\nA quality-control engineer tests n = 10 manufactured items and finds x = 3 defective. Prior belief about the defect rate θ is Uniform(0, 1) = Beta(1, 1).\n\n(a) State the posterior distribution of θ given the inspection data.\n(b) Compute the posterior mean defect rate.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 4.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 8.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.3333333333333333,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Manufacturing defect-rate framing; identical inputs and answers."
+  },
+  {
+    "task_id": "BINOM_FLAT_02_rephrase",
+    "base_task_id": "BINOM_FLAT_02",
+    "perturbation_type": "rephrase",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_02_rephrase  |  Tier 1  |  Basic]\n\nIn n = 10 independent Bernoulli trials with unknown success probability θ, x = 7 successes are recorded.\nA non-informative flat prior Beta(1, 1) is placed on θ.\n\n(a) Identify the posterior distribution.\n(b) Give the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 8.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 4.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.6666666666666666,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Same numbers, different sentence structure."
+  },
+  {
+    "task_id": "BINOM_FLAT_02_numerical",
+    "base_task_id": "BINOM_FLAT_02",
+    "perturbation_type": "numerical",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_02_numerical  |  Tier 1  |  Basic]\n\nYou observe x = 9 successes in n = 15 Bernoulli trials.\nThe prior on θ is Uniform(0, 1) = Beta(1, 1).\n\n(a) State the posterior distribution of θ.\n(b) Compute the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 10.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 7.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5882352941176471,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "x=9, n=15; posterior Beta(10,7), mean=10/17≈0.5882."
+  },
+  {
+    "task_id": "BINOM_FLAT_02_semantic",
+    "base_task_id": "BINOM_FLAT_02",
+    "perturbation_type": "semantic",
+    "task_type": "BINOM_FLAT",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BINOM_FLAT_02_semantic  |  Tier 1  |  Basic]\n\nA physician observes x = 7 patients out of n = 10 who respond to a new treatment. Prior belief about the response rate θ is fully diffuse: Beta(1, 1).\n\n(a) State the posterior distribution of θ.\n(b) Compute the posterior mean response rate.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 8.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 4.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.6666666666666666,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_flat_prior_as_beta_1_1",
+      "states_posterior_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Clinical-trial framing; identical inputs and answers."
+  },
+  {
+    "task_id": "BETA_BINOM_01_rephrase",
+    "base_task_id": "BETA_BINOM_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BETA_BINOM",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BETA_BINOM_01_rephrase  |  Tier 1  |  Basic]\n\nAn experiment has x = 6 successes in n = 10 Bernoulli trials.\nPrior: θ ~ Beta(α = 2, β = 2).\n\n(a) Write down the posterior distribution.\n(b) Find the posterior mean of θ.\n(c) Compute the 95% equal-tailed credible interval for θ.\n(d) Find P(X_new = 3 | data) where X_new ~ Binomial(5, θ) (posterior predictive).\n\nReport: posterior_mean, ci_lower, ci_upper, predictive_pmf_k_m\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5714285714285714,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_lower",
+        "true_value": 0.31577760291406304,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_upper",
+        "true_value": 0.807767558198712,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "predictive_pmf_k_m",
+        "true_value": 0.29411764705882354,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_prior",
+      "states_likelihood",
+      "states_posterior_kernel_or_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Same problem, passive-voice / restructured sentences."
+  },
+  {
+    "task_id": "BETA_BINOM_01_numerical",
+    "base_task_id": "BETA_BINOM_01",
+    "perturbation_type": "numerical",
+    "task_type": "BETA_BINOM",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BETA_BINOM_01_numerical  |  Tier 1  |  Basic]\n\nYou observe x = 4 successes in n = 8 Bernoulli trials.\nThe prior on the success probability θ is Beta(α = 3, β = 3).\n\n(a) State the posterior distribution of θ given the data.\n(b) Compute the posterior mean of θ.\n(c) Compute the 95% equal-tailed credible interval for θ.\n(d) Compute P(X_new = 2 | data) where X_new ~ Binomial(5, θ).\n\nReport: posterior_mean, ci_lower, ci_upper, predictive_pmf_k_m\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_lower",
+        "true_value": 0.251345,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_upper",
+        "true_value": 0.748655,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "predictive_pmf_k_m",
+        "true_value": 0.27451,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_prior",
+      "states_likelihood",
+      "states_posterior_kernel_or_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "α=3,β=3,x=4,n=8,k=2,m=5; symmetric posterior Beta(7,7)."
+  },
+  {
+    "task_id": "BETA_BINOM_01_semantic",
+    "base_task_id": "BETA_BINOM_01",
+    "perturbation_type": "semantic",
+    "task_type": "BETA_BINOM",
+    "tier": 1,
+    "difficulty": "basic",
+    "prompt": "[Task BETA_BINOM_01_semantic  |  Tier 1  |  Basic]\n\nA marketing analyst models click-through rates. In n = 10 ad impressions, x = 6 clicks are recorded. A prior Beta(2, 2) reflects mild belief in a moderate click rate.\n\n(a) State the posterior distribution of the click rate θ.\n(b) Compute the posterior mean.\n(c) Compute the 95% equal-tailed credible interval.\n(d) Find P(X_new = 3 clicks in 5 future impressions | data).\n\nReport: posterior_mean, ci_lower, ci_upper, predictive_pmf_k_m\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5714285714285714,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_lower",
+        "true_value": 0.31577760291406304,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "ci_upper",
+        "true_value": 0.807767558198712,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "predictive_pmf_k_m",
+        "true_value": 0.29411764705882354,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_prior",
+      "states_likelihood",
+      "states_posterior_kernel_or_family",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Click-through rate framing; identical inputs and answers."
+  },
+  {
+    "task_id": "DISC_MEDIAN_01_rephrase",
+    "base_task_id": "DISC_MEDIAN_01",
+    "perturbation_type": "rephrase",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task DISC_MEDIAN_01_rephrase  |  Tier 2  |  Intermediate]\n\nA discrete posterior over θ assigns probabilities:\n  θ = 1: 0.10,  θ = 2: 0.20,  θ = 3: 0.30,  θ = 4: 0.25,  θ = 5: 0.15\n\nDetermine the posterior median — the smallest value m such that P(θ ≤ m) ≥ 0.5.\n\nReport: posterior_median\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_median",
+        "true_value": 3.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_cumulative_probability_rule",
+      "identifies_first_cumsum_geq_half"
+    ],
+    "required_assumption_checks": [
+      "values_are_ordered"
+    ],
+    "perturbation_note": "Same discrete distribution, ask via cumulative definition."
+  },
+  {
+    "task_id": "DISC_MEDIAN_01_numerical",
+    "base_task_id": "DISC_MEDIAN_01",
+    "perturbation_type": "numerical",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task DISC_MEDIAN_01_numerical  |  Tier 2  |  Intermediate]\n\nA discrete random variable θ takes the following values and probabilities:\n  Values:        [1, 2, 3, 4, 5]\n  Probabilities: [0.15, 0.35, 0.20, 0.20, 0.10]\n\nFind the Bayes estimator under absolute-error loss — i.e. the posterior median.\n\nReport: posterior_median\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_median",
+        "true_value": 2.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_cumulative_probability_rule",
+      "identifies_first_cumsum_geq_half"
+    ],
+    "required_assumption_checks": [
+      "values_are_ordered"
+    ],
+    "perturbation_note": "Probs [0.15,0.35,0.20,0.20,0.10]; cum=[0.15,0.50,...] → median=2."
+  },
+  {
+    "task_id": "DISC_MEDIAN_01_semantic",
+    "base_task_id": "DISC_MEDIAN_01",
+    "perturbation_type": "semantic",
+    "task_type": "DISC_MEDIAN",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task DISC_MEDIAN_01_semantic  |  Tier 2  |  Intermediate]\n\nA Bayesian model assigns posterior probabilities over five possible temperature anomaly levels (°C):\n  Level 1 (0.1°C): prob = 0.10\n  Level 2 (0.5°C): prob = 0.20\n  Level 3 (1.0°C): prob = 0.30\n  Level 4 (1.5°C): prob = 0.25\n  Level 5 (2.0°C): prob = 0.15\n\nThe posterior median minimises posterior expected absolute deviation. Find it (report the level index 1–5).\n\nReport: posterior_median\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "posterior_median",
+        "true_value": 3.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_cumulative_probability_rule",
+      "identifies_first_cumsum_geq_half"
+    ],
+    "required_assumption_checks": [
+      "values_are_ordered"
+    ],
+    "perturbation_note": "Climate anomaly levels framing; same probabilities, median=3."
+  },
+  {
+    "task_id": "UNIFORM_MLE_01_rephrase",
+    "base_task_id": "UNIFORM_MLE_01",
+    "perturbation_type": "rephrase",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task UNIFORM_MLE_01_rephrase  |  Tier 2  |  Basic]\n\nFive i.i.d. observations are drawn from Uniform(0, θ):\n  data = [1.2, 3.4, 2.1, 4.7, 0.9]\n\nExplain why the MLE of θ equals the sample maximum, and compute it.\n\nReport: mle_theta\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle_theta",
+        "true_value": 4.7,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "identifies_mle_as_max_order_statistic",
+      "states_likelihood_function"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Ask for justification explicitly; same data."
+  },
+  {
+    "task_id": "UNIFORM_MLE_01_numerical",
+    "base_task_id": "UNIFORM_MLE_01",
+    "perturbation_type": "numerical",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task UNIFORM_MLE_01_numerical  |  Tier 2  |  Basic]\n\nYou observe n = 5 i.i.d. draws from Uniform(0, θ):\n  data = [2.3, 5.1, 1.8, 6.2, 3.4]\n\nDerive the Maximum Likelihood Estimator (MLE) for θ.\nState why the MLE is the sample maximum.\n\nReport: mle_theta\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle_theta",
+        "true_value": 6.2,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "identifies_mle_as_max_order_statistic",
+      "states_likelihood_function"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "New data; max=6.2."
+  },
+  {
+    "task_id": "UNIFORM_MLE_01_semantic",
+    "base_task_id": "UNIFORM_MLE_01",
+    "perturbation_type": "semantic",
+    "task_type": "UNIFORM_MLE",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task UNIFORM_MLE_01_semantic  |  Tier 2  |  Basic]\n\nA geologist records n = 5 sediment layer thicknesses (mm), each assumed i.i.d. from Uniform(0, θ) where θ is the maximum possible thickness:\n  measurements = [1.2, 3.4, 2.1, 4.7, 0.9]\n\nFind the MLE of the maximum thickness θ.\n\nReport: mle_theta\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle_theta",
+        "true_value": 4.7,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "identifies_mle_as_max_order_statistic",
+      "states_likelihood_function"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Geological measurement framing; identical data and answer."
+  },
+  {
+    "task_id": "BOX_MULLER_01_rephrase",
+    "base_task_id": "BOX_MULLER_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BOX_MULLER_01_rephrase  |  Tier 2  |  Basic]\n\nApply the Box-Muller transform to U = 0.531 and V = 0.253 to produce two independent standard normal variates z₁, z₂, then scale to Normal(μ = 50, σ = 5).\n\nFormulas:\n  z₁ = √(−2 ln U) · cos(2πV)\n  z₂ = √(−2 ln U) · sin(2πV)\n  xᵢ = μ + σ · zᵢ\n\nReport: z1, z2, x1, x2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "z1",
+        "true_value": -0.021207522909263758,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "z2",
+        "true_value": 1.1249607799618835,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x1",
+        "true_value": 49.89396238545368,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x2",
+        "true_value": 55.624803899809415,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_box_muller_formula",
+      "computes_r_as_sqrt_neg2_log_U",
+      "applies_cos_sin_with_2pi_V"
+    ],
+    "required_assumption_checks": [
+      "U_V_independent_uniform_0_1"
+    ],
+    "perturbation_note": "Formula given explicitly; same inputs."
+  },
+  {
+    "task_id": "BOX_MULLER_01_numerical",
+    "base_task_id": "BOX_MULLER_01",
+    "perturbation_type": "numerical",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BOX_MULLER_01_numerical  |  Tier 2  |  Basic]\n\nUsing the Box-Muller transform, generate two independent standard normal values from U = 0.2 and V = 0.4  (both drawn from Uniform(0, 1)).\n\nFormulas:\n  z₁ = √(−2 ln U) · cos(2πV)\n  z₂ = √(−2 ln U) · sin(2πV)\n\nThen scale to Normal(μ = 100, σ = 10):\n  x₁ = μ + σ z₁,  x₂ = μ + σ z₂\n\nReport: z1, z2, x1, x2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "z1",
+        "true_value": -1.451476,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "z2",
+        "true_value": 1.054559,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x1",
+        "true_value": 85.485243,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x2",
+        "true_value": 110.545588,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_box_muller_formula",
+      "computes_r_as_sqrt_neg2_log_U",
+      "applies_cos_sin_with_2pi_V"
+    ],
+    "required_assumption_checks": [
+      "U_V_independent_uniform_0_1"
+    ],
+    "perturbation_note": "U=0.2,V=0.4,μ=100,σ=10; z1≈-1.4515, z2≈1.0546."
+  },
+  {
+    "task_id": "BOX_MULLER_01_semantic",
+    "base_task_id": "BOX_MULLER_01",
+    "perturbation_type": "semantic",
+    "task_type": "BOX_MULLER",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BOX_MULLER_01_semantic  |  Tier 2  |  Basic]\n\nA Monte Carlo simulation requires Normal(μ = 50, σ = 5) samples. Using pseudo-random uniforms U = 0.531 and V = 0.253, apply the Box-Muller transform to generate two Normal(50, 25) realisations.\n\nFormulas:\n  z₁ = √(−2 ln U) · cos(2πV),  z₂ = √(−2 ln U) · sin(2πV)\n  x₁ = 50 + 5 z₁,  x₂ = 50 + 5 z₂\n\nReport: z1, z2, x1, x2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "z1",
+        "true_value": -0.021207522909263758,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "z2",
+        "true_value": 1.1249607799618835,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x1",
+        "true_value": 49.89396238545368,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "x2",
+        "true_value": 55.624803899809415,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_box_muller_formula",
+      "computes_r_as_sqrt_neg2_log_U",
+      "applies_cos_sin_with_2pi_V"
+    ],
+    "required_assumption_checks": [
+      "U_V_independent_uniform_0_1"
+    ],
+    "perturbation_note": "Monte-Carlo simulation framing; same numbers."
+  },
+  {
+    "task_id": "HPD_01_rephrase",
+    "base_task_id": "HPD_01",
+    "perturbation_type": "rephrase",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task HPD_01_rephrase  |  Tier 2  |  Intermediate]\n\nThe posterior is Beta(α = 5, β = 5), which is symmetric about 0.5.\n\nCompute the 95% Highest Posterior Density (HPD) interval. For a symmetric unimodal distribution the HPD equals the equal-tailed credible interval.\n\nReport: hpd_lower, hpd_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "hpd_lower",
+        "true_value": 0.21757733531973342,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "hpd_upper",
+        "true_value": 0.7929603178709547,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_hpd_via_shortest_interval",
+      "notes_hpd_shorter_than_equal_tail"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Hint about symmetry given; same posterior."
+  },
+  {
+    "task_id": "HPD_01_numerical",
+    "base_task_id": "HPD_01",
+    "perturbation_type": "numerical",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task HPD_01_numerical  |  Tier 2  |  Intermediate]\n\nThe posterior distribution is Beta(α = 4, β = 8).\n\nFind the 95% Highest Posterior Density (HPD) credible interval.\n\nNote: for skewed distributions the HPD is not equal-tailed — find the shortest interval [l, u] such that the density is equal at both endpoints and P(l ≤ θ ≤ u) = 0.95.\n\nReport: hpd_lower, hpd_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "hpd_lower",
+        "true_value": 0.093372,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "hpd_upper",
+        "true_value": 0.587952,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_hpd_via_shortest_interval",
+      "notes_hpd_shorter_than_equal_tail"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Beta(4,8) skewed left; HPD ≈ (0.0934, 0.5880)."
+  },
+  {
+    "task_id": "HPD_01_semantic",
+    "base_task_id": "HPD_01",
+    "perturbation_type": "semantic",
+    "task_type": "HPD",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task HPD_01_semantic  |  Tier 2  |  Intermediate]\n\nAfter combining prior and likelihood a researcher obtains a Beta(5, 5) posterior for the proportion of voters supporting a policy.\n\nReport the 95% HPD credible interval for the support proportion.\n\nReport: hpd_lower, hpd_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "hpd_lower",
+        "true_value": 0.21757733531973342,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "hpd_upper",
+        "true_value": 0.7929603178709547,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_hpd_via_shortest_interval",
+      "notes_hpd_shorter_than_equal_tail"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Voter-support proportion framing; identical posterior and answers."
+  },
+  {
+    "task_id": "MLE_MAP_01_rephrase",
+    "base_task_id": "MLE_MAP_01",
+    "perturbation_type": "rephrase",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task MLE_MAP_01_rephrase  |  Tier 2  |  Intermediate]\n\nFor x = 6 successes in n = 10 Binomial trials with prior Beta(2, 2):\n\n(1) MLE = x / n\n(2) MAP = (x + α − 1) / (n + α + β − 2)\n(3) Posterior mean = (x + α) / (n + α + β)\n(4) Shrinkage = |MLE − posterior mean|\n\nCompute all four quantities.\n\nReport: mle, map, posterior_mean, shrinkage\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle",
+        "true_value": 0.6,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "map",
+        "true_value": 0.5833333333333334,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5714285714285714,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "shrinkage",
+        "true_value": 0.1666666666666661,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_map_from_posterior_mode",
+      "contrasts_mle_and_map",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Formulas given explicitly; same inputs."
+  },
+  {
+    "task_id": "MLE_MAP_01_numerical",
+    "base_task_id": "MLE_MAP_01",
+    "perturbation_type": "numerical",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task MLE_MAP_01_numerical  |  Tier 2  |  Intermediate]\n\nBinomial model: x = 8 successes in n = 12 trials.\nPrior: Beta(α = 2, β = 2)  (prior mean = 0.5).\n\nCompute:\n  (1) MLE = x / n\n  (2) MAP = (x + α − 1) / (n + α + β − 2)\n  (3) Posterior mean = (x + α) / (n + α + β)\n  (4) Shrinkage = |MLE − posterior mean|\n\nReport: mle, map, posterior_mean, shrinkage\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle",
+        "true_value": 0.6666666666666666,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "map",
+        "true_value": 0.6428571428571429,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.625,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "shrinkage",
+        "true_value": 0.04166666666666663,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_map_from_posterior_mode",
+      "contrasts_mle_and_map",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "x=8,n=12; mle=0.6667,map=0.6429,pm=0.625,shrink=0.0417."
+  },
+  {
+    "task_id": "MLE_MAP_01_semantic",
+    "base_task_id": "MLE_MAP_01",
+    "perturbation_type": "semantic",
+    "task_type": "MLE_MAP",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task MLE_MAP_01_semantic  |  Tier 2  |  Intermediate]\n\nAn A/B test shows x = 6 conversions in n = 10 sessions. Prior belief about conversion rate θ is Beta(2, 2) (symmetrically centred).\n\nCompare MLE (pure data), MAP (penalised likelihood), and posterior mean (full Bayes). Quantify shrinkage toward the prior.\n\n  MLE = x/n,  MAP = (x+α−1)/(n+α+β−2),  PM = (x+α)/(n+α+β)\n  Shrinkage = |MLE − PM|\n\nReport: mle, map, posterior_mean, shrinkage\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mle",
+        "true_value": 0.6,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "map",
+        "true_value": 0.5833333333333334,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5714285714285714,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "shrinkage",
+        "true_value": 0.1666666666666661,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_map_from_posterior_mode",
+      "contrasts_mle_and_map",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "A/B conversion-rate framing; identical numbers."
+  },
+  {
+    "task_id": "CI_CREDIBLE_01_rephrase",
+    "base_task_id": "CI_CREDIBLE_01",
+    "perturbation_type": "rephrase",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task CI_CREDIBLE_01_rephrase  |  Tier 2  |  Intermediate]\n\nYou have n = 20 observations from Normal(μ, σ² = 1.0) with sample mean x̄ = 5.0375.\nPrior: μ ~ Normal(μ₀ = 0.0, τ₀² = 100.0).\n\n(1) Compute the 95% frequentist confidence interval for μ (use z = 1.96).\n(2) Compute the 95% Bayesian credible interval using the posterior Normal(μₙ, τₙ²) where\n    τₙ² = 1 / (1/τ₀² + n/σ²),  μₙ = τₙ²(μ₀/τ₀² + n·x̄/σ²).\n\nReport: freq_lower, freq_upper, bayes_lower, bayes_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "freq_lower",
+        "true_value": 4.599225986076149,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "freq_upper",
+        "true_value": 5.4757485266527315,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_lower",
+        "true_value": 4.5968180254381,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_upper",
+        "true_value": 5.473121517519301,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_frequentist_ci",
+      "computes_bayesian_credible"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption",
+      "constant_variance"
+    ],
+    "perturbation_note": "Posterior formulas given explicitly; same data."
+  },
+  {
+    "task_id": "CI_CREDIBLE_01_numerical",
+    "base_task_id": "CI_CREDIBLE_01",
+    "perturbation_type": "numerical",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task CI_CREDIBLE_01_numerical  |  Tier 2  |  Intermediate]\n\nYou have n = 30 observations from Normal(μ, σ² = 1.0) with sample mean x̄ = 3.5.\nPrior on μ: Normal(μ₀ = 0.0, τ₀² = 100.0).\n\n(1) Compute the 95% frequentist confidence interval for μ.\n(2) Compute the 95% Bayesian credible interval.\n\nReport: freq_lower, freq_upper, bayes_lower, bayes_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "freq_lower",
+        "true_value": 3.142155,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "freq_upper",
+        "true_value": 3.857845,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_lower",
+        "true_value": 3.141055,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_upper",
+        "true_value": 3.856613,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_frequentist_ci",
+      "computes_bayesian_credible"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption",
+      "constant_variance"
+    ],
+    "perturbation_note": "n=30, x̄=3.5; both intervals tighter due to larger n."
+  },
+  {
+    "task_id": "CI_CREDIBLE_01_semantic",
+    "base_task_id": "CI_CREDIBLE_01",
+    "perturbation_type": "semantic",
+    "task_type": "CI_CREDIBLE",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task CI_CREDIBLE_01_semantic  |  Tier 2  |  Intermediate]\n\nA lab measures reaction times (seconds) for n = 20 subjects. Assume Normal(μ, σ² = 1.0). The sample mean is x̄ = 5.0375 seconds.\nPrior: Normal(0, 100) (diffuse).\n\nCompare the classical 95% confidence interval for μ with the Bayesian 95% credible interval.\n\nReport: freq_lower, freq_upper, bayes_lower, bayes_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "freq_lower",
+        "true_value": 4.599225986076149,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "freq_upper",
+        "true_value": 5.4757485266527315,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_lower",
+        "true_value": 4.5968180254381,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "bayes_upper",
+        "true_value": 5.473121517519301,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_frequentist_ci",
+      "computes_bayesian_credible"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption",
+      "constant_variance"
+    ],
+    "perturbation_note": "Reaction-time experiment framing; same numbers."
+  },
+  {
+    "task_id": "JEFFREYS_01_rephrase",
+    "base_task_id": "JEFFREYS_01",
+    "perturbation_type": "rephrase",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task JEFFREYS_01_rephrase  |  Tier 2  |  Intermediate]\n\nThe Jeffreys prior for the Binomial model is Beta(0.5, 0.5). With x = 3 successes in n = 10 trials, the posterior is Beta(0.5 + x, 0.5 + n − x).\n\n(a) Compute α_post and β_post.\n(b) Compute the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 3.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 7.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.3181818181818182,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_jeffreys_prior_formula",
+      "notes_jeffreys_invariance",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Formula spelled out; same inputs."
+  },
+  {
+    "task_id": "JEFFREYS_01_numerical",
+    "base_task_id": "JEFFREYS_01",
+    "perturbation_type": "numerical",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task JEFFREYS_01_numerical  |  Tier 2  |  Intermediate]\n\nUsing the Jeffreys prior for the Binomial model — Beta(0.5, 0.5) —\nwith x = 5 successes in n = 12 trials:\n\n(a) State the posterior distribution Beta(α_post, β_post).\n(b) Compute the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 5.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 7.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.4230769230769231,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_jeffreys_prior_formula",
+      "notes_jeffreys_invariance",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "x=5,n=12; Beta(5.5,7.5), mean=5.5/13≈0.4231."
+  },
+  {
+    "task_id": "JEFFREYS_01_semantic",
+    "base_task_id": "JEFFREYS_01",
+    "perturbation_type": "semantic",
+    "task_type": "JEFFREYS",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "prompt": "[Task JEFFREYS_01_semantic  |  Tier 2  |  Intermediate]\n\nA forensic analyst uses the Jeffreys prior Beta(0.5, 0.5) as an objective, invariant prior for the probability θ that a DNA sample matches a reference. After x = 3 matches in n = 10 comparisons:\n\n(a) State the posterior distribution.\n(b) Compute the posterior mean.\n\nReport: alpha_post, beta_post, posterior_mean\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "alpha_post",
+        "true_value": 3.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "beta_post",
+        "true_value": 7.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "posterior_mean",
+        "true_value": 0.3181818181818182,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_jeffreys_prior_formula",
+      "notes_jeffreys_invariance",
+      "updates_hyperparameters_correctly"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "DNA forensics framing; identical numbers."
+  },
+  {
+    "task_id": "BAYES_RISK_01_rephrase",
+    "base_task_id": "BAYES_RISK_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BAYES_RISK_01_rephrase  |  Tier 2  |  Basic]\n\nAn estimator δ incurs frequentist risks R(δ, θ₁) = 0.5 and R(δ, θ₂) = 0.3. A prior assigns P(θ₁) = 0.4 and P(θ₂) = 0.6.\n\nThe Bayes risk is r(π, δ) = Σᵢ π(θᵢ) R(δ, θᵢ).\n\nCompute the Bayes risk.\n\nReport: bayes_risk\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bayes_risk",
+        "true_value": 0.38,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_prior_weighting",
+      "sums_weighted_risks"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "Formula given explicitly; same inputs."
+  },
+  {
+    "task_id": "BAYES_RISK_01_numerical",
+    "base_task_id": "BAYES_RISK_01",
+    "perturbation_type": "numerical",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BAYES_RISK_01_numerical  |  Tier 2  |  Basic]\n\nAn estimator δ has risk values R(δ, θᵢ) at 2 parameter values, with a discrete prior π(θᵢ):\n\n  Risk values R(δ, θᵢ): [0.6, 0.2]\n  Prior probabilities π(θᵢ): [0.3, 0.7]\n\nCompute the Bayes risk r(π, δ) = Σᵢ π(θᵢ) R(δ, θᵢ).\n\nReport: bayes_risk\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bayes_risk",
+        "true_value": 0.32,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_prior_weighting",
+      "sums_weighted_risks"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "Risks [0.6,0.2], priors [0.3,0.7]; 0.6×0.3+0.2×0.7=0.32."
+  },
+  {
+    "task_id": "BAYES_RISK_01_semantic",
+    "base_task_id": "BAYES_RISK_01",
+    "perturbation_type": "semantic",
+    "task_type": "BAYES_RISK",
+    "tier": 2,
+    "difficulty": "basic",
+    "prompt": "[Task BAYES_RISK_01_semantic  |  Tier 2  |  Basic]\n\nA weather forecaster uses estimator δ. When it rains (θ₁, prior prob 0.4) the forecast error risk is 0.5; when dry (θ₂, prior prob 0.6) the risk is 0.3.\n\nCompute the average (Bayes) risk under this prior.\n\nReport: bayes_risk\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bayes_risk",
+        "true_value": 0.38,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_prior_weighting",
+      "sums_weighted_risks"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "Weather-forecast risk framing; identical numbers."
+  },
+  {
+    "task_id": "FISHER_INFO_01_rephrase",
+    "base_task_id": "FISHER_INFO_01",
+    "perturbation_type": "rephrase",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task FISHER_INFO_01_rephrase  |  Tier 3  |  Intermediate]\n\nFor a Binomial(θ) model, Fisher information for a single observation is I₁(θ) = 1 / [θ(1−θ)]. With n = 10 i.i.d. observations:\n  I_n(θ) = n · I₁(θ)\n\nEvaluate I_n(0.3).\n\nReport: fisher_info\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 47.61904761904762,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "applies_correct_formula_for_distribution"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions"
+    ],
+    "perturbation_note": "Formula expanded; same θ and n."
+  },
+  {
+    "task_id": "FISHER_INFO_01_numerical",
+    "base_task_id": "FISHER_INFO_01",
+    "perturbation_type": "numerical",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task FISHER_INFO_01_numerical  |  Tier 3  |  Intermediate]\n\nCompute the Fisher information I_n(θ) for n = 15 i.i.d. observations\nfrom a Binomial distribution with parameter θ = 0.4.\n\nRecall: I_n(θ) = n / [θ(1 − θ)]\n\nReport: fisher_info\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 62.5,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "applies_correct_formula_for_distribution"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions"
+    ],
+    "perturbation_note": "θ=0.4, n=15; I_n=15/0.24=62.5."
+  },
+  {
+    "task_id": "FISHER_INFO_01_semantic",
+    "base_task_id": "FISHER_INFO_01",
+    "perturbation_type": "semantic",
+    "task_type": "FISHER_INFO",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task FISHER_INFO_01_semantic  |  Tier 3  |  Intermediate]\n\nIn a clinical trial with n = 10 patients, the outcome follows Binomial(θ) where θ = 0.3 is the true response rate.\n\nCompute the Fisher information in the full sample — the total information available about θ.\n\nRecall: I_n(θ) = n / [θ(1−θ)]\n\nReport: fisher_info\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 47.61904761904762,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "applies_correct_formula_for_distribution"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions"
+    ],
+    "perturbation_note": "Clinical-trial information framing; identical numbers."
+  },
+  {
+    "task_id": "RC_BOUND_01_rephrase",
+    "base_task_id": "RC_BOUND_01",
+    "perturbation_type": "rephrase",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "prompt": "[Task RC_BOUND_01_rephrase  |  Tier 3  |  Basic]\n\nFor n = 10 i.i.d. Binomial(θ = 0.3) observations:\n\n(a) Compute I_n(θ) = n / [θ(1−θ)].\n(b) The Rao-Cramér lower bound for an unbiased estimator is     RC = 1 / I_n(θ). Compute it.\n\nReport: fisher_info, rc_bound\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 47.61904761904762,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "rc_bound",
+        "true_value": 0.020999999999999998,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "identifies_unbiased_case_bias_deriv_zero"
+    ],
+    "required_assumption_checks": [
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "Rao-Cramér formula stated explicitly; same inputs."
+  },
+  {
+    "task_id": "RC_BOUND_01_numerical",
+    "base_task_id": "RC_BOUND_01",
+    "perturbation_type": "numerical",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "prompt": "[Task RC_BOUND_01_numerical  |  Tier 3  |  Basic]\n\nFor n = 8 i.i.d. observations from a Binomial distribution\nwith parameter θ = 0.5:\n\n(a) Compute the Fisher information I_n(θ).\n(b) Compute the Rao-Cramér lower bound RC = 1 / I_n(θ).\n\nReport: fisher_info, rc_bound\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 32.0,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "rc_bound",
+        "true_value": 0.03125,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "identifies_unbiased_case_bias_deriv_zero"
+    ],
+    "required_assumption_checks": [
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "θ=0.5, n=8; I_n=32, RC=0.03125."
+  },
+  {
+    "task_id": "RC_BOUND_01_semantic",
+    "base_task_id": "RC_BOUND_01",
+    "perturbation_type": "semantic",
+    "task_type": "RC_BOUND",
+    "tier": 3,
+    "difficulty": "basic",
+    "prompt": "[Task RC_BOUND_01_semantic  |  Tier 3  |  Basic]\n\nA statistician designs an experiment with n = 10 Binomial trials at θ = 0.3 to estimate the success rate.\n\n(a) What is the Fisher information available in the sample?\n(b) What is the minimum variance any unbiased estimator can achieve     (Rao-Cramér bound)?\n\nReport: fisher_info, rc_bound\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "fisher_info",
+        "true_value": 47.61904761904762,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "rc_bound",
+        "true_value": 0.020999999999999998,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "identifies_unbiased_case_bias_deriv_zero"
+    ],
+    "required_assumption_checks": [
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "Experimental-design framing; identical inputs."
+  },
+  {
+    "task_id": "MARKOV_01_rephrase",
+    "base_task_id": "MARKOV_01",
+    "perturbation_type": "rephrase",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MARKOV_01_rephrase  |  Tier 3  |  Intermediate]\n\nA 3-state Markov chain has transition matrix:\nP = [\n  [0.5000, 0.2500, 0.2500]\n  [0.6667, 0.0000, 0.3333]\n  [0.6000, 0.4000, 0.0000]\n]\n\nSolve πᵀ = πᵀ P, Σ πᵢ = 1 for the stationary distribution.\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.5591397849462366,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.22580645161290316,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.2150537634408602,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "System of equations framing; same matrix."
+  },
+  {
+    "task_id": "MARKOV_01_numerical",
+    "base_task_id": "MARKOV_01",
+    "perturbation_type": "numerical",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MARKOV_01_numerical  |  Tier 3  |  Intermediate]\n\nA Markov chain on 3 states has transition matrix:\nP = [\n  [0.4000, 0.3000, 0.3000]\n  [0.6000, 0.1000, 0.3000]\n  [0.5000, 0.3000, 0.2000]\n]\n\nFind the stationary distribution π = (π₀, π₁, π₂).\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.47727273,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.25,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.27272727,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "New matrix; π≈(0.4773,0.25,0.2727)."
+  },
+  {
+    "task_id": "MARKOV_01_semantic",
+    "base_task_id": "MARKOV_01",
+    "perturbation_type": "semantic",
+    "task_type": "MARKOV",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MARKOV_01_semantic  |  Tier 3  |  Intermediate]\n\nA consumer moves between three brands (0, 1, 2) each month according to the transition matrix:\nP = [\n  [0.5000, 0.2500, 0.2500]\n  [0.6667, 0.0000, 0.3333]\n  [0.6000, 0.4000, 0.0000]\n]\n\nFind the long-run market shares (stationary distribution).\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.5591397849462366,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.22580645161290316,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.2150537634408602,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "Brand-switching framing; same transition matrix."
+  },
+  {
+    "task_id": "ORDER_STAT_01_rephrase",
+    "base_task_id": "ORDER_STAT_01",
+    "perturbation_type": "rephrase",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task ORDER_STAT_01_rephrase  |  Tier 3  |  Intermediate]\n\nLet X₁, …, X₅ be i.i.d. Uniform[0, 1]. The PDF of the k-th order statistic X_(k) is Beta(k, n−k+1).\n\nEvaluate the PDF of X_(3) at y = 0.4.\n\nReport: order_stat_pdf\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "order_stat_pdf",
+        "true_value": 1.728000000000001,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_order_stat_pdf_formula",
+      "identifies_beta_distribution_connection"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "uniform_support_0_1"
+    ],
+    "perturbation_note": "Beta distribution connection made explicit; same values."
+  },
+  {
+    "task_id": "ORDER_STAT_01_numerical",
+    "base_task_id": "ORDER_STAT_01",
+    "perturbation_type": "numerical",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task ORDER_STAT_01_numerical  |  Tier 3  |  Intermediate]\n\nLet X₁, …, X_5 be i.i.d. Uniform[0, 1] random variables.\nLet X_(2) denote the 2nd order statistic (the 2nd smallest value).\n\nThe PDF of X_(k) is:\n  g_(k)(y) = n! / [(k−1)! (n−k)!] · y^(k−1) · (1−y)^(n−k)  for y ∈ [0,1]\n\nEvaluate the PDF of X_(2) at y = 0.3.\n\nReport: order_stat_pdf\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "order_stat_pdf",
+        "true_value": 2.058,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_order_stat_pdf_formula",
+      "identifies_beta_distribution_connection"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "uniform_support_0_1"
+    ],
+    "perturbation_note": "k=2,n=5,y=0.3; g=20×0.3×0.343=2.058."
+  },
+  {
+    "task_id": "ORDER_STAT_01_semantic",
+    "base_task_id": "ORDER_STAT_01",
+    "perturbation_type": "semantic",
+    "task_type": "ORDER_STAT",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task ORDER_STAT_01_semantic  |  Tier 3  |  Intermediate]\n\nFive random exam scores are each uniformly distributed on [0, 1]. The median score is the 3rd order statistic X_(3).\n\nThe PDF of X_(3) is Beta(3, 3). Evaluate this at y = 0.4.\n\nReport: order_stat_pdf\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "order_stat_pdf",
+        "true_value": 1.728000000000001,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_order_stat_pdf_formula",
+      "identifies_beta_distribution_connection"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "uniform_support_0_1"
+    ],
+    "perturbation_note": "Exam score framing; k=3 is median of 5 scores."
+  },
+  {
+    "task_id": "REGRESSION_01_rephrase",
+    "base_task_id": "REGRESSION_01",
+    "perturbation_type": "rephrase",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task REGRESSION_01_rephrase  |  Tier 3  |  Intermediate]\n\nFit Y = A + B·x via OLS to the 5 data points:\n  x = [1, 2, 3, 4, 5],  y = [2.1, 3.9, 6.2, 7.8, 10.1]\n\nFormulas:\n  B̂ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²\n  Â = ȳ − B̂·x̄\n  s² = Σ(yᵢ − Â − B̂xᵢ)² / (n−2)\n  95% CI for B: B̂ ± t_{n−2, 0.975} · s / √Sₓₓ\n\nReport: A_hat, B_hat, s2, B_lower, B_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "A_hat",
+        "true_value": 0.0500000000000016,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_hat",
+        "true_value": 1.9899999999999998,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "s2",
+        "true_value": 0.03566666666666691,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_lower",
+        "true_value": 1.7999392904005407,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_upper",
+        "true_value": 2.180060709599459,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_B_hat_via_Sxy_over_Sxx",
+      "computes_A_hat_via_ybar_minus_B_hat_xbar",
+      "computes_residual_variance_SSR_over_n_minus_2",
+      "constructs_t_based_confidence_intervals"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "normal_errors",
+      "constant_variance"
+    ],
+    "perturbation_note": "Formulas written out; same data."
+  },
+  {
+    "task_id": "REGRESSION_01_numerical",
+    "base_task_id": "REGRESSION_01",
+    "perturbation_type": "numerical",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task REGRESSION_01_numerical  |  Tier 3  |  Intermediate]\n\nYou have n = 5 data points for a simple linear regression Y = A + B·x + ε:\n  x = [2, 4, 6, 8, 10]\n  y = [5.1, 8.9, 13.0, 17.2, 21.0]\n\nCompute:\n  (1) OLS estimates Â and B̂\n  (2) Residual variance s²\n  (3) 95% confidence interval for B (use t_{3, 0.975})\n\nReport: A_hat, B_hat, s2, B_lower, B_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "A_hat",
+        "true_value": 1.01,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_hat",
+        "true_value": 2.005,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "s2",
+        "true_value": 0.017,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_lower",
+        "true_value": 1.939392,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_upper",
+        "true_value": 2.070608,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_B_hat_via_Sxy_over_Sxx",
+      "computes_A_hat_via_ybar_minus_B_hat_xbar",
+      "computes_residual_variance_SSR_over_n_minus_2",
+      "constructs_t_based_confidence_intervals"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "normal_errors",
+      "constant_variance"
+    ],
+    "perturbation_note": "x=[2,4,6,8,10], y=[5.1,8.9,13,17.2,21]; Â=1.01, B̂=2.005."
+  },
+  {
+    "task_id": "REGRESSION_01_semantic",
+    "base_task_id": "REGRESSION_01",
+    "perturbation_type": "semantic",
+    "task_type": "REGRESSION",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task REGRESSION_01_semantic  |  Tier 3  |  Intermediate]\n\nA physicist measures spring extension (cm) under various weights (kg):\n  Weight x: [1, 2, 3, 4, 5]\n  Extension y: [2.1, 3.9, 6.2, 7.8, 10.1]\n\nFit Hooke's Law: y = A + B·x. Estimate intercept Â, slope B̂ (spring constant), residual variance s², and 95% CI for B̂.\n\nReport: A_hat, B_hat, s2, B_lower, B_upper\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "A_hat",
+        "true_value": 0.0500000000000016,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_hat",
+        "true_value": 1.9899999999999998,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "s2",
+        "true_value": 0.03566666666666691,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_lower",
+        "true_value": 1.7999392904005407,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "B_upper",
+        "true_value": 2.180060709599459,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_B_hat_via_Sxy_over_Sxx",
+      "computes_A_hat_via_ybar_minus_B_hat_xbar",
+      "computes_residual_variance_SSR_over_n_minus_2",
+      "constructs_t_based_confidence_intervals"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "normal_errors",
+      "constant_variance"
+    ],
+    "perturbation_note": "Spring extension / Hooke's Law framing; identical data."
+  },
+  {
+    "task_id": "GAMBLER_01_rephrase",
+    "base_task_id": "GAMBLER_01",
+    "perturbation_type": "rephrase",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task GAMBLER_01_rephrase  |  Tier 3  |  Intermediate]\n\nGambler's ruin: fortune i = 3, absorbing barriers at 0 (ruin) and M = 8 (win), win probability per bet p = 0.6, q = 0.4.\n\nUsing P(ruin | i) = [(q/p)^i − (q/p)^M] / [1 − (q/p)^M], compute ruin probability and win probability.\n\nReport: ruin_prob, win_prob\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "ruin_prob",
+        "true_value": 0.2677240285487709,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "win_prob",
+        "true_value": 0.732275971451229,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_gamblers_ruin_formula",
+      "handles_fair_vs_unfair_case"
+    ],
+    "required_assumption_checks": [
+      "absorbing_boundaries_at_0_and_M"
+    ],
+    "perturbation_note": "Formula given explicitly; same parameters."
+  },
+  {
+    "task_id": "GAMBLER_01_numerical",
+    "base_task_id": "GAMBLER_01",
+    "perturbation_type": "numerical",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task GAMBLER_01_numerical  |  Tier 3  |  Intermediate]\n\nA gambler starts with fortune i = 4 and plays until reaching 0 (ruin)\nor M = 10 (win). Each bet is won with probability p = 0.55 (lost with q = 0.45).\n\nUsing the gambler's ruin formula:\n  P(ruin | i) = [(q/p)^i − (q/p)^M] / [1 − (q/p)^M]\n\nCompute the probability of ruin and the probability of winning.\n\nReport: ruin_prob, win_prob\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "ruin_prob",
+        "true_value": 0.362414,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "win_prob",
+        "true_value": 0.637586,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_gamblers_ruin_formula",
+      "handles_fair_vs_unfair_case"
+    ],
+    "required_assumption_checks": [
+      "absorbing_boundaries_at_0_and_M"
+    ],
+    "perturbation_note": "i=4, M=10, p=0.55; ruin≈0.3624."
+  },
+  {
+    "task_id": "GAMBLER_01_semantic",
+    "base_task_id": "GAMBLER_01",
+    "perturbation_type": "semantic",
+    "task_type": "GAMBLER",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task GAMBLER_01_semantic  |  Tier 3  |  Intermediate]\n\nA poker player has i = 3 chips. The game ends when they go broke (0 chips) or accumulate M = 8 chips. Each hand is won with probability p = 0.6.\n\nWhat is the probability of going broke? Of winning?\n\n  P(ruin | i) = [(q/p)^i − (q/p)^M] / [1 − (q/p)^M]\n\nReport: ruin_prob, win_prob\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "ruin_prob",
+        "true_value": 0.2677240285487709,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "win_prob",
+        "true_value": 0.732275971451229,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_gamblers_ruin_formula",
+      "handles_fair_vs_unfair_case"
+    ],
+    "required_assumption_checks": [
+      "absorbing_boundaries_at_0_and_M"
+    ],
+    "perturbation_note": "Poker chip framing; same parameters."
+  },
+  {
+    "task_id": "STATIONARY_01_rephrase",
+    "base_task_id": "STATIONARY_01",
+    "perturbation_type": "rephrase",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task STATIONARY_01_rephrase  |  Tier 3  |  Intermediate]\n\nA Markov chain on 3 states has transition matrix:\nP = [\n  [0.2000, 0.5000, 0.3000]\n  [0.4000, 0.2000, 0.4000]\n  [0.3000, 0.6000, 0.1000]\n]\n\nThe stationary distribution satisfies π P = π and Σᵢ πᵢ = 1. Set up the linear system and solve.\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.30967741935483845,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.406451612903226,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.28387096774193565,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "Linear-system framing; same matrix."
+  },
+  {
+    "task_id": "STATIONARY_01_numerical",
+    "base_task_id": "STATIONARY_01",
+    "perturbation_type": "numerical",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task STATIONARY_01_numerical  |  Tier 3  |  Intermediate]\n\nA Markov chain on 3 states has transition matrix:\nP = [\n  [0.2000, 0.5000, 0.3000]\n  [0.4000, 0.3000, 0.3000]\n  [0.1000, 0.6000, 0.3000]\n]\n\nFind the stationary distribution π = (π₀, π₁, π₂).\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.258333,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.441667,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.3,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "New matrix; π≈(0.2583,0.4417,0.3)."
+  },
+  {
+    "task_id": "STATIONARY_01_semantic",
+    "base_task_id": "STATIONARY_01",
+    "perturbation_type": "semantic",
+    "task_type": "STATIONARY",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task STATIONARY_01_semantic  |  Tier 3  |  Intermediate]\n\nA population moves between three employment states — employed (0), unemployed (1), out-of-labour-force (2) — each month:\nP = [\n  [0.2000, 0.5000, 0.3000]\n  [0.4000, 0.2000, 0.4000]\n  [0.3000, 0.6000, 0.1000]\n]\n\nFind the long-run proportions in each state.\n\nReport: pi_0, pi_1, pi_2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "pi_0",
+        "true_value": 0.30967741935483845,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_1",
+        "true_value": 0.406451612903226,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "pi_2",
+        "true_value": 0.28387096774193565,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "solves_pi_P_eq_pi",
+      "normalises_to_one",
+      "uses_eigenvalue_or_linear_system"
+    ],
+    "required_assumption_checks": [
+      "chain_is_irreducible",
+      "chain_is_aperiodic"
+    ],
+    "perturbation_note": "Labour-market states framing; same transition matrix."
+  },
+  {
+    "task_id": "MINIMAX_01_rephrase",
+    "base_task_id": "MINIMAX_01",
+    "perturbation_type": "rephrase",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MINIMAX_01_rephrase  |  Tier 3  |  Intermediate]\n\nRisk table for θ ∈ {0, 1, 2}:\n  R(δ₁, ·) = [0.0, 0.5, 0.0]\n  R(δ₂, ·) = [1.0, 0.0, 1.0]\n\nThe minimax rule picks the estimator with the smallest worst-case risk. Compute max-risk for each, then identify the minimax value.\n\nReport: max_risk_hat1, max_risk_hat2, minimax_value\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "max_risk_hat1",
+        "true_value": 0.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "max_risk_hat2",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "minimax_value",
+        "true_value": 0.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_max_risk_per_estimator",
+      "selects_estimator_with_min_max_risk"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "Decision procedure stated; same risk table."
+  },
+  {
+    "task_id": "MINIMAX_01_numerical",
+    "base_task_id": "MINIMAX_01",
+    "perturbation_type": "numerical",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MINIMAX_01_numerical  |  Tier 3  |  Intermediate]\n\nTwo estimators δ₁ and δ₂ have the following risk values R(δ, θ) at θ ∈ [0, 1, 2]:\n\n  R(δ₁, θ): [0.2, 0.8, 0.2]\n  R(δ₂, θ): [0.9, 0.1, 0.7]\n\nIdentify the minimax estimator and state its minimax value.\n\nReport: max_risk_hat1, max_risk_hat2, minimax_value\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "max_risk_hat1",
+        "true_value": 0.8,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "max_risk_hat2",
+        "true_value": 0.9,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "minimax_value",
+        "true_value": 0.8,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_max_risk_per_estimator",
+      "selects_estimator_with_min_max_risk"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "R1=[0.2,0.8,0.2],R2=[0.9,0.1,0.7]; max_r1=0.8,max_r2=0.9,minimax=0.8."
+  },
+  {
+    "task_id": "MINIMAX_01_semantic",
+    "base_task_id": "MINIMAX_01",
+    "perturbation_type": "semantic",
+    "task_type": "MINIMAX",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task MINIMAX_01_semantic  |  Tier 3  |  Intermediate]\n\nAn engineer chooses between two control policies δ₁ and δ₂. Under three operating conditions θ ∈ {0, 1, 2}, the risks are:\n  R(δ₁, ·) = [0.0, 0.5, 0.0]\n  R(δ₂, ·) = [1.0, 0.0, 1.0]\n\nA risk-averse engineer uses the minimax criterion. Which policy minimises worst-case risk?\n\nReport: max_risk_hat1, max_risk_hat2, minimax_value\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "max_risk_hat1",
+        "true_value": 0.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "max_risk_hat2",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "minimax_value",
+        "true_value": 0.5,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_max_risk_per_estimator",
+      "selects_estimator_with_min_max_risk"
+    ],
+    "required_assumption_checks": [],
+    "perturbation_note": "Engineering control-policy framing; same risk table."
+  },
+  {
+    "task_id": "BIAS_VAR_01_rephrase",
+    "base_task_id": "BIAS_VAR_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BIAS_VAR_01_rephrase  |  Tier 3  |  Intermediate]\n\nFor n = 5 i.i.d. draws from Uniform(0, θ = 1.0), let d₂ = max(Xᵢ).\n\nUsing:\n  E[d₂] = n θ / (n+1),  Var(d₂) = n θ² / [(n+1)²(n+2)]\n  Bias = E[d₂] − θ,  MSE = Bias² + Var(d₂)\n\nCompute bias, variance, and MSE of d₂.\n\nReport: bias, var_d2, mse_d2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bias",
+        "true_value": -0.16666666666666666,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "var_d2",
+        "true_value": 0.01984126984126984,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.047619047619047616,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_bias_from_expectation",
+      "computes_variance_of_estimator",
+      "states_mse_equals_bias_sq_plus_variance"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Formulas given; same n and θ."
+  },
+  {
+    "task_id": "BIAS_VAR_01_numerical",
+    "base_task_id": "BIAS_VAR_01",
+    "perturbation_type": "numerical",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BIAS_VAR_01_numerical  |  Tier 3  |  Intermediate]\n\nConsider n = 8 i.i.d. draws X₁, …, X_n from Uniform(0, θ = 2.0).\nLet d₂ = max(X₁, …, X_n) be the MLE estimator for θ.\n\nUsing the analytical formulas:\n  E[d₂] = n θ / (n+1)\n  Var(d₂) = n θ² / [(n+1)² (n+2)]\n  MSE(d₂) = Bias² + Var(d₂)\n\nCompute: bias, var_d2, mse_d2\n\nReport: bias, var_d2, mse_d2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bias",
+        "true_value": -0.2222222222222222,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "var_d2",
+        "true_value": 0.03950617283950617,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.08888888888888888,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_bias_from_expectation",
+      "computes_variance_of_estimator",
+      "states_mse_equals_bias_sq_plus_variance"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "n=8, θ=2; bias=-2/9≈-0.2222, mse≈0.0889."
+  },
+  {
+    "task_id": "BIAS_VAR_01_semantic",
+    "base_task_id": "BIAS_VAR_01",
+    "perturbation_type": "semantic",
+    "task_type": "BIAS_VAR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BIAS_VAR_01_semantic  |  Tier 3  |  Intermediate]\n\nA surveyor measures the height of n = 5 trees, each uniformly distributed on [0, θ] where θ is the tallest possible tree. The MLE is d₂ = max(Xᵢ).\n\nFor true θ = 1.0, compute the bias, variance, and MSE of the MLE.\n\nReport: bias, var_d2, mse_d2\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "bias",
+        "true_value": -0.16666666666666666,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "var_d2",
+        "true_value": 0.01984126984126984,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.047619047619047616,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_bias_from_expectation",
+      "computes_variance_of_estimator",
+      "states_mse_equals_bias_sq_plus_variance"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Tree-height framing; same n=5, θ=1."
+  },
+  {
+    "task_id": "LOG_ML_01_rephrase",
+    "base_task_id": "LOG_ML_01",
+    "perturbation_type": "rephrase",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "prompt": "[Task LOG_ML_01_rephrase  |  Tier 3  |  Advanced]\n\nFor a Beta(1.0, 1.0) prior with x = 6 successes in n = 10 Binomial trials, compute the log marginal likelihood:\n\n  log p(x | α, β) = log B(α+x, β+n−x) − log B(α, β)\n\nwhere B(a,b) = Γ(a)Γ(b)/Γ(a+b) is the Beta function.\n\nReport: log_ml\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_ml",
+        "true_value": -7.745002803515839,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_beta_function_for_ml",
+      "computes_normalizing_constant"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Beta-function formula provided; same inputs."
+  },
+  {
+    "task_id": "LOG_ML_01_numerical",
+    "base_task_id": "LOG_ML_01",
+    "perturbation_type": "numerical",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "prompt": "[Task LOG_ML_01_numerical  |  Tier 3  |  Advanced]\n\nFor a Beta(α = 2.0, β = 2.0) prior with x = 5 successes in n = 8 Binomial trials, compute the log marginal likelihood:\n\n  log p(x | α, β) = log B(α+x, β+n−x) − log B(α, β)\n\nReport: log_ml\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_ml",
+        "true_value": -5.953243,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_beta_function_for_ml",
+      "computes_normalizing_constant"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Beta(2,2) prior, x=5, n=8; log_ml≈-5.9532."
+  },
+  {
+    "task_id": "LOG_ML_01_semantic",
+    "base_task_id": "LOG_ML_01",
+    "perturbation_type": "semantic",
+    "task_type": "LOG_ML",
+    "tier": 3,
+    "difficulty": "advanced",
+    "prompt": "[Task LOG_ML_01_semantic  |  Tier 3  |  Advanced]\n\nA data scientist computes the evidence (marginal likelihood) for a Beta-Binomial model. Prior: Beta(1, 1). Data: x = 6 clicks in n = 10 ad impressions.\n\nCompute the log evidence:\n  log p(x) = log B(1+x, 1+n−x) − log B(1, 1)\n\nReport: log_ml\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <value>\nRound to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_ml",
+        "true_value": -7.745002803515839,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_beta_function_for_ml",
+      "computes_normalizing_constant"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Evidence / model-comparison framing; identical inputs."
+  },
+  {
+    "task_id": "BAYES_FACTOR_01_rephrase",
+    "base_task_id": "BAYES_FACTOR_01",
+    "perturbation_type": "rephrase",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BAYES_FACTOR_01_rephrase  |  Tier 3  |  Intermediate]\n\nCompare M₁: Beta(1, 1) prior vs M₂: Beta(0.5, 0.5) prior for Binomial data x = 3, n = 10.\n\nlog BF₁₂ = log p(x | M₁) − log p(x | M₂)\nwhere log p(x | M) = log B(α+x, β+n−x) − log B(α, β).\n\nReport: log_BF, BF\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_BF",
+        "true_value": 0.32841760423869104,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "BF",
+        "true_value": 1.388768806950624,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_bayes_factor_formula",
+      "states_evidence_scale"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Formula given explicitly; same inputs."
+  },
+  {
+    "task_id": "BAYES_FACTOR_01_numerical",
+    "base_task_id": "BAYES_FACTOR_01",
+    "perturbation_type": "numerical",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BAYES_FACTOR_01_numerical  |  Tier 3  |  Intermediate]\n\nCompare two models for Binomial data with x = 5 successes in n = 10 trials:\n\n  M₁: Beta(1.0, 1.0) prior\n  M₂: Beta(0.5, 0.5) prior\n\nCompute the Bayes factor BF₁₂ = p(x | M₁) / p(x | M₂) and its log.\n\nReport: log_BF, BF\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_BF",
+        "true_value": 0.40619,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "BF",
+        "true_value": 1.501088,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_bayes_factor_formula",
+      "states_evidence_scale"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "x=5, n=10; log_BF≈0.4062, BF≈1.5011."
+  },
+  {
+    "task_id": "BAYES_FACTOR_01_semantic",
+    "base_task_id": "BAYES_FACTOR_01",
+    "perturbation_type": "semantic",
+    "task_type": "BAYES_FACTOR",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "prompt": "[Task BAYES_FACTOR_01_semantic  |  Tier 3  |  Intermediate]\n\nA meta-analyst compares two elicited priors for a drug response rate θ:\n  M₁: flat prior Beta(1, 1)\n  M₂: Jeffreys prior Beta(0.5, 0.5)\n\nData: x = 3 responders in n = 10 patients.\n\nCompute the Bayes factor favouring M₁ and its log.\n\nReport: log_BF, BF\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "log_BF",
+        "true_value": 0.32841760423869104,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "BF",
+        "true_value": 1.388768806950624,
+        "full_credit_tol": 0.001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "applies_bayes_factor_formula",
+      "states_evidence_scale"
+    ],
+    "required_assumption_checks": [
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Drug response / prior comparison framing; same x,n."
+  },
+  {
+    "task_id": "OPT_SCALED_01_rephrase",
+    "base_task_id": "OPT_SCALED_01",
+    "perturbation_type": "rephrase",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task OPT_SCALED_01_rephrase  |  Tier 4  |  Advanced]\n\nFor n = 5 i.i.d. draws from Uniform(0, θ = 1.0), the scaled estimator d_c = c · max(Xᵢ) has MSE:\n  MSE(d_c) = θ² [n c² / (n+2) − 2nc / (n+1) + 1]\n\nMinimise over c to find c* = (n+2)/(n+1), then compute MSE(d_c*).\n\nReport: c_opt, mse_opt\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "c_opt",
+        "true_value": 1.1666666666666667,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_opt",
+        "true_value": 0.027777777777777776,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "derives_optimal_c_by_minimising_mse",
+      "states_c_opt_formula_n_plus_2_over_n_plus_1",
+      "computes_resulting_mse"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Derivation path given; same n and θ."
+  },
+  {
+    "task_id": "OPT_SCALED_01_numerical",
+    "base_task_id": "OPT_SCALED_01",
+    "perturbation_type": "numerical",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task OPT_SCALED_01_numerical  |  Tier 4  |  Advanced]\n\nFor n = 4 i.i.d. draws from Uniform(0, θ = 2.0),\nconsider the scaled estimator d_c = c · max(X₁, …, X_n).\n\n(a) Find the optimal constant c* that minimises MSE(d_c).\n    Formula: c* = (n+2)/(n+1)\n(b) Compute MSE(d_c*) = θ² / (n+1)²\n\nReport: c_opt, mse_opt\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "c_opt",
+        "true_value": 1.2,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_opt",
+        "true_value": 0.16,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "derives_optimal_c_by_minimising_mse",
+      "states_c_opt_formula_n_plus_2_over_n_plus_1",
+      "computes_resulting_mse"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "n=4, θ=2; c*=6/5=1.2, mse*=4/25=0.16."
+  },
+  {
+    "task_id": "OPT_SCALED_01_semantic",
+    "base_task_id": "OPT_SCALED_01",
+    "perturbation_type": "semantic",
+    "task_type": "OPT_SCALED",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task OPT_SCALED_01_semantic  |  Tier 4  |  Advanced]\n\nAn engineer estimates the maximum lifetime θ of a component from n = 5 i.i.d. Uniform(0, θ = 1.0) lifetimes. The estimator is d_c = c · max(Xᵢ).\n\nFind c* that minimises MSE and compute the resulting MSE.\n\nReport: c_opt, mse_opt\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "c_opt",
+        "true_value": 1.1666666666666667,
+        "full_credit_tol": 0.0001,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_opt",
+        "true_value": 0.027777777777777776,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "derives_optimal_c_by_minimising_mse",
+      "states_c_opt_formula_n_plus_2_over_n_plus_1",
+      "computes_resulting_mse"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Component lifetime framing; same n=5, θ=1."
+  },
+  {
+    "task_id": "MSE_COMPARE_01_rephrase",
+    "base_task_id": "MSE_COMPARE_01",
+    "perturbation_type": "rephrase",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MSE_COMPARE_01_rephrase  |  Tier 4  |  Advanced]\n\nFor n = 5 i.i.d. draws from Uniform(0, θ = 1.0), compare:\n  d₁ = 2X̄  (unbiased)\n  d₂ = max(Xᵢ)  (MLE)\n  d_c* = c* · max(Xᵢ)  (optimal scaled, c* = (n+2)/(n+1))\n\nMSE formulas:\n  MSE(d₁) = θ²/(3n)\n  MSE(d₂) = 2θ²/[(n+1)(n+2)]\n  MSE(d_c*) = θ²/(n+1)²\n\nReport: mse_d1, mse_d2, mse_dc\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mse_d1",
+        "true_value": 0.06666666666666667,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.047619047619047616,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_dc",
+        "true_value": 0.027777777777777776,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_mse_d1_analytical",
+      "computes_mse_d2_analytical",
+      "computes_mse_dc_at_optimal_c",
+      "identifies_dc_as_minimum_mse_estimator"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "MSE formulas given; same n=5, θ=1."
+  },
+  {
+    "task_id": "MSE_COMPARE_01_numerical",
+    "base_task_id": "MSE_COMPARE_01",
+    "perturbation_type": "numerical",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MSE_COMPARE_01_numerical  |  Tier 4  |  Advanced]\n\nFor n = 9 i.i.d. draws from Uniform(0, θ = 1.0), compare three estimators:\n\n  d₁ = 2 · X̄           MSE = θ²/(3n)\n  d₂ = max(Xᵢ)         MSE = 2θ²/[(n+1)(n+2)]\n  d_c* = c* · max(Xᵢ)  MSE = θ²/(n+1)²\n\nReport: mse_d1, mse_d2, mse_dc\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mse_d1",
+        "true_value": 0.037037037037037035,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.01818181818181818,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_dc",
+        "true_value": 0.01,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_mse_d1_analytical",
+      "computes_mse_d2_analytical",
+      "computes_mse_dc_at_optimal_c",
+      "identifies_dc_as_minimum_mse_estimator"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "n=9, θ=1; mse_d1≈0.0370, mse_d2≈0.0182, mse_dc=0.01."
+  },
+  {
+    "task_id": "MSE_COMPARE_01_semantic",
+    "base_task_id": "MSE_COMPARE_01",
+    "perturbation_type": "semantic",
+    "task_type": "MSE_COMPARE",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MSE_COMPARE_01_semantic  |  Tier 4  |  Advanced]\n\nA data scientist compares three estimators for the upper bound θ of a Uniform(0, θ) distribution using n = 5 observations (true θ = 1.0):\n\n  d₁ = 2X̄ (method-of-moments)\n  d₂ = max(Xᵢ) (MLE)\n  d_c* (optimal scaled MLE)\n\nRank them by MSE and report all three values.\n\nReport: mse_d1, mse_d2, mse_dc\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "mse_d1",
+        "true_value": 0.06666666666666667,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_d2",
+        "true_value": 0.047619047619047616,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "mse_dc",
+        "true_value": 0.027777777777777776,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "computes_mse_d1_analytical",
+      "computes_mse_d2_analytical",
+      "computes_mse_dc_at_optimal_c",
+      "identifies_dc_as_minimum_mse_estimator"
+    ],
+    "required_assumption_checks": [
+      "states_iid",
+      "states_distributional_assumption"
+    ],
+    "perturbation_note": "Estimator-comparison / model-selection framing; same n=5, θ=1."
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_01_rephrase",
+    "base_task_id": "MLE_EFFICIENCY_01",
+    "perturbation_type": "rephrase",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MLE_EFFICIENCY_01_rephrase  |  Tier 4  |  Advanced]\n\nFor Binomial(θ = 0.4), the MLE θ̂ = X̄ achieves the Rao-Cramér bound.\n\n(1) Compute RC = 1 / I_n(θ) = θ(1−θ) / n  for n = 30.\n(2) Efficiency ratio = RC / Var(MLE) = 1.0 (since MLE is efficient).\n(3) is_efficient = 1 if efficiency_ratio = 1.0 else 0.\n\nReport: rc_bound, efficiency_ratio, is_efficient\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "rc_bound",
+        "true_value": 0.007999999999999998,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "efficiency_ratio",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "is_efficient",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "states_unbiasedness_assumption"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions",
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "Efficiency argument spelled out; same θ and n."
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_01_numerical",
+    "base_task_id": "MLE_EFFICIENCY_01",
+    "perturbation_type": "numerical",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MLE_EFFICIENCY_01_numerical  |  Tier 4  |  Advanced]\n\nFor the Binomial distribution with parameter θ = 0.6\nand sample size n = 25, the MLE is known to be efficient.\n\nCompute:\n  (1) The Fisher information Rao-Cramér bound: RC = θ(1−θ)/n\n  (2) The efficiency ratio (1.0 for an efficient estimator)\n  (3) is_efficient (1 if efficient, 0 otherwise)\n\nReport: rc_bound, efficiency_ratio, is_efficient\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "rc_bound",
+        "true_value": 0.0096,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "efficiency_ratio",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "is_efficient",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "states_unbiasedness_assumption"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions",
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "θ=0.6, n=25; RC=0.24/25=0.0096."
+  },
+  {
+    "task_id": "MLE_EFFICIENCY_01_semantic",
+    "base_task_id": "MLE_EFFICIENCY_01",
+    "perturbation_type": "semantic",
+    "task_type": "MLE_EFFICIENCY",
+    "tier": 4,
+    "difficulty": "advanced",
+    "prompt": "[Task MLE_EFFICIENCY_01_semantic  |  Tier 4  |  Advanced]\n\nA pollster estimates support θ = 0.4 for a candidate from n = 30 independent yes/no responses. The estimator is the sample proportion.\n\nShow that the sample proportion is the efficient MLE by computing the Rao-Cramér bound and confirming that efficiency_ratio = 1.\n\nReport: rc_bound, efficiency_ratio, is_efficient\nShow your step-by-step reasoning before giving the final answer.\n\nYour final answer must be on the last line in this exact format:\nANSWER: <v1>, <v2>, ...\nList values in the order requested. Round each to 4 decimal places.",
+    "numeric_targets": [
+      {
+        "key": "rc_bound",
+        "true_value": 0.007999999999999998,
+        "full_credit_tol": 1e-05,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "efficiency_ratio",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      },
+      {
+        "key": "is_efficient",
+        "true_value": 1.0,
+        "full_credit_tol": 1e-06,
+        "zero_credit_scale": 0.05
+      }
+    ],
+    "required_structure_checks": [
+      "states_fisher_information_formula",
+      "states_rc_bound_as_reciprocal_of_fisher_info",
+      "states_unbiasedness_assumption"
+    ],
+    "required_assumption_checks": [
+      "states_regularity_conditions",
+      "states_unbiasedness_assumption"
+    ],
+    "perturbation_note": "Opinion-poll framing; same θ=0.4, n=30."
+  }
+]

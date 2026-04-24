@@ -1,21 +1,39 @@
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
-*.pyd
-.Python
-
-# Virtual environments
 .venv/
 venv/
+*.egg-info/
 
-# Jupyter
-.ipynb_checkpoints/
-
-# OS / editor
+# macOS
 .DS_Store
+
+# Runs & results data (large/sensitive)
+runs.jsonl
+results.json
+experiments/results_v1/
+
+# API keys & secrets
+.env
+.env.local
+secrets.*
+*api_key*
+
+# R
+.Rhistory
+.RData
+*.Rproj.user/
+
+# Node
+node_modules/
+.next/
+
+# Large binary files
+literature/*.pdf
+figures/*.gif
+interactive/
+
+# IDE
 .vscode/
 .idea/
-
-# Data outputs (edit based on what you want tracked)
-experiments/results_v1/

@@ -1,0 +1,80 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0A0E1A;
+  color: #E0F7FF;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0A0E1A; }
+::-webkit-scrollbar-thumb { background: #00CED1; border-radius: 3px; }
+
+@keyframes pulse {
+  from { box-shadow: 0 0 10px rgba(0,206,209,0.2); }
+  to   { box-shadow: 0 0 28px rgba(0,206,209,0.55); }
+}
+@keyframes ping {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.5; }
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-200%); }
+  100% { transform: translateX(400%); }
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+input::placeholder { color: #3a5a6a; }
+input:focus { outline: none; }
+button { font-family: inherit; }
+
+/* ─── Hide system cursor globally ────────────────────────────────── */
+* { cursor: none !important; }
+input, textarea, select { cursor: text !important; }
+a, button, [data-hover] { cursor: none !important; }
+
+/* ─── Global cursor element ──────────────────────────────────────── */
+#global-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid rgba(0, 255, 224, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  transition: width 0.18s ease, height 0.18s ease,
+              background 0.18s ease, opacity 0.2s ease;
+  opacity: 0;
+  will-change: transform;
+}
+
+#global-cursor.visible  { opacity: 1; }
+#global-cursor.hovering {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 255, 224, 0.07);
+}
+
+@media (pointer: coarse) {
+  * { cursor: auto !important; }
+  input, textarea, select { cursor: text !important; }
+  #global-cursor { display: none; }
+}
+
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
