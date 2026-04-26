@@ -38,6 +38,33 @@ _GEMINI_SLEEP_S     = 3.0                # default inter-request delay for Gemin
 # HTTP status codes that should NOT be retried (client errors)
 _NO_RETRY_STATUSES = {400, 401, 403, 404}
 
+# Raised when Gemini daily quota (RPD) is exhausted — not retryable
+class GeminiQuotaExhausted(RuntimeError):
+    pass
+
+
+def _gemini_429_body(exc: Exception) -> str:
+    """Extract response body from a Gemini 429 HTTPStatusError, or ''."""
+    if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code == 429:
+        try:
+            return exc.response.text
+        except Exception:
+            return ""
+    return ""
+
+
+def _is_gemini_quota_exhausted(exc: Exception) -> bool:
+    """True when Gemini signals daily RPD quota gone (not an RPM rate limit)."""
+    body = _gemini_429_body(exc)
+    if not body:
+        return False
+    body_lower = body.lower()
+    # RPM messages contain "per-minute" or "per minute"
+    if "per-minute" in body_lower or "per minute" in body_lower:
+        return False
+    # RPD messages: RESOURCE_EXHAUSTED without per-minute wording
+    return "resource_exhausted" in body_lower or "quota" in body_lower
+
 
 def _should_retry(exc: Exception) -> bool:
     """Return True if this exception is a retryable error."""
@@ -66,10 +93,18 @@ def _call_with_retry(
             return resp
         except Exception as exc:
             last_exc = exc
+            # Gemini daily quota exhausted — stop immediately, no point retrying
+            if _is_gemini_quota_exhausted(exc):
+                raise GeminiQuotaExhausted(
+                    "GEMINI_QUOTA_EXHAUSTED: daily RPD limit hit. "
+                    "Quota resets at midnight Pacific. Resume tomorrow."
+                ) from exc
             if attempt == max_attempts or not _should_retry(exc):
                 raise
             wait = retry_waits[attempt - 1]
-            print(f"  [RETRY {attempt}/{max_attempts - 1}] {model_family} | {task_id} — waiting {wait}s ({exc})")
+            body_snippet = _gemini_429_body(exc)[:120]
+            extra = f" | body: {body_snippet}" if body_snippet else ""
+            print(f"  [RETRY {attempt}/{max_attempts - 1}] {model_family} | {task_id} — waiting {wait}s ({exc}){extra}")
             time.sleep(wait)
     raise last_exc
 
@@ -205,9 +240,18 @@ class GeminiClient(BaseModelClient):
                 "latency_ms":    latency_ms,
                 "error":         None,
             }
-        except Exception as exc:
+        except GeminiQuotaExhausted as exc:
+            # Daily quota gone — propagate up so the runner can stop cleanly
             time.sleep(self.delay)
-            return self._empty_result(task_id, str(exc))
+            raise
+        except Exception as exc:
+            # Include response body in error message when available
+            body = _gemini_429_body(exc)
+            err_msg = str(exc)
+            if body:
+                err_msg = f"{err_msg} | body: {body[:300]}"
+            time.sleep(self.delay)
+            return self._empty_result(task_id, err_msg)
 
 
 # ── ChatGPT ───────────────────────────────────────────────────────────────────

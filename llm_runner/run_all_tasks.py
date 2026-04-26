@@ -35,7 +35,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
 from llm_runner.logger import log_jsonl, now_iso
-from llm_runner.model_clients import get_client
+from llm_runner.model_clients import get_client, GeminiQuotaExhausted
 from llm_runner.prompt_builder import build_prompt
 from llm_runner.response_parser import full_score
 
@@ -287,7 +287,13 @@ def run(
             # Perturbation records carry a pre-built prompt; base tasks use builder.
             prompt = task.get("prompt") or build_prompt(task)
 
-            model_result = client.query(prompt, task_id)
+            try:
+                model_result = client.query(prompt, task_id)
+            except GeminiQuotaExhausted as exc:
+                print(f"\n  *** {exc}")
+                print(f"  *** Stopping Gemini run. Resume tomorrow after quota resets.")
+                print(f"  *** Progress saved — {len(all_records)} new records written.\n")
+                break
             raw = model_result["raw_response"]
 
             # Score (even if empty — will score 0)
