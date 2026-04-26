@@ -37,3 +37,7 @@ interactive/
 # IDE
 .vscode/
 .idea/
+.claude/
+**/*.gif
+benchmark_report.html
+report_materials/r_analysis/benchmark_report.html

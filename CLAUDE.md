@@ -8,12 +8,14 @@ This file is the single source of truth for any Claude Code session working on t
 
 **DS 299 Capstone** — benchmarking LLMs on inferential and Bayesian statistical reasoning. Five research questions (RQ1–RQ5) cover numerical accuracy, method selection, assumption compliance, robustness, and confidence calibration.
 
-- 136 benchmark tasks across 31 task types, 4 tiers, 3 difficulty levels
+- 136 benchmark tasks across 31 task types, 4 tiers, 3 difficulty levels (Phase 1)
+- **35 Phase 2 advanced tasks** across 7 computational Bayes types (GIBBS×5, MH×5, HMC×5, RJMCMC×5, VB×5, ABC×5, HIERARCHICAL×5)
+- **171 total tasks** in `data/benchmark_v1/tasks_all.json` (136 + 35)
 - 5 LLM clients: Claude, Gemini, ChatGPT, DeepSeek, Mistral
 - Single canonical scoring weight set: N=0.20, M=0.20, A=0.20, C=0.20, R=0.20 (all five components equal and active)
 - MCP server for interactive querying and scoring
 - React + FastAPI website for result visualization
-- MCMC methods are explicitly **out of scope** (`bayesian_scope.md`)
+- MCMC methods are explicitly **out of scope** (`bayesian_scope.md`) for benchmark tasks; implemented as baseline ground-truth solvers only
 
 ---
 
@@ -26,8 +28,17 @@ source .venv/bin/activate
 # Regenerate tasks.json from ground-truth computations
 python -m baseline.bayesian.build_tasks_bayesian
 
+# Regenerate Phase 2 advanced tasks (35 tasks → tasks_advanced.json)
+python -m baseline.bayesian.build_tasks_advanced
+
 # Run benchmark against one or more models (requires API keys in env)
-python llm_runner/run_all_tasks.py --models claude gemini chatgpt deepseek mistral
+python -m llm_runner.run_all_tasks --models claude gemini chatgpt deepseek mistral
+
+# Run Phase 2 advanced tasks (35 tasks × 5 models = 175 runs)
+python -m llm_runner.run_all_tasks --models claude chatgpt deepseek mistral \
+    --tasks data/benchmark_v1/tasks_advanced.json
+python -m llm_runner.run_all_tasks --models gemini --delay 5 \
+    --tasks data/benchmark_v1/tasks_advanced.json
 
 # Dry-run: print prompts without API calls
 python llm_runner/run_all_tasks.py --models claude --dry-run --limit 3
@@ -83,6 +94,8 @@ Copy `.env.example` to `.env` and fill in keys. Missing key produces an error re
 ```
 baseline/
   bayesian/           # Closed-form Bayesian ground-truth computations
+    advanced_methods.py        # 7 computational Bayes solvers (Gibbs/MH/HMC/RJMCMC/VB/ABC/Hierarchical)
+    build_tasks_advanced.py    # Generate 35 Phase 2 tasks → tasks_advanced.json
   frequentist/        # Frequentist baselines
     test_frequentist.py  # 24 tests for fisher_information + order_statistics
 capstone_mcp/
@@ -101,7 +114,9 @@ capstone-website/
   backend/            # FastAPI serving runs.jsonl data
 data/
   benchmark_v1/
-    tasks.json        # 136 task specs (DO NOT edit by hand — regenerate)
+    tasks.json          # 136 Phase 1 task specs (DO NOT edit — regenerate with build_tasks_bayesian)
+    tasks_advanced.json # 35 Phase 2 task specs (DO NOT edit — regenerate with build_tasks_advanced)
+    tasks_all.json      # 171 merged tasks (136 + 35, DO NOT edit — regenerate by merging both)
   synthetic/
     perturbations.json      # 75 perturbations: 25 base tasks × 3 types (rephrase/numerical/semantic)
     build_perturbations.py  # Generation script — run to regenerate
@@ -255,7 +270,40 @@ All five order-statistic functions now support `dist="uniform"` (analytical), `d
 
 ## 5. Benchmark Tasks
 
-**136 tasks** total. Tasks are stored in `data/benchmark_v1/tasks.json`. **Do not edit manually** — regenerate with `python -m baseline.bayesian.build_tasks_bayesian`.
+**171 tasks** total across two phases.
+
+### Phase 1: 136 tasks
+Stored in `data/benchmark_v1/tasks.json`. **Do not edit manually** — regenerate with `python -m baseline.bayesian.build_tasks_bayesian`.
+
+### Phase 2: 35 advanced computational Bayes tasks
+Stored in `data/benchmark_v1/tasks_advanced.json`. **Do not edit manually** — regenerate with `python -m baseline.bayesian.build_tasks_advanced`.
+
+| Task Type | Count | Baseline module | Tolerance |
+|---|---|---|---|
+| GIBBS | 5 | `advanced_methods.GibbsSampler` | 0.05 |
+| MH | 5 | `advanced_methods.MetropolisHastings` | 0.05 |
+| HMC | 5 | `advanced_methods.HamiltonianMC` | 0.05 |
+| RJMCMC | 5 | `advanced_methods.RJMCMC` | 0.05 |
+| VB | 5 | `advanced_methods.VariationalBayes` | 0.10 |
+| ABC | 5 | `advanced_methods.ABCMethod` | 0.10 |
+| HIERARCHICAL | 5 | `advanced_methods.HierarchicalBayes` | 0.05 |
+
+All Phase 2 solvers call `np.random.seed(42)` in `solve()` for reproducibility. True values are MC estimates (seeded), not analytic — this is intentional for computational methods.
+
+**Merged file:** `data/benchmark_v1/tasks_all.json` (171 tasks = Phase 1 + Phase 2). Regenerate merge:
+```bash
+python3 -c "
+import json
+with open('data/benchmark_v1/tasks.json') as f: t1 = json.load(f)
+with open('data/benchmark_v1/tasks_advanced.json') as f: t2 = json.load(f)
+all_ = t1 + t2
+assert len(set(t['task_id'] for t in all_)) == len(all_)
+with open('data/benchmark_v1/tasks_all.json', 'w') as f: json.dump(all_, f, indent=2)
+print(f'Merged {len(t1)} + {len(t2)} = {len(all_)} tasks')
+"
+```
+
+### Phase 1 task type breakdown (31 types)
 
 ### Task type breakdown (31 types)
 
@@ -444,7 +492,9 @@ Note: `runs.jsonl` also contains an old placeholder record with a different sche
 
 ## 9. Known Gaps and TODOs
 
-### Verified Run Status (audited 2026-04-24)
+### Verified Run Status (audited 2026-04-25)
+
+#### Phase 1 (136 tasks)
 
 | Model | Runs | Avg Score | Pass Rate | Status |
 |---|---|---|---|---|
@@ -458,7 +508,19 @@ Note: `runs.jsonl` also contains an old placeholder record with a different sche
 
 **Gemini missing 62 tasks** (daily RPD quota exhausted 2026-04-24 ~09:41 UTC):
 BAYES_FACTOR×5, BAYES_REG×5, CI_CREDIBLE×5, CONCEPTUAL×10, GAMBLER×3, HPD×5, JEFFREYS×5, LOG_ML×5, MLE_EFFICIENCY×3, MLE_MAP×5, PPC×5, RANGE_DIST×3, STATIONARY×3.
-**Fix:** Resume tomorrow — `python llm_runner/run_all_tasks.py --models gemini` (resume logic skips completed tasks automatically).
+**Fix:** Resume — `python -m llm_runner.run_all_tasks --models gemini` (resume logic skips completed tasks automatically).
+
+#### Phase 2 (35 advanced tasks — audited 2026-04-25)
+
+| Model | Runs | Status |
+|---|---|---|
+| claude | 35/35 | ✅ Complete (0 errors) |
+| chatgpt | 35/35 | ✅ Complete (0 errors) |
+| deepseek | 35/35 | ✅ Complete (0 errors) |
+| mistral | 35/35 | ✅ Complete (0 errors) |
+| gemini | TBD | ⏳ In progress (separate process running 2026-04-25) |
+
+**Resume Gemini Phase 2:** `python -m llm_runner.run_all_tasks --models gemini --tasks data/benchmark_v1/tasks_advanced.json --delay 5`
 
 **Synthetic (RQ4): 0/375 runs** — `perturbations.json` exists (75 tasks), runner flag exists (`--synthetic`), but no model has run synthetic tasks yet.
 
@@ -467,10 +529,11 @@ BAYES_FACTOR×5, BAYES_REG×5, CI_CREDIBLE×5, CONCEPTUAL×10, GAMBLER×3, HPD×
 - results.json: **EMPTY** (0 entries) — `run_benchmark.py` has never produced output
 
 ### CRITICAL (blocks results)
-- [ ] **Resume Gemini** — 62 tasks missing due to daily quota. Run next day: `python llm_runner/run_all_tasks.py --models gemini`
-- [ ] **Run synthetic benchmark (RQ4)** — 0/375 done: `python llm_runner/run_all_tasks.py --models claude chatgpt deepseek mistral --synthetic` (do gemini after quota resets)
-- [ ] **Run `python -m experiments.run_benchmark`** — results.json is empty; scoring pipeline has never been executed
-- [ ] **Recompute Gemini error runs** — 58 runs logged with error + score=0; after quota resumes, the 62 missing tasks will run fresh; the 58 logged errors are separate and may need pruning or re-run
+- [ ] **Resume Gemini Phase 1** — 62 tasks missing: `python -m llm_runner.run_all_tasks --models gemini`
+- [ ] **Resume Gemini Phase 2** — 35 tasks: `python -m llm_runner.run_all_tasks --models gemini --tasks data/benchmark_v1/tasks_advanced.json --delay 5`
+- [ ] **Run synthetic benchmark (RQ4)** — 0/375 done: `python -m llm_runner.run_all_tasks --models claude chatgpt deepseek mistral --synthetic`
+- [ ] **Run `python -m experiments.run_benchmark`** — results.json needs refresh after Phase 2 runs complete
+- [ ] **Recompute Gemini error runs** — 58 runs logged with error + score=0; prune or re-run after quota resets
 
 ### IMPORTANT (needed for paper)
 - [ ] Implement RQ4 perturbation comparison analysis (compare rephrase/numerical/semantic per base task) — data will exist after synthetic run

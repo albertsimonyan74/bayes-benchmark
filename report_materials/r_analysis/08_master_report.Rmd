@@ -206,8 +206,10 @@ MODELS      <- c("claude", "chatgpt", "mistral", "deepseek")
 # Executive Summary
 
 <div class="info-box">
-This report presents preliminary benchmark results from **DS 299 Capstone**, evaluating five large language models on **136 Bayesian statistical reasoning tasks** across 31 task types and 4 difficulty tiers.
-**Note:** Gemini results are partial (76/136 tasks) due to daily API quota exhaustion. All analyses in this report use the **4 complete models**: Claude, ChatGPT, Mistral, DeepSeek.
+This report presents preliminary benchmark results from **DS 299 Capstone**, evaluating five large language models on **171 Bayesian statistical reasoning tasks** across 38 task types and 4 difficulty tiers.
+**Note:** Gemini results are partial (68/171 tasks) due to daily API quota exhaustion. All analyses in this report use the **4 complete models**: Claude, ChatGPT, Mistral, DeepSeek.
+
+The benchmark was extended to include seven computational Bayesian methods (Phase 2), adding 35 tasks for a total of 171 tasks across 38 task types. Stochastic sampling methods (Gibbs, MH, HMC, RJMCMC) use a tolerance of 0.05, while approximate methods (VB, ABC) use 0.10 to account for approximation error. All Phase 2 ground truth values were computed with numpy random seed 42.
 </div>
 
 ```{r exec-summary-cards}
@@ -228,7 +230,7 @@ total_runs <- nrow(df_complete)
 
 <div style="display:flex; flex-wrap:wrap; gap:8px; margin: 18px 0;">
 <div class="metric-card"><div class="metric-val">`r total_runs`</div><div class="metric-lbl">Total Runs (4 models)</div></div>
-<div class="metric-card"><div class="metric-val">136</div><div class="metric-lbl">Tasks per Model</div></div>
+<div class="metric-card"><div class="metric-val">171</div><div class="metric-lbl">Tasks per Model</div></div>
 <div class="metric-card"><div class="metric-val">31</div><div class="metric-lbl">Task Types</div></div>
 <div class="metric-card"><div class="metric-val">`r stringr::str_to_title(best_model)`</div><div class="metric-lbl">Top Model</div></div>
 <div class="metric-card"><div class="metric-val">`r best_score`</div><div class="metric-lbl">Best Avg Score</div></div>
@@ -242,6 +244,33 @@ total_runs <- nrow(df_complete)
 - **REGRESSION**, **BAYES_REG**, and **DIRICHLET** tasks are consistently hardest across all models
 - Tier has a modest negative effect on score; LOESS trends show slight degradation from Tier 1→4
 - Latency varies substantially: Claude averages ~18s, DeepSeek ~8s per task
+
+---
+
+# Methodology
+
+## Prompting Strategy
+All models were evaluated under zero-shot conditions (Wei et al., 2022),
+assessing baseline reasoning without exemplar guidance. A few-shot CoT
+variant was additionally implemented (`prompt_builder_fewshot.py`) for
+select task types following the exemplar format of Wei et al. (2022).
+A Program-of-Thoughts (PoT) prompting mode (Chen et al., 2022) was
+implemented to delegate computation to a Python interpreter, providing
+an accuracy upper bound for numerical tasks.
+
+## Answer Extraction and LLM-as-Judge
+Primary answer extraction uses structured `ANSWER: v1, v2` parsing.
+For responses where extraction fails (`parsed_values=[]`), an LLM-as-Judge
+pipeline (Nagarkar et al., 2026) is invoked using Claude as evaluator,
+consistent with findings that LLMs outperform BLEU/BERTScore on
+reasoning quality assessment. Judge-assisted runs are flagged in results
+via the `judge_assisted` field.
+
+## Task Quality Validation
+Task quality was validated using an automated proxy pipeline
+(`evaluation/task_validator.py`) as a computational alternative to
+StatEval's human-in-the-loop validation (Lu et al., 2025). Tasks
+flagged for human review are reported in `validation_report.json`.
 
 ---
 
@@ -998,3 +1027,15 @@ Ghosh, J. K., Delampady, M., & Samanta, T. (2006). *An Introduction to Bayesian 
 Lee, P. M. (2012). *Bayesian Statistics: An Introduction* (4th ed.). Wiley.
 
 Goldstein, M., & Wooff, D. (2007). *Bayes Linear Statistics: Theory and Methods*. Wiley.
+
+**Benchmark Methodology References**
+
+Lu, Y., Yang, R., Zhang, Y., et al. (2025). StatEval: A Comprehensive Benchmark for Large Language Models in Statistics. *arXiv:2510.09517*
+
+Nagarkar, C., et al. (2026). Can LLM Reasoning Be Trusted? A Comparative Study: Using Human Benchmarking on Statistical Tasks. *arXiv:2601.14479*
+
+Liu, T., Chen, Z., Fang, Z., et al. (2025). MathEval: A Comprehensive Benchmark for Evaluating Large Language Models on Mathematical Reasoning Capabilities. *Frontiers of Digital Education, 2*, 16. https://doi.org/10.1007/s44366-025-0053-z
+
+Chen, W., Ma, X., Wang, X., & Cohen, W. W. (2022). Program of Thoughts Prompting: Disentangling Computation from Reasoning for Numerical Reasoning Tasks. *arXiv:2211.12588*
+
+Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. *arXiv:2201.11903*

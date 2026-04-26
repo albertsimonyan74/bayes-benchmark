@@ -1,0 +1,1793 @@
+[
+  {
+    "task_id": "GIBBS_01",
+    "task_type": "GIBBS",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "mu_x": 0.0,
+      "mu_y": 0.0,
+      "sigma_x": 1.0,
+      "sigma_y": 1.0,
+      "rho": 0.5,
+      "n_samples": 2000,
+      "n_burnin": 500
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean_x",
+        "true_value": 0.001015378942673781,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_mean_y",
+        "true_value": 0.006583886446062759,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_var_x",
+        "true_value": 0.94930529435768,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "defines_conditional_distributions",
+      "implements_alternating_sampling",
+      "applies_burn_in"
+    ],
+    "required_assumption_checks": [
+      "uses_bivariate_normal_conditionals",
+      "seeds_rng_for_reproducibility"
+    ],
+    "prompt": "Use Gibbs sampling to sample from a bivariate normal distribution with mu_x=0.0, mu_y=0.0, sigma_x=1.0, sigma_y=1.0, rho=0.5. Run 2000 samples after 500 burn-in steps (seed 42). Report posterior_mean_x, posterior_mean_y, and posterior_var_x."
+  },
+  {
+    "task_id": "GIBBS_02",
+    "task_type": "GIBBS",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "mu_x": 2.0,
+      "mu_y": -1.0,
+      "sigma_x": 1.5,
+      "sigma_y": 0.8,
+      "rho": 0.7,
+      "n_samples": 3000,
+      "n_burnin": 500
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean_x",
+        "true_value": 1.9601767969042327,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_mean_y",
+        "true_value": -1.0207226539344785,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_var_x",
+        "true_value": 2.175327841916919,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "defines_conditional_distributions",
+      "implements_alternating_sampling",
+      "applies_burn_in"
+    ],
+    "required_assumption_checks": [
+      "uses_bivariate_normal_conditionals",
+      "seeds_rng_for_reproducibility"
+    ],
+    "prompt": "Use Gibbs sampling to sample from a bivariate normal distribution with mu_x=2.0, mu_y=-1.0, sigma_x=1.5, sigma_y=0.8, rho=0.7. Run 3000 samples after 500 burn-in steps (seed 42). Report posterior_mean_x, posterior_mean_y, and posterior_var_x."
+  },
+  {
+    "task_id": "GIBBS_03",
+    "task_type": "GIBBS",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "mu_x": -1.0,
+      "mu_y": 3.0,
+      "sigma_x": 2.0,
+      "sigma_y": 1.0,
+      "rho": 0.3,
+      "n_samples": 2000,
+      "n_burnin": 500
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean_x",
+        "true_value": -1.00094564872315,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_mean_y",
+        "true_value": 3.006551169391029,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_var_x",
+        "true_value": 3.804723873230653,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "defines_conditional_distributions",
+      "implements_alternating_sampling",
+      "applies_burn_in"
+    ],
+    "required_assumption_checks": [
+      "uses_bivariate_normal_conditionals",
+      "seeds_rng_for_reproducibility"
+    ],
+    "prompt": "Use Gibbs sampling to sample from a bivariate normal distribution with mu_x=-1.0, mu_y=3.0, sigma_x=2.0, sigma_y=1.0, rho=0.3. Run 2000 samples after 500 burn-in steps (seed 42). Report posterior_mean_x, posterior_mean_y, and posterior_var_x."
+  },
+  {
+    "task_id": "GIBBS_04",
+    "task_type": "GIBBS",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "mu_x": 5.0,
+      "mu_y": 5.0,
+      "sigma_x": 1.0,
+      "sigma_y": 2.0,
+      "rho": -0.6,
+      "n_samples": 4000,
+      "n_burnin": 1000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean_x",
+        "true_value": 4.992606037629365,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_mean_y",
+        "true_value": 4.9871060067335975,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_var_x",
+        "true_value": 1.0265491816613477,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "defines_conditional_distributions",
+      "implements_alternating_sampling",
+      "applies_burn_in"
+    ],
+    "required_assumption_checks": [
+      "uses_bivariate_normal_conditionals",
+      "seeds_rng_for_reproducibility"
+    ],
+    "prompt": "Use Gibbs sampling to sample from a bivariate normal distribution with mu_x=5.0, mu_y=5.0, sigma_x=1.0, sigma_y=2.0, rho=-0.6. Run 4000 samples after 1000 burn-in steps (seed 42). Report posterior_mean_x, posterior_mean_y, and posterior_var_x."
+  },
+  {
+    "task_id": "GIBBS_05",
+    "task_type": "GIBBS",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "mu_x": 0.0,
+      "mu_y": 0.0,
+      "sigma_x": 3.0,
+      "sigma_y": 3.0,
+      "rho": 0.9,
+      "n_samples": 5000,
+      "n_burnin": 1000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean_x",
+        "true_value": -0.20820906805740602,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_mean_y",
+        "true_value": -0.21057346546023822,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_var_x",
+        "true_value": 8.372710794742982,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "defines_conditional_distributions",
+      "implements_alternating_sampling",
+      "applies_burn_in"
+    ],
+    "required_assumption_checks": [
+      "uses_bivariate_normal_conditionals",
+      "seeds_rng_for_reproducibility"
+    ],
+    "prompt": "Use Gibbs sampling to sample from a bivariate normal distribution with mu_x=0.0, mu_y=0.0, sigma_x=3.0, sigma_y=3.0, rho=0.9. Run 5000 samples after 1000 burn-in steps (seed 42). Report posterior_mean_x, posterior_mean_y, and posterior_var_x."
+  },
+  {
+    "task_id": "MH_01",
+    "task_type": "MH",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 1.0,
+      "n_obs": 10,
+      "n_success": 7,
+      "proposal_std": 0.3,
+      "n_samples": 4000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.6405749675472812,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.11473412672671247,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "acceptance_rate",
+        "true_value": 0.84275,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "proposes_in_logit_space",
+      "computes_log_acceptance_ratio",
+      "tracks_acceptance_rate"
+    ],
+    "required_assumption_checks": [
+      "applies_binomial_log_likelihood",
+      "transforms_via_sigmoid"
+    ],
+    "prompt": "Use Metropolis-Hastings (in logit space) to sample from the posterior of theta given 7 successes in 10 Bernoulli trials, with Normal(0.0, 1.0^2) prior on logit(theta). Proposal std = 0.3, 4000 post-burnin samples, seed 42. Report posterior_mean, posterior_std, and acceptance_rate."
+  },
+  {
+    "task_id": "MH_02",
+    "task_type": "MH",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 2.0,
+      "n_obs": 20,
+      "n_success": 12,
+      "proposal_std": 0.5,
+      "n_samples": 5000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5952555132489935,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.10235651557842344,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "acceptance_rate",
+        "true_value": 0.6954,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "proposes_in_logit_space",
+      "computes_log_acceptance_ratio",
+      "tracks_acceptance_rate"
+    ],
+    "required_assumption_checks": [
+      "applies_binomial_log_likelihood",
+      "transforms_via_sigmoid"
+    ],
+    "prompt": "Use Metropolis-Hastings (in logit space) to sample from the posterior of theta given 12 successes in 20 Bernoulli trials, with Normal(0.0, 2.0^2) prior on logit(theta). Proposal std = 0.5, 5000 post-burnin samples, seed 42. Report posterior_mean, posterior_std, and acceptance_rate."
+  },
+  {
+    "task_id": "MH_03",
+    "task_type": "MH",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 1.0,
+      "n_obs": 50,
+      "n_success": 30,
+      "proposal_std": 0.4,
+      "n_samples": 6000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5950155818145102,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.06527421548785048,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "acceptance_rate",
+        "true_value": 0.6155,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "proposes_in_logit_space",
+      "computes_log_acceptance_ratio",
+      "tracks_acceptance_rate"
+    ],
+    "required_assumption_checks": [
+      "applies_binomial_log_likelihood",
+      "transforms_via_sigmoid"
+    ],
+    "prompt": "Use Metropolis-Hastings (in logit space) to sample from the posterior of theta given 30 successes in 50 Bernoulli trials, with Normal(0.0, 1.0^2) prior on logit(theta). Proposal std = 0.4, 6000 post-burnin samples, seed 42. Report posterior_mean, posterior_std, and acceptance_rate."
+  },
+  {
+    "task_id": "MH_04",
+    "task_type": "MH",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 1.0,
+      "prior_std": 1.5,
+      "n_obs": 30,
+      "n_success": 25,
+      "proposal_std": 0.3,
+      "n_samples": 5000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.8261453046414649,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.06125544513383197,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "acceptance_rate",
+        "true_value": 0.8172,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "proposes_in_logit_space",
+      "computes_log_acceptance_ratio",
+      "tracks_acceptance_rate"
+    ],
+    "required_assumption_checks": [
+      "applies_binomial_log_likelihood",
+      "transforms_via_sigmoid"
+    ],
+    "prompt": "Use Metropolis-Hastings (in logit space) to sample from the posterior of theta given 25 successes in 30 Bernoulli trials, with Normal(1.0, 1.5^2) prior on logit(theta). Proposal std = 0.3, 5000 post-burnin samples, seed 42. Report posterior_mean, posterior_std, and acceptance_rate."
+  },
+  {
+    "task_id": "MH_05",
+    "task_type": "MH",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 3.0,
+      "n_obs": 100,
+      "n_success": 60,
+      "proposal_std": 0.2,
+      "n_samples": 8000
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.603228768518587,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.04664807620887463,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "acceptance_rate",
+        "true_value": 0.71675,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "proposes_in_logit_space",
+      "computes_log_acceptance_ratio",
+      "tracks_acceptance_rate"
+    ],
+    "required_assumption_checks": [
+      "applies_binomial_log_likelihood",
+      "transforms_via_sigmoid"
+    ],
+    "prompt": "Use Metropolis-Hastings (in logit space) to sample from the posterior of theta given 60 successes in 100 Bernoulli trials, with Normal(0.0, 3.0^2) prior on logit(theta). Proposal std = 0.2, 8000 post-burnin samples, seed 42. Report posterior_mean, posterior_std, and acceptance_rate."
+  },
+  {
+    "task_id": "HMC_01",
+    "task_type": "HMC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 2.0,
+      "likelihood_std": 1.0,
+      "obs_mean": 2.0,
+      "n_obs": 10,
+      "step_size": 0.1,
+      "n_leapfrog": 5
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 1.9642430767780175,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.3044268805779825,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "energy_error",
+        "true_value": 0.016297526771760752,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "implements_leapfrog_integrator",
+      "computes_hamiltonian_energy",
+      "applies_metropolis_correction"
+    ],
+    "required_assumption_checks": [
+      "uses_gradient_of_log_posterior",
+      "refreshes_momentum_each_iteration"
+    ],
+    "prompt": "Use Hamiltonian Monte Carlo to sample from a Normal posterior (prior N(0.0, 2.0^2), likelihood N(theta, 1.0^2), observed mean=2.0 from 10 observations). Step size=0.1, 5 leapfrog steps, seed 42. Report posterior_mean, posterior_std, and mean energy_error."
+  },
+  {
+    "task_id": "HMC_02",
+    "task_type": "HMC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 1.0,
+      "prior_std": 3.0,
+      "likelihood_std": 0.5,
+      "obs_mean": 3.0,
+      "n_obs": 20,
+      "step_size": 0.05,
+      "n_leapfrog": 10
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 2.993437126597684,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.10791061027464173,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "energy_error",
+        "true_value": 0.03726860328624502,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "implements_leapfrog_integrator",
+      "computes_hamiltonian_energy",
+      "applies_metropolis_correction"
+    ],
+    "required_assumption_checks": [
+      "uses_gradient_of_log_posterior",
+      "refreshes_momentum_each_iteration"
+    ],
+    "prompt": "Use Hamiltonian Monte Carlo to sample from a Normal posterior (prior N(1.0, 3.0^2), likelihood N(theta, 0.5^2), observed mean=3.0 from 20 observations). Step size=0.05, 10 leapfrog steps, seed 42. Report posterior_mean, posterior_std, and mean energy_error."
+  },
+  {
+    "task_id": "HMC_03",
+    "task_type": "HMC",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 1.0,
+      "likelihood_std": 2.0,
+      "obs_mean": 1.0,
+      "n_obs": 5,
+      "step_size": 0.2,
+      "n_leapfrog": 5
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 0.5866083474059187,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.6543809997184822,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "energy_error",
+        "true_value": 0.013967533875130658,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "implements_leapfrog_integrator",
+      "computes_hamiltonian_energy",
+      "applies_metropolis_correction"
+    ],
+    "required_assumption_checks": [
+      "uses_gradient_of_log_posterior",
+      "refreshes_momentum_each_iteration"
+    ],
+    "prompt": "Use Hamiltonian Monte Carlo to sample from a Normal posterior (prior N(0.0, 1.0^2), likelihood N(theta, 2.0^2), observed mean=1.0 from 5 observations). Step size=0.2, 5 leapfrog steps, seed 42. Report posterior_mean, posterior_std, and mean energy_error."
+  },
+  {
+    "task_id": "HMC_04",
+    "task_type": "HMC",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_std": 5.0,
+      "likelihood_std": 1.0,
+      "obs_mean": 4.0,
+      "n_obs": 50,
+      "step_size": 0.05,
+      "n_leapfrog": 20
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 4.010275842011695,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.14161208489309032,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "energy_error",
+        "true_value": 0.02490016858169599,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "implements_leapfrog_integrator",
+      "computes_hamiltonian_energy",
+      "applies_metropolis_correction"
+    ],
+    "required_assumption_checks": [
+      "uses_gradient_of_log_posterior",
+      "refreshes_momentum_each_iteration"
+    ],
+    "prompt": "Use Hamiltonian Monte Carlo to sample from a Normal posterior (prior N(0.0, 5.0^2), likelihood N(theta, 1.0^2), observed mean=4.0 from 50 observations). Step size=0.05, 20 leapfrog steps, seed 42. Report posterior_mean, posterior_std, and mean energy_error."
+  },
+  {
+    "task_id": "HMC_05",
+    "task_type": "HMC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 2.0,
+      "prior_std": 2.0,
+      "likelihood_std": 1.5,
+      "obs_mean": 5.0,
+      "n_obs": 30,
+      "step_size": 0.1,
+      "n_leapfrog": 10
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_mean",
+        "true_value": 4.940932897425837,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_std",
+        "true_value": 0.2304859418011032,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "energy_error",
+        "true_value": 0.011467462778994842,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "implements_leapfrog_integrator",
+      "computes_hamiltonian_energy",
+      "applies_metropolis_correction"
+    ],
+    "required_assumption_checks": [
+      "uses_gradient_of_log_posterior",
+      "refreshes_momentum_each_iteration"
+    ],
+    "prompt": "Use Hamiltonian Monte Carlo to sample from a Normal posterior (prior N(2.0, 2.0^2), likelihood N(theta, 1.5^2), observed mean=5.0 from 30 observations). Step size=0.1, 10 leapfrog steps, seed 42. Report posterior_mean, posterior_std, and mean energy_error."
+  },
+  {
+    "task_id": "RJMCMC_01",
+    "task_type": "RJMCMC",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "data": [
+        0.1257302210933933,
+        -0.1321048632913019,
+        0.6404226504432821,
+        0.10490011715303971,
+        -0.535669373161111,
+        0.36159505490948474,
+        1.3040000451301372,
+        0.9470809631292422,
+        -0.7037352358069926,
+        -1.2654214710460525,
+        -0.6232744625373522,
+        0.0413259793472436
+      ],
+      "prior_prob_m1": 0.5,
+      "proposal_std": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_prob_m1",
+        "true_value": 0.6489446702262008,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_prob_m2",
+        "true_value": 0.35105532977379916,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "bayes_factor",
+        "true_value": 1.8485538181241838,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_marginal_likelihood_for_each_model",
+      "applies_bayes_theorem_for_model_probabilities",
+      "reports_bayes_factor"
+    ],
+    "required_assumption_checks": [
+      "uses_normal_marginal_likelihood_formula",
+      "posterior_probs_sum_to_one"
+    ],
+    "prompt": "Compute the analytical Bayes factor between M1 (single Normal mean over all 12 observations) and M2 (separate Normal means for two halves). Prior P(M1)=0.5. Data: [0.1257, -0.1321, 0.6404, 0.1049, -0.5357, 0.3616, 1.304, 0.9471, -0.7037, -1.2654, -0.6233, 0.0413]. Report posterior_prob_m1, posterior_prob_m2, and bayes_factor."
+  },
+  {
+    "task_id": "RJMCMC_02",
+    "task_type": "RJMCMC",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "data": [
+        -0.32503077463883434,
+        1.7812083360674542,
+        0.7540890527469348,
+        1.2677326452965483,
+        1.45574101714269,
+        1.6836998436308455,
+        2.411630536374133,
+        3.042513369442678,
+        1.8714653370559657,
+        3.366463470549686,
+        1.3348053265133863,
+        2.3515100700930196,
+        2.9034701816518087,
+        2.0940122977608744,
+        1.2565007506461916,
+        1.0782746237415806
+      ],
+      "prior_prob_m1": 0.5,
+      "proposal_std": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_prob_m1",
+        "true_value": 0.8494280444413972,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_prob_m2",
+        "true_value": 0.1505719555586028,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "bayes_factor",
+        "true_value": 5.641342979774202,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_marginal_likelihood_for_each_model",
+      "applies_bayes_theorem_for_model_probabilities",
+      "reports_bayes_factor"
+    ],
+    "required_assumption_checks": [
+      "uses_normal_marginal_likelihood_formula",
+      "posterior_probs_sum_to_one"
+    ],
+    "prompt": "Compute the analytical Bayes factor between M1 (single Normal mean over all 16 observations) and M2 (separate Normal means for two halves). Prior P(M1)=0.5. Data: [-0.325, 1.7812, 0.7541, 1.2677, 1.4557, 1.6837, 2.4116, 3.0425, 1.8715, 3.3665, 1.3348, 2.3515, 2.9035, 2.094, 1.2565, 1.0783]. Report posterior_prob_m1, posterior_prob_m2, and bayes_factor."
+  },
+  {
+    "task_id": "RJMCMC_03",
+    "task_type": "RJMCMC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "data": [
+        -0.9154516513346783,
+        0.4403902469400988,
+        -2.019236367077472,
+        -0.41835114974342613,
+        -0.31845001982895543,
+        1.0816911693716154,
+        0.4293182450126818,
+        0.7107454180798428,
+        -1.3076572188366788,
+        -0.2592272673855389,
+        1.567950940122659,
+        2.9868622904415214,
+        -2.5181310642082404,
+        3.027847549478125,
+        2.691750847564609,
+        1.562622801400855,
+        0.528911260658607,
+        -0.6278456290728556,
+        2.9160413670739174,
+        3.9205166328999295
+      ],
+      "prior_prob_m1": 0.6,
+      "proposal_std": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_prob_m1",
+        "true_value": 0.24731898042613207,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_prob_m2",
+        "true_value": 0.7526810195738679,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "bayes_factor",
+        "true_value": 0.21905603568618598,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_marginal_likelihood_for_each_model",
+      "applies_bayes_theorem_for_model_probabilities",
+      "reports_bayes_factor"
+    ],
+    "required_assumption_checks": [
+      "uses_normal_marginal_likelihood_formula",
+      "posterior_probs_sum_to_one"
+    ],
+    "prompt": "Compute the analytical Bayes factor between M1 (single Normal mean over all 20 observations) and M2 (separate Normal means for two halves). Prior P(M1)=0.6. Data: [-0.9155, 0.4404, -2.0192, -0.4184, -0.3185, 1.0817, 0.4293, 0.7107, -1.3077, -0.2592, 1.568, 2.9869, -2.5181, 3.0278, 2.6918, 1.5626, 0.5289, -0.6278, 2.916, 3.9205]. Report posterior_prob_m1, posterior_prob_m2, and bayes_factor."
+  },
+  {
+    "task_id": "RJMCMC_04",
+    "task_type": "RJMCMC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "data": [
+        7.702452304799188,
+        6.972655647101555,
+        5.536070615988434,
+        3.187522051576743,
+        4.993318800319875,
+        5.9847124026145035,
+        3.0674578043756684,
+        5.592683090273012,
+        5.644795542233345,
+        6.044064085944303
+      ],
+      "prior_prob_m1": 0.4,
+      "proposal_std": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_prob_m1",
+        "true_value": 0.995726127601722,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_prob_m2",
+        "true_value": 0.0042738723982780336,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "bayes_factor",
+        "true_value": 349.469767044133,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_marginal_likelihood_for_each_model",
+      "applies_bayes_theorem_for_model_probabilities",
+      "reports_bayes_factor"
+    ],
+    "required_assumption_checks": [
+      "uses_normal_marginal_likelihood_formula",
+      "posterior_probs_sum_to_one"
+    ],
+    "prompt": "Compute the analytical Bayes factor between M1 (single Normal mean over all 10 observations) and M2 (separate Normal means for two halves). Prior P(M1)=0.4. Data: [7.7025, 6.9727, 5.5361, 3.1875, 4.9933, 5.9847, 3.0675, 5.5927, 5.6448, 6.0441]. Report posterior_prob_m1, posterior_prob_m2, and bayes_factor."
+  },
+  {
+    "task_id": "RJMCMC_05",
+    "task_type": "RJMCMC",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "data": [
+        -1.184117966757189,
+        -0.6617025720390349,
+        -0.43643524714322124,
+        -1.169801907772864,
+        1.739367877130134,
+        -0.4959107284421519,
+        0.3289696294602021,
+        -0.258572545473924,
+        5.583472878802122,
+        5.320360987081839,
+        4.633352622824916,
+        1.7964901193533493,
+        4.052028974259887,
+        4.683686190776535,
+        5.00396157584217,
+        3.382092955292399
+      ],
+      "prior_prob_m1": 0.5,
+      "proposal_std": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "posterior_prob_m1",
+        "true_value": 0.0108549292717307,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "posterior_prob_m2",
+        "true_value": 0.9891450707282693,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "bayes_factor",
+        "true_value": 0.01097405182814957,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_marginal_likelihood_for_each_model",
+      "applies_bayes_theorem_for_model_probabilities",
+      "reports_bayes_factor"
+    ],
+    "required_assumption_checks": [
+      "uses_normal_marginal_likelihood_formula",
+      "posterior_probs_sum_to_one"
+    ],
+    "prompt": "Compute the analytical Bayes factor between M1 (single Normal mean over all 16 observations) and M2 (separate Normal means for two halves). Prior P(M1)=0.5. Data: [-1.1841, -0.6617, -0.4364, -1.1698, 1.7394, -0.4959, 0.329, -0.2586, 5.5835, 5.3204, 4.6334, 1.7965, 4.052, 4.6837, 5.004, 3.3821]. Report posterior_prob_m1, posterior_prob_m2, and bayes_factor."
+  },
+  {
+    "task_id": "VB_01",
+    "task_type": "VB",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_var": 1.0,
+      "likelihood_var": 1.0,
+      "observations": [
+        2.345584192064786,
+        2.8216181435011585,
+        2.330437076183387,
+        0.6968427683956391,
+        2.905355866673118,
+        2.4463745723640113,
+        1.463046764639715,
+        2.581118104196353,
+        2.364572396186076,
+        2.294132496655526
+      ],
+      "n_iter": 50
+    },
+    "numeric_targets": [
+      {
+        "key": "variational_mean",
+        "true_value": 2.0226438528054334,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "variational_var",
+        "true_value": 0.09090909090909091,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "final_elbo",
+        "true_value": -14.618640740534415,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "derives_variational_posterior_parameters",
+      "computes_elbo",
+      "iterates_cavi_updates"
+    ],
+    "required_assumption_checks": [
+      "assumes_mean_field_factorization",
+      "uses_conjugate_updates"
+    ],
+    "prompt": "Apply CAVI variational inference to a Normal-Normal model: prior N(0.0, 1.0), likelihood N(theta, 1.0), 10 observations (first 5: [2.3456, 2.8216, 2.3304, 0.6968, 2.9054]...). Run 50 iterations. Report variational_mean, variational_var, and final_elbo."
+  },
+  {
+    "task_id": "VB_02",
+    "task_type": "VB",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 1.0,
+      "prior_var": 2.0,
+      "likelihood_var": 0.5,
+      "observations": [
+        3.019895568921058,
+        3.3826990906287127,
+        2.484482139098833,
+        2.885963036404863,
+        2.6625164811240154,
+        3.419192348844239,
+        3.0278054752371615,
+        2.795280274324438,
+        2.4526640763502106,
+        2.8199654315667906,
+        3.0056995263628403,
+        2.8070779662904406,
+        3.905844670078745,
+        3.7047070207140558,
+        1.102186264723822,
+        1.6776907278226292,
+        2.8776595355613868,
+        2.7044667118965524,
+        3.1495500982490277,
+        3.1521253517157946
+      ],
+      "n_iter": 50
+    },
+    "numeric_targets": [
+      {
+        "key": "variational_mean",
+        "true_value": 2.829010952884721,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "variational_var",
+        "true_value": 0.024691358024691357,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "final_elbo",
+        "true_value": -21.994807480005264,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "derives_variational_posterior_parameters",
+      "computes_elbo",
+      "iterates_cavi_updates"
+    ],
+    "required_assumption_checks": [
+      "assumes_mean_field_factorization",
+      "uses_conjugate_updates"
+    ],
+    "prompt": "Apply CAVI variational inference to a Normal-Normal model: prior N(1.0, 2.0), likelihood N(theta, 0.5), 20 observations (first 5: [3.0199, 3.3827, 2.4845, 2.886, 2.6625]...). Run 50 iterations. Report variational_mean, variational_var, and final_elbo."
+  },
+  {
+    "task_id": "VB_03",
+    "task_type": "VB",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_var": 5.0,
+      "likelihood_var": 2.0,
+      "observations": [
+        1.9649742570714674,
+        -2.556829067769194,
+        -1.5286470099777973,
+        1.8598802504892622,
+        -0.0946158053174144,
+        -0.07171127867323372,
+        -1.719608920362448,
+        -3.3073052391979134,
+        -0.7655493580881624,
+        -0.8473802770498334,
+        -2.718292875942404,
+        -1.956517326492787,
+        -1.1008611516181184,
+        -2.3226522722850884,
+        -1.1375779549931042
+      ],
+      "n_iter": 50
+    },
+    "numeric_targets": [
+      {
+        "key": "variational_mean",
+        "true_value": -1.058616495467972,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "variational_var",
+        "true_value": 0.12987012987012986,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "final_elbo",
+        "true_value": -29.124865817926846,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "derives_variational_posterior_parameters",
+      "computes_elbo",
+      "iterates_cavi_updates"
+    ],
+    "required_assumption_checks": [
+      "assumes_mean_field_factorization",
+      "uses_conjugate_updates"
+    ],
+    "prompt": "Apply CAVI variational inference to a Normal-Normal model: prior N(0.0, 5.0), likelihood N(theta, 2.0), 15 observations (first 5: [1.965, -2.5568, -1.5286, 1.8599, -0.0946]...). Run 50 iterations. Report variational_mean, variational_var, and final_elbo."
+  },
+  {
+    "task_id": "VB_04",
+    "task_type": "VB",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 2.0,
+      "prior_var": 0.5,
+      "likelihood_var": 1.0,
+      "observations": [
+        4.095483027469454,
+        4.035586237055486,
+        3.4937083416856853,
+        4.593748071785823,
+        4.891166954282328,
+        4.320848304566564,
+        3.1817697726096927,
+        4.731652283785441,
+        3.4985599815329476,
+        4.879160618287985,
+        2.928212583122556,
+        4.9144672031287815,
+        3.9799365453845197,
+        2.7512511096655845,
+        3.686100528033152,
+        4.054102278771544,
+        4.272791339164454,
+        3.017811875059022,
+        2.892626952834807,
+        4.199584532847081,
+        3.533250383120198,
+        4.235505611730225,
+        4.759519522478379,
+        2.3512126336490518,
+        4.254388116517617,
+        5.224646967535732,
+        3.702473155629527,
+        3.18918541676243,
+        4.752243827179592,
+        4.253446516208141
+      ],
+      "n_iter": 50
+    },
+    "numeric_targets": [
+      {
+        "key": "variational_mean",
+        "true_value": 3.833576271621369,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "variational_var",
+        "true_value": 0.03125,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "final_elbo",
+        "true_value": -40.614399153807675,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "derives_variational_posterior_parameters",
+      "computes_elbo",
+      "iterates_cavi_updates"
+    ],
+    "required_assumption_checks": [
+      "assumes_mean_field_factorization",
+      "uses_conjugate_updates"
+    ],
+    "prompt": "Apply CAVI variational inference to a Normal-Normal model: prior N(2.0, 0.5), likelihood N(theta, 1.0), 30 observations (first 5: [4.0955, 4.0356, 3.4937, 4.5937, 4.8912]...). Run 50 iterations. Report variational_mean, variational_var, and final_elbo."
+  },
+  {
+    "task_id": "VB_05",
+    "task_type": "VB",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "prior_mean": 0.0,
+      "prior_var": 10.0,
+      "likelihood_var": 1.0,
+      "observations": [
+        5.89588307077756,
+        4.65478428994872,
+        3.518181726277789,
+        4.889989235288749,
+        4.554171846988768,
+        5.775323822047574,
+        5.193632848377153,
+        3.369150767564899,
+        3.8048369198968004,
+        5.883789036587255,
+        5.6797650174178465,
+        4.359756634091511,
+        4.9989512034327195,
+        5.445573553776186,
+        5.468404335847278,
+        5.87624219611435,
+        5.256485627221562,
+        4.905171661031502,
+        4.741151935212154,
+        6.055742800533251,
+        2.7491457249214624,
+        4.861344674908663,
+        5.03300010398406,
+        3.5746510391298125,
+        5.332813613138047,
+        4.348718987556606,
+        5.862444796315747,
+        4.874407915965673,
+        5.669153240789453,
+        6.218843605171223,
+        5.382929582713472,
+        4.124278856577154,
+        3.485681368295362,
+        6.753384117516372,
+        4.888707806812481,
+        4.311435052365678,
+        5.144257088060825,
+        4.808588669517351,
+        5.852142264212688,
+        5.0339281824371005,
+        5.013749583618419,
+        4.285420278967036,
+        5.4695680987474935,
+        3.9661332776450173,
+        5.665889439763967,
+        6.523937512990132,
+        3.475313961900848,
+        2.533770768648682,
+        5.616878755154319,
+        7.547897815483126
+      ],
+      "n_iter": 100
+    },
+    "numeric_targets": [
+      {
+        "key": "variational_mean",
+        "true_value": 4.964778537160518,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "variational_var",
+        "true_value": 0.01996007984031936,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "final_elbo",
+        "true_value": -75.22116187327418,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "derives_variational_posterior_parameters",
+      "computes_elbo",
+      "iterates_cavi_updates"
+    ],
+    "required_assumption_checks": [
+      "assumes_mean_field_factorization",
+      "uses_conjugate_updates"
+    ],
+    "prompt": "Apply CAVI variational inference to a Normal-Normal model: prior N(0.0, 10.0), likelihood N(theta, 1.0), 50 observations (first 5: [5.8959, 4.6548, 3.5182, 4.89, 4.5542]...). Run 100 iterations. Report variational_mean, variational_var, and final_elbo."
+  },
+  {
+    "task_id": "ABC_01",
+    "task_type": "ABC",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "observed_mean": 2.0,
+      "observed_std": 1.0,
+      "n_obs": 20,
+      "prior_low": 0.0,
+      "prior_high": 5.0,
+      "n_simulations": 20000,
+      "epsilon": 0.2
+    },
+    "numeric_targets": [
+      {
+        "key": "abc_posterior_mean",
+        "true_value": 2.0007968910217486,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "abc_posterior_std",
+        "true_value": 0.25440305659065604,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "draws_from_prior",
+      "simulates_data_from_likelihood",
+      "applies_acceptance_criterion"
+    ],
+    "required_assumption_checks": [
+      "uses_sufficient_statistic_for_comparison",
+      "epsilon_defines_tolerance_region"
+    ],
+    "prompt": "Use ABC rejection sampling to approximate the posterior of theta given observed mean=2.0 from 20 observations (observed std=1.0). Prior: Uniform(0.0, 5.0). Run 20000 simulations with epsilon=0.2, seed 42. Report abc_posterior_mean and abc_posterior_std."
+  },
+  {
+    "task_id": "ABC_02",
+    "task_type": "ABC",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "observed_mean": 3.5,
+      "observed_std": 0.5,
+      "n_obs": 30,
+      "prior_low": 1.0,
+      "prior_high": 6.0,
+      "n_simulations": 20000,
+      "epsilon": 0.15
+    },
+    "numeric_targets": [
+      {
+        "key": "abc_posterior_mean",
+        "true_value": 3.499038789991502,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "abc_posterior_std",
+        "true_value": 0.12776197412206086,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "draws_from_prior",
+      "simulates_data_from_likelihood",
+      "applies_acceptance_criterion"
+    ],
+    "required_assumption_checks": [
+      "uses_sufficient_statistic_for_comparison",
+      "epsilon_defines_tolerance_region"
+    ],
+    "prompt": "Use ABC rejection sampling to approximate the posterior of theta given observed mean=3.5 from 30 observations (observed std=0.5). Prior: Uniform(1.0, 6.0). Run 20000 simulations with epsilon=0.15, seed 42. Report abc_posterior_mean and abc_posterior_std."
+  },
+  {
+    "task_id": "ABC_03",
+    "task_type": "ABC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "observed_mean": 0.0,
+      "observed_std": 2.0,
+      "n_obs": 10,
+      "prior_low": -5.0,
+      "prior_high": 5.0,
+      "n_simulations": 20000,
+      "epsilon": 0.3
+    },
+    "numeric_targets": [
+      {
+        "key": "abc_posterior_mean",
+        "true_value": 0.008959896864246994,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "abc_posterior_std",
+        "true_value": 0.6652888018742541,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "draws_from_prior",
+      "simulates_data_from_likelihood",
+      "applies_acceptance_criterion"
+    ],
+    "required_assumption_checks": [
+      "uses_sufficient_statistic_for_comparison",
+      "epsilon_defines_tolerance_region"
+    ],
+    "prompt": "Use ABC rejection sampling to approximate the posterior of theta given observed mean=0.0 from 10 observations (observed std=2.0). Prior: Uniform(-5.0, 5.0). Run 20000 simulations with epsilon=0.3, seed 42. Report abc_posterior_mean and abc_posterior_std."
+  },
+  {
+    "task_id": "ABC_04",
+    "task_type": "ABC",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "observed_mean": 10.0,
+      "observed_std": 1.5,
+      "n_obs": 50,
+      "prior_low": 7.0,
+      "prior_high": 13.0,
+      "n_simulations": 30000,
+      "epsilon": 0.2
+    },
+    "numeric_targets": [
+      {
+        "key": "abc_posterior_mean",
+        "true_value": 9.996645067030956,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "abc_posterior_std",
+        "true_value": 0.24143894706425925,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "draws_from_prior",
+      "simulates_data_from_likelihood",
+      "applies_acceptance_criterion"
+    ],
+    "required_assumption_checks": [
+      "uses_sufficient_statistic_for_comparison",
+      "epsilon_defines_tolerance_region"
+    ],
+    "prompt": "Use ABC rejection sampling to approximate the posterior of theta given observed mean=10.0 from 50 observations (observed std=1.5). Prior: Uniform(7.0, 13.0). Run 30000 simulations with epsilon=0.2, seed 42. Report abc_posterior_mean and abc_posterior_std."
+  },
+  {
+    "task_id": "ABC_05",
+    "task_type": "ABC",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "observed_mean": 5.0,
+      "observed_std": 1.0,
+      "n_obs": 100,
+      "prior_low": 3.0,
+      "prior_high": 7.0,
+      "n_simulations": 50000,
+      "epsilon": 0.1
+    },
+    "numeric_targets": [
+      {
+        "key": "abc_posterior_mean",
+        "true_value": 5.000161885082009,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "abc_posterior_std",
+        "true_value": 0.11439908013227713,
+        "full_credit_tol": 0.1,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "draws_from_prior",
+      "simulates_data_from_likelihood",
+      "applies_acceptance_criterion"
+    ],
+    "required_assumption_checks": [
+      "uses_sufficient_statistic_for_comparison",
+      "epsilon_defines_tolerance_region"
+    ],
+    "prompt": "Use ABC rejection sampling to approximate the posterior of theta given observed mean=5.0 from 100 observations (observed std=1.0). Prior: Uniform(3.0, 7.0). Run 50000 simulations with epsilon=0.1, seed 42. Report abc_posterior_mean and abc_posterior_std."
+  },
+  {
+    "task_id": "HIERARCHICAL_01",
+    "task_type": "HIERARCHICAL",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "basic",
+    "inputs": {
+      "group_means": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "group_sizes": [
+        10,
+        10,
+        10
+      ],
+      "hyperprior_mean": 2.0,
+      "hyperprior_var": 1.0
+    },
+    "numeric_targets": [
+      {
+        "key": "hyperpost_mean",
+        "true_value": 2.0,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "hyperpost_var",
+        "true_value": 0.2682926829268293,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "shrinkage_factor",
+        "true_value": 0.0909090909090909,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_group_level_sampling_variances",
+      "derives_hyperparameter_posterior",
+      "computes_shrinkage_weights"
+    ],
+    "required_assumption_checks": [
+      "normal_normal_hierarchy_stated",
+      "shrinkage_factor_between_0_and_1"
+    ],
+    "prompt": "Fit a hierarchical Normal model (empirical Bayes). Group means: [1.0, 2.0, 3.0], group sizes: [10, 10, 10]. Hyperprior: N(2.0, 1.0). Report hyperpost_mean, hyperpost_var, and shrinkage_factor."
+  },
+  {
+    "task_id": "HIERARCHICAL_02",
+    "task_type": "HIERARCHICAL",
+    "category": "computational_bayes",
+    "tier": 2,
+    "difficulty": "intermediate",
+    "inputs": {
+      "group_means": [
+        0.5,
+        1.5,
+        2.5,
+        3.5
+      ],
+      "group_sizes": [
+        20,
+        15,
+        25,
+        10
+      ],
+      "hyperprior_mean": 2.0,
+      "hyperprior_var": 2.0
+    },
+    "numeric_targets": [
+      {
+        "key": "hyperpost_mean",
+        "true_value": 1.9905802221682694,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "hyperpost_var",
+        "true_value": 0.41682408031416684,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "shrinkage_factor",
+        "true_value": 0.050453180096643596,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_group_level_sampling_variances",
+      "derives_hyperparameter_posterior",
+      "computes_shrinkage_weights"
+    ],
+    "required_assumption_checks": [
+      "normal_normal_hierarchy_stated",
+      "shrinkage_factor_between_0_and_1"
+    ],
+    "prompt": "Fit a hierarchical Normal model (empirical Bayes). Group means: [0.5, 1.5, 2.5, 3.5], group sizes: [20, 15, 25, 10]. Hyperprior: N(2.0, 2.0). Report hyperpost_mean, hyperpost_var, and shrinkage_factor."
+  },
+  {
+    "task_id": "HIERARCHICAL_03",
+    "task_type": "HIERARCHICAL",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "intermediate",
+    "inputs": {
+      "group_means": [
+        5.0,
+        6.0,
+        4.5,
+        7.0,
+        5.5
+      ],
+      "group_sizes": [
+        30,
+        25,
+        20,
+        35,
+        15
+      ],
+      "hyperprior_mean": 5.6,
+      "hyperprior_var": 1.0
+    },
+    "numeric_targets": [
+      {
+        "key": "hyperpost_mean",
+        "true_value": 5.603799603866507,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "hyperpost_var",
+        "true_value": 0.17222462144178682,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "shrinkage_factor",
+        "true_value": 0.038725855074087295,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_group_level_sampling_variances",
+      "derives_hyperparameter_posterior",
+      "computes_shrinkage_weights"
+    ],
+    "required_assumption_checks": [
+      "normal_normal_hierarchy_stated",
+      "shrinkage_factor_between_0_and_1"
+    ],
+    "prompt": "Fit a hierarchical Normal model (empirical Bayes). Group means: [5.0, 6.0, 4.5, 7.0, 5.5], group sizes: [30, 25, 20, 35, 15]. Hyperprior: N(5.6, 1.0). Report hyperpost_mean, hyperpost_var, and shrinkage_factor."
+  },
+  {
+    "task_id": "HIERARCHICAL_04",
+    "task_type": "HIERARCHICAL",
+    "category": "computational_bayes",
+    "tier": 3,
+    "difficulty": "advanced",
+    "inputs": {
+      "group_means": [
+        10.0,
+        11.0,
+        9.5,
+        10.5
+      ],
+      "group_sizes": [
+        50,
+        40,
+        60,
+        45
+      ],
+      "hyperprior_mean": 10.25,
+      "hyperprior_var": 0.5
+    },
+    "numeric_targets": [
+      {
+        "key": "hyperpost_mean",
+        "true_value": 10.248888888569711,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "hyperpost_var",
+        "true_value": 0.10139277278330139,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "shrinkage_factor",
+        "true_value": 0.017170513551765357,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_group_level_sampling_variances",
+      "derives_hyperparameter_posterior",
+      "computes_shrinkage_weights"
+    ],
+    "required_assumption_checks": [
+      "normal_normal_hierarchy_stated",
+      "shrinkage_factor_between_0_and_1"
+    ],
+    "prompt": "Fit a hierarchical Normal model (empirical Bayes). Group means: [10.0, 11.0, 9.5, 10.5], group sizes: [50, 40, 60, 45]. Hyperprior: N(10.25, 0.5). Report hyperpost_mean, hyperpost_var, and shrinkage_factor."
+  },
+  {
+    "task_id": "HIERARCHICAL_05",
+    "task_type": "HIERARCHICAL",
+    "category": "computational_bayes",
+    "tier": 4,
+    "difficulty": "advanced",
+    "inputs": {
+      "group_means": [
+        2.0,
+        4.0,
+        6.0,
+        8.0,
+        10.0
+      ],
+      "group_sizes": [
+        5,
+        10,
+        15,
+        20,
+        25
+      ],
+      "hyperprior_mean": 6.0,
+      "hyperprior_var": 5.0
+    },
+    "numeric_targets": [
+      {
+        "key": "hyperpost_mean",
+        "true_value": 6.189568493205898,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "hyperpost_var",
+        "true_value": 0.9496696322290622,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      },
+      {
+        "key": "shrinkage_factor",
+        "true_value": 0.14700223523752937,
+        "full_credit_tol": 0.05,
+        "zero_credit_scale": 0.2
+      }
+    ],
+    "required_structure_checks": [
+      "computes_group_level_sampling_variances",
+      "derives_hyperparameter_posterior",
+      "computes_shrinkage_weights"
+    ],
+    "required_assumption_checks": [
+      "normal_normal_hierarchy_stated",
+      "shrinkage_factor_between_0_and_1"
+    ],
+    "prompt": "Fit a hierarchical Normal model (empirical Bayes). Group means: [2.0, 4.0, 6.0, 8.0, 10.0], group sizes: [5, 10, 15, 20, 25]. Hyperprior: N(6.0, 5.0). Report hyperpost_mean, hyperpost_var, and shrinkage_factor."
+  }
+]
