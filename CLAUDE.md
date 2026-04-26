@@ -530,12 +530,12 @@ Old Gemini free-tier records were wiped and re-run with paid billing (2026-04-26
 ✅ All CRITICAL items resolved as of 2026-04-26.
 
 ### IMPORTANT (needed for paper)
-- [ ] Regenerate R visualizations after results complete: `cd report_materials/r_analysis && Rscript run_all.R`
+- [x] Regenerate R visualizations — ✅ re-rendered 2026-04-26 with all 5 models (17/17 scripts, 24.5s)
 - [x] Implement RQ4 perturbation comparison analysis — `scripts/analyze_perturbations.py` ✅ written and tested
 - [x] Run `python scripts/summarize_results.py` — outputs `results_summary.json` with benchmark/synthetic split
-- [x] Interactive HTML: 14 HTML files in `report_materials/r_analysis/interactive/` (7 HTML from scripts 08–14, plus 7 `_files/` subdirs; scripts 01–07 output HTML to `figures/` dir)
-- [x] `report_materials/r_analysis/figures/` populated: 15 PNG + 1 GIF + 7 HTML (01–07)
-- [x] Master report `report_materials/r_analysis/benchmark_report.html` — **9.3 MB, generated 2026-04-24** (`theme: null` fixed to `theme: flatly` in Rmd YAML)
+- [x] Interactive HTML: 14 HTML files in `report_materials/r_analysis/interactive/` (all regenerated 2026-04-26)
+- [x] `report_materials/r_analysis/figures/` populated: 15 PNG + 1 GIF + 7 HTML (all 5 models, no Gemini exclusions)
+- [x] Master report `report_materials/r_analysis/benchmark_report.html` — **9.6 MB, regenerated 2026-04-26** (all 5 models complete, synthetic filtered out of R analysis)
 
 ### NICE TO HAVE
 - [ ] Verify `results.json` schema matches what `run_benchmark.py` writes before writing analysis code (DONE for `--no-judge` path — schema verified)
@@ -560,7 +560,7 @@ Old Gemini free-tier records were wiped and re-run with paid billing (2026-04-26
 - [x] Build Results & Visualizations page (`VizGallery.jsx`) — leaderboard cards + filter tabs + 15-viz gallery with lightbox/iframe/GIF modals. Assets in `frontend/public/visualizations/`. Manifest in `src/data/visualizations.js`. Added as `id="visualizations"` section in App.jsx and navbar entry.
 - [x] Website task modal improvements — stable 2×2 metadata grid with `minHeight:72`, collapsible "TASK INPUTS" section showing `inputs_str` as formatted JSON, GROUND TRUTH parameters wrapped in container div using `ParamTooltip` (portal-based).
 - [x] Website live results panel — `LiveResults` component below `AnimatedScoringBars` in `BenchmarkSection`, reads from `results_summary.json`, shows models benchmarked (4/5 + 1 partial), overall avg score, best model (CLAUDE), hardest/easiest task types with glowing cyan-border panel.
-- [x] R visualization pipeline — 15 PNG figures generated in `report_materials/r_analysis/figures/` (scripts 01–15). Interactive HTML charts in `report_materials/r_analysis/interactive/` (scripts 08–14). Script 08 fixed: replaced CSS `rgba()` color with hex `#FFFFFF0D` (ggplot2 compatibility). GIF animation in `report_materials/r_analysis/figures/15_bar_race.gif`. **Run from `report_materials/r_analysis/` dir** — outputs go to relative `figures/` and `interactive/` within that dir.
+- [x] R visualization pipeline — 17 scripts (00–15 + Rmd), all 5 models, synthetic excluded. Re-rendered 2026-04-26: 15 PNG + 1 GIF in `figures/`, 14 HTML in `interactive/`, master report 9.6 MB. **Run from `report_materials/r_analysis/` dir** — `Rscript run_all.R` (24.5s). Assets copied to `capstone-website/frontend/public/visualizations/`. Gemini no longer excluded from any R scripts.
 - [x] Tasks page pagination + view mode — perPage selector (9/18/36/72/All, default 18), currentPage state resets on filter change, pagination controls below grid, GROUP BY TYPE toggle in sidebar (grouped mode shows all filtered tasks by task_type, no pagination).
 - [x] Removed duplicate leaderboard from `ResultsSection.jsx` — only leaderboard is in `VizGallery.jsx` (Benchmark Visualizations section). `selectedModel` prop removed; heatmap now always shows all models.
 - [x] Viz modal improvements (`VizGallery.jsx`) — "Open Interactive" button: non-GIF now calls `window.open(viz.interactive, '_blank')` (Safari iframe blocked). GIF ("View Animation ▶") still opens in-page modal with `<img>`. iframe modal JSX removed. Static lightbox ("View Static") unchanged: 90vw × 85vh PNG lightbox, zIndex 99000/99001, ESC/backdrop close. Scroll lock on `modalOpen`/`showFullImg`. Plotly `_files/` subdirs copied via `cp -r report_materials/r_analysis/interactive/ frontend/public/visualizations/interactive/`.

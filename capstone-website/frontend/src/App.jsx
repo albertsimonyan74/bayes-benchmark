@@ -91,13 +91,16 @@ const PIPELINE = [
 ]
 
 // ─── Radar ────────────────────────────────────────────────────
+// Dimensions: Math Accuracy (pass_rate), Speed (inv latency), Consistency (RQ4 robustness),
+// Assumption Compliance (avg_assumption_score), Conceptual Reasoning (avg_structure_score)
+// Values derived from 2026-04-26 benchmark: 171 tasks × 5 models, all complete
 const RADAR_DIMS = ['Math\nAccuracy','Speed','Consistency','Assumption\nCompliance','Conceptual\nReasoning']
 const RADAR_VALS = {
-  claude:   [0.88, 0.74, 0.82, 0.84, 0.90],
-  gemini:   [0.76, 0.92, 0.74, 0.70, 0.72],
-  chatgpt:  [0.80, 0.80, 0.84, 0.78, 0.80],
-  deepseek: [0.84, 0.70, 0.72, 0.76, 0.76],
-  mistral:  [0.78, 0.76, 0.78, 0.74, 0.80],
+  claude:   [0.89, 0.61, 0.91, 0.73, 0.95],
+  gemini:   [0.86, 0.85, 0.90, 0.70, 0.93],
+  chatgpt:  [0.78, 0.90, 0.93, 0.60, 0.87],
+  deepseek: [0.79, 0.10, 0.90, 0.66, 0.88],
+  mistral:  [0.85, 0.55, 0.92, 0.61, 0.90],
 }
 
 // ─── Task type tooltips ───────────────────────────────────────
@@ -1472,11 +1475,11 @@ const TEXTBOOKS = [
 ]
 
 const RQS = [
-  { id:'RQ1', label:'Numerical & Statistical Accuracy',   color:'#00FFE0', status:'4/5 models complete · Claude 72.1% pass' },
-  { id:'RQ2', label:'Method Selection Accuracy',           color:'#00B4D8', status:'4/5 models complete · scoring active' },
-  { id:'RQ3', label:'Assumption Compliance',               color:'#7FFFD4', status:'4/5 models complete · scoring active' },
-  { id:'RQ4', label:'Robustness to Prompt Variations',     color:'#4A90D9', status:'75 perturbations ready · R scoring TBD' },
-  { id:'RQ5', label:'Confidence & Trust Calibration',      color:'#A78BFA', status:'Implementation planned' },
+  { id:'RQ1', label:'Numerical & Statistical Accuracy',   color:'#00FFE0', status:'5/5 models complete · Claude 88.9% pass' },
+  { id:'RQ2', label:'Method Selection Accuracy',           color:'#00B4D8', status:'5/5 models complete · structure scoring active' },
+  { id:'RQ3', label:'Assumption Compliance',               color:'#7FFFD4', status:'5/5 models complete · assumption scoring active' },
+  { id:'RQ4', label:'Robustness to Prompt Variations',     color:'#4A90D9', status:'375 runs · avg robustness 0.91 · ChatGPT most robust' },
+  { id:'RQ5', label:'Confidence & Trust Calibration',      color:'#A78BFA', status:'Implemented · C=0.20 active · confidence extraction running' },
 ]
 
 function About() {
@@ -1525,7 +1528,7 @@ function About() {
               <div style={{ color:'var(--text-primary)', fontSize:13, lineHeight:2 }}>
                 <span style={{ color:'var(--aqua)', fontWeight:700 }}>171 tasks</span> · 38 types · 4 tiers<br/>
                 <span style={{ color:'var(--aqua)', fontWeight:700 }}>126 numeric</span> + <span style={{ color:'var(--blue)', fontWeight:700 }}>10 conceptual</span><br/>
-                <span style={{ color:'#A78BFA', fontWeight:700 }}>75 perturbations</span> · RQ4 robustness
+                <span style={{ color:'#A78BFA', fontWeight:700 }}>375 pert. runs</span> · 5 models · RQ4 robustness
               </div>
             </div>
             <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:10 }}>7 TEXTBOOKS</div>

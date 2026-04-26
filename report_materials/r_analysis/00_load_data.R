@@ -88,16 +88,20 @@ message("  Parsed records: ", nrow(df_raw))
 
 # ── Clean / filter ────────────────────────────────────────────────────────────
 # Drop old placeholder record (missing task_type or model_family)
+# Also drop synthetic/perturbation tasks (task_id ends in _rephrase/_numerical/_semantic)
+SYNTH_PATTERN <- "_(rephrase|numerical|semantic)$"
+
 df <- df_raw %>%
   filter(
     !is.na(task_id),
     !is.na(model_family),
     !is.na(task_type),
     nzchar(task_type),
-    nzchar(model_family)
+    nzchar(model_family),
+    !stringr::str_detect(task_id, SYNTH_PATTERN)   # benchmark tasks only
   )
 
-message("  Records after dropping malformed rows: ", nrow(df))
+message("  Records after dropping malformed/synthetic rows: ", nrow(df))
 
 # Normalise model_family to lowercase
 df <- df %>%
@@ -108,11 +112,11 @@ df <- df %>%
     pass         = as.logical(pass)
   )
 
-# ── Tag gemini as incomplete ──────────────────────────────────────────────────
+# ── All 5 models now complete (171 tasks each) ────────────────────────────────
 gemini_count <- sum(df$model_family == "gemini", na.rm = TRUE)
-message("  Gemini run count: ", gemini_count, " (expected 136, incomplete due to quota)")
+message("  Gemini run count: ", gemini_count, " (expected 171 — fully complete as of 2026-04-26)")
 df <- df %>%
-  mutate(gemini_complete = !(model_family == "gemini"))
+  mutate(gemini_complete = TRUE)   # all models complete
 
 # ── Per-model counts ──────────────────────────────────────────────────────────
 counts <- df %>%
@@ -129,7 +133,6 @@ print(counts)
 
 # ── Task-type summary ─────────────────────────────────────────────────────────
 task_summary <- df %>%
-  filter(model_family != "gemini") %>%          # use complete models only
   group_by(task_type) %>%
   summarise(
     avg_score = round(mean(final_score, na.rm = TRUE), 3),
@@ -138,8 +141,8 @@ task_summary <- df %>%
   ) %>%
   arrange(avg_score)
 
-message("\n── Task-type avg scores (complete models, sorted) ──")
-print(task_summary, n = 31)
+message("\n── Task-type avg scores (all 5 models, sorted) ──")
+print(task_summary, n = 38)
 
 # ── Save ──────────────────────────────────────────────────────────────────────
 saveRDS(df, RDS_PATH)

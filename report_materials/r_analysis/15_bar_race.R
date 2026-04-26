@@ -24,7 +24,7 @@ TEXT_CLR   <- "#E8F4F8"
 if (!file.exists("data/benchmark_clean.rds")) stop("Run 00_load_data.R first.")
 df <- readRDS("data/benchmark_clean.rds")
 
-COMPLETE <- c("claude", "chatgpt", "deepseek", "mistral")
+COMPLETE <- c("claude", "chatgpt", "deepseek", "gemini", "mistral")
 
 # Pick a meaningful ordering of task types by avg difficulty/performance
 df_c <- df %>%

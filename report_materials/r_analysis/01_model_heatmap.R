@@ -43,8 +43,8 @@ if (!file.exists(RDS_PATH)) {
 }
 df <- readRDS(RDS_PATH)
 
-# Exclude gemini (incomplete)
-df_complete <- df %>% filter(model_family != "gemini")
+# All 5 models complete as of 2026-04-26
+df_complete <- df %>% filter(!is.na(model_family))
 
 # ── Build heatmap data ────────────────────────────────────────────────────────
 hm_data <- df_complete %>%

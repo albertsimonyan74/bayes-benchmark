@@ -50,7 +50,7 @@ if (!file.exists(RDS_PATH)) { source("00_load_data.R") }
 df <- readRDS(RDS_PATH)
 
 df_complete <- df %>%
-  filter(model_family != "gemini") %>%
+  filter(!is.na(model_family)) %>%
   mutate(
     model_family = factor(model_family,
                           levels = rev(c("claude", "chatgpt", "mistral", "deepseek")))

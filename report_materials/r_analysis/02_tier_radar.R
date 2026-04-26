@@ -51,7 +51,7 @@ if (!file.exists(RDS_PATH)) { source("00_load_data.R") }
 df <- readRDS(RDS_PATH)
 
 df_complete <- df %>%
-  filter(model_family != "gemini") %>%
+  filter(!is.na(model_family)) %>%
   mutate(tier_label = paste0("Tier ", tier))
 
 # ── Compute tier aggregates ───────────────────────────────────────────────────

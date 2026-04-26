@@ -103,3 +103,38 @@ Formally included in the core benchmark as of April 2026.
 Total benchmark: 171 tasks across 38 task types.
 Stochastic methods use wider tolerances (0.05–0.10) vs deterministic (1e-6–0.05).
 All Phase 2 ground truth values computed with `numpy` random seed 42.
+
+---
+
+## RQ4 Robustness Benchmark (Synthetic Perturbations)
+
+Not part of core benchmark scoring. Separate RQ4 analysis only.
+
+**25 base tasks** (Phase 1) × **3 perturbation types** = **75 perturbation tasks**
+
+| Perturbation Type | Description | Tasks |
+|-------------------|-------------|-------|
+| rephrase | Same inputs/answers, reworded prompt | 25 |
+| numerical | Changed numbers, recomputed ground truth | 25 |
+| semantic | Same math, new real-world framing | 25 |
+
+Data: `data/synthetic/perturbations.json`  
+Analysis: `scripts/analyze_perturbations.py` → `experiments/results_v1/rq4_analysis.json`  
+Runner: `--synthetic` flag in `run_all_tasks.py`
+
+---
+
+## Benchmark Run Status (2026-04-26)
+
+All 5 models complete on all phases.
+
+| Phase | Tasks | Claude | ChatGPT | DeepSeek | Gemini | Mistral |
+|-------|-------|--------|---------|----------|--------|---------|
+| Phase 1 | 136 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Phase 2 | 35 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Synthetic (RQ4) | 75 | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Total runs: 1230 (855 benchmark + 375 synthetic)
+
+**Leaderboard (formal scoring, `run_benchmark.py --no-judge`):**
+Claude 0.683 > Mistral 0.644 > Gemini 0.642 > DeepSeek 0.625 > ChatGPT 0.621

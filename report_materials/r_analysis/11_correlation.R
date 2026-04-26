@@ -25,7 +25,7 @@ TEXT_CLR   <- "#E8F4F8"
 if (!file.exists("data/benchmark_clean.rds")) stop("Run 00_load_data.R first.")
 df <- readRDS("data/benchmark_clean.rds")
 
-COMPLETE <- c("claude", "chatgpt", "deepseek", "mistral")
+COMPLETE <- c("claude", "chatgpt", "deepseek", "gemini", "mistral")
 df_c <- df %>% filter(model_family %in% COMPLETE)
 
 # ── (A) Model × Model correlation ─────────────────────────────────────────────

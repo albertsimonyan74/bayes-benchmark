@@ -31,7 +31,7 @@ RDS_PATH <- "data/benchmark_clean.rds"
 if (!file.exists(RDS_PATH)) { source("00_load_data.R") }
 df <- readRDS(RDS_PATH)
 
-df_complete <- df %>% filter(model_family != "gemini")
+df_complete <- df %>% filter(!is.na(model_family))
 
 # ── Build per-tier scores ─────────────────────────────────────────────────────
 tier_scores <- df_complete %>%

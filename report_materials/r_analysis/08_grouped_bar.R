@@ -28,7 +28,7 @@ PASS_THR   <- 0.5
 if (!file.exists("data/benchmark_clean.rds")) stop("Run 00_load_data.R first.")
 df <- readRDS("data/benchmark_clean.rds")
 
-COMPLETE <- c("claude", "chatgpt", "deepseek", "mistral")
+COMPLETE <- c("claude", "chatgpt", "deepseek", "gemini", "mistral")
 df_c <- df %>% filter(model_family %in% COMPLETE)
 
 # ── Summarize: mean ± sd per (model, tier, task_type) ─────────────────────────

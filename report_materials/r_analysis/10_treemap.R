@@ -22,7 +22,7 @@ TIER_COLORS <- c("1" = "#00FFE0", "2" = "#00BFFF", "3" = "#9B59B6", "4" = "#FF47
 if (!file.exists("data/benchmark_clean.rds")) stop("Run 00_load_data.R first.")
 df <- readRDS("data/benchmark_clean.rds")
 
-COMPLETE <- c("claude", "chatgpt", "deepseek", "mistral")
+COMPLETE <- c("claude", "chatgpt", "deepseek", "gemini", "mistral")
 df_c <- df %>% filter(model_family %in% COMPLETE)
 
 # Summarise: n tasks + avg score per (tier, task_type)
