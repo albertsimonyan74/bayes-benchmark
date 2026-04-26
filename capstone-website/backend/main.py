@@ -15,7 +15,7 @@ app.add_middleware(
 )
 
 BASE_DIR   = Path(__file__).parent.parent.parent   # project root
-TASKS_FILE = BASE_DIR / "data" / "benchmark_v1" / "tasks.json"
+TASKS_FILE = BASE_DIR / "data" / "benchmark_v1" / "tasks_all.json"  # 171 tasks (Phase 1 + Phase 2)
 RUNS_FILE  = BASE_DIR / "experiments" / "results_v1" / "runs.jsonl"
 
 
@@ -45,11 +45,20 @@ def _task_type(task_id: str) -> str:
 
 def _enrich(t: dict) -> dict:
     task_id = t.get("task_id", "")
+    task_type = t.get("task_type") or _task_type(task_id)
     is_conceptual = task_id.startswith("CONCEPTUAL")
+    # Phase 2 tasks have category="computational_bayes"; Phase 1 have notes.topic
+    raw_category = t.get("category", "")
+    if raw_category == "computational_bayes":
+        category = "computational_bayes"
+    elif is_conceptual:
+        category = "conceptual"
+    else:
+        category = "numeric"
 
     notes = t.get("notes", {})
     topic = notes.get("topic", "") if isinstance(notes, dict) else str(notes)
-    desc = topic.replace("_", " ") if topic else _task_type(task_id).replace("_", " ")
+    desc = topic.replace("_", " ") if topic else task_type.replace("_", " ")
 
     raw_targets = t.get("numeric_targets", [])
     if isinstance(raw_targets, list):
@@ -57,17 +66,24 @@ def _enrich(t: dict) -> dict:
     else:
         targets = raw_targets
 
+    # inputs: P1 stores under notes.inputs, P2 stores at top level
+    inputs = t.get("inputs") or (notes.get("inputs", {}) if isinstance(notes, dict) else {})
+
     return {
-        "task_id":         task_id,
-        "task_type":       _task_type(task_id),
-        "tier":            t.get("tier", 1),
-        "difficulty":      t.get("difficulty", "basic"),
-        "description":     desc,
-        "category":        "conceptual" if is_conceptual else "numeric",
-        "numeric_targets": targets,
-        "rubric_keys":     t.get("rubric_keys", []),
+        "task_id":          task_id,
+        "task_type":        task_type,
+        "tier":             t.get("tier", 1),
+        "difficulty":       t.get("difficulty", "basic"),
+        "description":      desc,
+        "category":         category,
+        "numeric_targets":  targets,
+        "rubric_keys":      t.get("rubric_keys", []),
         "reference_answer": t.get("reference_answer", ""),
-        "notes_topic":     topic,
+        "notes_topic":      topic,
+        "inputs":           inputs,
+        "prompt":           t.get("prompt", ""),
+        "required_structure_checks":  t.get("required_structure_checks", []),
+        "required_assumption_checks": t.get("required_assumption_checks", []),
     }
 
 
@@ -93,15 +109,17 @@ def status():
 def get_tasks(
     tier:         Optional[str] = None,
     category:     Optional[str] = None,
+    task_type:    Optional[str] = None,
     search_id:    Optional[str] = None,
     search_topic: Optional[str] = None,
-    limit:        int = 50,
+    limit:        int = 200,
 ):
     tasks  = _load_tasks()
     result = []
 
     for t in tasks:
-        task_id = t.get("task_id", "")
+        task_id  = t.get("task_id", "")
+        tt       = t.get("task_type") or _task_type(task_id)
         is_conceptual = task_id.startswith("CONCEPTUAL")
 
         if tier:
@@ -109,9 +127,16 @@ def get_tasks(
             if allowed and t.get("tier") not in allowed:
                 continue
 
-        if category == "conceptual" and not is_conceptual:
-            continue
-        if category == "numeric" and is_conceptual:
+        if category:
+            raw_cat = t.get("category", "")
+            if category == "conceptual" and not is_conceptual:
+                continue
+            if category == "numeric" and (is_conceptual or raw_cat == "computational_bayes"):
+                continue
+            if category == "computational_bayes" and raw_cat != "computational_bayes":
+                continue
+
+        if task_type and tt.upper() != task_type.upper():
             continue
 
         if search_id and search_id.upper() not in task_id.upper():
@@ -120,7 +145,7 @@ def get_tasks(
         if search_topic:
             notes = t.get("notes", {})
             topic = notes.get("topic", "") if isinstance(notes, dict) else str(notes)
-            hay   = (task_id + " " + topic).lower()
+            hay   = (task_id + " " + topic + " " + tt).lower()
             if search_topic.lower() not in hay:
                 continue
 

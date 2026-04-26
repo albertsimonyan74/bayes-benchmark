@@ -1,0 +1,203 @@
+{
+  "main": {
+    "id": "7e80509164821b22",
+    "type": "split",
+    "children": [
+      {
+        "id": "c019c9f8a3092ac8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "30604f221bba6249",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "028f3a27b04054dd",
+    "type": "split",
+    "children": [
+      {
+        "id": "b6e990d71d2902fb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f3f891a35e760384",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "1c54323760ae0362",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "8a340602e3c2223b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "cd5fb29787f9029a",
+    "type": "split",
+    "children": [
+      {
+        "id": "0c895f1844a2f3e7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "253f967ce3eb5705",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "06f8f01744d1c561",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "c7008f0250acb601",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "075e7606d1de21d9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "30604f221bba6249",
+  "lastOpenFiles": [
+    "00-home/index.md",
+    "knowledge/decisions/obsidian-vault-is-persistent-session-memory.md",
+    "sessions/2026-04-26-vault-creation-and-workflow-setup.md",
+    "inbox/README.md",
+    "inbox",
+    "sessions/2026-04-26-research-gap-closures-and-roadmap.md",
+    "sessions",
+    "knowledge/business/capstone-is-ds-299-deliverable.md",
+    "knowledge/business/benchmark-covers-bayesian-not-frequentist-methods.md",
+    "knowledge/business/five-research-questions-define-benchmark-scope.md",
+    "knowledge/business",
+    "knowledge/patterns/perturbation-types-test-three-robustness-axes.md",
+    "knowledge/patterns/llm-as-judge-fallback-for-failed-extraction.md",
+    "knowledge/patterns/resume-safe-benchmark-skips-completed-tasks.md",
+    "knowledge/patterns/scoring-weights-must-be-updated-in-two-files.md",
+    "00-home/current-priorities.md",
+    "knowledge/patterns/adding-a-new-task-type-requires-4-changes.md",
+    "knowledge/patterns",
+    "knowledge/debugging/safari-blocks-cross-origin-iframes.md",
+    "knowledge/debugging/css-filter-stacking-context-breaks-fixed-modals.md",
+    "knowledge/debugging/anthropic-module-not-in-venv.md",
+    "knowledge/debugging/gemini-daily-quota-exhausted-on-2026-04-24.md",
+    "knowledge/debugging",
+    "knowledge/decisions/tasks-json-is-generated-never-edited-manually.md",
+    "knowledge/decisions/runs-jsonl-is-append-only.md",
+    "Welcome.md",
+    "knowledge/decisions/httpx-used-directly-no-vendor-sdks.md",
+    "knowledge/decisions/mcmc-is-baseline-solver-not-benchmark-target.md",
+    "knowledge/decisions/dual-scoring-paths-exist-for-separation-of-concerns.md",
+    "knowledge/decisions/all-scoring-weights-are-equal-at-0.20.md",
+    "knowledge/decisions",
+    "knowledge/integrations/react-frontend-uses-vite-with-portal-tooltips.md",
+    "knowledge/integrations",
+    "knowledge",
+    "atlas",
+    "00-home"
+  ]
+}

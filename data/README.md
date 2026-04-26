@@ -20,12 +20,22 @@ Each line is a JSON object with the following fields:
 - `error` — error message if API call failed (e.g. 429 Too Many Requests)
 
 ### Statistics (as of April 2026)
-- Total runs: 620 / 680
-- Claude: 136/136 — avg score 0.696 — pass rate 86%
-- Mistral: 136/136 — avg score 0.635 — pass rate 81%
-- DeepSeek: 136/136 — avg score 0.615 — pass rate 74%
-- ChatGPT: 136/136 — avg score 0.612 — pass rate 72%
-- Gemini: 74/136 — avg score TBD (quota interruptions) — in progress
+
+**Phase 1 (136 tasks × 5 models):**
+- Claude: 136/136 — avg score 0.701 — pass rate 88%
+- Mistral: 136/136 — avg score 0.646 — pass rate 81%
+- DeepSeek: 136/136 — avg score 0.621 — pass rate 74%
+- ChatGPT: 136/136 — avg score 0.620 — pass rate 74%
+- Gemini: 68/136 — in progress (quota interruptions)
+
+**Phase 2 (35 tasks × 5 models — computational Bayes):**
+- Claude: 35/35 — avg score 0.613 — pass rate 100%
+- DeepSeek: 35/35 — avg score 0.642 — pass rate 100%
+- Mistral: 35/35 — avg score 0.637 — pass rate 100%
+- ChatGPT: 35/35 — avg score 0.627 — pass rate 100%
+- Gemini: 0/35 — pending
+
+**Total:** 752 runs / 855 (171 tasks × 5 models)
 - Synthetic (RQ4): 0/375 — in progress
 
 ### Reproducing runs

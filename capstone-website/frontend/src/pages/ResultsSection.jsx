@@ -35,7 +35,7 @@ function FadeIn({ children, delay = 0, style = {} }) {
 function ModelCard({ modelId, data, rank, isSelected, onClick }) {
   const meta     = MODEL_META[modelId] || { name: modelId, color: '#8BAFC0', initials: '??' }
   const isPending = !data
-  const isPartial = data && data.tasks < 136
+  const isPartial = data && data.tasks < 171
 
   return (
     <motion.div
@@ -74,7 +74,7 @@ function ModelCard({ modelId, data, rank, isSelected, onClick }) {
             {(data.avg_score * 100).toFixed(1)}%
           </div>
           <div style={{ color: '#FF9A3C', fontSize: 11, fontWeight: 700, background: 'rgba(255,154,60,0.12)', padding: '3px 8px', borderRadius: 10, display: 'inline-block' }}>
-            PARTIAL · {data.tasks}/136 runs
+            PARTIAL · {data.tasks}/171 runs
           </div>
         </>
       ) : (
@@ -411,7 +411,7 @@ export default function ResultsSection() {
           <span>Generated: {new Date(summary.generated_at).toLocaleString()}</span>
           <span>Total runs: {summary.total_runs}</span>
           <span>Complete: {summary.models_complete.join(', ')}</span>
-          {summary.models_partial.length > 0 && <span>Partial: {summary.models_partial.join(', ')} ({summaryData.by_model[summary.models_partial[0]]?.tasks || 0}/136 runs)</span>}
+          {summary.models_partial.length > 0 && <span>Partial: {summary.models_partial.join(', ')} ({summaryData.by_model[summary.models_partial[0]]?.tasks || 0}/171 runs)</span>}
         </div>
       </FadeIn>
     </>

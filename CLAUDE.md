@@ -474,7 +474,7 @@ Note: `runs.jsonl` also contains an old placeholder record with a different sche
 ### Result files
 
 - `experiments/results_v1/runs.jsonl` — append-only, one JSON object per line
-- `experiments/results_v1/results.json` — output of `run_benchmark.py`; top-level is a **list** of aggregate objects (not a dict with `model_aggregates` key)
+- `experiments/results_v1/results.json` — output of `run_benchmark.py`; top-level is a **dict** with keys `model_aggregates` (list of ModelAggregate) and `task_scores` (list of TaskScore)
 
 ---
 
@@ -634,7 +634,7 @@ Weights live in two places — always update both together:
 
 ## 11. Running the Full Benchmark
 
-680 tasks (136 × 5 models). Results append to `runs.jsonl` automatically.
+855 runs total (171 × 5 models). Results append to `runs.jsonl` automatically.
 Resume-safe: re-running skips already-completed tasks (checks existing records at startup).
 
 ```bash

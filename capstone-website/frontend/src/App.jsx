@@ -32,14 +32,14 @@ const TIER_INFO = {
   1: { label:'BASIC',        color:'#7FFFD4', tasks:9,  icon:'◆',
        desc:'Closed-form posterior · Single conjugate update',
        detail:'Direct application of Bayes theorem. No multi-step reasoning required. Tests foundational probability mechanics.' },
-  2: { label:'INTERMEDIATE', color:'#00FFE0', tasks:45, icon:'◆◆',
-       desc:'Multi-step inference · Distribution properties',
-       detail:'Requires tracking intermediate quantities and chaining multiple theorems. Tests working Bayesian fluency.' },
-  3: { label:'ADVANCED',     color:'#00B4D8', tasks:69, icon:'◆◆◆',
-       desc:'Decision theory · Model comparison · Order statistics',
-       detail:'Integrates multiple statistical frameworks. Requires strong mathematical intuition and formula-level recall.' },
-  4: { label:'EXPERT',       color:'#A78BFA', tasks:13, icon:'◆◆◆◆',
-       desc:'Competing estimators · Asymptotic theory · MCMC variants',
+  2: { label:'INTERMEDIATE', color:'#00FFE0', tasks:58, icon:'◆◆',
+       desc:'Multi-step inference · Distribution properties · MCMC basics',
+       detail:'Requires tracking intermediate quantities and chaining multiple theorems. Includes Phase 2 Gibbs, MH, and VB tasks.' },
+  3: { label:'ADVANCED',     color:'#00B4D8', tasks:84, icon:'◆◆◆',
+       desc:'Decision theory · Model comparison · Computational Bayes',
+       detail:'Integrates multiple statistical frameworks. Includes HMC, RJMCMC, ABC, and Hierarchical Bayes tasks.' },
+  4: { label:'EXPERT',       color:'#A78BFA', tasks:20, icon:'◆◆◆◆',
+       desc:'Competing estimators · Asymptotic theory · Advanced MCMC',
        detail:'Graduate-level statistical theory. Tests the frontier of LLM mathematical reasoning under pressure.' },
 }
 
@@ -76,8 +76,8 @@ const PIPELINE = [
   { label:'Baseline', desc:'80+ Python functions · Ground truth computation',
     detail:'Closed-form analytical solutions · 100% reproducible',
     icon:<svg viewBox="0 0 52 52" fill="none" stroke="var(--aqua)" strokeWidth="1.8" width="52" height="52"><path d="M6 26 L14 26 L19 13 L26 39 L33 16 L38 26 L46 26"/></svg> },
-  { label:'Tasks', desc:'136 benchmark tasks · Numeric + Conceptual',
-    detail:'31 task types · 4 difficulty tiers · Verified targets',
+  { label:'Tasks', desc:'171 benchmark tasks · Numeric + Conceptual',
+    detail:'38 task types · 4 difficulty tiers · Verified targets',
     icon:<svg viewBox="0 0 52 52" fill="none" stroke="var(--aqua)" strokeWidth="1.8" width="52" height="52"><rect x="9" y="5" width="34" height="42" rx="2"/><polyline points="17,21 22,27 32,17"/><polyline points="17,34 22,40 32,32"/><line x1="17" y1="12" x2="35" y2="12"/></svg> },
   { label:'LLM Runner', desc:'Claude · Gemini · ChatGPT · DeepSeek · Mistral',
     detail:'Unified API interface · Auto retry · JSONL logging',
@@ -133,6 +133,14 @@ const TASK_TYPE_TOOLTIPS = {
   BETA_BINOM:    { title:'Beta-Binomial Model',         subdivision:'Conjugate Bayesian Models',         description:'Canonical conjugate model: Beta(α,β) prior + Binomial likelihood = Beta(α+x, β+n-x) posterior.',                                              textbook:'Hoff Ch.3 · Bolstad Ch.3' },
   GAMMA_POISSON: { title:'Gamma-Poisson Model',         subdivision:'Conjugate Bayesian Models',         description:'Conjugate model for count data: Gamma(α,β) prior + Poisson likelihood = Gamma(α+Σx, β+n) posterior.',                                         textbook:'Hoff Ch.3 · Bolstad Ch.10' },
   CONCEPTUAL:    { title:'Conceptual Reasoning',        subdivision:'Bayesian Theory & Interpretation',  description:'Tests deep understanding of Bayesian concepts: prior influence, credible vs confidence intervals, exchangeability.',                              textbook:'All 7 textbooks' },
+  // Phase 2 — Computational Bayesian Methods
+  GIBBS:         { title:'Gibbs Sampling',              subdivision:'Computational Bayes (Phase 2)',     description:'Sample from bivariate normal via alternating conditional draws. Burn-in discarded; convergence verified against analytic marginals.',             textbook:'Hoff Ch.10 · Carlin & Louis Ch.4' },
+  MH:            { title:'Metropolis–Hastings',         subdivision:'Computational Bayes (Phase 2)',     description:'MCMC on logit-transformed Binomial-Normal posterior. Proposal in logit space; accept/reject via log-acceptance ratio.',                          textbook:'Hoff Ch.10 · Carlin & Louis Ch.4' },
+  HMC:           { title:'Hamiltonian Monte Carlo',     subdivision:'Computational Bayes (Phase 2)',     description:'Leapfrog integrator on Gaussian target. Analytical posterior used; energy error ≈ 0 for exact Gaussians.',                                       textbook:'Neal (2011) · Carlin & Louis Ch.4' },
+  RJMCMC:        { title:'Reversible Jump MCMC',        subdivision:'Computational Bayes (Phase 2)',     description:'Analytical Bayes factor between M1 (one mean) and M2 (split means). Posterior model probabilities via prior-weighted odds.',                     textbook:'Green (1995) · Carlin & Louis Ch.7' },
+  VB:            { title:'Variational Bayes (CAVI)',    subdivision:'Computational Bayes (Phase 2)',     description:'Exact CAVI for Normal-Normal conjugate model. Mean-field variational posterior; ELBO computed analytically.',                                    textbook:'Blei et al (2017) · Bishop Ch.10' },
+  ABC:           { title:'Approximate Bayesian Computation', subdivision:'Computational Bayes (Phase 2)', description:'Rejection ABC: draw θ~Uniform prior, simulate data, accept if |mean(sim)-observed|≤ε. Tolerance 0.10.',                                     textbook:'Sisson et al (2018) · Carlin & Louis Ch.4' },
+  HIERARCHICAL:  { title:'Hierarchical Bayesian Model', subdivision:'Computational Bayes (Phase 2)',     description:'Empirical Bayes normal hierarchy. Posterior hyperparameters for group mean; shrinkage factor toward grand mean.',                               textbook:'Hoff Ch.8 · Gelman et al Ch.5' },
 }
 
 // ─── Animation variants ───────────────────────────────────────
@@ -370,15 +378,17 @@ function AnimatedScoringBars() {
   const isInView = useInView(ref, { once: true, amount: 0.3 })
 
   const bars = [
-    { label:'Numeric Accuracy',       weight:60, key:'N', color:'#00FFE0', desc:'Exact numerical match within tolerance bounds' },
+    { label:'Numeric Accuracy',       weight:20, key:'N', color:'#00FFE0', desc:'Exact numerical match within tolerance bounds' },
     { label:'Method Structure',        weight:20, key:'M', color:'#A78BFA', desc:'Correct method selection and derivation steps' },
     { label:'Assumption Compliance',   weight:20, key:'A', color:'#00897B', desc:'Acknowledgment of prior, data, and model assumptions' },
+    { label:'Confidence Calibration',  weight:20, key:'C', color:'#F59E0B', desc:'Expressed certainty matches actual accuracy' },
+    { label:'Reasoning Quality',       weight:20, key:'R', color:'#EC4899', desc:'Shows work, identifies model, states formula, interprets result' },
   ]
 
   return (
     <div ref={ref}>
       <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:6, textAlign:'center' }}>
-        COMPOSITE SCORE = N·0.60 + M·0.20 + A·0.20
+        COMPOSITE SCORE = N·0.20 + M·0.20 + A·0.20 + C·0.20 + R·0.20
       </div>
       <div style={{ color:'var(--text-muted)', fontSize:10, textAlign:'center', marginBottom:20 }}>
         Pass threshold: final_score ≥ 0.5
@@ -451,7 +461,7 @@ function LiveResults() {
       <div style={{ color: 'rgba(0,255,224,0.55)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 5, textTransform: 'uppercase' }}>
         {label}
       </div>
-      <div style={{ color, fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: 15, marginBottom: sub ? 3 : 0 }}>
+      <div style={{ color, fontFamily: 'var(--font-mono)', fontWeight: 800, fontSize: String(value).length > 12 ? 11 : 15, marginBottom: sub ? 3 : 0, wordBreak: 'break-all', lineHeight: 1.3 }}>
         {value}
       </div>
       {sub && (
@@ -740,7 +750,7 @@ function Overview() {
 
           <motion.p variants={fadeUp} style={{ color:'var(--text-secondary)', fontSize:15, marginBottom:44, lineHeight:1.7 }}>
             Evaluating <b style={{ color:'var(--text-primary)' }}>Claude · Gemini · ChatGPT · DeepSeek · Mistral</b>
-            <br/>on 136 benchmark tasks across 31 Bayesian topic areas
+            <br/>on 171 benchmark tasks across 38 Bayesian topic areas
           </motion.p>
 
           {/* Quote */}
@@ -947,12 +957,13 @@ function Tasks({ onOpenModal }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [viewMode,    setViewMode]    = useState('grid')
 
-  const PER_PAGE_OPTIONS = [9, 18, 36, 72, 136]
+  const PER_PAGE_OPTIONS = [9, 18, 36, 72, 171]
 
   const filtered = useMemo(() => tasksData.filter(t => {
     if (tiers.length && !tiers.includes(t.tier)) return false
-    if (category==='conceptual' && t.category!=='conceptual') return false
-    if (category==='numeric'    && t.category!=='numeric')    return false
+    if (category==='conceptual'          && t.category!=='conceptual')          return false
+    if (category==='numeric'             && t.category!=='numeric')             return false
+    if (category==='computational_bayes' && t.category!=='computational_bayes') return false
     if (searchId    && !t.task_id.toUpperCase().includes(searchId.toUpperCase()))   return false
     if (searchTopic) {
       const hay = (t.task_id+' '+t.description+' '+(t.notes_topic||'')).toLowerCase()
@@ -1051,17 +1062,23 @@ function Tasks({ onOpenModal }) {
             <div style={{ marginBottom:20 }}>
               <div style={{ color:'var(--text-secondary)', fontSize:10, fontWeight:700, letterSpacing:'0.1em', marginBottom:10 }}>CATEGORY</div>
               <div style={{ display:'flex', gap:6 }}>
-                {['all','numeric','conceptual'].map(cat => (
+                {[
+                  { key:'all',                  label:'All' },
+                  { key:'numeric',              label:'Numeric' },
+                  { key:'conceptual',           label:'Concept' },
+                  { key:'computational_bayes',  label:'Phase 2' },
+                ].map(({ key: cat, label }) => (
                   <motion.button
                     key={cat}
                     onClick={() => setCategory(cat)}
                     whileTap={{ scale: 0.95 }}
                     style={{ flex:1, padding:'6px 4px', borderRadius:6, fontSize:10, fontWeight:700, cursor:'pointer',
-                      border:`1px solid ${category===cat?'var(--aqua)':'var(--border-default)'}`,
+                      border:`1px solid ${category===cat ? (cat==='computational_bayes'?'#A78BFA':'var(--aqua)') : 'var(--border-default)'}`,
                       background:category===cat?'var(--bg-card-hover)':'transparent',
-                      color:category===cat?'var(--aqua)':'var(--text-secondary)', transition:'all 0.18s' }}
+                      color:category===cat ? (cat==='computational_bayes'?'#A78BFA':'var(--aqua)') : 'var(--text-secondary)',
+                      transition:'all 0.18s' }}
                   >
-                    {cat.charAt(0).toUpperCase()+cat.slice(1)}
+                    {label}
                   </motion.button>
                 ))}
               </div>
@@ -1077,7 +1094,7 @@ function Tasks({ onOpenModal }) {
                     onClick={() => { setPerPage(n); setCurrentPage(1) }}
                     style={{ padding:'5px 12px', borderRadius:6, border: perPage === n ? '1px solid rgba(0,255,224,0.8)' : '1px solid rgba(255,255,255,0.12)', background: perPage === n ? 'rgba(0,255,224,0.12)' : 'transparent', color: perPage === n ? '#00FFE0' : 'rgba(255,255,255,0.45)', fontSize:12, fontWeight: perPage === n ? 700 : 400, cursor:'none', transition:'all 0.15s ease' }}
                   >
-                    {n === 136 ? 'All' : n}
+                    {n === 171 ? 'All' : n}
                   </button>
                 ))}
               </div>
@@ -1283,7 +1300,9 @@ function TaskCard({ task, onClick, onCopy, copied }) {
         {(task.description||'').slice(0,105)}{(task.description||'').length>105?'…':''}
       </p>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <Pill color={task.category==='conceptual' ? C.aquaLight : C.blue}>{task.category.toUpperCase()}</Pill>
+        <Pill color={task.category==='conceptual' ? C.aquaLight : task.category==='computational_bayes' ? '#A78BFA' : C.blue}>
+          {task.category==='computational_bayes' ? 'PHASE 2' : task.category.toUpperCase()}
+        </Pill>
         <span style={{ color:'var(--aqua)', fontSize:10, fontWeight:700 }}>VIEW →</span>
       </div>
     </motion.div>
@@ -1470,7 +1489,7 @@ function About() {
           <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.85, margin:0 }}>
             This DS 299 capstone project evaluates Bayesian statistical reasoning capabilities
             of five leading LLMs using a benchmark derived from 7 graduate-level textbooks and
-            40 lecture materials. The benchmark spans 31 task types across 4 difficulty tiers,
+            40 lecture materials. The benchmark spans 38 task types across 4 difficulty tiers,
             covering numerical accuracy, method selection, assumption compliance, and conceptual understanding.
           </p>
         </Card>
@@ -1504,7 +1523,7 @@ function About() {
             <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:16 }}>DATASET</div>
             <div style={{ marginBottom:16 }}>
               <div style={{ color:'var(--text-primary)', fontSize:13, lineHeight:2 }}>
-                <span style={{ color:'var(--aqua)', fontWeight:700 }}>136 tasks</span> · 31 types · 4 tiers<br/>
+                <span style={{ color:'var(--aqua)', fontWeight:700 }}>171 tasks</span> · 38 types · 4 tiers<br/>
                 <span style={{ color:'var(--aqua)', fontWeight:700 }}>126 numeric</span> + <span style={{ color:'var(--blue)', fontWeight:700 }}>10 conceptual</span><br/>
                 <span style={{ color:'#A78BFA', fontWeight:700 }}>75 perturbations</span> · RQ4 robustness
               </div>
@@ -1573,7 +1592,7 @@ export default function App() {
         style={{ textAlign:'center', padding:'28px 48px', borderTop:'1px solid var(--border-default)', color:'var(--text-muted)', fontSize:12, zIndex:1, position:'relative' }}
       >
         DS 299 Capstone · LLM Bayesian Benchmark · 2026 ·{' '}
-        <span style={{ color:'var(--aqua)', fontFamily:'var(--font-mono)' }}>136 tasks · 5 models · 31 task types</span>
+        <span style={{ color:'var(--aqua)', fontFamily:'var(--font-mono)' }}>171 tasks · 5 models · 38 task types</span>
       </motion.footer>
       <BackToTop/>
     </motion.div>

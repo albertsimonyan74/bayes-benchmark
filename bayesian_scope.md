@@ -1,9 +1,10 @@
 # Bayesian Benchmark Scope (Updated)
 
-The Bayesian component of this project focuses primarily on **analytical conjugate models**
-with **closed-form posterior distributions**, aligned with the course lecture framework.
-In addition, the benchmark includes **a limited set of Bayesian decision-theory tasks**
-and **a small stress-test subset of simulation-based tasks** (no MCMC).
+The benchmark covers two phases: Phase 1 (analytical conjugate models, closed-form posteriors) and Phase 2 (computational Bayesian methods). Both phases are formally included in the core benchmark as of April 2026.
+
+## Core Benchmark Scope (Phase 1 + Phase 2)
+
+### Phase 1 — 136 tasks, 31 task types (Complete)
 
 ## Core Bayesian Inference (Closed-Form Conjugate Models)
 
@@ -85,13 +86,20 @@ These tasks are not part of core Bayesian inference scoring and are treated as s
 
 ---
 
-# Excluded From Scope
-- Gibbs sampling
-- Metropolis–Hastings
-- Hamiltonian Monte Carlo
-- RJMCMC
-- Variational Bayes
-- Approximate Bayesian Computation (ABC)
-- Hierarchical Bayesian models beyond simple conjugate form
+### Phase 2 — 35 tasks, 7 task types (Extended Computational Methods)
 
-These may be discussed as future work but are not included in the core benchmark.
+Formally included in the core benchmark as of April 2026.
+
+| Task Type    | Method                           | Tasks | Tolerance |
+|--------------|----------------------------------|-------|-----------|
+| GIBBS        | Gibbs Sampling                   | 5     | 0.05      |
+| MH           | Metropolis–Hastings              | 5     | 0.05      |
+| HMC          | Hamiltonian Monte Carlo          | 5     | 0.05      |
+| RJMCMC       | Reversible Jump MCMC             | 5     | 0.05      |
+| VB           | Variational Bayes                | 5     | 0.10      |
+| ABC          | Approximate Bayesian Computation | 5     | 0.10      |
+| HIERARCHICAL | Hierarchical Bayesian Models     | 5     | 0.05      |
+
+Total benchmark: 171 tasks across 38 task types.
+Stochastic methods use wider tolerances (0.05–0.10) vs deterministic (1e-6–0.05).
+All Phase 2 ground truth values computed with `numpy` random seed 42.

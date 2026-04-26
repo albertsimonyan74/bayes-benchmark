@@ -46,7 +46,7 @@ function FadeIn({ children, delay = 0, style = {} }) {
 function LeaderCard({ modelId, data, rank }) {
   const meta      = MODEL_META[modelId]
   const isPending = !data
-  const isPartial = data && data.tasks < 136
+  const isPartial = data && data.tasks < 171
   const rankInfo  = RANK_GLOW[rank]
 
   return (
@@ -106,7 +106,7 @@ function LeaderCard({ modelId, data, rank }) {
           <div style={{ fontSize: 10, fontWeight: 700, color: '#FF9A3C',
                         background: 'rgba(255,154,60,0.1)', borderRadius: 8,
                         padding: '2px 8px', display: 'inline-block' }}>
-            PARTIAL · {data.tasks}/136
+            PARTIAL · {data.tasks}/171
           </div>
         </>
       ) : (

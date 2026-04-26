@@ -1,4 +1,4 @@
-// Structured tooltip definitions for all 71 numeric answer keys across 31 task types.
+// Structured tooltip definitions for all 71 numeric answer keys across 38 task types (incl. Phase 2).
 // Each entry: { label, formula, definition }
 
 export const TOOLTIP_MAP = {
@@ -799,6 +799,98 @@ export const TOOLTIP_MAP = {
     label: 'Test Statistic',
     formula: 'T(y) — summary of data departure from H₀',
     definition: 'Summary statistic used in the posterior predictive check. Common choices: mean, variance, min, max, or domain-specific quantities.',
+  },
+
+  // ── Phase 2 — Computational Bayes answer keys ──────────────────────────────
+  posterior_mean_x: {
+    label: 'Posterior Mean (X)',
+    formula: 'E[X | data]',
+    definition: 'Monte Carlo estimate of the marginal posterior mean for X in a bivariate Gibbs sampler.',
+  },
+  posterior_mean_y: {
+    label: 'Posterior Mean (Y)',
+    formula: 'E[Y | data]',
+    definition: 'Monte Carlo estimate of the marginal posterior mean for Y in a bivariate Gibbs sampler.',
+  },
+  posterior_var_x: {
+    label: 'Posterior Variance (X)',
+    formula: 'Var[X | data]',
+    definition: 'Monte Carlo estimate of the marginal posterior variance for X. Should converge to σ_x² for a bivariate normal.',
+  },
+  posterior_mean: {
+    label: 'Posterior Mean',
+    formula: 'E[θ | data]',
+    definition: 'Mean of MCMC posterior samples for θ (after burn-in). Used by MH and HMC samplers.',
+  },
+  posterior_std: {
+    label: 'Posterior Std Dev',
+    formula: 'SD[θ | data]',
+    definition: 'Standard deviation of MCMC posterior samples. Measures posterior uncertainty.',
+  },
+  acceptance_rate: {
+    label: 'Acceptance Rate',
+    formula: '# accepted / # proposed',
+    definition: 'Fraction of MH proposals accepted. Typical target: 0.23–0.44 for scalar targets.',
+  },
+  energy_error: {
+    label: 'Mean Energy Error',
+    formula: 'E[|H_prop − H_curr|]',
+    definition: 'Average absolute change in Hamiltonian across HMC proposals. Near 0 for Gaussian targets (leapfrog is symplectic).',
+  },
+  posterior_prob_m1: {
+    label: 'P(M₁ | data)',
+    formula: 'BF · P(M₁) / [BF · P(M₁) + P(M₂)]',
+    definition: 'Posterior probability of the single-mean model M1, computed from the Bayes factor.',
+  },
+  posterior_prob_m2: {
+    label: 'P(M₂ | data)',
+    formula: '1 − P(M₁ | data)',
+    definition: 'Posterior probability of the split-mean model M2. Must satisfy P(M1) + P(M2) = 1.',
+  },
+  bayes_factor: {
+    label: 'Bayes Factor (BF₁₂)',
+    formula: 'p(y | M₁) / p(y | M₂)',
+    definition: 'Ratio of marginal likelihoods. BF > 1 favors M1; BF < 1 favors M2.',
+  },
+  variational_mean: {
+    label: 'Variational Mean (μ_q)',
+    formula: 'μ_q = σ²_q (μ₀/σ²₀ + n·x̄/σ²)',
+    definition: 'Mean of the variational posterior q(θ) = N(μ_q, σ²_q) from CAVI. Equals the analytic posterior mean for Normal-Normal model.',
+  },
+  variational_var: {
+    label: 'Variational Variance (σ²_q)',
+    formula: 'σ²_q = 1/(1/σ²₀ + n/σ²)',
+    definition: 'Variance of the variational posterior. Equals the analytic posterior variance for conjugate Normal-Normal.',
+  },
+  final_elbo: {
+    label: 'ELBO',
+    formula: 'E_q[log p(x,θ)] − E_q[log q(θ)]',
+    definition: 'Evidence Lower BOund — lower bound on log marginal likelihood. Maximized by CAVI; negative values are normal.',
+  },
+  abc_posterior_mean: {
+    label: 'ABC Posterior Mean',
+    formula: 'mean(accepted θ)',
+    definition: 'Mean of accepted θ samples from ABC rejection algorithm. Approximates posterior mean under tolerance ε.',
+  },
+  abc_posterior_std: {
+    label: 'ABC Posterior Std',
+    formula: 'std(accepted θ)',
+    definition: 'Std dev of accepted ABC samples. Wider than analytic posterior due to approximate likelihood.',
+  },
+  hyperpost_mean: {
+    label: 'Hyperprior Posterior Mean',
+    formula: 'μ_hyper = σ²_hyper · Σ(y_j / (se²_j + τ²)) + μ₀/σ²₀)',
+    definition: 'Posterior mean of the hierarchical hyperparameter μ. Precision-weighted average of group means, shrunk toward prior.',
+  },
+  hyperpost_var: {
+    label: 'Hyperprior Posterior Variance',
+    formula: '1 / (Σ 1/(se²_j + τ²) + 1/σ²₀)',
+    definition: 'Posterior variance of hyperparameter μ. Decreases as more groups are observed.',
+  },
+  shrinkage_factor: {
+    label: 'Shrinkage Factor',
+    formula: 'mean(se²_j / (se²_j + τ²))',
+    definition: 'Average fraction by which each group estimate is shrunk toward the grand mean. 0 = no shrinkage, 1 = full pooling.',
   },
 }
 
