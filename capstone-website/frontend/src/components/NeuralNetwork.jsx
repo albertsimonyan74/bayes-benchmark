@@ -19,11 +19,19 @@ export default function NeuralNetwork({ onSelect, selected }) {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d', { willReadFrequently: false })
+    const dpr = window.devicePixelRatio || 1
 
     let W, H
     const resize = () => {
-      W = canvas.width  = canvas.parentElement?.clientWidth || window.innerWidth
-      H = canvas.height = 500
+      const cssW = canvas.parentElement?.clientWidth || window.innerWidth
+      const cssH = 500
+      W = cssW
+      H = cssH
+      canvas.width  = cssW * dpr
+      canvas.height = cssH * dpr
+      canvas.style.width  = cssW + 'px'
+      canvas.style.height = cssH + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
     window.addEventListener('resize', resize)

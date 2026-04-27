@@ -107,7 +107,7 @@ worst_data <- df_complete %>%
   summarise(avg_score = mean(final_score, na.rm = TRUE), .groups = "drop") %>%
   mutate(
     task_type    = factor(task_type, levels = worst10),
-    model_family = factor(model_family, levels = c("claude", "chatgpt", "mistral", "deepseek"))
+    model_family = factor(model_family, levels = c("claude", "chatgpt", "mistral", "deepseek", "gemini"))
   )
 
 pB <- ggplot(worst_data,
@@ -135,7 +135,7 @@ pB <- ggplot(worst_data,
 combined <- pA + pB +
   plot_annotation(
     title   = "Failure Analysis — LLM Benchmark on Bayesian Statistics",
-    caption = "n = 4 complete models × 136 tasks. Gemini excluded (partial dataset).",
+    caption = "n = 5 models × 171 tasks. All models complete (2026-04-26).",
     theme   = theme(
       plot.background = element_rect(fill = DARK_BG, color = NA),
       plot.title      = element_text(color = ACCENT, size = 16, face = "bold", hjust = 0.5),
@@ -186,7 +186,7 @@ pB_plotly <- plot_ly(worst_data,
   x    = ~task_type,
   y    = ~avg_score,
   color = ~model_family,
-  colors = PALETTE[c("claude","chatgpt","mistral","deepseek")],
+  colors = PALETTE[c("claude","chatgpt","mistral","deepseek","gemini")],
   type = "bar",
   text = ~paste0("Model: ", model_family,
                  "<br>Task: ", task_type,

@@ -461,7 +461,7 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
 }
 
 /* ─── Radar chart ────────────────────────────────────────────── */
-.radar-wrap { display: flex; justify-content: center; margin: 16px 0; }
+.radar-wrap { display: flex; justify-content: center; margin: 16px 0; overflow: visible; }
 
 /* ─── Filter live dot ────────────────────────────────────────── */
 .filter-dot {

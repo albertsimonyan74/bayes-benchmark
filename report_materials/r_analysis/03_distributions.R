@@ -53,7 +53,7 @@ df_complete <- df %>%
   filter(!is.na(model_family)) %>%
   mutate(
     model_family = factor(model_family,
-                          levels = rev(c("claude", "chatgpt", "mistral", "deepseek")))
+                          levels = rev(c("claude", "chatgpt", "mistral", "deepseek", "gemini")))
   )
 
 # Median per model for annotation
@@ -93,7 +93,7 @@ p_ridges <- ggplot(df_complete, aes(x = final_score, y = model_family, fill = mo
     subtitle = "Density ridges with individual task scores  |  Dashed line = pass threshold",
     x        = "Final Score",
     y        = NULL,
-    caption  = "n = 136 tasks per model. Gemini excluded (incomplete — 76/136 tasks ran)."
+    caption  = "n = 171 tasks per model. All 5 models complete (2026-04-26)."
   ) +
   dark_theme +
   theme(
@@ -108,7 +108,7 @@ ggsave(png_path, p_ridges, width = 1600, height = 1000, units = "px", dpi = 150)
 message("Saved: ", png_path)
 
 # ── Interactive plotly violin+strip ──────────────────────────────────────────
-models_ord <- c("claude", "chatgpt", "mistral", "deepseek")
+models_ord <- c("claude", "chatgpt", "mistral", "deepseek", "gemini")
 df_plotly  <- df %>%
   filter(model_family %in% models_ord) %>%
   mutate(model_family = factor(model_family, levels = models_ord))

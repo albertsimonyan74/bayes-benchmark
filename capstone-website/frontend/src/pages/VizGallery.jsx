@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'motion/react'
-import { VISUALIZATIONS, VIZ_FILTERS, VIZ_FILTER_MAP } from '../data/visualizations'
+import { VISUALIZATIONS, FEATURED_IDS, VIZ_FILTERS, VIZ_FILTER_MAP } from '../data/visualizations'
 import summaryData from '../data/results_summary.json'
 
-// ─── Model metadata (aligned with palette) ────────────────────
+// ─── Model metadata ───────────────────────────────────────────
 const MODEL_META = {
   claude:   { name: 'Claude Sonnet 4.5', provider: 'Anthropic',  color: '#CC785C', abbr: 'CL' },
   chatgpt:  { name: 'GPT-4.1',           provider: 'OpenAI',     color: '#10A37F', abbr: 'GP' },
@@ -62,7 +62,6 @@ function LeaderCard({ modelId, data, rank }) {
         opacity: isPending ? 0.55 : 1,
       }}
     >
-      {/* Rank badge */}
       {rank && !isPending && (
         <div style={{
           position: 'absolute', top: 10, right: 12,
@@ -75,7 +74,6 @@ function LeaderCard({ modelId, data, rank }) {
         </div>
       )}
 
-      {/* Avatar */}
       <div style={{
         width: 40, height: 40, borderRadius: 10, marginBottom: 10,
         background: `${meta.color}18`,
@@ -96,7 +94,7 @@ function LeaderCard({ modelId, data, rank }) {
 
       {isPending ? (
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', fontStyle: 'italic' }}>
-          ⏳ Results pending
+          Results pending
         </div>
       ) : isPartial ? (
         <>
@@ -115,7 +113,6 @@ function LeaderCard({ modelId, data, rank }) {
             {(data.avg_score * 100).toFixed(1)}%
           </div>
 
-          {/* Pass rate bar */}
           <div style={{ marginBottom: 10 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
               <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 9, fontWeight: 700, letterSpacing: '0.08em' }}>PASS RATE</span>
@@ -141,35 +138,23 @@ function LeaderCard({ modelId, data, rank }) {
   )
 }
 
-// ─── Visualization Card ───────────────────────────────────────
-function VizCard({ viz, index, setFullImg }) {
+// ─── VizCard (standard gallery card) ─────────────────────────
+function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
   const [imgLoaded, setImgLoaded] = useState(false)
-  const [modalOpen, setModalOpen] = useState(false)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, amount: 0.1 })
-
-  useEffect(() => {
-    if (!modalOpen) return
-    document.body.style.overflow = 'hidden'
-    const handler = (e) => { if (e.key === 'Escape') setModalOpen(false) }
-    window.addEventListener('keydown', handler)
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handler)
-    }
-  }, [modalOpen])
+  const hasInteractive = viz.interactive !== null
 
   return (
-    <>
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 32 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: (index % 4) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,255,224,0.15)' }}
+        whileHover={{ y: -4, boxShadow: featured ? '0 16px 48px rgba(0,255,224,0.2)' : '0 12px 40px rgba(0,255,224,0.15)' }}
         style={{
-          background: 'rgba(255,255,255,0.025)',
-          border: '1px solid rgba(0,255,224,0.1)',
+          background: featured ? 'rgba(0,255,224,0.025)' : 'rgba(255,255,255,0.025)',
+          border: featured ? '1px solid rgba(0,255,224,0.18)' : '1px solid rgba(0,255,224,0.1)',
           borderRadius: 16,
           overflow: 'hidden',
           transition: 'border-color 0.2s',
@@ -178,7 +163,7 @@ function VizCard({ viz, index, setFullImg }) {
         data-hover="true"
       >
         {/* Image preview */}
-        <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden', background: '#050a16' }}>
+        <div style={{ position: 'relative', aspectRatio: featured ? '16/9' : '16/10', overflow: 'hidden', background: '#050a16' }}>
           <img
             src={viz.png}
             alt={viz.title}
@@ -206,7 +191,7 @@ function VizCard({ viz, index, setFullImg }) {
           {/* Type badge */}
           <div style={{
             position: 'absolute', top: 10, right: 10,
-            background: 'rgba(0,10,20,0.75)',
+            background: 'rgba(0,10,20,0.8)',
             border: '1px solid rgba(0,255,224,0.3)',
             backdropFilter: 'blur(6px)',
             borderRadius: 5, padding: '2px 8px',
@@ -215,7 +200,21 @@ function VizCard({ viz, index, setFullImg }) {
             {viz.type}
           </div>
 
-          {/* Zoom overlay on hover */}
+          {/* Featured badge */}
+          {featured && (
+            <div style={{
+              position: 'absolute', top: 10, left: 10,
+              background: 'rgba(0,255,224,0.15)',
+              border: '1px solid rgba(0,255,224,0.4)',
+              backdropFilter: 'blur(6px)',
+              borderRadius: 5, padding: '2px 8px',
+              fontSize: 9, fontWeight: 700, color: '#00FFE0', letterSpacing: '0.1em',
+            }}>
+              KEY INSIGHT
+            </div>
+          )}
+
+          {/* Zoom overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
@@ -231,26 +230,33 @@ function VizCard({ viz, index, setFullImg }) {
         </div>
 
         {/* Card body */}
-        <div style={{ padding: '16px 18px 18px' }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 3 }}>
+        <div style={{ padding: featured ? '18px 20px 20px' : '16px 18px 18px' }}>
+          <div style={{ fontSize: featured ? 16 : 15, fontWeight: 700, color: '#fff', marginBottom: 3 }}>
             {viz.title}
           </div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 12, letterSpacing: '0.02em' }}>
             {viz.subtitle}
           </div>
 
+          {/* Description */}
+          <div style={{
+            fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.65, marginBottom: 12,
+          }}>
+            {viz.description}
+          </div>
+
           {/* Insight callout */}
           <div style={{
-            background: 'rgba(0,255,224,0.04)',
-            borderLeft: '2px solid rgba(0,255,224,0.4)',
+            background: 'rgba(0,255,224,0.05)',
+            borderLeft: '2px solid rgba(0,255,224,0.45)',
             borderRadius: '0 6px 6px 0',
             padding: '8px 12px',
-            fontSize: 12,
-            color: 'rgba(255,255,255,0.68)',
-            lineHeight: 1.55,
+            fontSize: 11.5,
+            color: 'rgba(255,255,255,0.75)',
+            lineHeight: 1.6,
             marginBottom: 14,
-            fontStyle: 'italic',
           }}>
+            <span style={{ color: 'rgba(0,255,224,0.7)', fontWeight: 700, fontSize: 10, letterSpacing: '0.07em', display: 'block', marginBottom: 3 }}>KEY FINDING</span>
             {viz.insight}
           </div>
 
@@ -260,151 +266,104 @@ function VizCard({ viz, index, setFullImg }) {
               data-hover="true"
               onClick={() => setFullImg(viz.png)}
               style={{
-                flex: 1, padding: '8px 0',
+                flex: 1, padding: '9px 0',
                 background: 'transparent',
                 border: '1px solid rgba(0,255,224,0.2)',
                 borderRadius: 7, color: 'rgba(0,255,224,0.75)',
                 fontSize: 12, fontWeight: 600, cursor: 'none',
-                transition: 'border-color 0.18s, color 0.18s',
+                transition: 'border-color 0.18s, color 0.18s, background 0.18s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(0,255,224,0.5)'; e.currentTarget.style.color = '#00FFE0' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0,255,224,0.2)'; e.currentTarget.style.color = 'rgba(0,255,224,0.75)' }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(0,255,224,0.55)'
+                e.currentTarget.style.color = '#00FFE0'
+                e.currentTarget.style.background = 'rgba(0,255,224,0.06)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(0,255,224,0.2)'
+                e.currentTarget.style.color = 'rgba(0,255,224,0.75)'
+                e.currentTarget.style.background = 'transparent'
+              }}
             >
               View Static
             </button>
-            <button
-              data-hover="true"
-              onClick={() => viz.isGif
-                ? setModalOpen(true)
-                : window.open(viz.interactive, '_blank')}
-              style={{
-                flex: 1, padding: '8px 0',
-                background: 'rgba(0,255,224,0.1)',
-                border: '1px solid rgba(0,255,224,0.3)',
-                borderRadius: 7, color: '#00FFE0',
-                fontSize: 12, fontWeight: 600, cursor: 'none',
-                transition: 'background 0.18s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,255,224,0.18)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,255,224,0.1)' }}
-            >
-              {viz.isGif ? 'View Animation ▶' : 'Open Interactive ↗'}
-            </button>
+
+            {hasInteractive ? (
+              <button
+                data-hover="true"
+                onClick={() => viz.isGif ? onOpenGif(viz.interactive) : window.open(viz.interactive, '_blank')}
+                style={{
+                  flex: 1, padding: '9px 0',
+                  background: 'rgba(0,255,224,0.1)',
+                  border: '1px solid rgba(0,255,224,0.3)',
+                  borderRadius: 7, color: '#00FFE0',
+                  fontSize: 12, fontWeight: 600, cursor: 'none',
+                  transition: 'background 0.18s, border-color 0.18s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = 'rgba(0,255,224,0.18)'
+                  e.currentTarget.style.borderColor = 'rgba(0,255,224,0.5)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'rgba(0,255,224,0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(0,255,224,0.3)'
+                }}
+              >
+                {viz.isGif ? 'View Animation ▶' : 'Open Interactive ↗'}
+              </button>
+            ) : (
+              <div
+                title="No interactive version — static only"
+                style={{
+                  flex: 1, padding: '9px 0',
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: 7, color: 'rgba(255,255,255,0.22)',
+                  fontSize: 12, fontWeight: 600, textAlign: 'center',
+                  userSelect: 'none',
+                }}
+              >
+                Static only
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
-
-      {/* Interactive / GIF modal */}
-      <AnimatePresence>
-        {modalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            onClick={() => setModalOpen(false)}
-            style={{
-              position: 'fixed', inset: 0, zIndex: 99000,
-              background: 'rgba(0,0,0,0.88)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: 24,
-            }}
-          >
-            {/* Modal box — NOT full screen */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 20 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              onClick={e => e.stopPropagation()}
-              style={{
-                width: '88vw',
-                height: '85vh',
-                maxWidth: 1200,
-                background: 'rgba(6,12,26,0.98)',
-                border: '1px solid rgba(0,255,224,0.2)',
-                borderRadius: 16,
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden',
-                boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
-              }}
-            >
-              {/* Header with close button */}
-              <div style={{
-                flexShrink: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: '12px 20px',
-                borderBottom: '1px solid rgba(0,255,224,0.1)',
-              }}>
-                <div>
-                  <div style={{ color: '#00FFE0', fontSize: 15, fontWeight: 700 }}>{viz.title}</div>
-                  <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, marginTop: 2 }}>
-                    Animated visualization
-                  </div>
-                </div>
-                <button
-                  data-hover="true"
-                  onClick={() => setModalOpen(false)}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(255,70,70,0.2)'
-                    e.currentTarget.style.borderColor = 'rgba(255,70,70,0.4)'
-                    e.currentTarget.style.color = '#ff4646'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'
-                    e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
-                  }}
-                  style={{
-                    width: 36, height: 36, borderRadius: 8,
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    background: 'rgba(255,255,255,0.05)',
-                    color: 'rgba(255,255,255,0.7)',
-                    fontSize: 16, cursor: 'none',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.15s ease', flexShrink: 0,
-                  }}
-                >✕</button>
-              </div>
-
-              {/* Content area — GIF only (interactive opens in new tab) */}
-              <div style={{ flex: 1, overflow: 'hidden' }}>
-                <img
-                  src={viz.interactive}
-                  alt={viz.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
   )
 }
 
 // ─── Main VizGallery Component ────────────────────────────────
-export default function VizGallery({ setFullImg }) {
+export default function VizGallery({ setFullImg, onOpenGif }) {
   const [activeFilter, setActiveFilter] = useState('All')
+  const [galleryExpanded, setGalleryExpanded] = useState(false)
+  const GALLERY_PREVIEW = 6
   const summary = summaryData
 
-  const allModels  = ['claude', 'chatgpt', 'mistral', 'deepseek', 'gemini']
-  const complete   = summary.models_complete
-  const rankings   = [...complete].sort((a, b) =>
+  const allModels = ['claude', 'chatgpt', 'mistral', 'deepseek', 'gemini']
+  const complete  = summary.models_complete
+  const rankings  = [...complete].sort((a, b) =>
     (summary.by_model[b]?.avg_score || 0) - (summary.by_model[a]?.avg_score || 0)
   )
-  // build ordered list: ranked complete models first, then pending
   const ordered = [
     ...rankings,
     ...allModels.filter(m => !complete.includes(m)),
   ]
 
-  const filtered = VISUALIZATIONS.filter(VIZ_FILTER_MAP[activeFilter])
+  const featuredViz = VISUALIZATIONS.filter(v => FEATURED_IDS.includes(v.id))
+  const galleryViz  = VISUALIZATIONS.filter(v => !FEATURED_IDS.includes(v.id))
+  const filtered    = activeFilter === 'All'
+    ? galleryViz
+    : galleryViz.filter(VIZ_FILTER_MAP[activeFilter])
+
+  // Also allow filtering featured vizs when user picks a filter
+  const filteredFeatured = activeFilter === 'All'
+    ? featuredViz
+    : featuredViz.filter(VIZ_FILTER_MAP[activeFilter])
+
+  const showFeatured = filteredFeatured.length > 0
 
   return (
     <>
-      {/* ── Section header ──────────────────────────────────── */}
+      {/* ── Section header ─────────────────────────────────── */}
       <FadeIn>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 8, flexWrap: 'wrap', gap: 12 }}>
           <div>
@@ -465,10 +424,7 @@ export default function VizGallery({ setFullImg }) {
       </FadeIn>
 
       {/* ── Filter tabs ──────────────────────────────────────── */}
-      <FadeIn delay={120}>
-        <div style={{ color: 'rgba(0,255,224,0.55)', fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', marginBottom: 14 }}>
-          VISUALIZATION GALLERY
-        </div>
+      <FadeIn delay={100}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 28, flexWrap: 'wrap' }}>
           {VIZ_FILTERS.map(f => (
             <motion.button
@@ -496,7 +452,6 @@ export default function VizGallery({ setFullImg }) {
         </div>
       </FadeIn>
 
-      {/* ── Visualization grid ───────────────────────────────── */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeFilter}
@@ -504,15 +459,90 @@ export default function VizGallery({ setFullImg }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
-            gap: 24,
-          }}
         >
-          {filtered.map((viz, i) => (
-            <VizCard key={viz.id} viz={viz} index={i} setFullImg={setFullImg} />
-          ))}
+          {/* ── Featured 2×2 grid ───────────────────────────── */}
+          {showFeatured && (
+            <div style={{ marginBottom: 40 }}>
+              <div style={{
+                color: 'rgba(0,255,224,0.55)', fontSize: 10, fontWeight: 700,
+                letterSpacing: '0.2em', marginBottom: 16,
+              }}>
+                KEY VISUALIZATIONS
+              </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
+                gap: 24,
+              }}>
+                {filteredFeatured.map((viz, i) => (
+                  <VizCard key={viz.id} viz={viz} index={i} setFullImg={setFullImg} onOpenGif={onOpenGif} featured />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Remaining gallery ────────────────────────────── */}
+          {filtered.length > 0 && (
+            <div>
+              {showFeatured && activeFilter === 'All' && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  marginBottom: 16,
+                }}>
+                  <div style={{ color: 'rgba(0,255,224,0.55)', fontSize: 10, fontWeight: 700, letterSpacing: '0.2em' }}>
+                    FULL GALLERY
+                  </div>
+                  <motion.button
+                    data-hover="true"
+                    onClick={() => setGalleryExpanded(v => !v)}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      padding: '5px 14px', borderRadius: 7, cursor: 'none',
+                      background: galleryExpanded ? 'rgba(0,255,224,0.1)' : 'transparent',
+                      border: '1px solid rgba(0,255,224,0.25)',
+                      color: '#00FFE0', fontSize: 11, fontWeight: 600,
+                      transition: 'all 0.18s',
+                    }}
+                  >
+                    {galleryExpanded ? '▲ Show Less' : `▼ Show All (${filtered.length})`}
+                  </motion.button>
+                </div>
+              )}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+                gap: 24,
+              }}>
+                {(galleryExpanded || activeFilter !== 'All' ? filtered : filtered.slice(0, GALLERY_PREVIEW)).map((viz, i) => (
+                  <VizCard key={viz.id} viz={viz} index={i} setFullImg={setFullImg} onOpenGif={onOpenGif} />
+                ))}
+              </div>
+              {!galleryExpanded && activeFilter === 'All' && filtered.length > GALLERY_PREVIEW && (
+                <div style={{ textAlign: 'center', marginTop: 20 }}>
+                  <motion.button
+                    data-hover="true"
+                    onClick={() => setGalleryExpanded(true)}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      padding: '9px 28px', borderRadius: 8, cursor: 'none',
+                      background: 'rgba(0,255,224,0.06)',
+                      border: '1px solid rgba(0,255,224,0.25)',
+                      color: '#00FFE0', fontSize: 13, fontWeight: 600,
+                      transition: 'all 0.18s',
+                    }}
+                  >
+                    Show {filtered.length - GALLERY_PREVIEW} More Visualizations ▼
+                  </motion.button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {showFeatured === false && filtered.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '60px 0', color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>
+              No visualizations in this category.
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -526,20 +556,18 @@ export default function VizGallery({ setFullImg }) {
           fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6,
         }}>
           <span style={{ color: 'rgba(0,255,224,0.5)', fontWeight: 700 }}>Note:</span>{' '}
-          After completing Gemini runs, re-run{' '}
+          Charts generated with R (ggplot2 + Plotly). To regenerate after new runs:{' '}
           <code style={{ fontFamily: 'monospace', color: 'rgba(0,255,224,0.6)', fontSize: 11 }}>
             python scripts/summarize_results.py
           </code>{' '}
-          and{' '}
+          then{' '}
           <code style={{ fontFamily: 'monospace', color: 'rgba(0,255,224,0.6)', fontSize: 11 }}>
             Rscript report_materials/r_analysis/run_all.R
-          </code>{' '}
-          then copy assets to refresh all charts.
+          </code>.{' '}
           Last generated: {new Date(summary.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}.
         </div>
       </FadeIn>
 
-      {/* Spin animation for loading state */}
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </>
   )

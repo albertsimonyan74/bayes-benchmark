@@ -66,7 +66,7 @@ tier_map <- df_complete %>%
 hm_data <- hm_data %>%
   mutate(
     task_type    = factor(task_type, levels = task_order),
-    model_family = factor(model_family, levels = c("claude", "chatgpt", "mistral", "deepseek")),
+    model_family = factor(model_family, levels = c("claude", "chatgpt", "mistral", "deepseek", "gemini")),
     label        = sprintf("%.2f", avg_score)
   ) %>%
   left_join(tier_map, by = "task_type")
@@ -106,10 +106,10 @@ p_hm <- ggplot(hm_data, aes(x = model_family, y = task_type, fill = avg_score)) 
   # We add a separate geom with tier fill using a second scale trick via annotation
   labs(
     title    = "LLM Performance on Bayesian Reasoning Tasks",
-    subtitle = "Average score per task type × model  |  Gemini excluded (incomplete — 76/136 tasks)",
+    subtitle = "Average score per task type × model  |  All 5 models complete (2026-04-26)",
     x        = "Model",
     y        = "Task Type  (sorted: hardest → easiest)",
-    caption  = "n = 4 models × 136 tasks each. Pass threshold ≥ 0.5."
+    caption  = "n = 5 models × 171 tasks each. Pass threshold ≥ 0.5."
   ) +
   dark_theme +
   theme(
@@ -151,7 +151,7 @@ hm_wide <- hm_data %>%
   select(task_type, model_family, avg_score) %>%
   tidyr::pivot_wider(names_from = model_family, values_from = avg_score)
 
-models_ordered <- c("claude", "chatgpt", "mistral", "deepseek")
+models_ordered <- c("claude", "chatgpt", "mistral", "deepseek", "gemini")
 z_mat  <- as.matrix(hm_wide[, models_ordered])
 rownames(z_mat) <- as.character(hm_wide$task_type)
 

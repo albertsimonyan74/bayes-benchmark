@@ -588,147 +588,109 @@ function TierLadder() {
 
   return (
     <div>
-      <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:12, textAlign:'center' }}>
+      <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:14, textAlign:'center' }}>
         DIFFICULTY LADDER · {total} TASKS
       </div>
 
-      {/* Proportional scale bar */}
-      <div style={{ display:'flex', height:4, borderRadius:2, overflow:'hidden', marginBottom:16, gap:1 }}>
-        {[1,2,3,4].map(t => (
-          <motion.div
-            key={t}
-            style={{ flex:TIER_INFO[t].tasks, background:TIER_INFO[t].color, opacity:0.75 }}
-            whileHover={{ opacity:1, scaleY:1.5 }}
-            transition={{ type:'spring', stiffness:400, damping:25 }}
-            title={`T${t} ${TIER_INFO[t].label}: ${TIER_INFO[t].tasks} tasks`}
-          />
-        ))}
-      </div>
-      {/* Scale labels */}
-      <div style={{ display:'flex', marginBottom:14, gap:1 }}>
-        {[1,2,3,4].map(t => (
-          <div key={t} style={{ flex:TIER_INFO[t].tasks, textAlign:'center' }}>
-            <span style={{ fontSize:8, color:TIER_INFO[t].color+'99', fontFamily:'var(--font-mono)', letterSpacing:'0.04em' }}>T{t}</span>
-          </div>
-        ))}
+      {/* 4 horizontal tier cards */}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8, marginBottom:16 }}>
+        {[1,2,3,4].map(tier => {
+          const info = TIER_INFO[tier]
+          const pct  = Math.round((info.tasks / total) * 100)
+          const isOpen = expanded === tier
+          return (
+            <motion.div
+              key={tier}
+              onClick={() => setExpanded(isOpen ? null : tier)}
+              style={{
+                background: isOpen ? `${info.color}0D` : 'rgba(0,0,0,0.22)',
+                border:`1px solid ${isOpen ? info.color : info.color+'33'}`,
+                borderRadius:10, cursor:'pointer', overflow:'hidden', padding:'12px 10px',
+                textAlign:'center',
+              }}
+              whileHover={{ borderColor:info.color+'88', background:`${info.color}07` }}
+              transition={{ type:'spring', stiffness:400, damping:30 }}
+            >
+              {/* T badge */}
+              <div style={{ width:32, height:32, borderRadius:8, background:`${info.color}18`,
+                border:`1.5px solid ${info.color}`, margin:'0 auto 8px',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                color:info.color, fontWeight:800, fontSize:11,
+                boxShadow: isOpen ? `0 0 12px ${info.color}44` : 'none' }}>
+                T{tier}
+              </div>
+              {/* Difficulty dots */}
+              <div style={{ display:'flex', justifyContent:'center', gap:3, marginBottom:8 }}>
+                {[1,2,3,4].map(d => (
+                  <div key={d} style={{ width:5, height:5, borderRadius:'50%',
+                    background: d<=tier ? info.color : `${info.color}20`,
+                    boxShadow: d<=tier ? `0 0 4px ${info.color}` : 'none' }}/>
+                ))}
+              </div>
+              <div style={{ color:info.color, fontWeight:700, fontSize:10, marginBottom:3, letterSpacing:'0.04em' }}>{info.label}</div>
+              <div style={{ color:'var(--text-muted)', fontSize:9, fontFamily:'var(--font-mono)' }}>{info.tasks} tasks · {pct}%</div>
+              {/* Mini progress bar */}
+              <div style={{ height:2, background:'rgba(255,255,255,0.06)', borderRadius:1, marginTop:8, overflow:'hidden' }}>
+                <motion.div style={{ height:'100%', background:info.color, borderRadius:1 }}
+                  initial={{ width:0 }} animate={{ width:`${pct}%` }}
+                  transition={{ duration:0.6, ease:'easeOut', delay:0.1 }}/>
+              </div>
+              <div style={{ color:info.color+'80', fontSize:8, marginTop:5 }}>{isOpen ? '▲ close' : '▼ detail'}</div>
+            </motion.div>
+          )
+        })}
       </div>
 
-      {[4,3,2,1].map(tier => {
-        const info   = TIER_INFO[tier]
-        const isOpen = expanded === tier
-        const pct    = Math.round((info.tasks / total) * 100)
-        return (
+      {/* Expanded detail panel */}
+      <AnimatePresence>
+        {expanded !== null && (
           <motion.div
-            key={tier}
-            onClick={() => setExpanded(isOpen ? null : tier)}
-            style={{
-              background: isOpen ? `${info.color}0D` : 'rgba(0,0,0,0.18)',
-              border:`1px solid ${isOpen ? info.color : info.color+'33'}`,
-              borderRadius:10, marginBottom:8, cursor:'pointer', overflow:'hidden',
-              transition:'border-color 0.2s, background 0.2s',
-            }}
-            whileHover={{ borderColor: info.color+'88' }}
-            transition={{ type:'spring', stiffness:400, damping:30 }}
+            initial={{ height:0, opacity:0 }}
+            animate={{ height:'auto', opacity:1 }}
+            exit={{ height:0, opacity:0 }}
+            transition={{ duration:0.25, ease:[0.22,1,0.36,1] }}
+            style={{ overflow:'hidden' }}
           >
-            <div style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px' }}>
-              {/* Tier badge with vertical difficulty bar */}
-              <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3, flexShrink:0 }}>
-                <div style={{
-                  width:34, height:34, borderRadius:8,
-                  background:`${info.color}18`, border:`1.5px solid ${info.color}`,
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  color:info.color, fontWeight:800, fontSize:11,
-                  boxShadow: isOpen ? `0 0 10px ${info.color}44` : 'none',
-                  transition:'box-shadow 0.2s',
-                }}>T{tier}</div>
-                {/* Difficulty dots */}
-                <div style={{ display:'flex', gap:2 }}>
-                  {[1,2,3,4].map(d => (
-                    <div key={d} style={{ width:4, height:4, borderRadius:'50%',
-                      background: d <= tier ? info.color : `${info.color}25`,
-                      boxShadow: d <= tier ? `0 0 4px ${info.color}` : 'none',
-                    }}/>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:3 }}>
-                  <span style={{ color:info.color, fontWeight:700, fontSize:12 }}>{info.label}</span>
-                  <span style={{ color:'var(--text-muted)', fontSize:10, fontFamily:'var(--font-mono)' }}>
-                    {info.tasks} tasks · {pct}%
-                  </span>
-                </div>
-                <div style={{ fontSize:11, color:'var(--text-secondary)', lineHeight:1.45 }}>{info.desc}</div>
-                {/* Inline progress bar */}
-                <div style={{ height:2, background:'rgba(255,255,255,0.06)', borderRadius:1, marginTop:7, overflow:'hidden' }}>
-                  <motion.div
-                    style={{ height:'100%', background:info.color, borderRadius:1 }}
-                    initial={{ width:0 }}
-                    animate={{ width:`${pct}%` }}
-                    transition={{ duration:0.6, ease:'easeOut', delay:0.1 }}
-                  />
-                </div>
-              </div>
-
-              <motion.span
-                style={{ color:info.color+'99', fontSize:10, flexShrink:0, width:14, display:'inline-block', textAlign:'center' }}
-                animate={{ rotate: isOpen ? 90 : 0 }}
-                transition={{ duration:0.2 }}
-              >▶</motion.span>
-            </div>
-
-            <AnimatePresence>
-              {isOpen && (
-                <motion.div
-                  initial={{ height:0, opacity:0 }}
-                  animate={{ height:'auto', opacity:1 }}
-                  exit={{ height:0, opacity:0 }}
-                  transition={{ duration:0.25, ease:[0.22,1,0.36,1] }}
-                  style={{ overflow:'hidden' }}
-                >
-                  <div style={{ padding:'10px 16px 16px 16px', borderTop:`1px solid ${info.color}22` }}>
-                    <p style={{ color:'var(--text-secondary)', fontSize:11.5, lineHeight:1.7, margin:'0 0 12px' }}>
-                      {info.detail}
-                    </p>
-                    {/* Key challenges */}
-                    <div style={{ marginBottom:12 }}>
-                      <div style={{ fontSize:9, color:info.color+'88', fontWeight:700, letterSpacing:'0.1em', marginBottom:6 }}>KEY CHALLENGES</div>
-                      <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
-                        {TIER_CHALLENGES[tier].map(c => (
-                          <div key={c} style={{ display:'flex', alignItems:'center', gap:6 }}>
-                            <div style={{ width:4, height:4, borderRadius:'50%', background:info.color, flexShrink:0 }}/>
-                            <span style={{ fontSize:11, color:'var(--text-secondary)' }}>{c}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {/* Task type chips */}
-                    <div style={{ fontSize:9, color:info.color+'88', fontWeight:700, letterSpacing:'0.1em', marginBottom:6 }}>TASK TYPES</div>
-                    <div style={{ display:'flex', gap:5, flexWrap:'wrap' }}>
-                      {TIER_TASK_EXAMPLES[tier].map(k => (
-                        <span key={k} style={{
-                          fontSize:9, padding:'3px 8px', borderRadius:4,
-                          background:`${info.color}14`, color:info.color,
-                          border:`1px solid ${info.color}33`,
-                          fontFamily:'var(--font-mono)', letterSpacing:'0.03em',
-                        }}>{k}</span>
+            {(() => {
+              const info = TIER_INFO[expanded]
+              return (
+                <div style={{ padding:'12px 0 4px' }}>
+                  <p style={{ color:'var(--text-secondary)', fontSize:11.5, lineHeight:1.7, margin:'0 0 10px' }}>
+                    {info.detail}
+                  </p>
+                  <div style={{ marginBottom:10 }}>
+                    <div style={{ fontSize:9, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:5 }}>KEY CHALLENGES</div>
+                    <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+                      {TIER_CHALLENGES[expanded].map(c => (
+                        <div key={c} style={{ display:'flex', alignItems:'center', gap:5 }}>
+                          <div style={{ width:4, height:4, borderRadius:'50%', background:info.color, flexShrink:0 }}/>
+                          <span style={{ fontSize:10, color:'var(--text-secondary)' }}>{c}</span>
+                        </div>
                       ))}
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <div style={{ fontSize:9, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:5 }}>TASK TYPES</div>
+                  <div style={{ display:'flex', gap:5, flexWrap:'wrap' }}>
+                    {TIER_TASK_EXAMPLES[expanded].map(k => (
+                      <span key={k} style={{ fontSize:9, padding:'3px 8px', borderRadius:4,
+                        background:`${info.color}14`, color:info.color,
+                        border:`1px solid ${info.color}33`, fontFamily:'var(--font-mono)' }}>{k}</span>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
           </motion.div>
-        )
-      })}
+        )}
+      </AnimatePresence>
     </div>
   )
 }
 
 // ─── Radar Chart ─────────────────────────────────────────────
 function RadarChart({ model }) {
-  const size=200, cx=100, cy=100, R=70, n=5
+  const pad=32, inner=200, size=inner+pad*2
+  const cx=size/2, cy=size/2, R=80, n=5
   const step = (Math.PI*2)/n
   const vals = RADAR_VALS[model.id] || Array(n).fill(0.7)
 
@@ -738,7 +700,7 @@ function RadarChart({ model }) {
   })
   const axes = Array.from({length:n},(_,i)=>{
     const a = i*step - Math.PI/2
-    return { ex: cx+R*Math.cos(a), ey: cy+R*Math.sin(a), lx: cx+(R+22)*Math.cos(a), ly: cy+(R+22)*Math.sin(a) }
+    return { ex: cx+R*Math.cos(a), ey: cy+R*Math.sin(a), lx: cx+(R+26)*Math.cos(a), ly: cy+(R+26)*Math.sin(a) }
   })
   const rings = [0.25,0.5,0.75,1].map(s =>
     Array.from({length:n},(_,i)=>{
@@ -750,7 +712,7 @@ function RadarChart({ model }) {
 
   return (
     <div className="radar-wrap">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} overflow="visible">
         {rings.map((r,i)=>(
           <polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
         ))}
@@ -760,9 +722,9 @@ function RadarChart({ model }) {
             <g key={i}>
               <line x1={cx} y1={cy} x2={ax.ex} y2={ax.ey} stroke="rgba(0,255,224,0.12)" strokeWidth="1"/>
               {lines.map((l,j)=>(
-                <text key={j} x={ax.lx} y={ax.ly+(j*9)-(lines.length>1?4:0)}
+                <text key={j} x={ax.lx} y={ax.ly+(j*10)-(lines.length>1?5:0)}
                   textAnchor="middle" dominantBaseline="middle"
-                  fontSize="7.5" fill="var(--text-secondary)">
+                  fontSize="8.5" fill="var(--text-secondary)">
                   {l}
                 </text>
               ))}
@@ -779,18 +741,19 @@ function RadarChart({ model }) {
 // ─── Multi-model radar ────────────────────────────────────────
 const MODEL_COLORS = { claude:'#00CED1', gemini:'#FF6B6B', chatgpt:'#7FFFD4', deepseek:'#4A90D9', mistral:'#A78BFA' }
 function MultiModelRadar() {
-  const size=260, cx=130, cy=130, R=90, n=5
+  const pad=36, inner=240, size=inner+pad*2
+  const cx=size/2, cy=size/2, R=95, n=5
   const step = (Math.PI*2)/n
   const rings = [0.25,0.5,0.75,1].map(s =>
     Array.from({length:n},(_,i)=>{ const a=i*step-Math.PI/2; return `${cx+s*R*Math.cos(a)},${cy+s*R*Math.sin(a)}` }).join(' ')
   )
   const axes = Array.from({length:n},(_,i)=>{
     const a=i*step-Math.PI/2
-    return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx:cx+(R+26)*Math.cos(a), ly:cy+(R+26)*Math.sin(a) }
+    return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx:cx+(R+28)*Math.cos(a), ly:cy+(R+28)*Math.sin(a) }
   })
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} overflow="visible">
         {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
         {axes.map((ax,i)=>{
           const lines=RADAR_DIMS[i].split('\n')
@@ -798,7 +761,7 @@ function MultiModelRadar() {
             <g key={i}>
               <line x1={cx} y1={cy} x2={ax.ex} y2={ax.ey} stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
               {lines.map((l,j)=>(
-                <text key={j} x={ax.lx} y={ax.ly+(j*9)-(lines.length>1?4:0)} textAnchor="middle" dominantBaseline="middle" fontSize="8" fill="var(--text-secondary)">{l}</text>
+                <text key={j} x={ax.lx} y={ax.ly+(j*10)-(lines.length>1?5:0)} textAnchor="middle" dominantBaseline="middle" fontSize="9" fill="var(--text-secondary)">{l}</text>
               ))}
             </g>
           )
@@ -815,52 +778,6 @@ function MultiModelRadar() {
             <div style={{ width:12, height:3, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0' }}/>
             {id.toUpperCase()}
           </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// ─── Timeline ─────────────────────────────────────────────────
-const MILESTONES = [
-  { date:'Jan 2026',    sub:'Project\nStart' },
-  { date:'Feb 2026',    sub:'Baseline\nImpl.' },
-  { date:'Mar 2026',    sub:'Benchmark\nCreation' },
-  { date:'Apr 2026',    sub:'LLM\nEvaluation' },
-  { date:'May 8, 2026', sub:'Poster\nPresentation', highlight:true },
-]
-
-function Timeline() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
-  return (
-    <div ref={ref} style={{ marginTop:48 }}>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-        transition={{ duration: 0.5 }}
-        style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:28 }}
-      >
-        DS 299 CAPSTONE TIMELINE
-      </motion.div>
-      <div className="timeline">
-        <div className="timeline-rail"/>
-        {MILESTONES.map((m,i)=>(
-          <motion.div
-            key={i}
-            className="timeline-item"
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className={`timeline-dot${m.highlight?' highlight':''}`}/>
-            <div className="timeline-label">
-              <div style={{ fontWeight:700, fontSize:11, color:m.highlight?'var(--aqua)':'var(--text-secondary)', lineHeight:1.4 }}>{m.date}</div>
-              {m.sub.split('\n').map((l,j)=>(
-                <div key={j} style={{ fontSize:10, color:'var(--text-muted)', lineHeight:1.4 }}>{l}</div>
-              ))}
-            </div>
-          </motion.div>
         ))}
       </div>
     </div>
@@ -966,86 +883,193 @@ function Overview() {
   )
 }
 
+// ─── Extra info cards for How It Works ───────────────────────
+const HOW_EXTRA = [
+  {
+    color:'#00CED1',
+    title:'Cloud Deployment',
+    icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>,
+    lines:[
+      'Frontend → Vercel edge CDN, instant global deploy',
+      'Backend → Render Docker (FastAPI + httpx, no vendor SDKs)',
+      '5 model API keys · REST proxy via /api/* rewrite rules',
+    ],
+  },
+  {
+    color:'#00FFE0',
+    title:'Research Question Integration',
+    icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>,
+    lines:[
+      'N·M·A·C·R scoring dimensions map 1-to-1 to RQ1–RQ5',
+      'Every task tagged to ≥1 RQ; weights equally 0.20 each',
+      'RQ4: 375 synthetic perturbation runs across 3 types',
+    ],
+  },
+  {
+    color:'#A78BFA',
+    title:'Referenced Paper Analysis',
+    icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
+    lines:[
+      'Wei et al. 2022 → zero-shot CoT baseline prompting',
+      'Chen et al. 2022 → Program-of-Thoughts (PoT) strategy',
+      'StatEval / MathEval → comparative benchmark baseline',
+    ],
+  },
+  {
+    color:'#FF6B6B',
+    title:'Interactive User Study',
+    icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+    lines:[
+      'Users submit Bayesian questions + optional image',
+      'All 5 models respond in parallel via live API calls',
+      'Votes collected, buffered in memory, aggregated live',
+    ],
+  },
+]
+
 // ═══════════════════════════════════════════════════════════════
 //  2. BENCHMARK
 // ═══════════════════════════════════════════════════════════════
 function BenchmarkSection() {
   const [expanded, setExpanded] = useState(null)
-  const pipelineRef = useRef(null)
-  const isPipelineInView = useInView(pipelineRef, { once: true, amount: 0.2 })
+
+  const R_FRAC = 0.355
+  const getPos = (i) => {
+    const angle = (i / 6) * 2 * Math.PI - Math.PI / 2
+    return {
+      left: `${(0.5 + R_FRAC * Math.cos(angle)) * 100}%`,
+      top:  `${(0.5 + R_FRAC * Math.sin(angle)) * 100}%`,
+    }
+  }
 
   return (
     <Section id="benchmark" minHeight="auto">
-      <SectionTitle sub="From textbooks to benchmark tasks to model evaluation — click any step to expand">How It Works</SectionTitle>
+      <SectionTitle sub="Six-step pipeline from task generation to scoring — click any node to expand">How It Works</SectionTitle>
 
-      {/* Pipeline */}
-      <motion.div
-        ref={pipelineRef}
-        initial="hidden"
-        animate={isPipelineInView ? 'visible' : 'hidden'}
-        variants={staggerContainer(0.1)}
-        style={{ display:'flex', justifyContent:'center', alignItems:'flex-start', flexWrap:'wrap', gap:0, marginBottom:16 }}
-      >
-        {PIPELINE.map((s,i) => (
-          <motion.div key={s.label} variants={staggerItem} style={{ display:'flex', alignItems:'center' }}>
-            <div style={{ position:'relative' }}>
-              <span className="step-badge">{String(i+1).padStart(2,'0')}</span>
+      {/* Circular pipeline diagram */}
+      <FadeIn>
+        <div style={{ position:'relative', width:'100%', maxWidth:560, height:560, margin:'0 auto 8px' }}>
+
+          {/* Outer rotating ring */}
+          <div style={{ position:'absolute', left:'50%', top:'50%', width:'78%', height:'78%',
+            animation:'ringRotate 70s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(0,255,224,0.12)' }}/>
+
+          {/* Inner counter-rotating ring */}
+          <div style={{ position:'absolute', left:'50%', top:'50%', width:'58%', height:'58%',
+            animation:'ringCCW 45s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(0,180,216,0.09)' }}/>
+
+          {/* SVG connector lines */}
+          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
+            {PIPELINE.map((_,i) => {
+              const angle = (i / 6) * 2 * Math.PI - Math.PI / 2
+              return (
+                <line key={i}
+                  x1="50%" y1="50%"
+                  x2={`${(0.5 + R_FRAC * Math.cos(angle)) * 100}%`}
+                  y2={`${(0.5 + R_FRAC * Math.sin(angle)) * 100}%`}
+                  stroke={expanded===i ? 'rgba(0,255,224,0.38)' : 'rgba(0,255,224,0.09)'}
+                  strokeWidth={expanded===i ? 1.5 : 1}
+                  strokeDasharray="5 5"
+                />
+              )
+            })}
+          </svg>
+
+          {/* Center hub */}
+          <motion.div
+            style={{ position:'absolute', left:'50%', top:'50%', width:110, height:110,
+              transform:'translate(-50%,-50%)', borderRadius:'50%',
+              background:'rgba(0,255,224,0.05)', border:'2px solid rgba(0,255,224,0.4)',
+              display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+              boxShadow:'0 0 30px rgba(0,255,224,0.12)' }}
+            animate={{ boxShadow:['0 0 20px rgba(0,255,224,0.08)','0 0 44px rgba(0,255,224,0.20)','0 0 20px rgba(0,255,224,0.08)'] }}
+            transition={{ duration:3, repeat:Infinity, ease:'easeInOut' }}
+          >
+            <div style={{ color:'var(--aqua)', fontSize:8, fontWeight:700, letterSpacing:'0.08em' }}>BENCHMARK</div>
+            <div style={{ color:'var(--aqua)', fontWeight:800, fontSize:24, fontFamily:'var(--font-mono)', lineHeight:1.1 }}>171</div>
+            <div style={{ color:'rgba(0,255,224,0.5)', fontSize:8, marginTop:1 }}>TASKS</div>
+            <div style={{ color:'rgba(255,255,255,0.3)', fontSize:7, marginTop:1 }}>5 MODELS</div>
+          </motion.div>
+
+          {/* Pipeline step nodes */}
+          {PIPELINE.map((s,i) => {
+            const pos = getPos(i)
+            const isActive = expanded === i
+            return (
               <motion.div
-                className={`card${expanded===i?' card-glow':''}`}
-                style={{ width:155, textAlign:'center', padding:'20px 12px', cursor:'pointer',
-                  borderColor: expanded===i ? 'var(--border-hover)' : undefined,
-                  background: expanded===i ? 'rgba(0,255,224,0.04)' : undefined }}
-                onClick={() => setExpanded(expanded===i ? null : i)}
-                whileHover={{ y:-4, boxShadow:'var(--glow-md)', borderColor:'var(--border-hover)' }}
+                key={i}
+                style={{ position:'absolute', ...pos, width:130, transform:'translate(-50%,-50%)',
+                  background: isActive ? 'rgba(0,255,224,0.08)' : 'rgba(255,255,255,0.03)',
+                  border:`1px solid ${isActive ? 'rgba(0,255,224,0.5)' : 'rgba(0,255,224,0.15)'}`,
+                  borderRadius:12, padding:'12px 10px 10px', cursor:'pointer', textAlign:'center' }}
+                onClick={() => setExpanded(isActive ? null : i)}
+                whileHover={{ scale:1.06, borderColor:'rgba(0,255,224,0.4)', background:'rgba(0,255,224,0.05)' }}
                 transition={{ type:'spring', stiffness:400, damping:28 }}
               >
-                <div style={{ marginBottom:8, lineHeight:1, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[i]}</div>
-                <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, marginBottom:4, letterSpacing:'0.06em' }}>{s.label}</div>
-                <div style={{ color:'var(--text-primary)', fontSize:11, fontWeight:600, marginBottom:5, lineHeight:1.3 }}>{s.title}</div>
-                <div style={{ color:'var(--aqua)', fontSize:8, opacity:0.65, letterSpacing:'0.04em' }}>{s.stat}</div>
-                <div style={{ color:'var(--text-muted)', fontSize:9, marginTop:6 }}>{expanded===i ? '▲ collapse':'▼ expand'}</div>
+                <div style={{ color:'var(--aqua)', marginBottom:5, display:'flex', justifyContent:'center', opacity:0.85 }}>{PIPELINE_ICONS[i]}</div>
+                <div style={{ color:'var(--aqua)', fontSize:9, fontWeight:700, marginBottom:3, letterSpacing:'0.05em', lineHeight:1.3 }}>{s.label}</div>
+                <div style={{ color:'rgba(255,255,255,0.55)', fontSize:8, fontWeight:600, lineHeight:1.3 }}>{s.stat}</div>
+                <div style={{ color:'rgba(0,255,224,0.35)', fontSize:7, marginTop:4 }}>{isActive ? '▲' : '▼'}</div>
               </motion.div>
-            </div>
-            {i < PIPELINE.length-1 && (
-              <div className="arrow-wrap">
-                <span style={{ fontSize:16 }}>→</span>
-                <div className="travel-dot" style={{ animationDelay:`${i*0.5}s` }}/>
-              </div>
-            )}
-          </motion.div>
-        ))}
-      </motion.div>
+            )
+          })}
+        </div>
 
-      {/* Accordion detail */}
-      <AnimatePresence mode="wait">
-        {expanded !== null && (
-          <motion.div
-            key={expanded}
-            initial={{ opacity:0, y:-8, height:0 }}
-            animate={{ opacity:1, y:0, height:'auto' }}
-            exit={{ opacity:0, y:-8, height:0 }}
-            transition={{ duration:0.28, ease:[0.22,1,0.36,1] }}
-            style={{ overflow:'hidden', maxWidth:680, margin:'0 auto 32px' }}
-          >
-            <Card glow style={{ padding:'22px 28px', textAlign:'center' }}>
-              <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
-              <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:11, letterSpacing:'0.1em', marginBottom:4 }}>
-                STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
+        {/* Expanded detail */}
+        <AnimatePresence mode="wait">
+          {expanded !== null && (
+            <motion.div
+              key={expanded}
+              initial={{ opacity:0, y:-8, height:0 }}
+              animate={{ opacity:1, y:0, height:'auto' }}
+              exit={{ opacity:0, y:-8, height:0 }}
+              transition={{ duration:0.28, ease:[0.22,1,0.36,1] }}
+              style={{ overflow:'hidden', maxWidth:600, margin:'0 auto 16px' }}
+            >
+              <Card glow style={{ padding:'20px 28px', textAlign:'center' }}>
+                <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
+                <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, letterSpacing:'0.1em', marginBottom:4 }}>
+                  STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
+                </div>
+                <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:15, marginBottom:10 }}>
+                  {PIPELINE[expanded].title}
+                </div>
+                <p style={{ color:'var(--text-secondary)', fontSize:12.5, lineHeight:1.75, margin:0 }}>
+                  {PIPELINE[expanded].desc}
+                </p>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </FadeIn>
+
+      {/* Extra info row: Deployment / RQ Integration / Papers / User Study */}
+      <FadeIn delay={120}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:14, maxWidth:960, margin:'0 auto 40px' }}>
+          {HOW_EXTRA.map((item) => (
+            <Card key={item.title} style={{ padding:'18px 16px' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:12 }}>
+                <div style={{ color:item.color, flexShrink:0 }}>{item.icon}</div>
+                <div style={{ color:item.color, fontWeight:700, fontSize:12 }}>{item.title}</div>
               </div>
-              <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:16, marginBottom:12 }}>
-                {PIPELINE[expanded].title}
-              </div>
-              <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.75, margin:0 }}>
-                {PIPELINE[expanded].desc}
-              </p>
+              <ul style={{ margin:0, padding:0, listStyle:'none' }}>
+                {item.lines.map((l,j) => (
+                  <li key={j} style={{ display:'flex', alignItems:'flex-start', gap:6, marginBottom:5 }}>
+                    <span style={{ color:item.color, fontSize:8, marginTop:3, flexShrink:0 }}>◆</span>
+                    <span style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.55 }}>{l}</span>
+                  </li>
+                ))}
+              </ul>
             </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+        </div>
+      </FadeIn>
 
       {/* Tier Ladder + Scoring */}
-      <FadeIn delay={150}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:24, maxWidth:800, margin:'0 auto' }}>
+      <FadeIn delay={180}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:24, maxWidth:900, margin:'0 auto' }}>
           <Card><TierLadder/></Card>
           <Card>
             <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:20 }}>SCORING FORMULA</div>
@@ -1256,7 +1280,7 @@ function Tasks({ onOpenModal }) {
                   { key:'all',                  label:'All' },
                   { key:'numeric',              label:'Numeric' },
                   { key:'conceptual',           label:'Concept' },
-                  { key:'computational_bayes',  label:'Phase 2' },
+                  { key:'computational_bayes',  label:'Comp. Bayes' },
                 ].map(({ key: cat, label }) => (
                   <motion.button
                     key={cat}
@@ -1487,11 +1511,14 @@ function TaskCard({ task, onClick, onCopy, copied }) {
         </div>
       </Tooltip>
       <p style={{ color:'var(--text-secondary)', fontSize:12, lineHeight:1.55, margin:'8px 0 12px', textTransform:'capitalize' }}>
-        {(task.description||'').slice(0,105)}{(task.description||'').length>105?'…':''}
+        {(() => {
+          const desc = task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
+          return desc.slice(0,110) + (desc.length>110 ? '…' : '')
+        })()}
       </p>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
         <Pill color={task.category==='conceptual' ? C.aquaLight : task.category==='computational_bayes' ? '#A78BFA' : C.blue}>
-          {task.category==='computational_bayes' ? 'PHASE 2' : task.category.toUpperCase()}
+          {task.category==='computational_bayes' ? 'COMP. BAYES' : task.category.toUpperCase()}
         </Pill>
         <span style={{ color:'var(--aqua)', fontSize:10, fontWeight:700 }}>VIEW →</span>
       </div>
@@ -1531,7 +1558,7 @@ function TaskModal({ task, onClose }) {
               { label:'TIER',       value:`${task.tier} — ${TIER_LABELS[task.tier]}` },
               { label:'DIFFICULTY', value:(task.difficulty||'').toUpperCase() },
               { label:'TYPE',       value:task.task_type },
-              { label:'CATEGORY',   value:task.category.toUpperCase() },
+              { label:'CATEGORY',   value:task.category==='computational_bayes' ? 'COMP. BAYES' : task.category.toUpperCase() },
             ].map(({ label, value }) => (
               <div key={label} style={{ background:'rgba(0,255,224,0.04)', border:'1px solid rgba(0,255,224,0.12)', borderRadius:8, padding:'12px 16px', minHeight:72 }}>
                 <div style={{ fontSize:10, fontWeight:700, color:'#00FFE0', letterSpacing:'0.1em', marginBottom:8 }}>{label}</div>
@@ -1640,10 +1667,10 @@ function Results() {
 // ═══════════════════════════════════════════════════════════════
 //  6. VISUALIZATIONS
 // ═══════════════════════════════════════════════════════════════
-function Visualizations({ setFullImg }) {
+function Visualizations({ setFullImg, onOpenGif }) {
   return (
     <Section id="visualizations" minHeight="auto">
-      <VizGallery setFullImg={setFullImg} />
+      <VizGallery setFullImg={setFullImg} onOpenGif={onOpenGif} />
     </Section>
   )
 }
@@ -1652,21 +1679,45 @@ function Visualizations({ setFullImg }) {
 //  7. ABOUT
 // ═══════════════════════════════════════════════════════════════
 const TEXTBOOKS = [
-  { text:'Bolstad — Introduction to Bayesian Statistics (2nd ed.)',              color:'#00FFE0', modules:['BB','HPD'] },
-  { text:'Bishop — Pattern Recognition and Machine Learning',                    color:'#00B4D8', modules:['DIR'] },
-  { text:'Ghosh, Delampady & Samanta — Introduction to Bayesian Analysis',       color:'#7FFFD4', modules:['JEF','RC'] },
-  { text:'Hoff — A First Course in Bayesian Statistical Methods',                color:'#4A90D9', modules:['NG','PPC'] },
-  { text:'Carlin & Louis — Bayesian Methods for Data Analysis (3rd ed.)',        color:'#00FFE0', modules:['BR','BF'] },
-  { text:'Goldstein & Wooff — Bayes Linear Statistics',                          color:'#7FFFD4', modules:['BL'] },
-  { text:'Lee — Bayesian Statistics: An Introduction (4th ed.)',                 color:'#00B4D8', modules:['CI'] },
+  { text:'Bolstad — Introduction to Bayesian Statistics (2nd ed.)', color:'#00FFE0',
+    desc:'Foundational text covering conjugate models, credible intervals, and HPD regions. Directly mapped to BETA_BINOM, BINOM_FLAT, HPD task types.',
+    url:'https://www.wiley.com/en-us/Introduction+to+Bayesian+Statistics%2C+3rd+Edition-p-9781118593226' },
+  { text:'Bishop — Pattern Recognition and Machine Learning', color:'#00B4D8',
+    desc:'Comprehensive reference for variational Bayes (Ch.10) and Dirichlet-Multinomial models (Ch.2). Core for VB and DIRICHLET tasks.',
+    url:'https://link.springer.com/book/9780387310732' },
+  { text:'Ghosh, Delampady & Samanta — Introduction to Bayesian Analysis', color:'#7FFFD4',
+    desc:'Graduate-level treatment of Jeffreys priors, Fisher information, and Rao-Cramér bounds. Primary reference for JEFFREYS, FISHER_INFO, RC_BOUND.',
+    url:'https://link.springer.com/book/9780387400846' },
+  { text:'Hoff — A First Course in Bayesian Statistical Methods', color:'#4A90D9',
+    desc:'Accessible introduction to Normal-Gamma models, posterior predictive checks, and Gibbs sampling. Open access. Covers NORMAL_GAMMA, PPC, GIBBS.',
+    url:'https://pdhoff.github.io/book/' },
+  { text:'Carlin & Louis — Bayesian Methods for Data Analysis (3rd ed.)', color:'#00FFE0',
+    desc:'Advanced Bayesian computation including MCMC methods (Gibbs, MH, HMC), Bayesian regression, and hierarchical models. Core for Phase 2 tasks.',
+    url:'https://www.taylorfrancis.com/books/mono/10.1201/b14884/bayesian-methods-data-analysis-bradley-carlin-thomas-louis' },
+  { text:'Goldstein & Wooff — Bayes Linear Statistics', color:'#7FFFD4',
+    desc:'Specialized reference for Bayes linear methodology. Provides theoretical background for linear approximation methods in the benchmark.',
+    url:'https://www.wiley.com/en-us/Bayes+Linear+Statistics%3A+Theory+and+Methods-p-9780470015629' },
+  { text:'Lee — Bayesian Statistics: An Introduction (4th ed.)', color:'#00B4D8',
+    desc:'Clear introduction to Bayesian inference fundamentals. Key reference for CI_CREDIBLE comparison tasks and BAYES_FACTOR analysis.',
+    url:'https://www.wiley.com/en-us/Bayesian+Statistics%3A+An+Introduction%2C+4th+Edition-p-9781118332573' },
 ]
 
 const RQS = [
-  { id:'RQ1', label:'Numerical & Statistical Accuracy',   color:'#00FFE0', status:'5/5 models complete · Claude 88.9% pass' },
-  { id:'RQ2', label:'Method Selection Accuracy',           color:'#00B4D8', status:'5/5 models complete · structure scoring active' },
-  { id:'RQ3', label:'Assumption Compliance',               color:'#7FFFD4', status:'5/5 models complete · assumption scoring active' },
-  { id:'RQ4', label:'Robustness to Prompt Variations',     color:'#4A90D9', status:'375 runs · avg robustness 0.91 · ChatGPT most robust' },
-  { id:'RQ5', label:'Confidence & Trust Calibration',      color:'#A78BFA', status:'Complete · C=0.20 · calibration extraction active across 1,230 runs' },
+  { id:'RQ1', label:'Numerical & Statistical Accuracy',   color:'#00FFE0',
+    detail:'Do LLMs compute correct numerical answers? Tests exact posterior parameters, credible intervals, and predictive distributions against deterministic ground-truth values computed in Python.',
+    result:'Claude 88.9% pass · avg N-score 0.683 across all 5 models', metric:'N = 0.20', icon:'#' },
+  { id:'RQ2', label:'Method Selection Accuracy',           color:'#00B4D8',
+    detail:'Do models choose the correct statistical method and show appropriate derivation steps? Evaluates whether the response uses the right conjugate family, MCMC variant, or frequentist procedure.',
+    result:'Structure rubric active · Phase 2 tasks test 7 computational Bayes methods', metric:'M = 0.20', icon:'M' },
+  { id:'RQ3', label:'Assumption Compliance',               color:'#7FFFD4',
+    detail:'Do models state and verify the assumptions required for their chosen method — prior specification, iid conditions, distributional families? Failures here indicate shallow statistical reasoning.',
+    result:'E3 Assumption Violation is the #1 failure mode (119/143 failures)', metric:'A = 0.20', icon:'A' },
+  { id:'RQ4', label:'Robustness to Prompt Variations',     color:'#4A90D9',
+    detail:'Are model scores stable across rephrasings, numerical changes, and semantic reframings of the same problem? Tests whether LLMs understand statistics or rely on surface pattern matching.',
+    result:'375 synthetic runs · avg robustness 0.91 · ChatGPT most robust (0.931)', metric:'RQ4 ≈ 0.91', icon:'R' },
+  { id:'RQ5', label:'Confidence & Trust Calibration',      color:'#A78BFA',
+    detail:'Does expressed certainty match actual accuracy? Overconfident-wrong answers are penalized 1.5× more than well-calibrated wrong answers. Extracted from linguistic hedges and explicit percentages.',
+    result:'C=0.20 active · calibration extracted across all 1,230 runs', metric:'C = 0.20', icon:'C' },
 ]
 
 const ABOUT_FINDINGS = [
@@ -1703,20 +1754,21 @@ const ABOUT_FINDING_ICONS = [
   </svg>,
 ]
 const ABOUT_REFS = [
-  { authors:'Lu et al.', year:2025, title:'StatEval: Benchmarking LLMs on Statistical Reasoning', id:'arXiv:2510.09517' },
-  { authors:'Nagarkar et al.', year:2026, title:'Can LLM Reasoning Be Trusted in Statistical Domains', id:'arXiv:2601.14479' },
-  { authors:'Liu et al.', year:2025, title:'MathEval: A Comprehensive Benchmark for Mathematical Reasoning', id:'DOI:10.1007/s44366-025-0053-z' },
-  { authors:'Chen et al.', year:2022, title:'Program of Thoughts Prompting', id:'arXiv:2211.12588' },
-  { authors:'Wei et al.', year:2022, title:'Chain-of-Thought Prompting Elicits Reasoning in LLMs', id:'arXiv:2201.11903' },
-]
-const LECTURE_MAP = [
-  ['Lec 21–22', 'MINIMAX · BAYES_RISK · DISC_MEDIAN'],
-  ['Lec 23–25', 'FISHER_INFO · RC_BOUND · MLE_EFFICIENCY · BIAS_VAR'],
-  ['Lec 26–27', 'DIRICHLET · BINOM_FLAT · GAMMA_POISSON'],
-  ['Lec 28–29', 'ORDER_STAT · RANGE_DIST · UNIFORM_MLE · OPT_SCALED'],
-  ['Lec 30–33', 'MARKOV · GAMBLER · STATIONARY'],
-  ['Lec 36–38', 'BOX_MULLER · REGRESSION · LOG_ML'],
-  ['Lec 39–40', 'BAYES_REG · CI_CREDIBLE · CONCEPTUAL'],
+  { authors:'Lu et al.', year:2025, title:'StatEval: Benchmarking LLMs on Statistical Reasoning',
+    id:'arXiv:2510.09517', url:'https://arxiv.org/abs/2510.09517',
+    desc:'Closest prior work. Benchmarks LLMs on descriptive + hypothesis-testing statistics using multiple-choice format. Our work extends to Bayesian inference with free-response scoring.' },
+  { authors:'Nagarkar et al.', year:2026, title:'Can LLM Reasoning Be Trusted in Statistical Domains',
+    id:'arXiv:2601.14479', url:'https://arxiv.org/abs/2601.14479',
+    desc:'Investigates reliability and hallucination patterns in statistical reasoning tasks. Motivates our confidence calibration dimension (RQ5).' },
+  { authors:'Liu et al.', year:2025, title:'MathEval: A Comprehensive Benchmark for Mathematical Reasoning',
+    id:'DOI:10.1007/s44366-025-0053-z', url:'https://doi.org/10.1007/s44366-025-0053-z',
+    desc:'Comprehensive mathematical reasoning benchmark across 17 datasets. Provides comparative baseline for our 5-dimensional Bayesian scoring rubric.' },
+  { authors:'Chen et al.', year:2022, title:'Program of Thoughts Prompting: Disentangling Computation from Reasoning',
+    id:'arXiv:2211.12588', url:'https://arxiv.org/abs/2211.12588',
+    desc:'Introduces Program-of-Thoughts (PoT) prompting where models write executable code. One of 3 prompting strategies implemented in our benchmark runner.' },
+  { authors:'Wei et al.', year:2022, title:'Chain-of-Thought Prompting Elicits Reasoning in Large Language Models',
+    id:'arXiv:2201.11903', url:'https://arxiv.org/abs/2201.11903',
+    desc:'Foundational paper establishing Chain-of-Thought (CoT) as the primary prompting strategy. Zero-shot CoT is our baseline prompting mode for all 1,230 benchmark runs.' },
 ]
 const SCORE_DIMS = [
   { dim:'N', name:'Numerical Accuracy',     color:'#00FFE0' },
@@ -1731,14 +1783,45 @@ function About() {
     <Section id="about" minHeight="auto">
       <SectionTitle sub="DS 299 Capstone — evaluating LLM statistical reasoning at graduate level">About This Research</SectionTitle>
 
-      {/* § 1 — Research Overview + CountUp stats */}
+      {/* § 1 — Research Questions (TOP) */}
       <FadeIn>
+        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>FIVE RESEARCH QUESTIONS</div>
+        <p style={{ color:'var(--text-secondary)', fontSize:13, textAlign:'center', maxWidth:680, margin:'0 auto 24px', lineHeight:1.7 }}>
+          Each question maps to a scoring dimension (N·M·A·C·R = 0.20 each).
+          RQ4 uses 375 additional synthetic perturbation runs across 3 perturbation types.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:14, maxWidth:960, margin:'0 auto 52px' }}>
+          {RQS.map((q,i) => (
+            <motion.div key={i}
+              whileHover={{ y:-4, boxShadow:`0 8px 32px ${q.color}22` }}
+              transition={{ type:'spring', stiffness:400, damping:28 }}
+            >
+              <Card style={{ padding:'20px 18px', height:'100%', boxSizing:'border-box', borderLeft:`3px solid ${q.color}`, borderRadius:'0 12px 12px 0' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
+                  <div style={{ width:38, height:38, borderRadius:8, background:`${q.color}18`, border:`1.5px solid ${q.color}`, display:'flex', alignItems:'center', justifyContent:'center', color:q.color, fontWeight:800, fontSize:13, flexShrink:0 }}>{q.id}</div>
+                  <div>
+                    <div style={{ color:'var(--text-primary)', fontSize:13, fontWeight:700, lineHeight:1.3 }}>{q.label}</div>
+                    <div style={{ color:q.color, fontSize:9, fontWeight:700, letterSpacing:'0.08em', marginTop:2 }}>{q.metric}</div>
+                  </div>
+                </div>
+                <p style={{ color:'var(--text-secondary)', fontSize:11.5, lineHeight:1.7, margin:'0 0 10px' }}>{q.detail}</p>
+                <div style={{ background:`${q.color}0D`, border:`1px solid ${q.color}22`, borderRadius:6, padding:'6px 10px', fontSize:10, color:q.color, fontStyle:'italic' }}>
+                  {q.result}
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </FadeIn>
+
+      {/* § 2 — Research Overview + CountUp stats */}
+      <FadeIn delay={60}>
         <Card style={{ maxWidth:900, margin:'0 auto 48px', padding:'36px 40px', textAlign:'center' }}>
           <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.85, margin:'0 0 36px' }}>
             The first benchmark dedicated to Bayesian and inferential statistical reasoning,
-            covering both classical conjugate methods and advanced computational techniques
-            (MCMC, Variational Bayes, ABC). Five leading LLMs evaluated across five scoring
-            dimensions derived from graduate-level curriculum.
+            covering both classical conjugate models and advanced computational methods
+            (MCMC, Variational Bayes, ABC, Hierarchical Bayes). Five leading LLMs evaluated
+            across five scoring dimensions. Supervised by Dr. Vahe Movsisyan, AUA.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'28px 40px' }}>
             {[
@@ -1759,8 +1842,8 @@ function About() {
         </Card>
       </FadeIn>
 
-      {/* § 2 — Key Findings */}
-      <FadeIn delay={80}>
+      {/* § 3 — Key Findings */}
+      <FadeIn delay={100}>
         <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>KEY FINDINGS</div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(210px,1fr))', gap:14, maxWidth:900, margin:'0 auto 52px' }}>
           {ABOUT_FINDINGS.map((f,i) => (
@@ -1778,7 +1861,7 @@ function About() {
         </div>
       </FadeIn>
 
-      {/* § 3 — Scoring Framework + Multi-model radar */}
+      {/* § 4 — Scoring Framework + Multi-model radar */}
       <FadeIn delay={140}>
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:24, maxWidth:900, margin:'0 auto 52px' }}>
           <Card style={{ padding:'24px 20px' }}>
@@ -1810,78 +1893,57 @@ function About() {
         </div>
       </FadeIn>
 
-      {/* § 4 — Research Questions */}
-      <FadeIn delay={170}>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>RESEARCH QUESTIONS</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:12, maxWidth:900, margin:'0 auto 52px' }}>
-          {RQS.map((q,i) => (
-            <motion.div key={i} whileHover={{ x:4 }} transition={{ type:'spring', stiffness:400, damping:30 }}>
-              <Card style={{ padding:'14px 16px', display:'flex', gap:10, alignItems:'flex-start' }}>
-                <span style={{ background:`${q.color}22`, color:q.color, fontSize:9, fontWeight:700, padding:'3px 7px', borderRadius:4, flexShrink:0, marginTop:1 }}>{q.id}</span>
-                <div>
-                  <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:600, marginBottom:3 }}>{q.label}</div>
-                  <div style={{ color:'var(--text-muted)', fontSize:10, fontStyle:'italic', lineHeight:1.4 }}>{q.status}</div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </FadeIn>
-
-      {/* § 5 — References */}
-      <FadeIn delay={200}>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>REFERENCES</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(270px,1fr))', gap:12, maxWidth:900, margin:'0 auto 52px' }}>
+      {/* § 5 — Research Papers */}
+      <FadeIn delay={180}>
+        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>5 REFERENCED RESEARCH PAPERS</div>
+        <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
+          Papers that directly shaped our benchmark design, prompting strategies, and evaluation methodology.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:960, margin:'0 auto 44px' }}>
           {ABOUT_REFS.map((r,i) => (
-            <motion.div key={i} whileHover={{ y:-3, scale:1.02, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
-              <Card style={{ padding:'14px 16px' }}>
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:6 }}>
-                  <span style={{ color:'var(--text-muted)', fontSize:10 }}>{r.authors}</span>
-                  <span style={{ background:'rgba(0,255,224,0.12)', color:'var(--aqua)', fontSize:9, fontWeight:700, padding:'2px 6px', borderRadius:4 }}>{r.year}</span>
-                </div>
-                <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:600, marginBottom:6, lineHeight:1.4 }}>{r.title}</div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--text-muted)' }}>{r.id}</div>
-              </Card>
+            <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
+              <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
+                <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
+                    <span style={{ color:'var(--text-muted)', fontSize:10 }}>{r.authors}</span>
+                    <span style={{ background:'rgba(0,255,224,0.12)', color:'var(--aqua)', fontSize:9, fontWeight:700, padding:'2px 6px', borderRadius:4 }}>{r.year}</span>
+                  </div>
+                  <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:700, marginBottom:8, lineHeight:1.4 }}>{r.title}</div>
+                  <p style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.6, margin:'0 0 8px' }}>{r.desc}</p>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--aqua)', opacity:0.7 }}>{r.id} ↗</div>
+                </Card>
+              </a>
             </motion.div>
           ))}
         </div>
       </FadeIn>
 
-      {/* § 6 — Textbooks */}
-      <FadeIn delay={230}>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>7 GRADUATE TEXTBOOKS</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(270px,1fr))', gap:10, maxWidth:900, margin:'0 auto 52px' }}>
+      {/* § 6 — Graduate Textbooks */}
+      <FadeIn delay={220}>
+        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>7 GRADUATE TEXTBOOKS</div>
+        <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
+          Graduate-level Bayesian statistics texts that define the scope and task types of this benchmark.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:960, margin:'0 auto 48px' }}>
           {TEXTBOOKS.map((b,i) => (
-            <motion.div key={i} whileHover={{ y:-3, scale:1.02 }} transition={{ type:'spring', stiffness:400, damping:28 }}>
-              <Card style={{ padding:'12px 16px', display:'flex', gap:10, alignItems:'flex-start' }}>
-                <div style={{ width:7, height:7, borderRadius:'50%', background:b.color, flexShrink:0, marginTop:4, boxShadow:`0 0 5px ${b.color}` }}/>
-                <span style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.55 }}>{b.text}</span>
-              </Card>
+            <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
+              <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
+                <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
+                  <div style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
+                    <div style={{ width:8, height:8, borderRadius:'50%', background:b.color, flexShrink:0, marginTop:5, boxShadow:`0 0 6px ${b.color}` }}/>
+                    <div>
+                      <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:700, marginBottom:6, lineHeight:1.4 }}>{b.text}</div>
+                      <p style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.6, margin:'0 0 6px' }}>{b.desc}</p>
+                      <span style={{ color:b.color, fontSize:9, fontWeight:700, opacity:0.8 }}>View book ↗</span>
+                    </div>
+                  </div>
+                </Card>
+              </a>
             </motion.div>
           ))}
         </div>
       </FadeIn>
 
-      {/* § 7 — Course Foundation */}
-      <FadeIn delay={260}>
-        <Card style={{ maxWidth:900, margin:'0 auto 40px', padding:'24px 28px' }}>
-          <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', marginBottom:14 }}>COURSE FOUNDATION — DS 299 CAPSTONE</div>
-          <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.7, margin:'0 0 20px' }}>
-            Built on DS 299 Capstone curriculum — Lectures 21–40 directly mapped to benchmark task types.
-            Supervisor: Dr. Vahe Movsisyan, AUA.
-          </p>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:8 }}>
-            {LECTURE_MAP.map(([lec, tasks]) => (
-              <div key={lec} style={{ display:'flex', gap:10, alignItems:'flex-start', padding:'8px 10px', background:'rgba(0,0,0,0.2)', borderRadius:8, border:'1px solid rgba(0,255,224,0.06)' }}>
-                <span style={{ color:'var(--aqua)', fontSize:9, fontWeight:700, fontFamily:'var(--font-mono)', flexShrink:0, marginTop:1 }}>{lec}</span>
-                <span style={{ color:'var(--text-muted)', fontSize:9, lineHeight:1.5 }}>{tasks}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </FadeIn>
-
-      <Timeline/>
     </Section>
   )
 }
@@ -1890,12 +1952,13 @@ function About() {
 //  ROOT APP
 // ═══════════════════════════════════════════════════════════════
 export default function App() {
-  const [modal,   setModal]   = useState(null)
-  const [fullImg, setFullImg] = useState(null)
+  const [modal,    setModal]    = useState(null)
+  const [fullImg,  setFullImg]  = useState(null)
+  const [gifModal, setGifModal] = useState(null)
 
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === 'Escape') { setModal(null); setFullImg(null) }
+      if (e.key === 'Escape') { setModal(null); setFullImg(null); setGifModal(null) }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -1921,7 +1984,7 @@ export default function App() {
       <SectionDivider/>
       <Tasks onOpenModal={setModal}/>
       <SectionDivider/>
-      <Visualizations setFullImg={setFullImg}/>
+      <Visualizations setFullImg={setFullImg} onOpenGif={setGifModal}/>
       <SectionDivider/>
       <UserStudy/>
       <SectionDivider/>
@@ -2003,6 +2066,68 @@ export default function App() {
           }}>
             Click outside or press ESC to close
           </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* GIF modal — outside filter motion.div for same stacking context reason */}
+    <AnimatePresence>
+      {gifModal && (
+        <motion.div
+          key="gif-modal-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={() => setGifModal(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999990,
+            background: 'rgba(0,0,0,0.9)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 24,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.93, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.93, y: 20 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: '88vw', maxWidth: 1100,
+              background: 'rgba(6,12,26,0.98)',
+              border: '1px solid rgba(0,255,224,0.2)',
+              borderRadius: 16,
+              display: 'flex', flexDirection: 'column',
+              overflow: 'hidden',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
+            }}
+          >
+            <div style={{
+              flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '12px 20px', borderBottom: '1px solid rgba(0,255,224,0.1)',
+            }}>
+              <div style={{ color: '#00FFE0', fontSize: 14, fontWeight: 700 }}>Score Race Animation</div>
+              <button
+                onClick={() => setGifModal(null)}
+                style={{
+                  width: 34, height: 34, borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  background: 'rgba(255,255,255,0.05)',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: 16, cursor: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}
+              >✕</button>
+            </div>
+            <div style={{ padding: 12, display: 'flex', justifyContent: 'center' }}>
+              <img
+                src={gifModal}
+                alt="Animated visualization"
+                style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 8 }}
+              />
+            </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
