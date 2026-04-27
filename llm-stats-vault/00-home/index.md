@@ -25,7 +25,8 @@ date: 2026-04-26
 
 **results.json:** ✅ Populated (5 models × 171 tasks = 855 entries)  
 **rq4_analysis.json:** ✅ Complete (375 triples, all 5 models)  
-**R report:** ✅ Re-rendered 2026-04-26, 9.6 MB, all 5 models
+**R report:** ✅ Re-rendered 2026-04-26, 9.6 MB, all 5 models  
+**Website:** ✅ Live — https://capstone-llm-stats.vercel.app (Vercel frontend + Render backend)
 
 ## Navigation
 
@@ -52,6 +53,8 @@ date: 2026-04-26
 - [[2026-04-26-research-gap-closures-and-roadmap]] — LLM-as-Judge, PoT, few-shot, bibliography
 - [[2026-04-26-benchmark-completion-and-r-report]] — all 5 models complete, R re-render, doc updates
 - [[2026-04-26-error-taxonomy-pipeline]] — error taxonomy pipeline (E1-E9), proposal gap closed, vault updated
+- [[2026-04-27-website-ui-viz-overhaul]] — emoji→SVG, TierLadder rebuild, viz gallery overhaul (18→12), Gemini fix in R scripts, removed Results section
+- [[2026-04-27-user-study-and-deployment]] — User Study (5-model parallel, image upload, voting), Vercel + Render deploy, Dockerfile fixes
 
 ## Quick Commands
 
