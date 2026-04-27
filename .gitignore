@@ -14,6 +14,9 @@ runs.jsonl
 results.json
 experiments/results_v1/
 
+# Un-ignore static copies bundled for Render Docker build
+!capstone-website/backend/static_data/**
+
 # API keys & secrets
 .env
 .env.local
