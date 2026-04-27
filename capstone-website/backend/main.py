@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import json
@@ -12,9 +13,14 @@ except ModuleNotFoundError:
 
 app = FastAPI(title="LLM Bayesian Benchmark API")
 
+_frontend = os.environ.get("FRONTEND_URL", "")
+_ORIGINS = ["http://localhost:5173", "http://localhost:3000"] + (
+    [_frontend] if _frontend else ["*"]
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )

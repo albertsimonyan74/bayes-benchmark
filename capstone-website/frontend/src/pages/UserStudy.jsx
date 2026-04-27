@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
-const API_BASE = 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_URL || ''
 
 const MODEL_META = {
   claude:   { name: 'Claude Sonnet 4.6', color: '#00CED1', initials: 'CL', vision: true },
