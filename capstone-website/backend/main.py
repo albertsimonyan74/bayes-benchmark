@@ -100,6 +100,16 @@ def _enrich(t: dict) -> dict:
     }
 
 
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "service": "capstone-llm-stats-api",
+        "endpoints": ["/api/status", "/api/leaderboard", "/api/tasks",
+                      "/api/results/summary", "/api/user-study"],
+    }
+
+
 @app.get("/api/status")
 def status():
     tasks = _load_tasks()
