@@ -85,64 +85,100 @@ a, button, [data-hover] { cursor: none !important; }
 
 /* ─── KaTeX math rendering in model responses ────────────────────── */
 .md-response .katex { font-size: 1.05em; }
-.md-response .katex-display { overflow-x: auto; padding: 4px 0; }
+.md-response .katex-display { overflow-x: auto; padding: 6px 0; margin: 6px 0; }
 
 /* ─── Mobile responsive layout ──────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   /* Restore system cursor on touch devices */
   * { cursor: auto !important; }
   input, textarea, select { cursor: text !important; }
+  a, button, [data-hover] { cursor: pointer !important; }
   #global-cursor { display: none !important; }
 
   /* Sections */
-  section[id] { padding: 60px 20px 60px !important; }
+  section[id] { padding: 56px 20px 56px !important; }
 
   /* Navbar */
-  nav { padding: 0 16px !important; }
+  nav { padding: 0 16px !important; gap: 10px !important; }
   .nav-links { display: none !important; }
 
-  /* Hero title */
-  h1 { font-size: clamp(26px, 7vw, 48px) !important; }
+  /* Hero */
+  h1 { font-size: clamp(24px, 7vw, 46px) !important; }
+  h2 { font-size: clamp(20px, 5vw, 36px) !important; }
 
-  /* About grid — stack columns */
-  .sec-about > div [style*="grid-template-columns: 1fr 1fr"] {
+  /* Grid: any 2-col → 1-col */
+  [style*="gridTemplateColumns: '1fr 1fr'"],
+  [style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* Tasks — sidebar + grid become vertical */
-  .sec-tasks > div > div[style*="grid-template-columns: 250px"] {
+  /* Tasks sidebar + grid */
+  [style*="gridTemplateColumns: '250px 1fr'"],
+  [style*="grid-template-columns: 250px"] {
     grid-template-columns: 1fr !important;
   }
-  .sec-tasks [style*="position: sticky"] { position: relative !important; top: auto !important; }
-
-  /* How It Works circle — scale down */
-  .sec-benchmark [style*="width:'100%'"] { overflow-x: auto; }
-
-  /* Benchmark circle container */
-  .sec-benchmark [style*="maxWidth: 560"] { max-width: 360px !important; height: 360px !important; }
-
-  /* Task grid */
-  .sec-tasks [style*="gridTemplateColumns: 'repeat(auto-fill,minmax(290px"] {
-    grid-template-columns: 1fr !important;
+  [style*="position: sticky"][style*="top: 96"] {
+    position: relative !important; top: auto !important;
   }
 
-  /* Results grid */
-  .sec-results [style*="grid"] { grid-template-columns: 1fr !important; }
+  /* Task card grid */
+  [style*="minmax(290px"] { grid-template-columns: 1fr !important; }
 
-  /* User study response grid */
-  #user-study [style*="minmax(300px"] { grid-template-columns: 1fr !important; }
-  #user-study { padding: 60px 0 !important; }
+  /* Pipeline circle */
+  .sec-benchmark [style*="maxWidth"] > div {
+    transform: scale(0.7) !important;
+    transform-origin: top center !important;
+  }
+
+  /* Results model cards — 1 col */
+  [style*="repeat(auto-fill, minmax(220px"] { grid-template-columns: 1fr !important; }
+
+  /* User study */
+  #user-study { padding: 56px 0 !important; }
   #user-study > div { padding: 0 16px !important; }
+  #user-study [style*="minmax(300px"] { grid-template-columns: 1fr !important; }
+  #user-study [style*="padding: '28px 32px'"] { padding: 18px 16px !important; }
 
-  /* Radar chart — shrink */
-  svg[width="344"], svg[width="296"] { width: 280px !important; height: 280px !important; }
+  /* Radar — scale SVG containers down */
+  .radar-wrap svg { max-width: 100%; height: auto; }
+  .radar-wrap { overflow: hidden; }
 
-  /* Scoring bars */
-  [style*="grid-template-columns: repeat(5,1fr)"] { grid-template-columns: repeat(3, 1fr) !important; }
+  /* Results heatmap — allow horizontal scroll */
+  [style*="minWidth: 600"] { min-width: 0 !important; }
+  [style*="minWidth: 500"] { min-width: 0 !important; }
 
-  /* Footer */
-  footer { padding: 20px 16px !important; }
+  /* Tier breakdown — 2 cols on mobile */
+  [style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Score distribution — 2 cols */
+  [style*="repeat(5, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Modal inner layout */
+  [style*="grid-template-columns: '1fr 1fr'"] { grid-template-columns: 1fr !important; }
 
   /* VizGallery */
-  .sec-visualizations [style*="grid"] { grid-template-columns: 1fr !important; }
+  [style*="minmax(360px"] { grid-template-columns: 1fr !important; }
+
+  /* Typography in cards */
+  [style*="fontSize: 32"] { font-size: 24px !important; }
+  [style*="fontSize: 36"] { font-size: 26px !important; }
+  [style*="fontSize: 48"] { font-size: 32px !important; }
+
+  /* Vote panel buttons — wrap */
+  [style*="flexWrap: 'wrap'"] { flex-wrap: wrap !important; }
+
+  /* Footer */
+  footer { padding: 20px 16px !important; flex-direction: column !important; gap: 8px !important; }
+}
+
+@media (max-width: 480px) {
+  section[id] { padding: 48px 14px 48px !important; }
+  h1 { font-size: clamp(22px, 8vw, 36px) !important; }
+  [style*="padding: '96px 64px'"] { padding: 48px 14px !important; }
+  [style*="maxWidth: 1200"] { max-width: 100% !important; }
+  [style*="maxWidth: 1100"] { max-width: 100% !important; padding: 0 14px !important; }
+
+  /* Tier breakdown — 1 col on tiny screens */
+  [style*="repeat(4, 1fr)"] { grid-template-columns: 1fr !important; }
+  [style*="repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
 }

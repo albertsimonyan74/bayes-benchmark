@@ -684,7 +684,7 @@ function TierLadder() {
 
 // ─── Radar Chart ─────────────────────────────────────────────
 function RadarChart({ model }) {
-  const pad=48, inner=200, size=inner+pad*2
+  const pad=72, inner=200, size=inner+pad*2
   const cx=size/2, cy=size/2, R=80, n=5
   const step = (Math.PI*2)/n
   const vals = RADAR_VALS[model.id] || Array(n).fill(0.7)
@@ -739,7 +739,7 @@ function RadarChart({ model }) {
 const MODEL_COLORS = { claude:'#00CED1', gemini:'#FF6B6B', chatgpt:'#7FFFD4', deepseek:'#4A90D9', mistral:'#A78BFA' }
 function MultiModelRadar() {
   const [hoveredModel, setHoveredModel] = useState(null)
-  const pad=52, inner=240, size=inner+pad*2
+  const pad=80, inner=240, size=inner+pad*2
   const cx=size/2, cy=size/2, R=95, n=5
   const step = (Math.PI*2)/n
   const rings = [0.25,0.5,0.75,1].map(s =>

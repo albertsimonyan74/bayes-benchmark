@@ -233,7 +233,7 @@ async def call_claude(question: str, image_b64: Optional[str], media_type: str) 
                 "https://api.anthropic.com/v1/messages",
                 headers={"x-api-key": key, "anthropic-version": "2023-06-01",
                          "content-type": "application/json"},
-                json={"model": "claude-sonnet-4-6", "max_tokens": 1024,
+                json={"model": "claude-sonnet-4-6", "max_tokens": 2048,
                       "system": SYSTEM_PROMPT,
                       "messages": [{"role": "user", "content": content}]},
             )
@@ -267,7 +267,7 @@ async def call_gpt4(question: str, image_b64: Optional[str], media_type: str) ->
             r = await client.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": "gpt-4.1", "max_tokens": 1024,
+                json={"model": "gpt-4.1", "max_tokens": 2048,
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                    {"role": "user", "content": content}]},
             )
@@ -300,7 +300,7 @@ async def call_gemini(question: str, image_b64: Optional[str], media_type: str) 
             r = await client.post(url, json={
                 "contents": [{"parts": parts}],
                 "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
-                "generationConfig": {"maxOutputTokens": 1024},
+                "generationConfig": {"maxOutputTokens": 4096},
             })
             r.raise_for_status()
             text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
@@ -332,7 +332,7 @@ async def call_deepseek(question: str, image_b64: Optional[str], media_type: str
             r = await client.post(
                 "https://api.deepseek.com/chat/completions",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": "deepseek-chat", "max_tokens": 1024,
+                json={"model": "deepseek-chat", "max_tokens": 2048,
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                    {"role": "user", "content": text_question}]},
             )
@@ -366,7 +366,7 @@ async def call_mistral(question: str, image_b64: Optional[str], media_type: str)
             r = await client.post(
                 "https://api.mistral.ai/v1/chat/completions",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                json={"model": "mistral-large-latest", "max_tokens": 1024,
+                json={"model": "mistral-large-latest", "max_tokens": 2048,
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                    {"role": "user", "content": text_question}]},
             )

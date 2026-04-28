@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
@@ -16,9 +16,20 @@ const MODEL_META = {
 
 const MODEL_ORDER = ['claude', 'chatgpt', 'gemini', 'deepseek', 'mistral']
 
-// Markdown + LaTeX renderer for model responses
+// Normalize LaTeX delimiters: \(...\) → $...$, \[...\] → $$...$$
+function normalizeMath(text) {
+  if (!text) return text
+  // \(...\) inline math
+  text = text.replace(/\\\((.+?)\\\)/gs, (_, m) => `$${m}$`)
+  // \[...\] display math
+  text = text.replace(/\\\[(.+?)\\\]/gs, (_, m) => `$$${m}$$`)
+  return text
+}
+
+// Markdown + LaTeX renderer for model responses (react-markdown v9 compatible)
 function MarkdownRenderer({ text, color }) {
   if (!text) return null
+  const normalized = normalizeMath(text)
   return (
     <div
       className="md-response"
@@ -27,7 +38,7 @@ function MarkdownRenderer({ text, color }) {
         lineHeight: 1.75,
         color: '#c8dce8',
         wordBreak: 'break-word',
-        maxHeight: 460,
+        maxHeight: 520,
         overflowY: 'auto',
         paddingRight: 4,
         '--md-accent': color,
@@ -35,25 +46,33 @@ function MarkdownRenderer({ text, color }) {
     >
       <ReactMarkdown
         remarkPlugins={[remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[[rehypeKatex, { throwOnError: false, strict: false }]]}
         components={{
           p: ({ children }) => <p style={{ margin: '0 0 10px' }}>{children}</p>,
           strong: ({ children }) => <strong style={{ color: '#e8f4f8', fontWeight: 700 }}>{children}</strong>,
           em: ({ children }) => <em style={{ color: '#b8d0e0' }}>{children}</em>,
-          code: ({ inline, children }) => inline
-            ? <code style={{ background: 'rgba(0,255,224,0.1)', border: '1px solid rgba(0,255,224,0.2)', borderRadius: 4, padding: '1px 5px', fontSize: 12.5, fontFamily: 'var(--font-mono)', color: '#00FFE0' }}>{children}</code>
-            : <pre style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '12px 14px', overflow: 'auto', margin: '8px 0' }}><code style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: '#c8dce8' }}>{children}</code></pre>,
+          // react-markdown v9: use className to detect inline vs block code
+          code: ({ node, className, children, ...props }) => {
+            const isBlock = node?.position?.start?.line !== node?.position?.end?.line || String(children).includes('\n')
+            return isBlock
+              ? <pre style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '12px 14px', overflow: 'auto', margin: '8px 0' }}><code style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: '#c8dce8' }}>{children}</code></pre>
+              : <code style={{ background: 'rgba(0,255,224,0.1)', border: '1px solid rgba(0,255,224,0.2)', borderRadius: 4, padding: '1px 5px', fontSize: 12.5, fontFamily: 'var(--font-mono)', color: '#00FFE0' }}>{children}</code>
+          },
           ul: ({ children }) => <ul style={{ margin: '4px 0 10px', paddingLeft: 20 }}>{children}</ul>,
           ol: ({ children }) => <ol style={{ margin: '4px 0 10px', paddingLeft: 20 }}>{children}</ol>,
           li: ({ children }) => <li style={{ marginBottom: 4, color: '#b8d0e0' }}>{children}</li>,
           h1: ({ children }) => <h1 style={{ fontSize: 16, fontWeight: 700, color: '#e8f4f8', margin: '12px 0 6px' }}>{children}</h1>,
           h2: ({ children }) => <h2 style={{ fontSize: 14, fontWeight: 700, color: '#e8f4f8', margin: '10px 0 5px' }}>{children}</h2>,
           h3: ({ children }) => <h3 style={{ fontSize: 13, fontWeight: 700, color: '#d0e8f0', margin: '8px 0 4px' }}>{children}</h3>,
+          h4: ({ children }) => <h4 style={{ fontSize: 12, fontWeight: 700, color: '#b8d0e0', margin: '6px 0 3px' }}>{children}</h4>,
           blockquote: ({ children }) => <blockquote style={{ borderLeft: '3px solid rgba(0,255,224,0.4)', paddingLeft: 12, margin: '8px 0', color: '#9ab8c8' }}>{children}</blockquote>,
           hr: () => <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '12px 0' }} />,
+          table: ({ children }) => <table style={{ borderCollapse: 'collapse', width: '100%', margin: '8px 0', fontSize: 12 }}>{children}</table>,
+          th: ({ children }) => <th style={{ border: '1px solid rgba(0,255,224,0.2)', padding: '6px 10px', background: 'rgba(0,255,224,0.06)', color: '#00FFE0', textAlign: 'left' }}>{children}</th>,
+          td: ({ children }) => <td style={{ border: '1px solid rgba(255,255,255,0.08)', padding: '5px 10px', color: '#c8dce8' }}>{children}</td>,
         }}
       >
-        {text}
+        {normalized}
       </ReactMarkdown>
     </div>
   )
@@ -306,7 +325,7 @@ function VotePanel({ responses, question, sessionId, hasImage, onVoteDone }) {
   )
 }
 
-function AggregateStats() {
+function AggregateStats({ refreshTrigger }) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -331,6 +350,13 @@ function AggregateStats() {
     } catch {}
     setLoading(false)
   }
+
+  // Auto-refresh when a vote is submitted (refreshTrigger increments)
+  useEffect(() => {
+    if (refreshTrigger > 0 && isOpen) {
+      refresh()
+    }
+  }, [refreshTrigger])
 
   function close() {
     setIsOpen(false)
@@ -448,6 +474,7 @@ export default function UserStudy() {
   const [responses, setResponses] = useState(null)
   const [sessionId, setSessionId] = useState(null)
   const [voteWinner, setVoteWinner] = useState(null)
+  const [voteRefresh, setVoteRefresh] = useState(0)
   const [error, setError] = useState(null)
   const fileRef = useRef()
 
@@ -547,7 +574,7 @@ export default function UserStudy() {
             marginBottom: 28,
           }}
         >
-          <AggregateStats />
+          <AggregateStats refreshTrigger={voteRefresh} />
         </motion.div>
 
         {/* Input panel */}
@@ -738,7 +765,7 @@ export default function UserStudy() {
                     question={question.trim()}
                     sessionId={sessionId}
                     hasImage={!!imageFile}
-                    onVoteDone={id => setVoteWinner(id)}
+                    onVoteDone={id => { setVoteWinner(id); setVoteRefresh(n => n + 1) }}
                   />
                 </motion.div>
               )}

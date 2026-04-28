@@ -4,7 +4,7 @@
     "task_type": "BETA_BINOM",
     "tier": 1,
     "difficulty": "basic",
-    "description": "beta-binomial",
+    "description": "Beta(2,2) prior, Binomial(10,6) data. Find posterior Beta(2+6,2+10-6), posterior mean, 95% credible interval, and posterior predictive P(X=3 | 5 new trials).",
     "category": "numeric",
     "numeric_targets": {
       "posterior_mean": 0.5714285714285714,
@@ -22,7 +22,7 @@
     "task_type": "GAMMA_POISSON",
     "tier": 1,
     "difficulty": "intermediate",
-    "description": "gamma-poisson",
+    "description": "Gamma(1.0,1.0) prior, 4 Poisson observations summing to 6. Find posterior Gamma distribution, mean, 95% CI, and predictive PMF at y=2.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_mean": 1.4,
@@ -40,7 +40,7 @@
     "task_type": "NORMAL_GAMMA",
     "tier": 1,
     "difficulty": "advanced",
-    "description": "normal-gamma",
+    "description": "Normal-Gamma(0.0,1.0,2.0,2.0) conjugate prior, 4 obs with mean \u2248 1.25. Find posterior parameters and 95% credible interval for the mean \u03bc.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_mean_mu": 1.0,
@@ -58,7 +58,7 @@
     "task_type": "DIRICHLET",
     "tier": 1,
     "difficulty": "intermediate",
-    "description": "dirichlet-multinomial",
+    "description": "Dirichlet([1, 1, 1]) prior over 3 categories with observed counts [10, 5, 0]. Compute posterior Dirichlet, category probabilities, and posterior predictive.",
     "category": "numeric",
     "numeric_targets": {
       "p1_mean": 0.6111111111111112,
@@ -76,7 +76,7 @@
     "task_type": "DISC_MEDIAN",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "discrete posterior median",
+    "description": "Discrete distribution on values [1, 2, 3, 4, 5] with probs [0.1, 0.2, 0.3, 0.25, 0.15]. Find the posterior median (first value where CDF \u2265 0.5). Answer: ?.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_median": 3.0
@@ -91,7 +91,7 @@
     "task_type": "DISC_MEDIAN",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "discrete posterior median",
+    "description": "Discrete distribution on values [0.5, 1.0, 1.5, 2.0] with probs [0.3, 0.4, 0.2, 0.1]. Find the posterior median (first value where CDF \u2265 0.5). Answer: ?.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_median": 1.0
@@ -106,7 +106,7 @@
     "task_type": "DISC_MEDIAN",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "discrete posterior median",
+    "description": "Discrete distribution on values [10, 20, 30] with probs [0.1, 0.5, 0.4]. Find the posterior median (first value where CDF \u2265 0.5). Answer: ?.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_median": 20.0
@@ -121,7 +121,7 @@
     "task_type": "DISC_MEDIAN",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "discrete posterior median",
+    "description": "Discrete distribution on values [2, 4, 6, 8] with probs [0.25, 0.25, 0.25, 0.25]. Find the posterior median (first value where CDF \u2265 0.5). Answer: ?.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_median": 4.0
@@ -136,7 +136,7 @@
     "task_type": "DISC_MEDIAN",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "discrete posterior median",
+    "description": "Discrete distribution on values [1, 3, 5, 7, 9] with probs [0.05, 0.2, 0.5, 0.2, 0.05]. Find the posterior median (first value where CDF \u2265 0.5). Answer: ?.",
     "category": "numeric",
     "numeric_targets": {
       "posterior_median": 5.0
@@ -151,7 +151,7 @@
     "task_type": "UNIFORM_MLE",
     "tier": 2,
     "difficulty": "basic",
-    "description": "uniform mle",
+    "description": "MLE for Uniform(0,\u03b8) with data [1.2, 3.4, 2.1, 4.7, 0.9]. \u03b8\u0302 = max(4.7) = 4.7.",
     "category": "numeric",
     "numeric_targets": {
       "mle_theta": 4.7
@@ -166,7 +166,7 @@
     "task_type": "UNIFORM_MLE",
     "tier": 2,
     "difficulty": "basic",
-    "description": "uniform mle",
+    "description": "MLE for Uniform(0,\u03b8) with data [0.5, 1.8, 3.2, 2.9, 1.1, 3.8]. \u03b8\u0302 = max(3.8) = 3.8.",
     "category": "numeric",
     "numeric_targets": {
       "mle_theta": 3.8
@@ -181,7 +181,7 @@
     "task_type": "UNIFORM_MLE",
     "tier": 2,
     "difficulty": "basic",
-    "description": "uniform mle",
+    "description": "MLE for Uniform(0,\u03b8) with data [7.1, 2.3, 5.8, 9.2, 4.6]. \u03b8\u0302 = max(9.2) = 9.2.",
     "category": "numeric",
     "numeric_targets": {
       "mle_theta": 9.2
@@ -196,7 +196,7 @@
     "task_type": "UNIFORM_MLE",
     "tier": 2,
     "difficulty": "basic",
-    "description": "uniform mle",
+    "description": "MLE for Uniform(0,\u03b8) with data [0.3, 0.7, 0.5, 0.9, 0.4, 0.8, 0.6]. \u03b8\u0302 = max(0.9) = 0.9.",
     "category": "numeric",
     "numeric_targets": {
       "mle_theta": 0.9
@@ -211,7 +211,7 @@
     "task_type": "UNIFORM_MLE",
     "tier": 2,
     "difficulty": "basic",
-    "description": "uniform mle",
+    "description": "MLE for Uniform(0,\u03b8) with data [12.5, 8.3, 15.7, 11.2, 9.8, 14.1]. \u03b8\u0302 = max(15.7) = 15.7.",
     "category": "numeric",
     "numeric_targets": {
       "mle_theta": 15.7
@@ -226,7 +226,7 @@
     "task_type": "BINOM_FLAT",
     "tier": 1,
     "difficulty": "basic",
-    "description": "binomial flat prior",
+    "description": "Beta(1,1) flat prior + Binomial(10,3) data. Posterior = Beta(3+1,10-3+1). Posterior mean = (3+1)/(10+2) \u2248 0.3333.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 4.0,
@@ -243,7 +243,7 @@
     "task_type": "BINOM_FLAT",
     "tier": 1,
     "difficulty": "basic",
-    "description": "binomial flat prior",
+    "description": "Beta(1,1) flat prior + Binomial(10,7) data. Posterior = Beta(7+1,10-7+1). Posterior mean = (7+1)/(10+2) \u2248 0.6667.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 8.0,
@@ -260,7 +260,7 @@
     "task_type": "BINOM_FLAT",
     "tier": 1,
     "difficulty": "basic",
-    "description": "binomial flat prior",
+    "description": "Beta(1,1) flat prior + Binomial(5,0) data. Posterior = Beta(0+1,5-0+1). Posterior mean = (0+1)/(5+2) \u2248 0.1429.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 1.0,
@@ -277,7 +277,7 @@
     "task_type": "BINOM_FLAT",
     "tier": 1,
     "difficulty": "basic",
-    "description": "binomial flat prior",
+    "description": "Beta(1,1) flat prior + Binomial(20,15) data. Posterior = Beta(15+1,20-15+1). Posterior mean = (15+1)/(20+2) \u2248 0.7273.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 16.0,
@@ -294,7 +294,7 @@
     "task_type": "BINOM_FLAT",
     "tier": 1,
     "difficulty": "basic",
-    "description": "binomial flat prior",
+    "description": "Beta(1,1) flat prior + Binomial(8,4) data. Posterior = Beta(4+1,8-4+1). Posterior mean = (4+1)/(8+2) \u2248 0.5.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 5.0,
@@ -311,7 +311,7 @@
     "task_type": "MINIMAX",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "minimax comparison",
+    "description": "Find the minimax estimator minimizing worst-case risk under ? loss. Compare Bayes estimators across all priors.",
     "category": "numeric",
     "numeric_targets": {
       "max_risk_hat1": 0.5,
@@ -328,7 +328,7 @@
     "task_type": "MINIMAX",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "minimax comparison",
+    "description": "Find the minimax estimator minimizing worst-case risk under ? loss. Compare Bayes estimators across all priors.",
     "category": "numeric",
     "numeric_targets": {
       "max_risk_hat1": 0.3,
@@ -345,7 +345,7 @@
     "task_type": "MINIMAX",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "minimax comparison",
+    "description": "Find the minimax estimator minimizing worst-case risk under ? loss. Compare Bayes estimators across all priors.",
     "category": "numeric",
     "numeric_targets": {
       "max_risk_hat1": 0.5,
@@ -362,7 +362,7 @@
     "task_type": "MINIMAX",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "minimax comparison",
+    "description": "Find the minimax estimator minimizing worst-case risk under ? loss. Compare Bayes estimators across all priors.",
     "category": "numeric",
     "numeric_targets": {
       "max_risk_hat1": 0.6,
@@ -379,7 +379,7 @@
     "task_type": "MINIMAX",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "minimax comparison",
+    "description": "Find the minimax estimator minimizing worst-case risk under ? loss. Compare Bayes estimators across all priors.",
     "category": "numeric",
     "numeric_targets": {
       "max_risk_hat1": 0.4,
@@ -396,7 +396,7 @@
     "task_type": "BAYES_RISK",
     "tier": 2,
     "difficulty": "basic",
-    "description": "discrete bayes risk",
+    "description": "Compute Bayes risk B(\u03b4) = \u03a3 R(\u03b8\u1d62,\u03b4)\u00b7\u03c0(\u03b8\u1d62) \u2014 prior-weighted expected loss of estimator \u03b4 under prior ?.",
     "category": "numeric",
     "numeric_targets": {
       "bayes_risk": 0.38
@@ -411,7 +411,7 @@
     "task_type": "BAYES_RISK",
     "tier": 2,
     "difficulty": "basic",
-    "description": "discrete bayes risk",
+    "description": "Compute Bayes risk B(\u03b4) = \u03a3 R(\u03b8\u1d62,\u03b4)\u00b7\u03c0(\u03b8\u1d62) \u2014 prior-weighted expected loss of estimator \u03b4 under prior ?.",
     "category": "numeric",
     "numeric_targets": {
       "bayes_risk": 0.53
@@ -426,7 +426,7 @@
     "task_type": "BAYES_RISK",
     "tier": 2,
     "difficulty": "basic",
-    "description": "discrete bayes risk",
+    "description": "Compute Bayes risk B(\u03b4) = \u03a3 R(\u03b8\u1d62,\u03b4)\u00b7\u03c0(\u03b8\u1d62) \u2014 prior-weighted expected loss of estimator \u03b4 under prior ?.",
     "category": "numeric",
     "numeric_targets": {
       "bayes_risk": 0.5
@@ -441,7 +441,7 @@
     "task_type": "BAYES_RISK",
     "tier": 2,
     "difficulty": "basic",
-    "description": "discrete bayes risk",
+    "description": "Compute Bayes risk B(\u03b4) = \u03a3 R(\u03b8\u1d62,\u03b4)\u00b7\u03c0(\u03b8\u1d62) \u2014 prior-weighted expected loss of estimator \u03b4 under prior ?.",
     "category": "numeric",
     "numeric_targets": {
       "bayes_risk": 0.25
@@ -456,7 +456,7 @@
     "task_type": "BAYES_RISK",
     "tier": 2,
     "difficulty": "basic",
-    "description": "discrete bayes risk",
+    "description": "Compute Bayes risk B(\u03b4) = \u03a3 R(\u03b8\u1d62,\u03b4)\u00b7\u03c0(\u03b8\u1d62) \u2014 prior-weighted expected loss of estimator \u03b4 under prior ?.",
     "category": "numeric",
     "numeric_targets": {
       "bayes_risk": 0.35000000000000003
@@ -471,7 +471,7 @@
     "task_type": "BIAS_VAR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bias variance decomp",
+    "description": "Decompose MSE into Bias\u00b2 + Variance for estimator ? with n=5. Verify MSE = Bias\u00b2 + Variance algebraically.",
     "category": "numeric",
     "numeric_targets": {
       "bias": -0.16666666666666666,
@@ -488,7 +488,7 @@
     "task_type": "BIAS_VAR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bias variance decomp",
+    "description": "Decompose MSE into Bias\u00b2 + Variance for estimator ? with n=10. Verify MSE = Bias\u00b2 + Variance algebraically.",
     "category": "numeric",
     "numeric_targets": {
       "bias": -0.18181818181818182,
@@ -505,7 +505,7 @@
     "task_type": "BIAS_VAR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bias variance decomp",
+    "description": "Decompose MSE into Bias\u00b2 + Variance for estimator ? with n=20. Verify MSE = Bias\u00b2 + Variance algebraically.",
     "category": "numeric",
     "numeric_targets": {
       "bias": -0.14285714285714285,
@@ -522,7 +522,7 @@
     "task_type": "BIAS_VAR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bias variance decomp",
+    "description": "Decompose MSE into Bias\u00b2 + Variance for estimator ? with n=8. Verify MSE = Bias\u00b2 + Variance algebraically.",
     "category": "numeric",
     "numeric_targets": {
       "bias": -0.4444444444444444,
@@ -539,7 +539,7 @@
     "task_type": "BIAS_VAR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bias variance decomp",
+    "description": "Decompose MSE into Bias\u00b2 + Variance for estimator ? with n=15. Verify MSE = Bias\u00b2 + Variance algebraically.",
     "category": "numeric",
     "numeric_targets": {
       "bias": -0.3125,
@@ -556,7 +556,7 @@
     "task_type": "FISHER_INFO",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "fisher information",
+    "description": "Compute Fisher information I(\u03b8) for the binomial distribution with parameter ?=?, sample size n=10. Evaluate expected curvature of log-likelihood.",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 47.61904761904762
@@ -571,7 +571,7 @@
     "task_type": "FISHER_INFO",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "fisher information",
+    "description": "Compute Fisher information I(\u03b8) for the binomial distribution with parameter ?=?, sample size n=20. Evaluate expected curvature of log-likelihood.",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 80.0
@@ -586,7 +586,7 @@
     "task_type": "FISHER_INFO",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "fisher information",
+    "description": "Compute Fisher information I(\u03b8) for the poisson distribution with parameter ?=?, sample size n=5. Evaluate expected curvature of log-likelihood.",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 1.25
@@ -601,7 +601,7 @@
     "task_type": "FISHER_INFO",
     "tier": 3,
     "difficulty": "basic",
-    "description": "fisher information",
+    "description": "Compute Fisher information I(\u03b8) for the normal distribution with parameter ?=?, sample size n=15. Evaluate expected curvature of log-likelihood.",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 15.0
@@ -616,7 +616,7 @@
     "task_type": "FISHER_INFO",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "fisher information",
+    "description": "Compute Fisher information I(\u03b8) for the poisson distribution with parameter ?=?, sample size n=8. Evaluate expected curvature of log-likelihood.",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 4.0
@@ -631,7 +631,7 @@
     "task_type": "RC_BOUND",
     "tier": 3,
     "difficulty": "basic",
-    "description": "rao cramer bound",
+    "description": "Verify the Rao\u2013Cram\u00e9r lower bound for estimator of binomial distribution. Check if Var(\u03b8\u0302) = 1/I(\u03b8) (efficient estimator).",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 47.61904761904762,
@@ -647,7 +647,7 @@
     "task_type": "RC_BOUND",
     "tier": 3,
     "difficulty": "basic",
-    "description": "rao cramer bound",
+    "description": "Verify the Rao\u2013Cram\u00e9r lower bound for estimator of binomial distribution. Check if Var(\u03b8\u0302) = 1/I(\u03b8) (efficient estimator).",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 80.0,
@@ -663,7 +663,7 @@
     "task_type": "RC_BOUND",
     "tier": 3,
     "difficulty": "basic",
-    "description": "rao cramer bound",
+    "description": "Verify the Rao\u2013Cram\u00e9r lower bound for estimator of poisson distribution. Check if Var(\u03b8\u0302) = 1/I(\u03b8) (efficient estimator).",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 5.0,
@@ -679,7 +679,7 @@
     "task_type": "RC_BOUND",
     "tier": 3,
     "difficulty": "basic",
-    "description": "rao cramer bound",
+    "description": "Verify the Rao\u2013Cram\u00e9r lower bound for estimator of normal distribution. Check if Var(\u03b8\u0302) = 1/I(\u03b8) (efficient estimator).",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 10.0,
@@ -695,7 +695,7 @@
     "task_type": "RC_BOUND",
     "tier": 3,
     "difficulty": "basic",
-    "description": "rao cramer bound",
+    "description": "Verify the Rao\u2013Cram\u00e9r lower bound for estimator of poisson distribution. Check if Var(\u03b8\u0302) = 1/I(\u03b8) (efficient estimator).",
     "category": "numeric",
     "numeric_targets": {
       "fisher_info": 4.0,
@@ -711,7 +711,7 @@
     "task_type": "OPT_SCALED",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "optimal scaled estimator",
+    "description": "Find constant c minimizing MSE of c\u00b7max(X\u2081,...,X\u2099) for n=5 Uniform(0,\u03b8) samples. Optimal c = (n+1)/(n+2) = ?.",
     "category": "numeric",
     "numeric_targets": {
       "c_opt": 1.1666666666666667,
@@ -727,7 +727,7 @@
     "task_type": "OPT_SCALED",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "optimal scaled estimator",
+    "description": "Find constant c minimizing MSE of c\u00b7max(X\u2081,...,X\u2099) for n=10 Uniform(0,\u03b8) samples. Optimal c = (n+1)/(n+2) = ?.",
     "category": "numeric",
     "numeric_targets": {
       "c_opt": 1.0909090909090908,
@@ -743,7 +743,7 @@
     "task_type": "OPT_SCALED",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "optimal scaled estimator",
+    "description": "Find constant c minimizing MSE of c\u00b7max(X\u2081,...,X\u2099) for n=20 Uniform(0,\u03b8) samples. Optimal c = (n+1)/(n+2) = ?.",
     "category": "numeric",
     "numeric_targets": {
       "c_opt": 1.0476190476190477,
@@ -759,7 +759,7 @@
     "task_type": "OPT_SCALED",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "optimal scaled estimator",
+    "description": "Find constant c minimizing MSE of c\u00b7max(X\u2081,...,X\u2099) for n=8 Uniform(0,\u03b8) samples. Optimal c = (n+1)/(n+2) = ?.",
     "category": "numeric",
     "numeric_targets": {
       "c_opt": 1.1111111111111112,
@@ -775,7 +775,7 @@
     "task_type": "OPT_SCALED",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "optimal scaled estimator",
+    "description": "Find constant c minimizing MSE of c\u00b7max(X\u2081,...,X\u2099) for n=15 Uniform(0,\u03b8) samples. Optimal c = (n+1)/(n+2) = ?.",
     "category": "numeric",
     "numeric_targets": {
       "c_opt": 1.0625,
@@ -791,7 +791,7 @@
     "task_type": "MSE_COMPARE",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mse comparison",
+    "description": "Compare MSE of competing estimators for n=5 observations. Determine which estimator is uniformly better in terms of mean squared error.",
     "category": "numeric",
     "numeric_targets": {
       "mse_d1": 0.06666666666666667,
@@ -808,7 +808,7 @@
     "task_type": "MSE_COMPARE",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mse comparison",
+    "description": "Compare MSE of competing estimators for n=10 observations. Determine which estimator is uniformly better in terms of mean squared error.",
     "category": "numeric",
     "numeric_targets": {
       "mse_d1": 0.13333333333333333,
@@ -825,7 +825,7 @@
     "task_type": "MSE_COMPARE",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mse comparison",
+    "description": "Compare MSE of competing estimators for n=20 observations. Determine which estimator is uniformly better in terms of mean squared error.",
     "category": "numeric",
     "numeric_targets": {
       "mse_d1": 0.15,
@@ -842,7 +842,7 @@
     "task_type": "MSE_COMPARE",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mse comparison",
+    "description": "Compare MSE of competing estimators for n=8 observations. Determine which estimator is uniformly better in terms of mean squared error.",
     "category": "numeric",
     "numeric_targets": {
       "mse_d1": 0.6666666666666666,
@@ -859,7 +859,7 @@
     "task_type": "MSE_COMPARE",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mse comparison",
+    "description": "Compare MSE of competing estimators for n=15 observations. Determine which estimator is uniformly better in terms of mean squared error.",
     "category": "numeric",
     "numeric_targets": {
       "mse_d1": 0.5555555555555556,
@@ -876,7 +876,7 @@
     "task_type": "MARKOV",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "markov stationary",
+    "description": "Markov chain analysis with 3\u00d73 transition matrix. Compute ?-step transition probabilities and stationary distribution.",
     "category": "numeric",
     "numeric_targets": {
       "pi_0": 0.5591397849462366,
@@ -893,7 +893,7 @@
     "task_type": "MARKOV",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "gamblers ruin",
+    "description": "Markov chain: compute n-step transitions and stationary distribution.",
     "category": "numeric",
     "numeric_targets": {
       "ruin_prob": 0.7,
@@ -909,7 +909,7 @@
     "task_type": "MARKOV",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "gamblers ruin",
+    "description": "Markov chain: compute n-step transitions and stationary distribution.",
     "category": "numeric",
     "numeric_targets": {
       "ruin_prob": 0.8836363636363636,
@@ -925,7 +925,7 @@
     "task_type": "MARKOV",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "markov n step",
+    "description": "Markov chain analysis with 3\u00d73 transition matrix. Compute ?-step transition probabilities and stationary distribution.",
     "category": "numeric",
     "numeric_targets": {
       "P2_1_2": 0.16666666666666666
@@ -940,7 +940,7 @@
     "task_type": "MARKOV",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "markov stationary 2state",
+    "description": "Markov chain analysis with 2\u00d72 transition matrix. Compute ?-step transition probabilities and stationary distribution.",
     "category": "numeric",
     "numeric_targets": {
       "pi_0": 0.5714285714285714,
@@ -956,7 +956,7 @@
     "task_type": "ORDER_STAT",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "order statistic pdf",
+    "description": "Find density and CDF of the 3-th order statistic X(3) from n=5 Uniform[0,1] samples. For Uniform, X(3)~Beta(3,5-3+1).",
     "category": "numeric",
     "numeric_targets": {
       "order_stat_pdf": 1.728000000000001
@@ -971,7 +971,7 @@
     "task_type": "ORDER_STAT",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "order statistic pdf",
+    "description": "Find density and CDF of the 1-th order statistic X(1) from n=4 Uniform[0,1] samples. For Uniform, X(1)~Beta(1,4-1+1).",
     "category": "numeric",
     "numeric_targets": {
       "order_stat_pdf": 2.048000000000001
@@ -986,7 +986,7 @@
     "task_type": "ORDER_STAT",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "min order statistic cdf",
+    "description": "Find density and CDF of the ?-th order statistic X(?) from n=5 Uniform[0,1] samples. For Uniform, X(?)~Beta(?,5-?+1).",
     "category": "numeric",
     "numeric_targets": {
       "min_cdf": 0.8319300000000001
@@ -1001,7 +1001,7 @@
     "task_type": "ORDER_STAT",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "min order statistic cdf",
+    "description": "Find density and CDF of the ?-th order statistic X(?) from n=8 Uniform[0,1] samples. For Uniform, X(?)~Beta(?,8-?+1).",
     "category": "numeric",
     "numeric_targets": {
       "min_cdf": 0.99609375
@@ -1016,7 +1016,7 @@
     "task_type": "ORDER_STAT",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "uniform range distribution",
+    "description": "Find density and CDF of the ?-th order statistic X(?) from n=5 Uniform[0,1] samples. For Uniform, X(?)~Beta(?,5-?+1).",
     "category": "numeric",
     "numeric_targets": {
       "range_beta_alpha": 4.0,
@@ -1032,7 +1032,7 @@
     "task_type": "REGRESSION",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ols regression",
+    "description": "OLS linear regression on 5 data points. Find slope \u03b2\u0302 and intercept \u03b1\u0302 minimizing \u03a3(y\u1d62 - \u03b1 - \u03b2x\u1d62)\u00b2.",
     "category": "numeric",
     "numeric_targets": {
       "A_hat": 0.0500000000000016,
@@ -1051,7 +1051,7 @@
     "task_type": "REGRESSION",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ols regression",
+    "description": "OLS linear regression on 6 data points. Find slope \u03b2\u0302 and intercept \u03b1\u0302 minimizing \u03a3(y\u1d62 - \u03b1 - \u03b2x\u1d62)\u00b2.",
     "category": "numeric",
     "numeric_targets": {
       "A_hat": 0.9285714285714288,
@@ -1070,7 +1070,7 @@
     "task_type": "REGRESSION",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ols regression",
+    "description": "OLS linear regression on 5 data points. Find slope \u03b2\u0302 and intercept \u03b1\u0302 minimizing \u03a3(y\u1d62 - \u03b1 - \u03b2x\u1d62)\u00b2.",
     "category": "numeric",
     "numeric_targets": {
       "A_hat": 0.16999999999999993,
@@ -1089,7 +1089,7 @@
     "task_type": "REGRESSION",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ols regression",
+    "description": "OLS linear regression on 5 data points. Find slope \u03b2\u0302 and intercept \u03b1\u0302 minimizing \u03a3(y\u1d62 - \u03b1 - \u03b2x\u1d62)\u00b2.",
     "category": "numeric",
     "numeric_targets": {
       "A_hat": 3.0649999999999995,
@@ -1108,7 +1108,7 @@
     "task_type": "REGRESSION",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ols regression",
+    "description": "OLS linear regression on 5 data points. Find slope \u03b2\u0302 and intercept \u03b1\u0302 minimizing \u03a3(y\u1d62 - \u03b1 - \u03b2x\u1d62)\u00b2.",
     "category": "numeric",
     "numeric_targets": {
       "A_hat": 5.299999999999997,
@@ -1127,7 +1127,7 @@
     "task_type": "BOX_MULLER",
     "tier": 2,
     "difficulty": "basic",
-    "description": "box muller transform",
+    "description": "Apply Box-Muller transform to (U\u2081=?, U\u2082=?) to generate Normal(0,1) samples: \u03b7 = \u221a(-2 ln U\u2081)\u00b7cos(2\u03c0U\u2082).",
     "category": "numeric",
     "numeric_targets": {
       "z1": -0.021207522909263758,
@@ -1145,7 +1145,7 @@
     "task_type": "BOX_MULLER",
     "tier": 2,
     "difficulty": "basic",
-    "description": "box muller transform",
+    "description": "Apply Box-Muller transform to (U\u2081=?, U\u2082=?) to generate Normal(0,1) samples: \u03b7 = \u221a(-2 ln U\u2081)\u00b7cos(2\u03c0U\u2082).",
     "category": "numeric",
     "numeric_targets": {
       "z1": -1.7941225779941015,
@@ -1163,7 +1163,7 @@
     "task_type": "BOX_MULLER",
     "tier": 2,
     "difficulty": "basic",
-    "description": "box muller transform",
+    "description": "Apply Box-Muller transform to (U\u2081=?, U\u2082=?) to generate Normal(0,1) samples: \u03b7 = \u221a(-2 ln U\u2081)\u00b7cos(2\u03c0U\u2082).",
     "category": "numeric",
     "numeric_targets": {
       "z1": 0.6136617324034359,
@@ -1181,7 +1181,7 @@
     "task_type": "BOX_MULLER",
     "tier": 2,
     "difficulty": "basic",
-    "description": "box muller transform",
+    "description": "Apply Box-Muller transform to (U\u2081=?, U\u2082=?) to generate Normal(0,1) samples: \u03b7 = \u221a(-2 ln U\u2081)\u00b7cos(2\u03c0U\u2082).",
     "category": "numeric",
     "numeric_targets": {
       "z1": -4.49643798197451e-16,
@@ -1199,7 +1199,7 @@
     "task_type": "BOX_MULLER",
     "tier": 2,
     "difficulty": "basic",
-    "description": "box muller transform",
+    "description": "Apply Box-Muller transform to (U\u2081=?, U\u2082=?) to generate Normal(0,1) samples: \u03b7 = \u221a(-2 ln U\u2081)\u00b7cos(2\u03c0U\u2082).",
     "category": "numeric",
     "numeric_targets": {
       "z1": -0.141852275112305,
@@ -1217,7 +1217,7 @@
     "task_type": "HPD",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd credible interval",
+    "description": "Find 95% HPD credible interval for ?(5,5) posterior \u2014 shortest interval containing that probability mass.",
     "category": "numeric",
     "numeric_targets": {
       "hpd_lower": 0.21757733531973342,
@@ -1233,7 +1233,7 @@
     "task_type": "HPD",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd credible interval",
+    "description": "Find 95% HPD credible interval for ?(2,8) posterior \u2014 shortest interval containing that probability mass.",
     "category": "numeric",
     "numeric_targets": {
       "hpd_lower": 0.007408346347955803,
@@ -1249,7 +1249,7 @@
     "task_type": "HPD",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd credible interval",
+    "description": "Find 95% HPD credible interval for ?(1,10) posterior \u2014 shortest interval containing that probability mass.",
     "category": "numeric",
     "numeric_targets": {
       "hpd_lower": 5.638329190267618e-07,
@@ -1265,7 +1265,7 @@
     "task_type": "HPD",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd credible interval",
+    "description": "Find 95% HPD credible interval for ?(10,2) posterior \u2014 shortest interval containing that probability mass.",
     "category": "numeric",
     "numeric_targets": {
       "hpd_lower": 0.632333433544232,
@@ -1281,7 +1281,7 @@
     "task_type": "HPD",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd credible interval",
+    "description": "Find 90% HPD credible interval for ?(3,7) posterior \u2014 shortest interval containing that probability mass.",
     "category": "numeric",
     "numeric_targets": {
       "hpd_lower": 0.07343709635063403,
@@ -1297,7 +1297,7 @@
     "task_type": "BAYES_FACTOR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor beta binomial",
+    "description": "Compute Bayes Factor BF\u2081\u2082 = p(data|M\u2081)/p(data|M\u2082) comparing two models. Evaluate evidence strength for one model over the other.",
     "category": "numeric",
     "numeric_targets": {
       "log_BF": 0.32841760423869104,
@@ -1313,7 +1313,7 @@
     "task_type": "BAYES_FACTOR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor beta binomial",
+    "description": "Compute Bayes Factor BF\u2081\u2082 = p(data|M\u2081)/p(data|M\u2082) comparing two models. Evaluate evidence strength for one model over the other.",
     "category": "numeric",
     "numeric_targets": {
       "log_BF": 0.4182739333605525,
@@ -1329,7 +1329,7 @@
     "task_type": "BAYES_FACTOR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor beta binomial",
+    "description": "Compute Bayes Factor BF\u2081\u2082 = p(data|M\u2081)/p(data|M\u2082) comparing two models. Evaluate evidence strength for one model over the other.",
     "category": "numeric",
     "numeric_targets": {
       "log_BF": 0.2922421160145827,
@@ -1345,7 +1345,7 @@
     "task_type": "BAYES_FACTOR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor beta binomial",
+    "description": "Compute Bayes Factor BF\u2081\u2082 = p(data|M\u2081)/p(data|M\u2082) comparing two models. Evaluate evidence strength for one model over the other.",
     "category": "numeric",
     "numeric_targets": {
       "log_BF": 0.2106345685823081,
@@ -1361,7 +1361,7 @@
     "task_type": "BAYES_FACTOR",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor beta binomial",
+    "description": "Compute Bayes Factor BF\u2081\u2082 = p(data|M\u2081)/p(data|M\u2082) comparing two models. Evaluate evidence strength for one model over the other.",
     "category": "numeric",
     "numeric_targets": {
       "log_BF": 0.4315880284320812,
@@ -1377,7 +1377,7 @@
     "task_type": "JEFFREYS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "jeffreys prior binomial",
+    "description": "Derive Jeffreys prior for the ? distribution: p(\u03b8) \u221d \u221a|I(\u03b8)|. Verify it is proper and compute the resulting posterior.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 3.5,
@@ -1394,7 +1394,7 @@
     "task_type": "JEFFREYS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "jeffreys prior binomial",
+    "description": "Derive Jeffreys prior for the ? distribution: p(\u03b8) \u221d \u221a|I(\u03b8)|. Verify it is proper and compute the resulting posterior.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 7.5,
@@ -1411,7 +1411,7 @@
     "task_type": "JEFFREYS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "jeffreys prior binomial",
+    "description": "Derive Jeffreys prior for the ? distribution: p(\u03b8) \u221d \u221a|I(\u03b8)|. Verify it is proper and compute the resulting posterior.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 2.5,
@@ -1428,7 +1428,7 @@
     "task_type": "JEFFREYS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "jeffreys prior binomial",
+    "description": "Derive Jeffreys prior for the ? distribution: p(\u03b8) \u221d \u221a|I(\u03b8)|. Verify it is proper and compute the resulting posterior.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 10.5,
@@ -1445,7 +1445,7 @@
     "task_type": "JEFFREYS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "jeffreys prior binomial",
+    "description": "Derive Jeffreys prior for the ? distribution: p(\u03b8) \u221d \u221a|I(\u03b8)|. Verify it is proper and compute the resulting posterior.",
     "category": "numeric",
     "numeric_targets": {
       "alpha_post": 4.5,
@@ -1462,7 +1462,7 @@
     "task_type": "PPC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "posterior predictive check",
+    "description": "Posterior predictive check for ? model. Compare observed test statistic T(y) to distribution of T(y_rep) under the posterior.",
     "category": "numeric",
     "numeric_targets": {
       "p_value": 0.6004,
@@ -1478,7 +1478,7 @@
     "task_type": "PPC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "posterior predictive check",
+    "description": "Posterior predictive check for ? model. Compare observed test statistic T(y) to distribution of T(y_rep) under the posterior.",
     "category": "numeric",
     "numeric_targets": {
       "p_value": 0.5992,
@@ -1494,7 +1494,7 @@
     "task_type": "PPC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "posterior predictive check",
+    "description": "Posterior predictive check for ? model. Compare observed test statistic T(y) to distribution of T(y_rep) under the posterior.",
     "category": "numeric",
     "numeric_targets": {
       "p_value": 0.0048,
@@ -1510,7 +1510,7 @@
     "task_type": "PPC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "posterior predictive check",
+    "description": "Posterior predictive check for ? model. Compare observed test statistic T(y) to distribution of T(y_rep) under the posterior.",
     "category": "numeric",
     "numeric_targets": {
       "p_value": 1.0,
@@ -1526,7 +1526,7 @@
     "task_type": "PPC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "posterior predictive check",
+    "description": "Posterior predictive check for ? model. Compare observed test statistic T(y) to distribution of T(y_rep) under the posterior.",
     "category": "numeric",
     "numeric_targets": {
       "p_value": 0.551,
@@ -1542,7 +1542,7 @@
     "task_type": "BAYES_REG",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "bayesian linear regression",
+    "description": "Bayesian linear regression with Normal-Inverse-Gamma prior. Compute posterior parameters and posterior predictive distribution.",
     "category": "numeric",
     "numeric_targets": {
       "intercept_post": 0.553275976881757,
@@ -1558,7 +1558,7 @@
     "task_type": "BAYES_REG",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "bayesian linear regression",
+    "description": "Bayesian linear regression with Normal-Inverse-Gamma prior. Compute posterior parameters and posterior predictive distribution.",
     "category": "numeric",
     "numeric_targets": {
       "intercept_post": 3.526876060741021,
@@ -1574,7 +1574,7 @@
     "task_type": "BAYES_REG",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "bayesian linear regression",
+    "description": "Bayesian linear regression with Normal-Inverse-Gamma prior. Compute posterior parameters and posterior predictive distribution.",
     "category": "numeric",
     "numeric_targets": {
       "intercept_post": 0.9318950682018112,
@@ -1590,7 +1590,7 @@
     "task_type": "BAYES_REG",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "bayesian linear regression",
+    "description": "Bayesian linear regression with Normal-Inverse-Gamma prior. Compute posterior parameters and posterior predictive distribution.",
     "category": "numeric",
     "numeric_targets": {
       "intercept_post": 1.3399429467941992,
@@ -1606,7 +1606,7 @@
     "task_type": "BAYES_REG",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "bayesian linear regression",
+    "description": "Bayesian linear regression with Normal-Inverse-Gamma prior. Compute posterior parameters and posterior predictive distribution.",
     "category": "numeric",
     "numeric_targets": {
       "intercept_post": 4.954639501411265,
@@ -1622,7 +1622,7 @@
     "task_type": "MLE_MAP",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "mle vs map binomial",
+    "description": "Compare MLE, MAP estimator (posterior mode), and posterior mean for ? with n=10 observations. Demonstrate shrinkage of MAP toward prior.",
     "category": "numeric",
     "numeric_targets": {
       "mle": 0.6,
@@ -1640,7 +1640,7 @@
     "task_type": "MLE_MAP",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "mle vs map binomial",
+    "description": "Compare MLE, MAP estimator (posterior mode), and posterior mean for ? with n=15 observations. Demonstrate shrinkage of MAP toward prior.",
     "category": "numeric",
     "numeric_targets": {
       "mle": 0.2,
@@ -1658,7 +1658,7 @@
     "task_type": "MLE_MAP",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "mle vs map binomial",
+    "description": "Compare MLE, MAP estimator (posterior mode), and posterior mean for ? with n=20 observations. Demonstrate shrinkage of MAP toward prior.",
     "category": "numeric",
     "numeric_targets": {
       "mle": 0.6,
@@ -1676,7 +1676,7 @@
     "task_type": "MLE_MAP",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "mle vs map binomial",
+    "description": "Compare MLE, MAP estimator (posterior mode), and posterior mean for ? with n=10 observations. Demonstrate shrinkage of MAP toward prior.",
     "category": "numeric",
     "numeric_targets": {
       "mle": 0.2,
@@ -1694,7 +1694,7 @@
     "task_type": "MLE_MAP",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "mle vs map binomial",
+    "description": "Compare MLE, MAP estimator (posterior mode), and posterior mean for ? with n=12 observations. Demonstrate shrinkage of MAP toward prior.",
     "category": "numeric",
     "numeric_targets": {
       "mle": 0.6666666666666666,
@@ -1712,7 +1712,7 @@
     "task_type": "CI_CREDIBLE",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "ci vs credible normal",
+    "description": "Compare 95% frequentist CI to 95% Bayesian credible interval for Binomial data (? successes in ? trials). Interpret difference in probability statements.",
     "category": "numeric",
     "numeric_targets": {
       "freq_lower": 4.599225986076149,
@@ -1730,7 +1730,7 @@
     "task_type": "CI_CREDIBLE",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "ci vs credible normal",
+    "description": "Compare 95% frequentist CI to 95% Bayesian credible interval for Binomial data (? successes in ? trials). Interpret difference in probability statements.",
     "category": "numeric",
     "numeric_targets": {
       "freq_lower": 4.51203252644282,
@@ -1748,7 +1748,7 @@
     "task_type": "CI_CREDIBLE",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "ci vs credible normal",
+    "description": "Compare 95% frequentist CI to 95% Bayesian credible interval for Binomial data (? successes in 10 trials). Interpret difference in probability statements.",
     "category": "numeric",
     "numeric_targets": {
       "freq_lower": 3.9641245553171855,
@@ -1766,7 +1766,7 @@
     "task_type": "CI_CREDIBLE",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "ci vs credible normal",
+    "description": "Compare 95% frequentist CI to 95% Bayesian credible interval for Binomial data (? successes in ? trials). Interpret difference in probability statements.",
     "category": "numeric",
     "numeric_targets": {
       "freq_lower": 3.9375125789711847,
@@ -1784,7 +1784,7 @@
     "task_type": "CI_CREDIBLE",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "ci vs credible normal",
+    "description": "Compare 95% frequentist CI to 95% Bayesian credible interval for Binomial data (? successes in 5 trials). Interpret difference in probability statements.",
     "category": "numeric",
     "numeric_targets": {
       "freq_lower": -1.0401545950609168,
@@ -1802,7 +1802,7 @@
     "task_type": "LOG_ML",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "log marginal likelihood",
+    "description": "Compute log marginal likelihood log p(data|prior) \u2014 the log normalizing constant of the posterior. Used for Bayesian model selection.",
     "category": "numeric",
     "numeric_targets": {
       "log_ml": -7.745002803515839
@@ -1817,7 +1817,7 @@
     "task_type": "LOG_ML",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "log marginal likelihood",
+    "description": "Compute log marginal likelihood log p(data|prior) \u2014 the log normalizing constant of the posterior. Used for Bayesian model selection.",
     "category": "numeric",
     "numeric_targets": {
       "log_ml": -8.295049140435111
@@ -1832,7 +1832,7 @@
     "task_type": "LOG_ML",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "log marginal likelihood",
+    "description": "Compute log marginal likelihood log p(data|prior) \u2014 the log normalizing constant of the posterior. Used for Bayesian model selection.",
     "category": "numeric",
     "numeric_targets": {
       "log_ml": -11.96036977563056
@@ -1847,7 +1847,7 @@
     "task_type": "LOG_ML",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "log marginal likelihood",
+    "description": "Compute log marginal likelihood log p(data|prior) \u2014 the log normalizing constant of the posterior. Used for Bayesian model selection.",
     "category": "numeric",
     "numeric_targets": {
       "log_ml": -7.782995418781033
@@ -1862,7 +1862,7 @@
     "task_type": "LOG_ML",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "log marginal likelihood",
+    "description": "Compute log marginal likelihood log p(data|prior) \u2014 the log normalizing constant of the posterior. Used for Bayesian model selection.",
     "category": "numeric",
     "numeric_targets": {
       "log_ml": -7.582324723318883
@@ -1877,7 +1877,7 @@
     "task_type": "GAMBLER",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "gamblers ruin",
+    "description": "Gambler starts with 3 units, absorbing barriers at 0 and 8, win prob p=0.6 per step. Compute ruin probability \u2248 0.2677.",
     "category": "numeric",
     "numeric_targets": {
       "ruin_prob": 0.2677240285487709,
@@ -1893,7 +1893,7 @@
     "task_type": "GAMBLER",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "gamblers ruin",
+    "description": "Gambler starts with 7 units, absorbing barriers at 0 and 15, win prob p=0.5 per step. Compute ruin probability \u2248 0.5333.",
     "category": "numeric",
     "numeric_targets": {
       "ruin_prob": 0.5333333333333333,
@@ -1909,7 +1909,7 @@
     "task_type": "GAMBLER",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "gamblers ruin",
+    "description": "Gambler starts with 2 units, absorbing barriers at 0 and 10, win prob p=0.3 per step. Compute ruin probability \u2248 0.9991.",
     "category": "numeric",
     "numeric_targets": {
       "ruin_prob": 0.9990707331944839,
@@ -1925,7 +1925,7 @@
     "task_type": "STATIONARY",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "stationary distribution",
+    "description": "Find stationary distribution \u03c0 of a 3-state Markov chain satisfying \u03c0\u00b7P = \u03c0. Solve the balance equations.",
     "category": "numeric",
     "numeric_targets": {
       "pi_0": 0.30967741935483845,
@@ -1942,7 +1942,7 @@
     "task_type": "STATIONARY",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "stationary distribution",
+    "description": "Find stationary distribution \u03c0 of a 2-state Markov chain satisfying \u03c0\u00b7P = \u03c0. Solve the balance equations.",
     "category": "numeric",
     "numeric_targets": {
       "pi_0": 0.6666666666666666,
@@ -1958,7 +1958,7 @@
     "task_type": "STATIONARY",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "stationary distribution",
+    "description": "Find stationary distribution \u03c0 of a 4-state Markov chain satisfying \u03c0\u00b7P = \u03c0. Solve the balance equations.",
     "category": "numeric",
     "numeric_targets": {
       "pi_0": 0.25619834710743805,
@@ -1976,7 +1976,7 @@
     "task_type": "RANGE_DIST",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "uniform range distribution",
+    "description": "Distribution of R = X(n)-X(1) (range) for n=4 Uniform[0,1] samples. Derive the density of the range statistic.",
     "category": "numeric",
     "numeric_targets": {
       "alpha": 3.0,
@@ -1993,7 +1993,7 @@
     "task_type": "RANGE_DIST",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "uniform range distribution",
+    "description": "Distribution of R = X(n)-X(1) (range) for n=8 Uniform[0,1] samples. Derive the density of the range statistic.",
     "category": "numeric",
     "numeric_targets": {
       "alpha": 7.0,
@@ -2010,7 +2010,7 @@
     "task_type": "RANGE_DIST",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "uniform range distribution",
+    "description": "Distribution of R = X(n)-X(1) (range) for n=12 Uniform[0,1] samples. Derive the density of the range statistic.",
     "category": "numeric",
     "numeric_targets": {
       "alpha": 11.0,
@@ -2027,7 +2027,7 @@
     "task_type": "MLE_EFFICIENCY",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mle efficiency",
+    "description": "Verify MLE efficiency for binomial: show Var(\u03b8\u0302_MLE) equals Rao-Cram\u00e9r bound 1/I(\u03b8). MLE is UMVUE for exponential families.",
     "category": "numeric",
     "numeric_targets": {
       "rc_bound": 0.007999999999999998,
@@ -2044,7 +2044,7 @@
     "task_type": "MLE_EFFICIENCY",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mle efficiency",
+    "description": "Verify MLE efficiency for poisson: show Var(\u03b8\u0302_MLE) equals Rao-Cram\u00e9r bound 1/I(\u03b8). MLE is UMVUE for exponential families.",
     "category": "numeric",
     "numeric_targets": {
       "rc_bound": 0.15000000000000002,
@@ -2061,7 +2061,7 @@
     "task_type": "MLE_EFFICIENCY",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "mle efficiency",
+    "description": "Verify MLE efficiency for normal: show Var(\u03b8\u0302_MLE) equals Rao-Cram\u00e9r bound 1/I(\u03b8). MLE is UMVUE for exponential families.",
     "category": "numeric",
     "numeric_targets": {
       "rc_bound": 0.06666666666666667,
@@ -2078,7 +2078,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "p value vs posterior",
+    "description": "No. p=P(data|H0), not P(H0|data). Converting requires a prior via Bayes theorem. P(H0|data) depends on the prior probabi...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2096,7 +2096,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "hpd vs equal tail",
+    "description": "HPD is the shortest interval with the required probability mass. Equal-tail intervals cut equal mass from each tail. The...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2114,7 +2114,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "bayes factor interpretation",
+    "description": "BF10=15 means the data are 15 times more likely under H1 than H0. On the Kass-Raftery scale this is strong evidence for...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2132,7 +2132,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "jeffreys prior invariance",
+    "description": "Jeffreys prior p(theta) \u221d sqrt(I(theta)) is invariant under reparametrisation: applying it to any monotone transform of...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2150,7 +2150,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "credible vs confidence interval",
+    "description": "Credible interval: given the prior and data, P(theta in [0.3,0.7]) = 0.95. This is a direct probability statement about...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2168,7 +2168,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "prior influence large n",
+    "description": "The posterior is proportional to prior \u00d7 likelihood. For small n the prior contributes substantially; for large n the li...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2186,7 +2186,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 2,
     "difficulty": "basic",
-    "description": "mle map posterior mean",
+    "description": "MLE = x/n = 0.5. MAP = (1+2-1)/(2+2+2-2) = 2/4 = 0.5. Posterior mean = (1+2)/(2+2+2) = 3/6 = 0.5. For this symmetric cas...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2204,7 +2204,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "exchangeability de finetti",
+    "description": "A sequence X1,...,Xn is exchangeable if its joint distribution is invariant under permutation of indices. This is weaker...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2222,7 +2222,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "conjugate prior advantages",
+    "description": "Advantages: the posterior is in the same parametric family as the prior, giving a closed-form update with no numerical i...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2240,7 +2240,7 @@
     "task_type": "CONCEPTUAL",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "ppc interpretation",
+    "description": "A Bayesian p-value of 0.02 means the observed test statistic falls in the lower 2% of the posterior predictive distribut...",
     "category": "conceptual",
     "numeric_targets": {},
     "rubric_keys": [
@@ -2258,7 +2258,7 @@
     "task_type": "GIBBS",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Gibbs",
+    "description": "Gibbs sampler implementation: alternately sample from each conditional p(\u03b8\u2081|\u03b8\u2082,data) and p(\u03b8\u2082|\u03b8\u2081,data). Estimate posterior mean and variance from MCMC chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean_x": 0.001015378942673781,
@@ -2280,7 +2280,7 @@
     "task_type": "GIBBS",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Gibbs",
+    "description": "Gibbs sampler implementation: alternately sample from each conditional p(\u03b8\u2081|\u03b8\u2082,data) and p(\u03b8\u2082|\u03b8\u2081,data). Estimate posterior mean and variance from MCMC chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean_x": 1.9601767969042327,
@@ -2302,7 +2302,7 @@
     "task_type": "GIBBS",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Gibbs",
+    "description": "Gibbs sampler implementation: alternately sample from each conditional p(\u03b8\u2081|\u03b8\u2082,data) and p(\u03b8\u2082|\u03b8\u2081,data). Estimate posterior mean and variance from MCMC chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean_x": -1.00094564872315,
@@ -2324,7 +2324,7 @@
     "task_type": "GIBBS",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Gibbs",
+    "description": "Gibbs sampler implementation: alternately sample from each conditional p(\u03b8\u2081|\u03b8\u2082,data) and p(\u03b8\u2082|\u03b8\u2081,data). Estimate posterior mean and variance from MCMC chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean_x": 4.992606037629365,
@@ -2346,7 +2346,7 @@
     "task_type": "GIBBS",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Gibbs",
+    "description": "Gibbs sampler implementation: alternately sample from each conditional p(\u03b8\u2081|\u03b8\u2082,data) and p(\u03b8\u2082|\u03b8\u2081,data). Estimate posterior mean and variance from MCMC chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean_x": -0.20820906805740602,
@@ -2368,7 +2368,7 @@
     "task_type": "MH",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Mh",
+    "description": "Metropolis-Hastings algorithm with proposal \u03c3=?. Compute acceptance ratio \u03b1 = min(1, p(\u03b8*|data)/p(\u03b8|data)) and simulate posterior chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.6405749675472812,
@@ -2390,7 +2390,7 @@
     "task_type": "MH",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Mh",
+    "description": "Metropolis-Hastings algorithm with proposal \u03c3=?. Compute acceptance ratio \u03b1 = min(1, p(\u03b8*|data)/p(\u03b8|data)) and simulate posterior chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.5952555132489935,
@@ -2412,7 +2412,7 @@
     "task_type": "MH",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Mh",
+    "description": "Metropolis-Hastings algorithm with proposal \u03c3=?. Compute acceptance ratio \u03b1 = min(1, p(\u03b8*|data)/p(\u03b8|data)) and simulate posterior chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.5950155818145102,
@@ -2434,7 +2434,7 @@
     "task_type": "MH",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Mh",
+    "description": "Metropolis-Hastings algorithm with proposal \u03c3=?. Compute acceptance ratio \u03b1 = min(1, p(\u03b8*|data)/p(\u03b8|data)) and simulate posterior chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.8261453046414649,
@@ -2456,7 +2456,7 @@
     "task_type": "MH",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Mh",
+    "description": "Metropolis-Hastings algorithm with proposal \u03c3=?. Compute acceptance ratio \u03b1 = min(1, p(\u03b8*|data)/p(\u03b8|data)) and simulate posterior chain.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.603228768518587,
@@ -2478,7 +2478,7 @@
     "task_type": "HMC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Hmc",
+    "description": "Hamiltonian Monte Carlo with ? leapfrog steps, step size \u03b5=?. Simulate Hamiltonian dynamics to make large posterior jumps efficiently.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 1.9642430767780175,
@@ -2500,7 +2500,7 @@
     "task_type": "HMC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Hmc",
+    "description": "Hamiltonian Monte Carlo with ? leapfrog steps, step size \u03b5=?. Simulate Hamiltonian dynamics to make large posterior jumps efficiently.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 2.993437126597684,
@@ -2522,7 +2522,7 @@
     "task_type": "HMC",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Hmc",
+    "description": "Hamiltonian Monte Carlo with ? leapfrog steps, step size \u03b5=?. Simulate Hamiltonian dynamics to make large posterior jumps efficiently.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 0.5866083474059187,
@@ -2544,7 +2544,7 @@
     "task_type": "HMC",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Hmc",
+    "description": "Hamiltonian Monte Carlo with ? leapfrog steps, step size \u03b5=?. Simulate Hamiltonian dynamics to make large posterior jumps efficiently.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 4.010275842011695,
@@ -2566,7 +2566,7 @@
     "task_type": "HMC",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Hmc",
+    "description": "Hamiltonian Monte Carlo with ? leapfrog steps, step size \u03b5=?. Simulate Hamiltonian dynamics to make large posterior jumps efficiently.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_mean": 4.940932897425837,
@@ -2588,7 +2588,7 @@
     "task_type": "RJMCMC",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Rjmcmc",
+    "description": "Reversible Jump MCMC jumping between M\u2081 (single mean) and M\u2082 (two means). Compute posterior model probabilities via acceptance ratios with dimension-matching proposals.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_prob_m1": 0.6489446702262008,
@@ -2610,7 +2610,7 @@
     "task_type": "RJMCMC",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Rjmcmc",
+    "description": "Reversible Jump MCMC jumping between M\u2081 (single mean) and M\u2082 (two means). Compute posterior model probabilities via acceptance ratios with dimension-matching proposals.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_prob_m1": 0.8494280444413972,
@@ -2632,7 +2632,7 @@
     "task_type": "RJMCMC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Rjmcmc",
+    "description": "Reversible Jump MCMC jumping between M\u2081 (single mean) and M\u2082 (two means). Compute posterior model probabilities via acceptance ratios with dimension-matching proposals.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_prob_m1": 0.24731898042613207,
@@ -2654,7 +2654,7 @@
     "task_type": "RJMCMC",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Rjmcmc",
+    "description": "Reversible Jump MCMC jumping between M\u2081 (single mean) and M\u2082 (two means). Compute posterior model probabilities via acceptance ratios with dimension-matching proposals.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_prob_m1": 0.995726127601722,
@@ -2676,7 +2676,7 @@
     "task_type": "RJMCMC",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Rjmcmc",
+    "description": "Reversible Jump MCMC jumping between M\u2081 (single mean) and M\u2082 (two means). Compute posterior model probabilities via acceptance ratios with dimension-matching proposals.",
     "category": "computational_bayes",
     "numeric_targets": {
       "posterior_prob_m1": 0.0108549292717307,
@@ -2698,7 +2698,7 @@
     "task_type": "VB",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Vb",
+    "description": "Variational Bayes (CAVI): minimize KL(q\u2016p) by optimizing mean-field factors. Maximize ELBO to approximate posterior q*(\u03b8\u2081,\u03b8\u2082) = q(\u03b8\u2081)\u00b7q(\u03b8\u2082).",
     "category": "computational_bayes",
     "numeric_targets": {
       "variational_mean": 2.0226438528054334,
@@ -2720,7 +2720,7 @@
     "task_type": "VB",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Vb",
+    "description": "Variational Bayes (CAVI): minimize KL(q\u2016p) by optimizing mean-field factors. Maximize ELBO to approximate posterior q*(\u03b8\u2081,\u03b8\u2082) = q(\u03b8\u2081)\u00b7q(\u03b8\u2082).",
     "category": "computational_bayes",
     "numeric_targets": {
       "variational_mean": 2.829010952884721,
@@ -2742,7 +2742,7 @@
     "task_type": "VB",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Vb",
+    "description": "Variational Bayes (CAVI): minimize KL(q\u2016p) by optimizing mean-field factors. Maximize ELBO to approximate posterior q*(\u03b8\u2081,\u03b8\u2082) = q(\u03b8\u2081)\u00b7q(\u03b8\u2082).",
     "category": "computational_bayes",
     "numeric_targets": {
       "variational_mean": -1.058616495467972,
@@ -2764,7 +2764,7 @@
     "task_type": "VB",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Vb",
+    "description": "Variational Bayes (CAVI): minimize KL(q\u2016p) by optimizing mean-field factors. Maximize ELBO to approximate posterior q*(\u03b8\u2081,\u03b8\u2082) = q(\u03b8\u2081)\u00b7q(\u03b8\u2082).",
     "category": "computational_bayes",
     "numeric_targets": {
       "variational_mean": 3.833576271621369,
@@ -2786,7 +2786,7 @@
     "task_type": "VB",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Vb",
+    "description": "Variational Bayes (CAVI): minimize KL(q\u2016p) by optimizing mean-field factors. Maximize ELBO to approximate posterior q*(\u03b8\u2081,\u03b8\u2082) = q(\u03b8\u2081)\u00b7q(\u03b8\u2082).",
     "category": "computational_bayes",
     "numeric_targets": {
       "variational_mean": 4.964778537160518,
@@ -2808,7 +2808,7 @@
     "task_type": "ABC",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Abc",
+    "description": "ABC rejection sampling: draw \u03b8 from prior, simulate data, accept if |T(sim)-T(obs)| < \u03b5=0.2. Run 20000 simulations to approximate intractable posterior.",
     "category": "computational_bayes",
     "numeric_targets": {
       "abc_posterior_mean": 2.0007968910217486,
@@ -2829,7 +2829,7 @@
     "task_type": "ABC",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Abc",
+    "description": "ABC rejection sampling: draw \u03b8 from prior, simulate data, accept if |T(sim)-T(obs)| < \u03b5=0.15. Run 20000 simulations to approximate intractable posterior.",
     "category": "computational_bayes",
     "numeric_targets": {
       "abc_posterior_mean": 3.499038789991502,
@@ -2850,7 +2850,7 @@
     "task_type": "ABC",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Abc",
+    "description": "ABC rejection sampling: draw \u03b8 from prior, simulate data, accept if |T(sim)-T(obs)| < \u03b5=0.3. Run 20000 simulations to approximate intractable posterior.",
     "category": "computational_bayes",
     "numeric_targets": {
       "abc_posterior_mean": 0.008959896864246994,
@@ -2871,7 +2871,7 @@
     "task_type": "ABC",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Abc",
+    "description": "ABC rejection sampling: draw \u03b8 from prior, simulate data, accept if |T(sim)-T(obs)| < \u03b5=0.2. Run 30000 simulations to approximate intractable posterior.",
     "category": "computational_bayes",
     "numeric_targets": {
       "abc_posterior_mean": 9.996645067030956,
@@ -2892,7 +2892,7 @@
     "task_type": "ABC",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Abc",
+    "description": "ABC rejection sampling: draw \u03b8 from prior, simulate data, accept if |T(sim)-T(obs)| < \u03b5=0.1. Run 50000 simulations to approximate intractable posterior.",
     "category": "computational_bayes",
     "numeric_targets": {
       "abc_posterior_mean": 5.000161885082009,
@@ -2913,7 +2913,7 @@
     "task_type": "HIERARCHICAL",
     "tier": 2,
     "difficulty": "basic",
-    "description": "Hierarchical",
+    "description": "Hierarchical Bayesian model with ? groups. Hyperprior on group means induces shrinkage toward grand mean. Compute group-level and population-level posterior estimates.",
     "category": "computational_bayes",
     "numeric_targets": {
       "hyperpost_mean": 2.0,
@@ -2935,7 +2935,7 @@
     "task_type": "HIERARCHICAL",
     "tier": 2,
     "difficulty": "intermediate",
-    "description": "Hierarchical",
+    "description": "Hierarchical Bayesian model with ? groups. Hyperprior on group means induces shrinkage toward grand mean. Compute group-level and population-level posterior estimates.",
     "category": "computational_bayes",
     "numeric_targets": {
       "hyperpost_mean": 1.9905802221682694,
@@ -2957,7 +2957,7 @@
     "task_type": "HIERARCHICAL",
     "tier": 3,
     "difficulty": "intermediate",
-    "description": "Hierarchical",
+    "description": "Hierarchical Bayesian model with ? groups. Hyperprior on group means induces shrinkage toward grand mean. Compute group-level and population-level posterior estimates.",
     "category": "computational_bayes",
     "numeric_targets": {
       "hyperpost_mean": 5.603799603866507,
@@ -2979,7 +2979,7 @@
     "task_type": "HIERARCHICAL",
     "tier": 3,
     "difficulty": "advanced",
-    "description": "Hierarchical",
+    "description": "Hierarchical Bayesian model with ? groups. Hyperprior on group means induces shrinkage toward grand mean. Compute group-level and population-level posterior estimates.",
     "category": "computational_bayes",
     "numeric_targets": {
       "hyperpost_mean": 10.248888888569711,
@@ -3001,7 +3001,7 @@
     "task_type": "HIERARCHICAL",
     "tier": 4,
     "difficulty": "advanced",
-    "description": "Hierarchical",
+    "description": "Hierarchical Bayesian model with ? groups. Hyperprior on group means induces shrinkage toward grand mean. Compute group-level and population-level posterior estimates.",
     "category": "computational_bayes",
     "numeric_targets": {
       "hyperpost_mean": 6.189568493205898,
