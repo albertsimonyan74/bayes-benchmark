@@ -27,8 +27,9 @@ router = APIRouter()
 
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-RESULTS_PATH  = DATA_DIR / "user_study_results.json"
-QUESTIONS_PATH = DATA_DIR / "question_summaries.json"
+RESULTS_PATH    = DATA_DIR / "user_study_results.json"
+QUESTIONS_PATH  = DATA_DIR / "question_summaries.json"
+VOTE_MEMORY_PATH = DATA_DIR / "vote_memory.json"
 
 # ── Shared in-memory vote store (survives request lifetime, seeded from disk) ──
 _votes: list[dict] = []
@@ -166,8 +167,11 @@ class VoteRequest(BaseModel):
     session_id: str
     question: str
     voted_model: str
-    reason: Optional[str] = None
+    reason: Optional[str] = None          # reason key (e.g. "mathematical_accuracy")
+    reason_label: Optional[str] = None    # human-readable label
     had_image: bool = False
+    divergence_verdict: Optional[str] = None
+    divergence_data: Optional[dict] = None
 
 
 # ── Rate limiter (10 req/hr per IP) ───────────────────────────────────────────
@@ -317,7 +321,7 @@ async def call_deepseek(question: str, image_b64: Optional[str], media_type: str
     start = time.time()
     key = os.environ.get("DEEPSEEK_API_KEY", "")
     if not key:
-        return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3",
+        return ModelResponse(model_id="deepseek", model_name="DeepSeek V4 Flash",
                              response="", latency_ms=0, error="DEEPSEEK_API_KEY not set",
                              supports_vision=True, color=MODEL_COLORS["deepseek"])
 
@@ -338,11 +342,11 @@ async def call_deepseek(question: str, image_b64: Optional[str], media_type: str
             )
             r.raise_for_status()
             text = r.json()["choices"][0]["message"]["content"]
-        return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3", response=text,
+        return ModelResponse(model_id="deepseek", model_name="DeepSeek V4 Flash", response=text,
                              latency_ms=round((time.time() - start) * 1000, 1),
                              supports_vision=True, color=MODEL_COLORS["deepseek"])
     except Exception as e:
-        return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3",
+        return ModelResponse(model_id="deepseek", model_name="DeepSeek V4 Flash",
                              response="", latency_ms=round((time.time() - start) * 1000, 1),
                              error=str(e)[:200], supports_vision=True, color=MODEL_COLORS["deepseek"])
 
@@ -435,13 +439,16 @@ async def submit_vote(vote: VoteRequest):
     task_category = _classify_question(vote.question)
 
     record = {
-        "session_id":    vote.session_id,
-        "timestamp":     datetime.utcnow().isoformat(),
-        "question":      vote.question[:2000],   # full text now (was 200)
-        "voted_model":   vote.voted_model,
-        "reason":        vote.reason or "",
-        "had_image":     vote.had_image,
-        "task_category": task_category,
+        "session_id":          vote.session_id,
+        "timestamp":           datetime.utcnow().isoformat(),
+        "question":            vote.question[:2000],
+        "voted_model":         vote.voted_model,
+        "reason":              vote.reason or "",
+        "reason_label":        vote.reason_label or "",
+        "had_image":           vote.had_image,
+        "task_category":       task_category,
+        "divergence_verdict":  vote.divergence_verdict or "",
+        "divergence_data":     vote.divergence_data or {},
     }
 
     # Save question summary (text only, no image data)
@@ -469,6 +476,30 @@ async def submit_vote(vote: VoteRequest):
         pass
     try:
         QUESTIONS_PATH.write_text(json.dumps(questions_snapshot, indent=2))
+    except Exception:
+        pass
+
+    # Update aggregated vote_memory.json (research paper reference)
+    try:
+        dist: dict[str, int] = defaultdict(int)
+        reason_dist: dict[str, int] = defaultdict(int)
+        divergence_counts: dict[str, int] = defaultdict(int)
+        for r in votes_snapshot:
+            dist[r.get("voted_model", "?")] += 1
+            rk = r.get("reason", "")
+            if rk:
+                reason_dist[rk] += 1
+            dv = r.get("divergence_verdict", "")
+            if dv:
+                divergence_counts[dv] += 1
+        memory = {
+            "total_votes": len(votes_snapshot),
+            "vote_distribution": dict(sorted(dist.items(), key=lambda x: -x[1])),
+            "reason_distribution": dict(sorted(reason_dist.items(), key=lambda x: -x[1])),
+            "divergence_verdict_distribution": dict(divergence_counts),
+            "last_updated": datetime.utcnow().isoformat(),
+        }
+        VOTE_MEMORY_PATH.write_text(json.dumps(memory, indent=2))
     except Exception:
         pass
 

@@ -48,23 +48,23 @@ const TIER_INFO = {
 const MODELS = [
   { id:'claude',   initials:'CL', name:'Claude Sonnet 4.5', full:'Claude Sonnet 4.5',
     version:'claude-sonnet-4-5',    provider:'Anthropic',       lab:'Frontier AI Lab',
-    color:'#00CED1', api:'api.anthropic.com/v1/messages',
+    color:'#00CED1', api:'api.anthropic.com/v1/messages', maxTokens: 1024,
     strengths:'Strong mathematical reasoning, excellent at step-by-step Bayesian derivations and conjugate updates', status:'READY' },
   { id:'gemini',   initials:'GM', name:'Gemini 2.5 Flash',  full:'Gemini 2.5 Flash',
     version:'gemini-2.5-flash',     provider:'Google DeepMind', lab:'Alphabet',
-    color:'#FF6B6B', api:'generativelanguage.googleapis.com',
+    color:'#FF6B6B', api:'generativelanguage.googleapis.com', maxTokens: 4096,
     strengths:'Fast inference, good at probability calculations and statistical formula application', status:'READY' },
   { id:'chatgpt',  initials:'GP', name:'GPT-4.1',           full:'GPT-4.1',
     version:'gpt-4.1',              provider:'OpenAI',           lab:'Microsoft Partnership',
-    color:'#7FFFD4', api:'api.openai.com/v1/chat/completions',
+    color:'#7FFFD4', api:'api.openai.com/v1/chat/completions', maxTokens: 1024,
     strengths:'Broad statistical knowledge, reliable at standard Bayesian textbook problems', status:'READY' },
-  { id:'deepseek', initials:'DS', name:'DeepSeek Chat',     full:'DeepSeek Chat',
+  { id:'deepseek', initials:'DS', name:'DeepSeek V4 Flash', full:'DeepSeek V4 Flash',
     version:'deepseek-chat',        provider:'DeepSeek AI',      lab:'China',
-    color:'#4A90D9', api:'api.deepseek.com/v1/chat/completions',
+    color:'#4A90D9', api:'api.deepseek.com/v1/chat/completions', maxTokens: 1024,
     strengths:'Strong mathematical background, emerging capability in statistical inference tasks', status:'READY' },
   { id:'mistral',  initials:'MS', name:'Mistral Large',     full:'Mistral Large Latest',
     version:'mistral-large-latest', provider:'Mistral AI',       lab:'France',
-    color:'#A78BFA', api:'api.mistral.ai/v1/chat/completions',
+    color:'#A78BFA', api:'api.mistral.ai/v1/chat/completions', maxTokens: 1024,
     strengths:'Strong reasoning with European research pedigree, competitive on formal mathematical tasks', status:'READY' },
 ]
 const MODEL_META = Object.fromEntries(MODELS.map(m => [m.id, m]))
@@ -650,7 +650,7 @@ function TierLadder() {
               const info = TIER_INFO[expanded]
               return (
                 <div style={{ padding:'12px 0 4px' }}>
-                  <p style={{ color:'var(--text-secondary)', fontSize:11.5, lineHeight:1.7, margin:'0 0 10px' }}>
+                  <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.75, margin:'0 0 12px' }}>
                     {info.detail}
                   </p>
                   <div style={{ marginBottom:10 }}>
@@ -1236,7 +1236,7 @@ function Models() {
 
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:16 }}>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr', gap:8 }}>
-                  {[['VERSION', selModel.version],['API', selModel.api],['MAX TOKENS','1 024']].map(([k,v]) => (
+                  {[['VERSION', selModel.version],['API', selModel.api],['MAX TOKENS', (selModel.maxTokens || 1024).toLocaleString()]].map(([k,v]) => (
                     <div key={k} style={{ background:'rgba(0,0,0,0.22)', borderRadius:8, padding:'10px 12px' }}>
                       <div style={{ color:'var(--aqua)', fontSize:9, fontWeight:700, letterSpacing:'0.1em', marginBottom:4 }}>{k}</div>
                       <div style={{ color:'var(--text-primary)', fontSize:11, fontFamily:'var(--font-mono)', wordBreak:'break-all' }}>{v}</div>
@@ -1318,7 +1318,7 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
   }
 
   return (
-    <Section id="tasks">
+    <Section id="tasks" minHeight={isOpen ? '100vh' : 'auto'}>
       {/* Collapsible header */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginBottom: isOpen ? 40 : 0 }}>
         <div style={{ textAlign:'center' }}>
@@ -2010,36 +2010,12 @@ function About() {
         </div>
       </FadeIn>
 
-      {/* § 4 — Scoring Framework + Multi-model radar */}
+      {/* § 4 — Multi-model radar (scoring framework removed — see Benchmark section) */}
       <FadeIn delay={140}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:24, maxWidth:900, margin:'0 auto 52px' }}>
-          <Card style={{ padding:'24px 20px' }}>
-            <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:20 }}>SCORING FRAMEWORK — N·M·A·C·R</div>
-            {SCORE_DIMS.map(({ dim, name, color }) => (
-              <div key={dim} style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
-                <div style={{ width:28, height:28, borderRadius:6, background:`${color}22`, border:`1.5px solid ${color}`, display:'flex', alignItems:'center', justifyContent:'center', color, fontWeight:800, fontSize:13, flexShrink:0 }}>{dim}</div>
-                <div style={{ flex:1 }}>
-                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
-                    <span style={{ color:'var(--text-primary)', fontSize:12, fontWeight:600 }}>{name}</span>
-                    <span style={{ color:'var(--text-muted)', fontSize:11, fontFamily:'var(--font-mono)' }}>0.20</span>
-                  </div>
-                  <div style={{ height:4, background:'rgba(255,255,255,0.07)', borderRadius:2, overflow:'hidden' }}>
-                    <motion.div initial={{ width:0 }} whileInView={{ width:'100%' }} viewport={{ once:true }}
-                      transition={{ duration:0.8, delay:0.05 }}
-                      style={{ height:'100%', background:`linear-gradient(90deg,${color}99,${color})`, borderRadius:2 }}/>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div style={{ color:'var(--text-muted)', fontSize:10, marginTop:8, borderTop:'1px solid rgba(0,255,224,0.08)', paddingTop:10 }}>
-              Pass threshold: 0.50 · Tier-5 stress multiplier: 1.5×
-            </div>
-          </Card>
-          <Card style={{ padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center' }}>
-            <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
-            <MultiModelRadar/>
-          </Card>
-        </div>
+        <Card style={{ padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', maxWidth:900, margin:'0 auto 52px' }}>
+          <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
+          <MultiModelRadar/>
+        </Card>
       </FadeIn>
 
     </Section>
