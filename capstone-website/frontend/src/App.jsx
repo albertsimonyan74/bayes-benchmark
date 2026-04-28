@@ -738,6 +738,7 @@ function RadarChart({ model }) {
 // ─── Multi-model radar ────────────────────────────────────────
 const MODEL_COLORS = { claude:'#00CED1', gemini:'#FF6B6B', chatgpt:'#7FFFD4', deepseek:'#4A90D9', mistral:'#A78BFA' }
 function MultiModelRadar() {
+  const [hoveredModel, setHoveredModel] = useState(null)
   const pad=52, inner=240, size=inner+pad*2
   const cx=size/2, cy=size/2, R=95, n=5
   const step = (Math.PI*2)/n
@@ -746,34 +747,77 @@ function MultiModelRadar() {
   )
   const axes = Array.from({length:n},(_,i)=>{
     const a=i*step-Math.PI/2
-    const lx=cx+(R+42)*Math.cos(a), ly=cy+(R+42)*Math.sin(a)
+    const lx=cx+(R+44)*Math.cos(a), ly=cy+(R+44)*Math.sin(a)
     const anchor = lx < cx-5 ? 'end' : lx > cx+5 ? 'start' : 'middle'
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
-        {axes.map((ax,i)=>{
-          const lines=RADAR_DIMS[i].split('\n')
-          return (
-            <g key={i}>
-              <line x1={cx} y1={cy} x2={ax.ex} y2={ax.ey} stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
-              {lines.map((l,j)=>(
-                <text key={j} x={ax.lx} y={ax.ly+(j*11)-(lines.length>1?5.5:0)} textAnchor={ax.anchor} dominantBaseline="middle" fontSize="9" fill="var(--text-secondary)">{l}</text>
+      <div style={{ position:'relative' }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+          {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
+          {axes.map((ax,i)=>{
+            const lines=RADAR_DIMS[i].split('\n')
+            return (
+              <g key={i}>
+                <line x1={cx} y1={cy} x2={ax.ex} y2={ax.ey} stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
+                {lines.map((l,j)=>(
+                  <text key={j} x={ax.lx} y={ax.ly+(j*13)-(lines.length>1?6.5:0)} textAnchor={ax.anchor} dominantBaseline="middle" fontSize="10" fill="rgba(200,220,230,0.9)" fontWeight="500">{l}</text>
+                ))}
+              </g>
+            )
+          })}
+          {Object.entries(RADAR_VALS).map(([id, vals]) => {
+            const pts=vals.map((v,i)=>{ const a=i*step-Math.PI/2; return `${cx+v*R*Math.cos(a)},${cy+v*R*Math.sin(a)}` }).join(' ')
+            const col=MODEL_COLORS[id]||'#00FFE0'
+            const isHov = hoveredModel===id
+            const dimmed = hoveredModel && !isHov
+            return (
+              <polygon
+                key={id}
+                points={pts}
+                fill={isHov ? col+'44' : col+'1A'}
+                stroke={col}
+                strokeWidth={isHov ? 2.5 : 1.5}
+                opacity={dimmed ? 0.18 : isHov ? 1 : 0.85}
+                style={{ cursor:'pointer', transition:'opacity 0.2s, stroke-width 0.2s' }}
+                onMouseEnter={()=>setHoveredModel(id)}
+                onMouseLeave={()=>setHoveredModel(null)}
+              />
+            )
+          })}
+        </svg>
+        {/* Hover label */}
+        {hoveredModel && (
+          <div style={{
+            position:'absolute', left:'50%', top:'50%',
+            transform:'translate(-50%,-50%)',
+            pointerEvents:'none', textAlign:'center',
+            background:'rgba(10,14,26,0.85)', borderRadius:8,
+            padding:'6px 12px', border:`1px solid ${MODEL_COLORS[hoveredModel]}55`,
+          }}>
+            <div style={{ color:MODEL_COLORS[hoveredModel], fontSize:11, fontWeight:700, fontFamily:'var(--font-mono)' }}>
+              {hoveredModel.toUpperCase()}
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', gap:2, marginTop:4 }}>
+              {RADAR_DIMS.map((d,i)=>(
+                <div key={i} style={{ fontSize:9, color:'rgba(200,220,230,0.8)', display:'flex', justifyContent:'space-between', gap:8 }}>
+                  <span>{d.replace('\n',' ')}</span>
+                  <span style={{ color:MODEL_COLORS[hoveredModel], fontWeight:700 }}>{(RADAR_VALS[hoveredModel][i]*100).toFixed(0)}%</span>
+                </div>
               ))}
-            </g>
-          )
-        })}
-        {Object.entries(RADAR_VALS).map(([id, vals]) => {
-          const pts=vals.map((v,i)=>{ const a=i*step-Math.PI/2; return `${cx+v*R*Math.cos(a)},${cy+v*R*Math.sin(a)}` }).join(' ')
-          const col=MODEL_COLORS[id]||'#00FFE0'
-          return <polygon key={id} points={pts} fill={col+'22'} stroke={col} strokeWidth="1.5" opacity="0.85"/>
-        })}
-      </svg>
+            </div>
+          </div>
+        )}
+      </div>
       <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:10, marginTop:6 }}>
         {Object.keys(RADAR_VALS).map(id=>(
-          <div key={id} style={{ display:'flex', alignItems:'center', gap:4, fontSize:9, color:'var(--text-secondary)' }}>
+          <div
+            key={id}
+            style={{ display:'flex', alignItems:'center', gap:4, fontSize:9, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s' }}
+            onMouseEnter={()=>setHoveredModel(id)}
+            onMouseLeave={()=>setHoveredModel(null)}
+          >
             <div style={{ width:12, height:3, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0' }}/>
             {id.toUpperCase()}
           </div>
@@ -942,7 +986,7 @@ const HOW_EXTRA = [
 function BenchmarkSection() {
   const [expanded, setExpanded] = useState(null)
 
-  const R_FRAC = 0.355
+  const R_FRAC = 0.40
   const getPos = (i) => {
     const angle = (i / 6) * 2 * Math.PI - Math.PI / 2
     return {
@@ -957,7 +1001,7 @@ function BenchmarkSection() {
 
       {/* Circular pipeline diagram */}
       <FadeIn>
-        <div style={{ position:'relative', width:'100%', maxWidth:560, height:560, margin:'0 auto 8px' }}>
+        <div style={{ position:'relative', width:'100%', maxWidth:640, height:640, margin:'0 auto 8px' }}>
 
           {/* Outer rotating ring */}
           <div style={{ position:'absolute', left:'50%', top:'50%', width:'78%', height:'78%',
@@ -1220,7 +1264,7 @@ function Models() {
 // ═══════════════════════════════════════════════════════════════
 //  4. TASKS
 // ═══════════════════════════════════════════════════════════════
-function Tasks({ onOpenModal }) {
+function Tasks({ onOpenModal, isOpen, onToggle }) {
   const [tiers,       setTiers]       = useState([])
   const [category,    setCategory]    = useState('all')
   const [idInput,     setIdInput]     = useState('')
@@ -1275,7 +1319,48 @@ function Tasks({ onOpenModal }) {
 
   return (
     <Section id="tasks">
-      <SectionTitle>Benchmark Tasks</SectionTitle>
+      {/* Collapsible header */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:16, marginBottom: isOpen ? 40 : 0 }}>
+        <div style={{ textAlign:'center' }}>
+          <h2 style={{ fontSize:'clamp(32px,4vw,48px)', fontWeight:700, color:'var(--text-primary)', margin:0, lineHeight:1.2 }}>
+            Benchmark Tasks
+          </h2>
+          <motion.div
+            initial={{ scaleX:0 }}
+            whileInView={{ scaleX:1 }}
+            viewport={{ once:true }}
+            transition={{ duration:0.7, delay:0.25 }}
+            style={{ width:64, height:3, background:'linear-gradient(90deg,var(--aqua),var(--blue))', margin:'12px auto 0', borderRadius:2, transformOrigin:'left' }}
+          />
+        </div>
+        <motion.button
+          onClick={onToggle}
+          whileHover={{ scale:1.05 }}
+          whileTap={{ scale:0.95 }}
+          style={{
+            marginTop:4,
+            padding:'8px 20px', borderRadius:8,
+            border:`1.5px solid rgba(0,255,224,${isOpen?'0.6':'0.35'})`,
+            background: isOpen ? 'rgba(0,255,224,0.10)' : 'rgba(0,255,224,0.05)',
+            color: isOpen ? '#00FFE0' : 'rgba(0,255,224,0.7)',
+            fontSize:12, fontWeight:700, cursor:'pointer',
+            fontFamily:'var(--font-mono)', letterSpacing:'0.05em',
+            transition:'all 0.18s',
+          }}
+        >
+          {isOpen ? '▼ COLLAPSE' : '▶ EXPAND (171 TASKS)'}
+        </motion.button>
+      </div>
+
+      <AnimatePresence>
+      {isOpen && (
+      <motion.div
+        initial={{ height:0, opacity:0 }}
+        animate={{ height:'auto', opacity:1 }}
+        exit={{ height:0, opacity:0 }}
+        transition={{ duration:0.35, ease:[0.22,1,0.36,1] }}
+        style={{ overflow:'hidden' }}
+      >
       <div style={{ display:'grid', gridTemplateColumns:'250px 1fr', gap:24, alignItems:'start' }}>
 
         {/* Filter sidebar */}
@@ -1523,6 +1608,9 @@ function Tasks({ onOpenModal }) {
           )}
         </div>
       </div>
+      </motion.div>
+      )}
+      </AnimatePresence>
 
     </Section>
   )
@@ -1571,10 +1659,10 @@ function TaskCard({ task, onClick, onCopy, copied }) {
           {task.task_type}
         </div>
       </Tooltip>
-      <p style={{ color:'var(--text-secondary)', fontSize:12, lineHeight:1.55, margin:'8px 0 12px' }}>
+      <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.6, margin:'8px 0 12px' }}>
         {(() => {
           const desc = task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
-          return desc.slice(0,110) + (desc.length>110 ? '…' : '')
+          return desc.slice(0,160) + (desc.length>160 ? '…' : '')
         })()}
       </p>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
@@ -2024,9 +2112,10 @@ function References() {
 //  ROOT APP
 // ═══════════════════════════════════════════════════════════════
 export default function App() {
-  const [modal,    setModal]    = useState(null)
-  const [fullImg,  setFullImg]  = useState(null)
-  const [gifModal, setGifModal] = useState(null)
+  const [modal,     setModal]     = useState(null)
+  const [fullImg,   setFullImg]   = useState(null)
+  const [gifModal,  setGifModal]  = useState(null)
+  const [tasksOpen, setTasksOpen] = useState(false)
 
   useEffect(() => {
     const handler = (e) => {
@@ -2056,7 +2145,7 @@ export default function App() {
       <SectionDivider/>
       <Models/>
       <SectionDivider/>
-      <Tasks onOpenModal={setModal}/>
+      <Tasks onOpenModal={setModal} isOpen={tasksOpen} onToggle={()=>setTasksOpen(o=>!o)}/>
       <SectionDivider/>
       <Visualizations setFullImg={setFullImg} onOpenGif={setGifModal}/>
       <SectionDivider/>

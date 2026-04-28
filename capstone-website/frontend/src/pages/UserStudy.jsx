@@ -1,36 +1,63 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
 
 const API_BASE = import.meta.env.VITE_API_URL || ''
-
-function stripMarkdown(text) {
-  if (!text) return ''
-  return text
-    .replace(/#{1,6}\s+/gm, '')
-    .replace(/\*\*(.+?)\*\*/gs, '$1')
-    .replace(/\*(.+?)\*/gs, '$1')
-    .replace(/__(.+?)__/gs, '$1')
-    .replace(/_(.+?)_/gs, '$1')
-    .replace(/```[\s\S]*?```/g, (m) => m.replace(/```\w*\n?/g, '').trim())
-    .replace(/`(.+?)`/g, '$1')
-    .replace(/^\s*[-*+]\s+/gm, '\u2022 ')
-    .replace(/^\s*\d+\.\s+/gm, '')
-    .replace(/\[(.+?)\]\(.+?\)/g, '$1')
-    .replace(/^>\s*/gm, '')
-    .replace(/---+/g, '\u2014\u2014')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()
-}
 
 const MODEL_META = {
   claude:   { name: 'Claude Sonnet 4.6', color: '#00CED1', initials: 'CL', vision: true },
   chatgpt:  { name: 'GPT-4.1',           color: '#7FFFD4', initials: 'GP', vision: true },
   gemini:   { name: 'Gemini 2.5 Flash',  color: '#FF6B6B', initials: 'GM', vision: true },
-  deepseek: { name: 'DeepSeek-V3',       color: '#4A90D9', initials: 'DS', vision: false },
-  mistral:  { name: 'Mistral Large',     color: '#A78BFA', initials: 'MS', vision: false },
+  deepseek: { name: 'DeepSeek-V3',       color: '#4A90D9', initials: 'DS', vision: true },
+  mistral:  { name: 'Mistral Large',     color: '#A78BFA', initials: 'MS', vision: true },
 }
 
 const MODEL_ORDER = ['claude', 'chatgpt', 'gemini', 'deepseek', 'mistral']
+
+// Markdown + LaTeX renderer for model responses
+function MarkdownRenderer({ text, color }) {
+  if (!text) return null
+  return (
+    <div
+      className="md-response"
+      style={{
+        fontSize: 13.5,
+        lineHeight: 1.75,
+        color: '#c8dce8',
+        wordBreak: 'break-word',
+        maxHeight: 460,
+        overflowY: 'auto',
+        paddingRight: 4,
+        '--md-accent': color,
+      }}
+    >
+      <ReactMarkdown
+        remarkPlugins={[remarkMath]}
+        rehypePlugins={[rehypeKatex]}
+        components={{
+          p: ({ children }) => <p style={{ margin: '0 0 10px' }}>{children}</p>,
+          strong: ({ children }) => <strong style={{ color: '#e8f4f8', fontWeight: 700 }}>{children}</strong>,
+          em: ({ children }) => <em style={{ color: '#b8d0e0' }}>{children}</em>,
+          code: ({ inline, children }) => inline
+            ? <code style={{ background: 'rgba(0,255,224,0.1)', border: '1px solid rgba(0,255,224,0.2)', borderRadius: 4, padding: '1px 5px', fontSize: 12.5, fontFamily: 'var(--font-mono)', color: '#00FFE0' }}>{children}</code>
+            : <pre style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '12px 14px', overflow: 'auto', margin: '8px 0' }}><code style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: '#c8dce8' }}>{children}</code></pre>,
+          ul: ({ children }) => <ul style={{ margin: '4px 0 10px', paddingLeft: 20 }}>{children}</ul>,
+          ol: ({ children }) => <ol style={{ margin: '4px 0 10px', paddingLeft: 20 }}>{children}</ol>,
+          li: ({ children }) => <li style={{ marginBottom: 4, color: '#b8d0e0' }}>{children}</li>,
+          h1: ({ children }) => <h1 style={{ fontSize: 16, fontWeight: 700, color: '#e8f4f8', margin: '12px 0 6px' }}>{children}</h1>,
+          h2: ({ children }) => <h2 style={{ fontSize: 14, fontWeight: 700, color: '#e8f4f8', margin: '10px 0 5px' }}>{children}</h2>,
+          h3: ({ children }) => <h3 style={{ fontSize: 13, fontWeight: 700, color: '#d0e8f0', margin: '8px 0 4px' }}>{children}</h3>,
+          blockquote: ({ children }) => <blockquote style={{ borderLeft: '3px solid rgba(0,255,224,0.4)', paddingLeft: 12, margin: '8px 0', color: '#9ab8c8' }}>{children}</blockquote>,
+          hr: () => <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '12px 0' }} />,
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  )
+}
 
 function SkeletonCard({ index }) {
   const meta = MODEL_META[MODEL_ORDER[index]]
@@ -77,8 +104,9 @@ function SkeletonCard({ index }) {
 function ResponseCard({ resp, voted, onVote, hasImage }) {
   const meta = MODEL_META[resp.model_id] || { name: resp.model_name, color: '#8BAFC0', initials: '?', vision: true }
   const isVoted = voted === resp.model_id
-  const noVision = hasImage && !meta.vision
   const isError = !!resp.error
+  // DeepSeek/Mistral with image: they now respond via image description, no skip needed
+  const isImageDesc = hasImage && (resp.model_id === 'deepseek' || resp.model_id === 'mistral') && !isError
 
   return (
     <motion.div
@@ -111,11 +139,11 @@ function ResponseCard({ resp, voted, onVote, hasImage }) {
             <div style={{ fontSize: 13, fontWeight: 600, color: '#e8f4f8' }}>{meta.name}</div>
             <div style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
               {resp.latency_ms > 0 ? `${resp.latency_ms.toLocaleString()} ms` : '—'}
-              {!meta.vision && <span style={{ marginLeft: 8, color: '#A78BFA' }}>text-only</span>}
+              {isImageDesc && <span style={{ marginLeft: 8, color: meta.color + 'cc', fontSize: 10 }}>via img description</span>}
             </div>
           </div>
         </div>
-        {!isError && !noVision && (
+        {!isError && (
           <button
             onClick={() => onVote(resp.model_id)}
             style={{
@@ -138,27 +166,12 @@ function ResponseCard({ resp, voted, onVote, hasImage }) {
       </div>
 
       {/* Body */}
-      {noVision ? (
-        <div style={{ color: '#A78BFA', fontSize: 13, fontStyle: 'italic' }}>
-          Image input not supported — text-only model. Submit without image to get a response.
-        </div>
-      ) : isError ? (
+      {isError ? (
         <div style={{ color: '#FF6B6B', fontSize: 13, fontFamily: 'var(--font-mono)' }}>
           Error: {resp.error}
         </div>
       ) : (
-        <div style={{
-          fontSize: 13.5,
-          lineHeight: 1.75,
-          color: '#c8dce8',
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-          maxHeight: 420,
-          overflowY: 'auto',
-          paddingRight: 4,
-        }}>
-          {stripMarkdown(resp.response)}
-        </div>
+        <MarkdownRenderer text={resp.response} color={meta.color} />
       )}
     </motion.div>
   )
@@ -169,10 +182,6 @@ function VotePanel({ responses, question, sessionId, hasImage, onVoteDone }) {
   const [reason, setReason] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-
-  async function handleVote(modelId) {
-    setVoted(modelId)
-  }
 
   async function submitVote() {
     if (!voted) return
@@ -223,19 +232,19 @@ function VotePanel({ responses, question, sessionId, hasImage, onVoteDone }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 12, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight:700 }}>
+      <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 12, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
         STEP 2 — SELECT BEST RESPONSE
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {MODEL_ORDER.map(id => {
           const resp = responses.find(r => r.model_id === id)
-          if (!resp || resp.error || (hasImage && !MODEL_META[id].vision)) return null
+          if (!resp || resp.error) return null
           const meta = MODEL_META[id]
           const isVoted = voted === id
           return (
             <button
               key={id}
-              onClick={() => handleVote(id)}
+              onClick={() => setVoted(id)}
               style={{
                 padding: '8px 18px',
                 borderRadius: 8,
@@ -300,10 +309,10 @@ function VotePanel({ responses, question, sessionId, hasImage, onVoteDone }) {
 function AggregateStats() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [fetched, setFetched] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   async function load() {
-    if (fetched) return
+    setIsOpen(true)
     setLoading(true)
     try {
       const r = await fetch(`${API_BASE}/api/user-study/results`)
@@ -311,10 +320,23 @@ function AggregateStats() {
       setData(d)
     } catch {}
     setLoading(false)
-    setFetched(true)
   }
 
-  if (!fetched) {
+  async function refresh() {
+    setLoading(true)
+    try {
+      const r = await fetch(`${API_BASE}/api/user-study/results`)
+      const d = await r.json()
+      setData(d)
+    } catch {}
+    setLoading(false)
+  }
+
+  function close() {
+    setIsOpen(false)
+  }
+
+  if (!isOpen) {
     return (
       <button
         onClick={load}
@@ -336,48 +358,85 @@ function AggregateStats() {
     )
   }
 
-  if (loading) return <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>Loading...</div>
-  if (!data || data.total_votes === 0) return (
-    <div style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'var(--font-mono)' }}>
-      No votes yet.
-    </div>
-  )
-
-  const dist = data.vote_distribution
-  const max = Math.max(...Object.values(dist), 1)
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div style={{ color: 'rgba(0,255,224,0.8)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight:700 }}>
-        AGGREGATE VOTES — {data.total_votes} total
+    <motion.div
+      initial={{ opacity: 0, y: -4 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+    >
+      {/* Header row */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ color: 'rgba(0,255,224,0.8)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
+          AGGREGATE VOTES {data ? `— ${data.total_votes} total` : ''}
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            onClick={refresh}
+            disabled={loading}
+            style={{
+              padding: '4px 12px', borderRadius: 6,
+              border: '1px solid rgba(0,255,224,0.3)',
+              background: 'rgba(0,255,224,0.06)',
+              color: 'rgba(0,255,224,0.8)', fontSize: 10,
+              fontWeight: 700, cursor: loading ? 'wait' : 'pointer',
+              fontFamily: 'var(--font-mono)',
+            }}
+          >
+            ↻ REFRESH
+          </button>
+          <button
+            onClick={close}
+            style={{
+              padding: '4px 10px', borderRadius: 6,
+              border: '1px solid rgba(255,255,255,0.15)',
+              background: 'transparent',
+              color: 'rgba(255,255,255,0.5)', fontSize: 10,
+              fontWeight: 700, cursor: 'pointer',
+              fontFamily: 'var(--font-mono)',
+            }}
+          >
+            ▲ CLOSE
+          </button>
+        </div>
       </div>
-      {Object.entries(dist).map(([id, count]) => {
-        const meta = MODEL_META[id] || { name: id, color: '#8BAFC0' }
-        const pct = Math.round((count / data.total_votes) * 100)
-        return (
-          <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 100, fontSize: 11, color: meta.color, fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
-              {meta.name}
+
+      {loading ? (
+        <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>Loading...</div>
+      ) : !data || data.total_votes === 0 ? (
+        <div style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'var(--font-mono)' }}>
+          No votes yet. Be the first to submit a question and vote!
+        </div>
+      ) : (() => {
+        const dist = data.vote_distribution
+        const max = Math.max(...Object.values(dist), 1)
+        return Object.entries(dist).map(([id, count]) => {
+          const meta = MODEL_META[id] || { name: id, color: '#8BAFC0' }
+          const pct = Math.round((count / data.total_votes) * 100)
+          return (
+            <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ width: 110, fontSize: 11, color: meta.color, fontFamily: 'var(--font-mono)', fontWeight: 600, flexShrink: 0 }}>
+                {meta.name}
+              </div>
+              <div style={{
+                flex: 1, height: 12, borderRadius: 6,
+                background: 'rgba(255,255,255,0.06)',
+                overflow: 'hidden',
+              }}>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(count / max) * 100}%` }}
+                  transition={{ duration: 0.6, ease: 'easeOut' }}
+                  style={{ height: '100%', background: meta.color + 'cc', borderRadius: 6 }}
+                />
+              </div>
+              <div style={{ width: 60, textAlign: 'right', fontSize: 11, color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>
+                {count} ({pct}%)
+              </div>
             </div>
-            <div style={{
-              flex: 1, height: 12, borderRadius: 6,
-              background: 'rgba(255,255,255,0.06)',
-              overflow: 'hidden',
-            }}>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${(count / max) * 100}%` }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                style={{ height: '100%', background: meta.color + 'cc', borderRadius: 6 }}
-              />
-            </div>
-            <div style={{ width: 52, textAlign: 'right', fontSize: 11, color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-mono)' }}>
-              {count} ({pct}%)
-            </div>
-          </div>
-        )
-      })}
-    </div>
+          )
+        })
+      })()}
+    </motion.div>
   )
 }
 
@@ -431,7 +490,7 @@ export default function UserStudy() {
       const data = await r.json()
       setResponses(data.responses)
       setSessionId(data.session_id)
-    } catch (e) {
+    } catch {
       setError('Failed to reach backend. Is the server running on port 8000?')
     } finally {
       setLoading(false)
@@ -448,7 +507,7 @@ export default function UserStudy() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ marginBottom: 48 }}
+          style={{ marginBottom: 32 }}
         >
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -474,6 +533,23 @@ export default function UserStudy() {
           </p>
         </motion.div>
 
+        {/* Aggregate stats — always accessible at top, above the form */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            background: 'rgba(0,255,224,0.02)',
+            border: '1px solid rgba(0,255,224,0.1)',
+            borderRadius: 12,
+            padding: '16px 24px',
+            marginBottom: 28,
+          }}
+        >
+          <AggregateStats />
+        </motion.div>
+
         {/* Input panel */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -491,7 +567,7 @@ export default function UserStudy() {
             gap: 16,
           }}
         >
-          <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight:700 }}>
+          <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
             STEP 1 — YOUR QUESTION
           </div>
 
@@ -575,7 +651,9 @@ export default function UserStudy() {
               </div>
             )}
             <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 'auto' }}>
-              {imageFile ? 'Vision: Claude, GPT-4.1, Gemini only' : 'Optional — attach a chart, equation, or problem statement'}
+              {imageFile
+                ? 'All 5 models respond — DeepSeek & Mistral use AI image description'
+                : 'Optional — attach a chart, equation, or problem statement'}
             </span>
           </div>
 
@@ -667,22 +745,6 @@ export default function UserStudy() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Aggregate stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{
-            background: 'rgba(0,255,224,0.02)',
-            border: '1px solid rgba(0,255,224,0.1)',
-            borderRadius: 12,
-            padding: '20px 28px',
-          }}
-        >
-          <AggregateStats />
-        </motion.div>
 
       </div>
     </section>

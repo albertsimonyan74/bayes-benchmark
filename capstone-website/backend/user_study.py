@@ -3,6 +3,7 @@ User Study — parallel 5-model comparison
 POST /api/user-study        : submit question → parallel responses from all 5 models
 POST /api/user-study/vote   : record user preference
 GET  /api/user-study/results: aggregate voting statistics
+GET  /api/user-study/questions: categorized question summaries (text only, no images)
 """
 from __future__ import annotations
 
@@ -26,12 +27,18 @@ router = APIRouter()
 
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-RESULTS_PATH = DATA_DIR / "user_study_results.json"
+RESULTS_PATH  = DATA_DIR / "user_study_results.json"
+QUESTIONS_PATH = DATA_DIR / "question_summaries.json"
 
 # ── Shared in-memory vote store (survives request lifetime, seeded from disk) ──
 _votes: list[dict] = []
 _votes_loaded: bool = False
 _votes_lock = threading.Lock()
+
+_questions: list[dict] = []
+_questions_loaded: bool = False
+_questions_lock = threading.Lock()
+
 
 def _ensure_loaded() -> None:
     global _votes, _votes_loaded
@@ -45,6 +52,69 @@ def _ensure_loaded() -> None:
                 _votes = []
         _votes_loaded = True
 
+
+def _ensure_questions_loaded() -> None:
+    global _questions, _questions_loaded
+    with _questions_lock:
+        if _questions_loaded:
+            return
+        if QUESTIONS_PATH.exists():
+            try:
+                _questions = json.loads(QUESTIONS_PATH.read_text())
+            except Exception:
+                _questions = []
+        _questions_loaded = True
+
+
+# ── Task category classifier — keyword-based ─────────────────────────────────
+_CATEGORY_KEYWORDS: dict[str, list[str]] = {
+    "BETA_BINOM":    ["beta-binomial", "beta binomial", "beta(", "binomial likelihood"],
+    "GAMMA_POISSON": ["gamma-poisson", "gamma poisson", "poisson likelihood", "gamma prior"],
+    "BINOM_FLAT":    ["flat prior", "uniform prior", "beta(1,1)", "laplace smoothing"],
+    "DIRICHLET":     ["dirichlet", "multinomial", "categorical"],
+    "NORMAL_GAMMA":  ["normal-gamma", "normal gamma", "conjugate normal"],
+    "JEFFREYS":      ["jeffreys prior", "jeffreys", "invariant prior"],
+    "FISHER_INFO":   ["fisher information", "expected information", "observed information"],
+    "MARKOV":        ["markov chain", "transition matrix", "transition probability"],
+    "STATIONARY":    ["stationary distribution", "limiting distribution", "ergodic"],
+    "HPD":           ["hpd", "highest posterior density", "credible interval"],
+    "BAYES_FACTOR":  ["bayes factor", "marginal likelihood ratio", "model comparison"],
+    "BAYES_RISK":    ["bayes risk", "expected loss", "decision theory"],
+    "BAYES_REG":     ["bayesian regression", "normal-inverse-gamma", "bayesian linear"],
+    "MLE_MAP":       ["mle", "map estimate", "posterior mode", "maximum likelihood"],
+    "CI_CREDIBLE":   ["confidence interval", "credible interval", "frequentist"],
+    "BIAS_VAR":      ["bias-variance", "bias variance", "mse decomposition"],
+    "RC_BOUND":      ["rao-cramer", "cramer-rao", "lower bound"],
+    "MINIMAX":       ["minimax", "worst-case risk"],
+    "PPC":           ["posterior predictive check", "predictive distribution", "ppc"],
+    "CONCEPTUAL":    ["interpret", "explain", "what is", "why does", "compare"],
+    "GIBBS":         ["gibbs sampling", "gibbs sampler"],
+    "MH":            ["metropolis-hastings", "metropolis hastings", "mh algorithm"],
+    "HMC":           ["hamiltonian monte carlo", "hmc", "leapfrog"],
+    "RJMCMC":        ["reversible jump", "rjmcmc", "transdimensional"],
+    "VB":            ["variational bayes", "variational inference", "elbo", "cavi"],
+    "ABC":           ["approximate bayesian computation", "abc", "likelihood-free"],
+    "HIERARCHICAL":  ["hierarchical", "multilevel", "hyperprior", "shrinkage"],
+    "LOG_ML":        ["log marginal likelihood", "log evidence", "model evidence"],
+    "ORDER_STAT":    ["order statistic", "k-th order"],
+    "REGRESSION":    ["ordinary least squares", "ols", "linear regression"],
+    "GAMBLER":       ["gambler's ruin", "ruin probability"],
+}
+
+def _classify_question(text: str) -> str:
+    lower = text.lower()
+    for category, keywords in _CATEGORY_KEYWORDS.items():
+        for kw in keywords:
+            if kw in lower:
+                return category
+    # fallback: check for generic Bayesian terms
+    if any(w in lower for w in ["posterior", "prior", "bayes", "bayesian"]):
+        return "BAYESIAN_GENERAL"
+    if any(w in lower for w in ["probability", "distribution", "inference"]):
+        return "PROBABILITY_GENERAL"
+    return "UNCATEGORIZED"
+
+
 SYSTEM_PROMPT = (
     "You are an expert in Bayesian statistics and probability theory. "
     "The user has a question about Bayesian or inferential statistics. "
@@ -54,6 +124,13 @@ SYSTEM_PROMPT = (
     "(3) interprets the result in plain language, "
     "(4) states key assumptions and caveats. "
     "Be thorough but accessible to a graduate statistics student."
+)
+
+IMAGE_DESCRIBE_PROMPT = (
+    "Describe this image in detail for a statistics student. "
+    "If it contains mathematical notation, equations, charts, graphs, tables, or statistical output, "
+    "transcribe and explain each element accurately. "
+    "Focus on all quantitative information visible."
 )
 
 MODEL_COLORS = {
@@ -103,6 +180,36 @@ def _check_rate(ip: str, limit: int = 10, window: int = 3600) -> bool:
         return False
     _rate_store[ip].append(now)
     return True
+
+
+# ── Image description via Claude ──────────────────────────────────────────────
+async def describe_image(image_b64: str, media_type: str) -> str:
+    """Use Claude to generate a text description of an image for text-only models."""
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not key:
+        return "[Image attached but could not be described: ANTHROPIC_API_KEY not set]"
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            r = await client.post(
+                "https://api.anthropic.com/v1/messages",
+                headers={"x-api-key": key, "anthropic-version": "2023-06-01",
+                         "content-type": "application/json"},
+                json={
+                    "model": "claude-haiku-4-5-20251001",
+                    "max_tokens": 512,
+                    "messages": [{
+                        "role": "user",
+                        "content": [
+                            {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": image_b64}},
+                            {"type": "text", "text": IMAGE_DESCRIBE_PROMPT},
+                        ],
+                    }],
+                },
+            )
+            r.raise_for_status()
+            return r.json()["content"][0]["text"]
+    except Exception as e:
+        return f"[Image attached but description failed: {str(e)[:100]}]"
 
 
 # ── Async model callers — httpx REST, no SDK ──────────────────────────────────
@@ -206,17 +313,20 @@ async def call_gemini(question: str, image_b64: Optional[str], media_type: str) 
                              error=str(e)[:200], color=MODEL_COLORS["gemini"])
 
 
-async def call_deepseek(question: str, image_b64: Optional[str], _media_type: str) -> ModelResponse:
+async def call_deepseek(question: str, image_b64: Optional[str], media_type: str) -> ModelResponse:
     start = time.time()
-    if image_b64:
-        return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3",
-                             response="", latency_ms=0, error="vision_not_supported",
-                             supports_vision=False, color=MODEL_COLORS["deepseek"])
     key = os.environ.get("DEEPSEEK_API_KEY", "")
     if not key:
         return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3",
                              response="", latency_ms=0, error="DEEPSEEK_API_KEY not set",
-                             supports_vision=False, color=MODEL_COLORS["deepseek"])
+                             supports_vision=True, color=MODEL_COLORS["deepseek"])
+
+    # For image inputs: get AI description first, prepend as context
+    text_question = question
+    if image_b64:
+        img_desc = await describe_image(image_b64, media_type)
+        text_question = f"[Image context: {img_desc}]\n\n{question}"
+
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
             r = await client.post(
@@ -224,30 +334,33 @@ async def call_deepseek(question: str, image_b64: Optional[str], _media_type: st
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                 json={"model": "deepseek-chat", "max_tokens": 1024,
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
-                                   {"role": "user", "content": question}]},
+                                   {"role": "user", "content": text_question}]},
             )
             r.raise_for_status()
             text = r.json()["choices"][0]["message"]["content"]
         return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3", response=text,
                              latency_ms=round((time.time() - start) * 1000, 1),
-                             supports_vision=False, color=MODEL_COLORS["deepseek"])
+                             supports_vision=True, color=MODEL_COLORS["deepseek"])
     except Exception as e:
         return ModelResponse(model_id="deepseek", model_name="DeepSeek-V3",
                              response="", latency_ms=round((time.time() - start) * 1000, 1),
-                             error=str(e)[:200], supports_vision=False, color=MODEL_COLORS["deepseek"])
+                             error=str(e)[:200], supports_vision=True, color=MODEL_COLORS["deepseek"])
 
 
-async def call_mistral(question: str, image_b64: Optional[str], _media_type: str) -> ModelResponse:
+async def call_mistral(question: str, image_b64: Optional[str], media_type: str) -> ModelResponse:
     start = time.time()
-    if image_b64:
-        return ModelResponse(model_id="mistral", model_name="Mistral Large",
-                             response="", latency_ms=0, error="vision_not_supported",
-                             supports_vision=False, color=MODEL_COLORS["mistral"])
     key = os.environ.get("MISTRAL_API_KEY", "")
     if not key:
         return ModelResponse(model_id="mistral", model_name="Mistral Large",
                              response="", latency_ms=0, error="MISTRAL_API_KEY not set",
-                             supports_vision=False, color=MODEL_COLORS["mistral"])
+                             supports_vision=True, color=MODEL_COLORS["mistral"])
+
+    # For image inputs: get AI description first, prepend as context
+    text_question = question
+    if image_b64:
+        img_desc = await describe_image(image_b64, media_type)
+        text_question = f"[Image context: {img_desc}]\n\n{question}"
+
     try:
         async with httpx.AsyncClient(timeout=TIMEOUT) as client:
             r = await client.post(
@@ -255,17 +368,17 @@ async def call_mistral(question: str, image_b64: Optional[str], _media_type: str
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                 json={"model": "mistral-large-latest", "max_tokens": 1024,
                       "messages": [{"role": "system", "content": SYSTEM_PROMPT},
-                                   {"role": "user", "content": question}]},
+                                   {"role": "user", "content": text_question}]},
             )
             r.raise_for_status()
             text = r.json()["choices"][0]["message"]["content"]
         return ModelResponse(model_id="mistral", model_name="Mistral Large", response=text,
                              latency_ms=round((time.time() - start) * 1000, 1),
-                             supports_vision=False, color=MODEL_COLORS["mistral"])
+                             supports_vision=True, color=MODEL_COLORS["mistral"])
     except Exception as e:
         return ModelResponse(model_id="mistral", model_name="Mistral Large",
                              response="", latency_ms=round((time.time() - start) * 1000, 1),
-                             error=str(e)[:200], supports_vision=False, color=MODEL_COLORS["mistral"])
+                             error=str(e)[:200], supports_vision=True, color=MODEL_COLORS["mistral"])
 
 
 # ── Endpoints ──────────────────────────────────────────────────────────────────
@@ -317,23 +430,49 @@ async def submit_question(
 @router.post("/api/user-study/vote")
 async def submit_vote(vote: VoteRequest):
     _ensure_loaded()
+    _ensure_questions_loaded()
+
+    task_category = _classify_question(vote.question)
+
     record = {
-        "session_id":  vote.session_id,
-        "timestamp":   datetime.utcnow().isoformat(),
-        "question":    vote.question[:200],
-        "voted_model": vote.voted_model,
-        "reason":      vote.reason or "",
-        "had_image":   vote.had_image,
+        "session_id":    vote.session_id,
+        "timestamp":     datetime.utcnow().isoformat(),
+        "question":      vote.question[:2000],   # full text now (was 200)
+        "voted_model":   vote.voted_model,
+        "reason":        vote.reason or "",
+        "had_image":     vote.had_image,
+        "task_category": task_category,
     }
+
+    # Save question summary (text only, no image data)
+    q_record = {
+        "session_id":    vote.session_id,
+        "timestamp":     datetime.utcnow().isoformat(),
+        "question_text": vote.question[:2000],
+        "task_category": task_category,
+        "had_image":     vote.had_image,
+        "voted_model":   vote.voted_model,
+    }
+
     with _votes_lock:
         _votes.append(record)
-        snapshot = list(_votes)
-    # Write to disk outside the lock
+        votes_snapshot = list(_votes)
+
+    with _questions_lock:
+        _questions.append(q_record)
+        questions_snapshot = list(_questions)
+
+    # Write to disk outside the locks
     try:
-        RESULTS_PATH.write_text(json.dumps(snapshot, indent=2))
+        RESULTS_PATH.write_text(json.dumps(votes_snapshot, indent=2))
     except Exception:
         pass
-    return {"status": "recorded", "session_id": vote.session_id}
+    try:
+        QUESTIONS_PATH.write_text(json.dumps(questions_snapshot, indent=2))
+    except Exception:
+        pass
+
+    return {"status": "recorded", "session_id": vote.session_id, "task_category": task_category}
 
 
 @router.get("/api/user-study/results")
@@ -347,4 +486,29 @@ async def get_study_results():
     return {
         "total_votes": len(records),
         "vote_distribution": dict(sorted(dist.items(), key=lambda x: -x[1])),
+    }
+
+
+@router.get("/api/user-study/questions")
+async def get_question_summaries():
+    """Returns categorized question summaries for research use. No image data included."""
+    _ensure_questions_loaded()
+    with _questions_lock:
+        records = list(_questions)
+
+    # Group by task_category
+    by_category: dict[str, list] = defaultdict(list)
+    for r in records:
+        cat = r.get("task_category", "UNCATEGORIZED")
+        by_category[cat].append({
+            "session_id":  r.get("session_id"),
+            "timestamp":   r.get("timestamp"),
+            "question":    r.get("question_text", ""),
+            "had_image":   r.get("had_image", False),
+            "voted_model": r.get("voted_model", ""),
+        })
+
+    return {
+        "total_questions": len(records),
+        "by_category": dict(sorted(by_category.items())),
     }

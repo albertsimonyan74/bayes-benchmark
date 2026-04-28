@@ -43,33 +43,33 @@ button { font-family: inherit; }
 input, textarea, select { cursor: text !important; }
 a, button, [data-hover] { cursor: none !important; }
 
-/* ─── Global cursor element — sharp angled triangle ─────────────── */
+/* ─── Global cursor element — clean right-angle triangle pointer ─── */
 #global-cursor {
   position: fixed;
   top: 0;
   left: 0;
   width: 18px;
   height: 22px;
-  background: rgba(0, 255, 224, 0.88);
-  clip-path: polygon(0 0, 100% 28%, 28% 100%);
+  background: rgba(0, 255, 224, 0.92);
+  clip-path: polygon(0 0, 0 88%, 88% 0);
+  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5));
   border-radius: 0;
   border: none;
   pointer-events: none;
   z-index: 999999;
   transform: translate(-1px, -1px);
-  transition: width 0.14s ease, height 0.14s ease,
-              background 0.14s ease, opacity 0.18s ease,
-              filter 0.14s ease;
+  transition: transform 0.08s ease, width 0.14s ease, height 0.14s ease,
+              background 0.14s ease, opacity 0.18s ease, filter 0.14s ease;
   opacity: 0;
   will-change: transform;
 }
 
 #global-cursor.visible  { opacity: 1; }
 #global-cursor.hovering {
-  width: 26px;
-  height: 32px;
+  width: 24px;
+  height: 30px;
   background: rgba(0, 255, 224, 1.0);
-  filter: drop-shadow(0 0 7px rgba(0, 255, 224, 0.75));
+  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(0, 255, 224, 0.8));
 }
 
 @media (pointer: coarse) {
@@ -81,4 +81,68 @@ a, button, [data-hover] { cursor: none !important; }
 @keyframes tooltipFadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── KaTeX math rendering in model responses ────────────────────── */
+.md-response .katex { font-size: 1.05em; }
+.md-response .katex-display { overflow-x: auto; padding: 4px 0; }
+
+/* ─── Mobile responsive layout ──────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Restore system cursor on touch devices */
+  * { cursor: auto !important; }
+  input, textarea, select { cursor: text !important; }
+  #global-cursor { display: none !important; }
+
+  /* Sections */
+  section[id] { padding: 60px 20px 60px !important; }
+
+  /* Navbar */
+  nav { padding: 0 16px !important; }
+  .nav-links { display: none !important; }
+
+  /* Hero title */
+  h1 { font-size: clamp(26px, 7vw, 48px) !important; }
+
+  /* About grid — stack columns */
+  .sec-about > div [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tasks — sidebar + grid become vertical */
+  .sec-tasks > div > div[style*="grid-template-columns: 250px"] {
+    grid-template-columns: 1fr !important;
+  }
+  .sec-tasks [style*="position: sticky"] { position: relative !important; top: auto !important; }
+
+  /* How It Works circle — scale down */
+  .sec-benchmark [style*="width:'100%'"] { overflow-x: auto; }
+
+  /* Benchmark circle container */
+  .sec-benchmark [style*="maxWidth: 560"] { max-width: 360px !important; height: 360px !important; }
+
+  /* Task grid */
+  .sec-tasks [style*="gridTemplateColumns: 'repeat(auto-fill,minmax(290px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Results grid */
+  .sec-results [style*="grid"] { grid-template-columns: 1fr !important; }
+
+  /* User study response grid */
+  #user-study [style*="minmax(300px"] { grid-template-columns: 1fr !important; }
+  #user-study { padding: 60px 0 !important; }
+  #user-study > div { padding: 0 16px !important; }
+
+  /* Radar chart — shrink */
+  svg[width="344"], svg[width="296"] { width: 280px !important; height: 280px !important; }
+
+  /* Scoring bars */
+  [style*="grid-template-columns: repeat(5,1fr)"] { grid-template-columns: repeat(3, 1fr) !important; }
+
+  /* Footer */
+  footer { padding: 20px 16px !important; }
+
+  /* VizGallery */
+  .sec-visualizations [style*="grid"] { grid-template-columns: 1fr !important; }
 }
