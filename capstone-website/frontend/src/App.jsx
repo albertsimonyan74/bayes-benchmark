@@ -650,24 +650,24 @@ function TierLadder() {
               const info = TIER_INFO[expanded]
               return (
                 <div style={{ padding:'12px 0 4px' }}>
-                  <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.8, margin:'0 0 14px' }}>
+                  <p style={{ color:'var(--text-secondary)', fontSize:17, lineHeight:1.85, margin:'0 0 16px' }}>
                     {info.detail}
                   </p>
-                  <div style={{ marginBottom:10 }}>
-                    <div style={{ fontSize:10, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:6 }}>KEY CHALLENGES</div>
+                  <div style={{ marginBottom:12 }}>
+                    <div style={{ fontSize:11, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:8 }}>KEY CHALLENGES</div>
                     <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
                       {TIER_CHALLENGES[expanded].map(c => (
                         <div key={c} style={{ display:'flex', alignItems:'center', gap:5 }}>
                           <div style={{ width:4, height:4, borderRadius:'50%', background:info.color, flexShrink:0 }}/>
-                          <span style={{ fontSize:12, color:'var(--text-secondary)' }}>{c}</span>
+                          <span style={{ fontSize:14, color:'var(--text-secondary)' }}>{c}</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <div style={{ fontSize:10, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:6 }}>TASK TYPES</div>
+                  <div style={{ fontSize:11, color:info.color+'80', fontWeight:700, letterSpacing:'0.1em', marginBottom:8 }}>TASK TYPES</div>
                   <div style={{ display:'flex', gap:5, flexWrap:'wrap' }}>
                     {TIER_TASK_EXAMPLES[expanded].map(k => (
-                      <span key={k} style={{ fontSize:10, padding:'3px 8px', borderRadius:4,
+                      <span key={k} style={{ fontSize:11, padding:'4px 9px', borderRadius:4,
                         background:`${info.color}14`, color:info.color,
                         border:`1px solid ${info.color}33`, fontFamily:'var(--font-mono)' }}>{k}</span>
                     ))}

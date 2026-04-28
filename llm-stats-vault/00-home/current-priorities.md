@@ -72,6 +72,16 @@ All 10 items complete. See [[2026-04-28-ui-overhaul-part2]].
 
 Commit 84fa12a pushed → Vercel auto-deploying.
 
+### 4c. Website UI Fixes Part 3 ✅ DONE (2026-04-28)
+5 fixes: tier description font size, divergence tolerance (0.005 numeric), viz interactive HTML (cleanUrls:false), GIF loading state, vote storage clarification, model avg output tokens display.
+Commit 2f6fdf0 → Vercel + Render auto-deploying.
+See [[2026-04-28-ui-fixes-part3]].
+
+### 4d. Website UI Fixes Part 4 ✅ DONE (2026-04-28)
+5 fixes: tier text even bigger (17px), model outputs full-width stacked (flex column), interactive HTML + GIF committed to git (root cause: gitignore exclusions), vote info bar removed, vote persistence via Supabase (optional env vars).
+See [[2026-04-28-ui-fixes-part4]].
+**Supabase setup needed** for persistent votes: create `votes`+`questions` tables, set `SUPABASE_URL`+`SUPABASE_KEY` in Render env vars.
+
 ---
 
 ## Phase 5 — Paper Writing

@@ -31,7 +31,60 @@ RESULTS_PATH    = DATA_DIR / "user_study_results.json"
 QUESTIONS_PATH  = DATA_DIR / "question_summaries.json"
 VOTE_MEMORY_PATH = DATA_DIR / "vote_memory.json"
 
-# ── Shared in-memory vote store (survives request lifetime, seeded from disk) ──
+# ── Supabase config (optional — set env vars for persistent storage) ──────────
+# Create a free project at supabase.com, then set:
+#   SUPABASE_URL=https://xxxx.supabase.co
+#   SUPABASE_KEY=your-anon-key
+# SQL to create table:
+#   CREATE TABLE votes (id BIGSERIAL PRIMARY KEY, data JSONB NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW());
+#   CREATE TABLE questions (id BIGSERIAL PRIMARY KEY, data JSONB NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW());
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
+USE_SUPABASE = bool(SUPABASE_URL and SUPABASE_KEY)
+
+
+async def _supabase_insert(table: str, record: dict) -> None:
+    """Insert one JSON record into a Supabase table."""
+    if not USE_SUPABASE:
+        return
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            await client.post(
+                f"{SUPABASE_URL}/rest/v1/{table}",
+                headers={
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_KEY}",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal",
+                },
+                json={"data": record},
+            )
+    except Exception:
+        pass
+
+
+async def _supabase_fetch_all(table: str) -> list[dict]:
+    """Fetch all records from a Supabase table, ordered by id."""
+    if not USE_SUPABASE:
+        return []
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            r = await client.get(
+                f"{SUPABASE_URL}/rest/v1/{table}",
+                headers={
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_KEY}",
+                },
+                params={"select": "data", "order": "id.asc"},
+            )
+            r.raise_for_status()
+            rows = r.json()
+            return [row["data"] for row in rows if isinstance(row.get("data"), dict)]
+    except Exception:
+        return []
+
+
+# ── Shared in-memory vote store (survives request lifetime, seeded from disk/Supabase) ──
 _votes: list[dict] = []
 _votes_loaded: bool = False
 _votes_lock = threading.Lock()
@@ -469,15 +522,22 @@ async def submit_vote(vote: VoteRequest):
         _questions.append(q_record)
         questions_snapshot = list(_questions)
 
-    # Write to disk outside the locks
-    try:
-        RESULTS_PATH.write_text(json.dumps(votes_snapshot, indent=2))
-    except Exception:
-        pass
-    try:
-        QUESTIONS_PATH.write_text(json.dumps(questions_snapshot, indent=2))
-    except Exception:
-        pass
+    # Persist to Supabase if configured (survives redeploys), else write to disk
+    if USE_SUPABASE:
+        await asyncio.gather(
+            _supabase_insert("votes", record),
+            _supabase_insert("questions", q_record),
+            return_exceptions=True,
+        )
+    else:
+        try:
+            RESULTS_PATH.write_text(json.dumps(votes_snapshot, indent=2))
+        except Exception:
+            pass
+        try:
+            QUESTIONS_PATH.write_text(json.dumps(questions_snapshot, indent=2))
+        except Exception:
+            pass
 
     # Update aggregated vote_memory.json (research paper reference)
     try:
@@ -508,9 +568,13 @@ async def submit_vote(vote: VoteRequest):
 
 @router.get("/api/user-study/results")
 async def get_study_results():
-    _ensure_loaded()
-    with _votes_lock:
-        records = list(_votes)
+    # If Supabase configured: fetch live from DB (always current, survives redeploys)
+    if USE_SUPABASE:
+        records = await _supabase_fetch_all("votes")
+    else:
+        _ensure_loaded()
+        with _votes_lock:
+            records = list(_votes)
     dist: dict[str, int] = defaultdict(int)
     for r in records:
         dist[r.get("voted_model", "?")] += 1

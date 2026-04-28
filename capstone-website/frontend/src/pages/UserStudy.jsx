@@ -579,17 +579,6 @@ export default function UserStudy() {
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }} style={{ background: 'rgba(0,255,224,0.02)', border: '1px solid rgba(0,255,224,0.1)', borderRadius: 12, padding: '16px 24px', marginBottom: 8 }}>
           <AggregateStats refreshTrigger={voteRefresh} />
         </motion.div>
-        {/* Vote storage info */}
-        <div style={{ marginBottom: 20, padding: '8px 16px', borderRadius: 8, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>💾 VOTES SAVED TO</span>
-          <code style={{ fontSize: 10, color: 'rgba(0,255,224,0.5)', fontFamily: 'var(--font-mono)', background: 'rgba(0,255,224,0.05)', padding: '2px 8px', borderRadius: 4 }}>backend/data/user_study_results.json</code>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-mono)' }}>·</span>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>JSON array — one record per vote</span>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-mono)' }}>·</span>
-          <code style={{ fontSize: 10, color: 'rgba(0,255,224,0.5)', fontFamily: 'var(--font-mono)', background: 'rgba(0,255,224,0.05)', padding: '2px 8px', borderRadius: 4 }}>backend/data/vote_memory.json</code>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>aggregated stats</span>
-        </div>
-
         {/* Input panel */}
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} style={{ background: 'rgba(0,255,224,0.03)', border: '1px solid rgba(0,255,224,0.15)', borderRadius: 14, padding: '28px 32px', marginBottom: 36, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
@@ -645,7 +634,7 @@ export default function UserStudy() {
               {/* Divergence banner */}
               {!loading && divergence && <DivergenceBanner divergence={divergence} />}
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 18, marginBottom: 32 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 32 }}>
                 {loading
                   ? MODEL_ORDER.map((_, i) => <SkeletonCard key={i} index={i} />)
                   : MODEL_ORDER.map(id => {
