@@ -163,6 +163,8 @@
   },
   "active": "8473cc840ece86cb",
   "lastOpenFiles": [
+    "sessions/2026-04-28-ui-fixes-part4.md",
+    "sessions/2026-04-28-ui-fixes-part3.md",
     "00-home/index.md",
     "sessions/2026-04-26-error-taxonomy-pipeline.md",
     "inbox/README.md",
@@ -192,8 +194,6 @@
     "Welcome.md",
     "knowledge/decisions/httpx-used-directly-no-vendor-sdks.md",
     "knowledge/decisions/mcmc-is-baseline-solver-not-benchmark-target.md",
-    "knowledge/decisions/dual-scoring-paths-exist-for-separation-of-concerns.md",
-    "knowledge/decisions/all-scoring-weights-are-equal-at-0.20.md",
     "knowledge/decisions",
     "knowledge/integrations",
     "knowledge",
