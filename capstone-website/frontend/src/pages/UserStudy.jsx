@@ -3,6 +3,25 @@ import { motion, AnimatePresence } from 'motion/react'
 
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
+function stripMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/#{1,6}\s+/gm, '')
+    .replace(/\*\*(.+?)\*\*/gs, '$1')
+    .replace(/\*(.+?)\*/gs, '$1')
+    .replace(/__(.+?)__/gs, '$1')
+    .replace(/_(.+?)_/gs, '$1')
+    .replace(/```[\s\S]*?```/g, (m) => m.replace(/```\w*\n?/g, '').trim())
+    .replace(/`(.+?)`/g, '$1')
+    .replace(/^\s*[-*+]\s+/gm, '\u2022 ')
+    .replace(/^\s*\d+\.\s+/gm, '')
+    .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+    .replace(/^>\s*/gm, '')
+    .replace(/---+/g, '\u2014\u2014')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 const MODEL_META = {
   claude:   { name: 'Claude Sonnet 4.6', color: '#00CED1', initials: 'CL', vision: true },
   chatgpt:  { name: 'GPT-4.1',           color: '#7FFFD4', initials: 'GP', vision: true },
@@ -138,7 +157,7 @@ function ResponseCard({ resp, voted, onVote, hasImage }) {
           overflowY: 'auto',
           paddingRight: 4,
         }}>
-          {resp.response}
+          {stripMarkdown(resp.response)}
         </div>
       )}
     </motion.div>
@@ -507,13 +526,15 @@ export default function UserStudy() {
               style={{
                 padding: '8px 18px',
                 borderRadius: 8,
-                border: '1px solid rgba(0,255,224,0.25)',
-                background: 'transparent',
-                color: 'var(--text-muted)',
+                border: '1.5px solid rgba(0,255,224,0.65)',
+                background: 'rgba(0,255,224,0.10)',
+                color: 'rgba(0,255,224,0.95)',
                 fontSize: 12,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-mono)',
                 display: 'flex', alignItems: 'center', gap: 7,
+                boxShadow: '0 0 10px rgba(0,255,224,0.08)',
+                fontWeight: 600,
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -984,6 +984,21 @@ function BenchmarkSection() {
                 />
               )
             })}
+            {HOW_EXTRA.map((_,i) => {
+              const R_INNER = 0.21
+              const angle = (i / 4) * 2 * Math.PI
+              const idx = 10 + i
+              return (
+                <line key={`inner-${i}`}
+                  x1="50%" y1="50%"
+                  x2={`${(0.5 + R_INNER * Math.cos(angle)) * 100}%`}
+                  y2={`${(0.5 + R_INNER * Math.sin(angle)) * 100}%`}
+                  stroke={expanded===idx ? `${HOW_EXTRA[i].color}66` : `${HOW_EXTRA[i].color}18`}
+                  strokeWidth={expanded===idx ? 1.5 : 1}
+                  strokeDasharray="3 4"
+                />
+              )
+            })}
           </svg>
 
           {/* Center hub */}
@@ -1029,6 +1044,40 @@ function BenchmarkSection() {
               </div>
             )
           })}
+
+          {/* Inner ring nodes — 4 HOW_EXTRA items at R=0.21, cardinal directions */}
+          {HOW_EXTRA.map((item, i) => {
+            const R_INNER = 0.21
+            const angle = (i / 4) * 2 * Math.PI
+            const idx = 10 + i
+            const isActive = expanded === idx
+            const pos = {
+              left: `${(0.5 + R_INNER * Math.cos(angle)) * 100}%`,
+              top:  `${(0.5 + R_INNER * Math.sin(angle)) * 100}%`,
+            }
+            return (
+              <div key={`inner-${i}`} style={{ position:'absolute', ...pos, transform:'translate(-50%,-50%)', width:78, zIndex:2 }}>
+                <motion.div
+                  style={{
+                    background: isActive ? `${item.color}18` : 'rgba(0,0,0,0.55)',
+                    border:`1px solid ${isActive ? item.color : item.color+'44'}`,
+                    borderRadius:10, padding:'8px 6px 7px', cursor:'pointer', textAlign:'center',
+                    boxShadow: isActive ? `0 0 14px ${item.color}33` : 'none',
+                    transition:'background 0.2s, border-color 0.2s, box-shadow 0.2s',
+                    backdropFilter:'blur(4px)',
+                  }}
+                  onClick={() => setExpanded(isActive ? null : idx)}
+                  whileHover={{ scale:1.10 }}
+                  whileTap={{ scale:0.95 }}
+                  transition={{ type:'spring', stiffness:440, damping:26 }}
+                >
+                  <div style={{ color: isActive ? item.color : item.color+'cc', marginBottom:4, display:'flex', justifyContent:'center', transform:'scale(0.8)' }}>{item.icon}</div>
+                  <div style={{ color: isActive ? item.color : 'rgba(255,255,255,0.8)', fontSize:7.5, fontWeight:700, letterSpacing:'0.04em', lineHeight:1.3 }}>{item.title}</div>
+                  <div style={{ color: isActive ? item.color+'99' : 'rgba(255,255,255,0.25)', fontSize:6.5, marginTop:3 }}>{isActive ? '▲' : '▼'}</div>
+                </motion.div>
+              </div>
+            )
+          })}
         </div>
 
         {/* Expanded detail */}
@@ -1042,43 +1091,41 @@ function BenchmarkSection() {
               transition={{ duration:0.28, ease:[0.22,1,0.36,1] }}
               style={{ overflow:'hidden', maxWidth:600, margin:'0 auto 16px' }}
             >
-              <Card glow style={{ padding:'20px 28px', textAlign:'center' }}>
-                <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
-                <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, letterSpacing:'0.1em', marginBottom:4 }}>
-                  STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
-                </div>
-                <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:15, marginBottom:10 }}>
-                  {PIPELINE[expanded].title}
-                </div>
-                <p style={{ color:'var(--text-secondary)', fontSize:12.5, lineHeight:1.75, margin:0 }}>
-                  {PIPELINE[expanded].desc}
-                </p>
-              </Card>
+              {expanded < 10 ? (
+                <Card glow style={{ padding:'20px 28px', textAlign:'center' }}>
+                  <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
+                  <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, letterSpacing:'0.1em', marginBottom:4 }}>
+                    STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
+                  </div>
+                  <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:15, marginBottom:10 }}>
+                    {PIPELINE[expanded].title}
+                  </div>
+                  <p style={{ color:'var(--text-secondary)', fontSize:12.5, lineHeight:1.75, margin:0 }}>
+                    {PIPELINE[expanded].desc}
+                  </p>
+                </Card>
+              ) : (() => {
+                const item = HOW_EXTRA[expanded - 10]
+                return (
+                  <Card style={{ padding:'20px 28px', borderColor: item.color + '44' }}>
+                    <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14 }}>
+                      <div style={{ color:item.color }}>{item.icon}</div>
+                      <div style={{ color:item.color, fontWeight:700, fontSize:14 }}>{item.title}</div>
+                    </div>
+                    <ul style={{ margin:0, padding:0, listStyle:'none' }}>
+                      {item.lines.map((l,j) => (
+                        <li key={j} style={{ display:'flex', alignItems:'flex-start', gap:8, marginBottom:8 }}>
+                          <span style={{ color:item.color, fontSize:8, marginTop:4, flexShrink:0 }}>◆</span>
+                          <span style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.6 }}>{l}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                )
+              })()}
             </motion.div>
           )}
         </AnimatePresence>
-      </FadeIn>
-
-      {/* Extra info row: Deployment / RQ Integration / Papers / User Study */}
-      <FadeIn delay={120}>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:14, maxWidth:960, margin:'0 auto 40px' }}>
-          {HOW_EXTRA.map((item) => (
-            <Card key={item.title} style={{ padding:'18px 16px' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:12 }}>
-                <div style={{ color:item.color, flexShrink:0 }}>{item.icon}</div>
-                <div style={{ color:item.color, fontWeight:700, fontSize:12 }}>{item.title}</div>
-              </div>
-              <ul style={{ margin:0, padding:0, listStyle:'none' }}>
-                {item.lines.map((l,j) => (
-                  <li key={j} style={{ display:'flex', alignItems:'flex-start', gap:6, marginBottom:5 }}>
-                    <span style={{ color:item.color, fontSize:8, marginTop:3, flexShrink:0 }}>◆</span>
-                    <span style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.55 }}>{l}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          ))}
-        </div>
       </FadeIn>
 
       {/* Tier Ladder + Scoring — stacked vertically, each full-width */}
@@ -1524,10 +1571,9 @@ function TaskCard({ task, onClick, onCopy, copied }) {
           {task.task_type}
         </div>
       </Tooltip>
-      <p style={{ color:'var(--text-secondary)', fontSize:12, lineHeight:1.55, margin:'8px 0 12px', textTransform:'capitalize' }}>
+      <p style={{ color:'var(--text-secondary)', fontSize:12, lineHeight:1.55, margin:'8px 0 12px' }}>
         {(() => {
-          const useTooltip = task.category === 'computational_bayes' && (!task.description || task.description.length < 20)
-          const desc = (useTooltip ? TASK_TYPE_TOOLTIPS[task.task_type]?.description : task.description) || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
+          const desc = task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
           return desc.slice(0,110) + (desc.length>110 ? '…' : '')
         })()}
       </p>
@@ -1585,7 +1631,7 @@ function TaskModal({ task, onClose }) {
           {/* Description */}
           <div style={{ marginBottom:20 }}>
             <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:10 }}>DESCRIPTION</div>
-            <p style={{ color:'var(--text-primary)', fontSize:14, lineHeight:1.75, margin:0, textTransform:'capitalize' }}>{task.description}</p>
+            <p style={{ color:'var(--text-primary)', fontSize:14, lineHeight:1.75, margin:0 }}>{task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''}</p>
           </div>
 
           {/* Collapsible task inputs */}
@@ -1908,8 +1954,20 @@ function About() {
         </div>
       </FadeIn>
 
-      {/* § 5 — Research Papers */}
-      <FadeIn delay={180}>
+    </Section>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  REFERENCES — Research Papers + Graduate Textbooks (bottom of page)
+// ═══════════════════════════════════════════════════════════════
+function References() {
+  return (
+    <Section id="references" minHeight="auto">
+      <SectionTitle sub="Papers and textbooks that define the scope and methodology of this benchmark">References</SectionTitle>
+
+      {/* Research Papers */}
+      <FadeIn>
         <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>5 REFERENCED RESEARCH PAPERS</div>
         <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
           Papers that directly shaped our benchmark design, prompting strategies, and evaluation methodology.
@@ -1933,8 +1991,8 @@ function About() {
         </div>
       </FadeIn>
 
-      {/* § 6 — Graduate Textbooks */}
-      <FadeIn delay={220}>
+      {/* Graduate Textbooks */}
+      <FadeIn delay={80}>
         <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>7 GRADUATE TEXTBOOKS</div>
         <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
           Graduate-level Bayesian statistics texts that define the scope and task types of this benchmark.
@@ -1958,7 +2016,6 @@ function About() {
           ))}
         </div>
       </FadeIn>
-
     </Section>
   )
 }
@@ -2004,6 +2061,8 @@ export default function App() {
       <Visualizations setFullImg={setFullImg} onOpenGif={setGifModal}/>
       <SectionDivider/>
       <UserStudy/>
+      <SectionDivider/>
+      <References/>
       <motion.footer
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

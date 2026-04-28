@@ -10,6 +10,7 @@ import asyncio
 import base64
 import json
 import os
+import threading
 import time
 import uuid
 from collections import defaultdict
@@ -26,6 +27,23 @@ router = APIRouter()
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 RESULTS_PATH = DATA_DIR / "user_study_results.json"
+
+# ── Shared in-memory vote store (survives request lifetime, seeded from disk) ──
+_votes: list[dict] = []
+_votes_loaded: bool = False
+_votes_lock = threading.Lock()
+
+def _ensure_loaded() -> None:
+    global _votes, _votes_loaded
+    with _votes_lock:
+        if _votes_loaded:
+            return
+        if RESULTS_PATH.exists():
+            try:
+                _votes = json.loads(RESULTS_PATH.read_text())
+            except Exception:
+                _votes = []
+        _votes_loaded = True
 
 SYSTEM_PROMPT = (
     "You are an expert in Bayesian statistics and probability theory. "
@@ -298,6 +316,7 @@ async def submit_question(
 
 @router.post("/api/user-study/vote")
 async def submit_vote(vote: VoteRequest):
+    _ensure_loaded()
     record = {
         "session_id":  vote.session_id,
         "timestamp":   datetime.utcnow().isoformat(),
@@ -306,25 +325,22 @@ async def submit_vote(vote: VoteRequest):
         "reason":      vote.reason or "",
         "had_image":   vote.had_image,
     }
-    existing: list = []
-    if RESULTS_PATH.exists():
-        try:
-            existing = json.loads(RESULTS_PATH.read_text())
-        except Exception:
-            existing = []
-    existing.append(record)
-    RESULTS_PATH.write_text(json.dumps(existing, indent=2))
+    with _votes_lock:
+        _votes.append(record)
+        snapshot = list(_votes)
+    # Write to disk outside the lock
+    try:
+        RESULTS_PATH.write_text(json.dumps(snapshot, indent=2))
+    except Exception:
+        pass
     return {"status": "recorded", "session_id": vote.session_id}
 
 
 @router.get("/api/user-study/results")
 async def get_study_results():
-    if not RESULTS_PATH.exists():
-        return {"total_votes": 0, "vote_distribution": {}}
-    try:
-        records = json.loads(RESULTS_PATH.read_text())
-    except Exception:
-        return {"total_votes": 0, "vote_distribution": {}}
+    _ensure_loaded()
+    with _votes_lock:
+        records = list(_votes)
     dist: dict[str, int] = defaultdict(int)
     for r in records:
         dist[r.get("voted_model", "?")] += 1
