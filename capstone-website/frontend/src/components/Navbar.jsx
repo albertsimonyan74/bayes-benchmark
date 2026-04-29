@@ -82,7 +82,7 @@ export default function Navbar() {
             BB
           </motion.div>
           <div>
-            <div className="nav-logo-title">Bayes Bench</div>
+            <div className="nav-logo-title">Bayesian Benchmark</div>
           </div>
         </div>
 

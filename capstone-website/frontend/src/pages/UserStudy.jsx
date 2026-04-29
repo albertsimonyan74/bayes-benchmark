@@ -90,21 +90,32 @@ function MarkdownRenderer({ text, color }) {
 function extractFinalAnswer(text) {
   if (!text) return ''
   const lines = text.split('\n')
+  // Scan bottom-up: ANSWER: or **ANSWER:** (markdown bold)
   for (let i = lines.length - 1; i >= 0; i--) {
     const line = lines[i].trim()
-    if (line.toUpperCase().startsWith('ANSWER:')) return line.replace(/^ANSWER:\s*/i, '').trim()
+    if (/^\*{0,2}ANSWER:\*{0,2}/i.test(line)) {
+      return line.replace(/^\*{0,2}ANSWER:\*{0,2}\s*/i, '').replace(/\*{0,2}$/, '').trim()
+    }
   }
   for (let i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].trim()) return lines[i].trim().slice(0, 120)
+    if (lines[i].trim()) return lines[i].trim().slice(0, 200)
   }
   return ''
 }
 
 const NUMERIC_TOLERANCE = 0.02
 
+// Normalize fractions like "1/6", "3/7" → decimal string before numeric extraction
+function normalizeFractions(s) {
+  return s.replace(/(-?\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/g, (_, n, d) => {
+    const val = parseFloat(n) / parseFloat(d)
+    return isFinite(val) && parseFloat(d) !== 0 ? val.toFixed(8) : _
+  })
+}
+
 function normalizeAnswerStr(s) {
-  // Normalize percentages to decimals (e.g. "43%" → "0.43")
-  let norm = s.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => (parseFloat(n) / 100).toFixed(4))
+  let norm = normalizeFractions(s)
+  norm = norm.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => (parseFloat(n) / 100).toFixed(4))
   norm = norm.toLowerCase()
     .replace(/\b\d+\.\d+\b/g, n => parseFloat(n).toFixed(3))
     .replace(/[,;]/g, ' ')
@@ -112,16 +123,17 @@ function normalizeAnswerStr(s) {
   return norm
 }
 
-// Extract first numeric value from an answer string; null if no number found.
-// Handles percentages by dividing by 100.
+// Extract first numeric value from answer string.
+// Normalizes fractions (1/6 → 0.1667) and percentages (43% → 0.43).
 function extractFirstNum(s) {
-  // Check for percentage first
-  const pct = s.match(/(-?\d+(?:\.\d+)?)\s*%/)
+  if (!s) return null
+  const norm = normalizeFractions(s)
+  const pct = norm.match(/(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*%/i)
   if (pct) {
     const n = parseFloat(pct[1]) / 100
     return isFinite(n) ? n : null
   }
-  const m = s.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/i)
+  const m = norm.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/i)
   if (!m) return null
   const n = parseFloat(m[0])
   return isFinite(n) ? n : null
@@ -129,8 +141,9 @@ function extractFirstNum(s) {
 
 // Extract all numeric values from an answer string
 function extractAllNums(s) {
-  // Normalize percentages first
-  const norm = s.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => String(parseFloat(n) / 100))
+  if (!s) return []
+  const norm = normalizeFractions(s)
+    .replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => String(parseFloat(n) / 100))
   const matches = norm.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi) || []
   return matches.map(m => parseFloat(m)).filter(n => isFinite(n))
 }
@@ -232,7 +245,7 @@ function computeDivergence(responses) {
     const names = minority.map(id => MODEL_META[id]?.name || id).join(', ')
     verdict = 'majority'; severity = 'note'
     message = `Note: ${names} give different answers from the majority (${largest} models). The majority answer may be more reliable.`
-  } else if (groupList.length === total) {
+  } else if (groupList.length === total && total >= 3) {
     verdict = 'no-consensus'; severity = 'warning'
     message = 'All models provide different answers. No consensus has been reached — verify using a reference source before relying on any single model.'
   } else {

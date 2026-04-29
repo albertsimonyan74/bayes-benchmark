@@ -739,15 +739,15 @@ function RadarChart({ model }) {
 const MODEL_COLORS = { claude:'#00CED1', gemini:'#FF6B6B', chatgpt:'#7FFFD4', deepseek:'#4A90D9', mistral:'#A78BFA' }
 function MultiModelRadar() {
   const [hoveredModel, setHoveredModel] = useState(null)
-  const pad=80, inner=240, size=inner+pad*2
-  const cx=size/2, cy=size/2, R=95, n=5
+  const pad=80, inner=320, size=inner+pad*2
+  const cx=size/2, cy=size/2, R=130, n=5
   const step = (Math.PI*2)/n
   const rings = [0.25,0.5,0.75,1].map(s =>
     Array.from({length:n},(_,i)=>{ const a=i*step-Math.PI/2; return `${cx+s*R*Math.cos(a)},${cy+s*R*Math.sin(a)}` }).join(' ')
   )
   const axes = Array.from({length:n},(_,i)=>{
     const a=i*step-Math.PI/2
-    const lx=cx+(R+44)*Math.cos(a), ly=cy+(R+44)*Math.sin(a)
+    const lx=cx+(R+52)*Math.cos(a), ly=cy+(R+52)*Math.sin(a)
     const anchor = lx < cx-5 ? 'end' : lx > cx+5 ? 'start' : 'middle'
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
@@ -856,11 +856,6 @@ function Overview() {
           animate="visible"
           variants={staggerContainer(0.15)}
         >
-          {/* Eyebrow */}
-          <motion.div variants={fadeUp} style={{ color:'var(--aqua)', fontSize:11, letterSpacing:'0.28em', marginBottom:20, fontFamily:'var(--font-mono)' }}>
-            // BAYES BENCH · LLM EVALUATION
-          </motion.div>
-
           {/* Hero title */}
           <motion.h1 variants={fadeUp} style={{ fontSize:'clamp(32px,5.5vw,66px)', fontWeight:700, lineHeight:1.15, color:'var(--text-primary)', marginBottom:24 }}>
             Benchmarking LLMs on{' '}
@@ -869,11 +864,12 @@ function Overview() {
             </span>
           </motion.h1>
 
-          <motion.p variants={fadeUp} style={{ color:'var(--text-secondary)', fontSize:15, marginBottom:44, lineHeight:1.7 }}>
+          <motion.p variants={fadeUp} style={{ color:'var(--text-secondary)', fontSize:15, marginBottom:44, lineHeight:2 }}>
             American University of Armenia
-            <br/><b style={{ color:'var(--text-primary)' }}>Student: Albert Simonyan</b>
-            {' · '}
-            <b style={{ color:'var(--text-primary)' }}>Supervisor: Dr. Vahe Movsisyan</b>
+            <br/><b style={{ color:'var(--text-primary)' }}>Student: </b>
+            <a href="https://www.linkedin.com/in/albert-simonyan-3b0560311/" target="_blank" rel="noopener noreferrer" style={{ color:'var(--aqua)', textDecoration:'none', fontWeight:700 }}>Albert Simonyan</a>
+            <br/><b style={{ color:'var(--text-primary)' }}>Supervisor: </b>
+            <a href="https://www.linkedin.com/in/vahemovsisyan/" target="_blank" rel="noopener noreferrer" style={{ color:'var(--aqua)', textDecoration:'none', fontWeight:700 }}>Dr. Vahe Movsisyan</a>
           </motion.p>
 
           {/* Quote */}
@@ -1933,7 +1929,7 @@ const SCORE_DIMS = [
 function About() {
   return (
     <Section id="about" minHeight="auto">
-      <SectionTitle sub="Evaluating LLM statistical reasoning on Bayesian benchmark tasks">About This Research</SectionTitle>
+      <SectionTitle>About This Research</SectionTitle>
 
       {/* § 1 — Research Questions (TOP) */}
       <FadeIn>
