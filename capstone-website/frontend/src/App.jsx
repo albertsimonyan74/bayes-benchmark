@@ -7,7 +7,7 @@ import resultsData from './data/results_summary.json'
 import GlobeBackground from './components/GlobeBackground'
 import Navbar          from './components/Navbar'
 import NeuralNetwork   from './components/NeuralNetwork'
-import MobiusStrip     from './components/MobiusStrip'
+import HeroNetworkBg   from './components/HeroNetworkBg'
 import ResultsSection  from './pages/ResultsSection'
 import VizGallery      from './pages/VizGallery'
 import UserStudy       from './pages/UserStudy'
@@ -753,7 +753,7 @@ function MultiModelRadar() {
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
   return (
-    <div style={{ display:'flex', flexDirection:'row', alignItems:'center', gap:24, justifyContent:'center', flexWrap:'wrap' }}>
+    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:16 }}>
       <div style={{ position:'relative', flexShrink:0 }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
@@ -811,16 +811,16 @@ function MultiModelRadar() {
           </div>
         )}
       </div>
-      {/* Legend — right side */}
-      <div style={{ display:'flex', flexDirection:'column', gap:14, minWidth:160 }}>
+      {/* Legend — horizontal row below radar */}
+      <div style={{ display:'flex', flexDirection:'row', flexWrap:'wrap', gap:'6px 18px', justifyContent:'center' }}>
         {Object.keys(RADAR_VALS).map(id=>(
           <div
             key={id}
-            style={{ display:'flex', alignItems:'center', gap:10, fontSize:14, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s', padding:'5px 10px', borderRadius:6, background: hoveredModel===id ? MODEL_COLORS[id]+'14' : 'transparent' }}
+            style={{ display:'flex', alignItems:'center', gap:8, fontSize:13, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s', padding:'4px 10px', borderRadius:6, background: hoveredModel===id ? MODEL_COLORS[id]+'14' : 'transparent' }}
             onMouseEnter={()=>setHoveredModel(id)}
             onMouseLeave={()=>setHoveredModel(null)}
           >
-            <div style={{ width:16, height:4, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0', flexShrink:0 }}/>
+            <div style={{ width:18, height:4, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0', flexShrink:0 }}/>
             <span style={{ fontFamily:'var(--font-mono)', fontWeight: hoveredModel===id ? 700 : 600 }}>{id.toUpperCase()}</span>
           </div>
         ))}
@@ -847,8 +847,7 @@ function Overview() {
     <Section id="overview">
       <HeroOrbs />
       <div style={{ position:'absolute', inset:0, overflow:'hidden', zIndex:0, pointerEvents:'none' }}>
-        <div className="hero-watermark">BAYESIAN</div>
-        <MobiusStrip opacity={0.45} />
+        <HeroNetworkBg opacity={0.55} />
       </div>
 
       <div style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', minHeight:'calc(100vh - 200px)' }}>
@@ -1014,6 +1013,29 @@ function BenchmarkSection() {
             animation:'ringCCW 45s linear infinite', borderRadius:'50%',
             border:'1px dashed rgba(0,180,216,0.09)' }}/>
 
+          {/* Electron orbit paths */}
+          <div style={{ position:'absolute', left:'50%', top:'50%', width:'38%', height:'38%',
+            animation:'ringRotate 28s linear infinite', borderRadius:'50%',
+            border:'1.5px dashed rgba(0,255,224,0.22)' }}>
+            <div style={{ position:'absolute', top:'-5px', left:'50%', transform:'translateX(-50%)',
+              width:8, height:8, borderRadius:'50%', background:'#00FFE0',
+              boxShadow:'0 0 10px rgba(0,255,224,0.8)', marginTop:1 }}/>
+          </div>
+          <div style={{ position:'absolute', left:'50%', top:'50%', width:'48%', height:'28%',
+            animation:'ringCCW 18s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(167,139,250,0.25)' }}>
+            <div style={{ position:'absolute', top:'-4px', left:'50%', transform:'translateX(-50%)',
+              width:6, height:6, borderRadius:'50%', background:'#A78BFA',
+              boxShadow:'0 0 8px rgba(167,139,250,0.9)' }}/>
+          </div>
+          <div style={{ position:'absolute', left:'50%', top:'50%', width:'28%', height:'48%',
+            animation:'ringRotate 22s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(0,180,216,0.22)' }}>
+            <div style={{ position:'absolute', top:'-4px', left:'50%', transform:'translateX(-50%)',
+              width:6, height:6, borderRadius:'50%', background:'#00B4D8',
+              boxShadow:'0 0 8px rgba(0,180,216,0.9)' }}/>
+          </div>
+
           {/* SVG connector lines */}
           <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
             {PIPELINE.map((_,i) => {
@@ -1048,15 +1070,15 @@ function BenchmarkSection() {
 
           {/* Center hub */}
           <motion.div
-            style={{ position:'absolute', left:'50%', top:'50%', width:110, height:110,
+            style={{ position:'absolute', left:'50%', top:'50%', width:145, height:145,
               transform:'translate(-50%,-50%)', borderRadius:'50%',
-              background:'rgba(0,255,224,0.05)', border:'2px solid rgba(0,255,224,0.4)',
+              background:'rgba(0,255,224,0.05)', border:'2px solid rgba(0,255,224,0.45)',
               display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-              boxShadow:'0 0 30px rgba(0,255,224,0.12)' }}
-            animate={{ boxShadow:['0 0 20px rgba(0,255,224,0.08)','0 0 44px rgba(0,255,224,0.20)','0 0 20px rgba(0,255,224,0.08)'] }}
+              boxShadow:'0 0 40px rgba(0,255,224,0.14)', zIndex:2 }}
+            animate={{ boxShadow:['0 0 28px rgba(0,255,224,0.10)','0 0 56px rgba(0,255,224,0.24)','0 0 28px rgba(0,255,224,0.10)'] }}
             transition={{ duration:3, repeat:Infinity, ease:'easeInOut' }}
           >
-            <div style={{ color:'var(--aqua)', fontSize:8, fontWeight:700, letterSpacing:'0.08em' }}>BENCHMARK</div>
+            <div style={{ color:'var(--aqua)', fontSize:9, fontWeight:700, letterSpacing:'0.08em' }}>BENCHMARK</div>
             <div style={{ color:'var(--aqua)', fontWeight:800, fontSize:24, fontFamily:'var(--font-mono)', lineHeight:1.1 }}>171</div>
             <div style={{ color:'rgba(0,255,224,0.5)', fontSize:8, marginTop:1 }}>TASKS</div>
             <div style={{ color:'rgba(255,255,255,0.3)', fontSize:7, marginTop:1 }}>5 MODELS</div>
@@ -1364,12 +1386,7 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
       <div style={{ display:'grid', gridTemplateColumns:'250px 1fr', gap:24, alignItems:'start' }}>
 
         {/* Filter sidebar */}
-        <motion.div
-          style={{ position:'sticky', top:96, alignSelf:'flex-start' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div style={{ position:'sticky', top:96, alignSelf:'start' }}>
           <Card>
             <div style={{ textAlign:'center', paddingBottom:16, borderBottom:'1px solid var(--border-default)', marginBottom:16 }}>
               <motion.span
@@ -1515,7 +1532,7 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
               ↺ CLEAR ALL FILTERS
             </motion.button>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Task grid + pagination */}
         <div style={{ display:'flex', flexDirection:'column' }}>
@@ -1994,16 +2011,16 @@ function About() {
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, maxWidth:1300, margin:'0 auto 52px', alignItems:'start' }}>
           {/* Left: Key Findings */}
           <div>
-            <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', marginBottom:20 }}>KEY FINDINGS</div>
-            <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+            <div style={{ color:'var(--aqua)', fontSize:13, fontWeight:700, letterSpacing:'0.14em', marginBottom:20, textAlign:'center' }}>KEY FINDINGS</div>
+            <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
               {ABOUT_FINDINGS.map((f,i) => (
                 <motion.div
                   key={i}
-                  whileHover={{ y:-4, scale:1.01, boxShadow:'var(--glow-md)' }}
+                  whileHover={{ y:-3, scale:1.01, boxShadow:'var(--glow-md)' }}
                   transition={{ type:'spring', stiffness:400, damping:28 }}
                 >
-                  <Card style={{ padding:'22px 18px', boxSizing:'border-box' }}>
-                    <div style={{ color:f.color, marginBottom:12, display:'flex', alignItems:'center' }}>{ABOUT_FINDING_ICONS[i]}</div>
+                  <Card style={{ padding:'18px 16px', boxSizing:'border-box' }}>
+                    <div style={{ color:f.color, marginBottom:10, display:'flex', alignItems:'center' }}>{ABOUT_FINDING_ICONS[i]}</div>
                     <div style={{ color:f.color, fontSize:12, lineHeight:1.65 }}>{f.text}</div>
                   </Card>
                 </motion.div>
@@ -2012,8 +2029,8 @@ function About() {
           </div>
           {/* Right: Radar */}
           <div>
-            <div style={{ color:'var(--aqua)', fontSize:14, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
-            <Card style={{ padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center' }}>
+            <div style={{ color:'var(--aqua)', fontSize:13, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
+            <Card style={{ padding:'20px 12px', display:'flex', flexDirection:'column', alignItems:'center' }}>
               <MultiModelRadar/>
             </Card>
           </div>
@@ -2152,9 +2169,6 @@ export default function App() {
             style={{ color:'var(--aqua)', textDecoration:'none', fontWeight:700 }}>Albert Simonyan
           </a>
           {' '}· DS 299 Capstone · American University of Armenia · 2026
-        </div>
-        <div style={{ color:'rgba(255,255,255,0.2)', fontSize:11, marginTop:4 }}>
-          Bayes Bench · 171 tasks · 5 models · 38 task types
         </div>
       </footer>
 

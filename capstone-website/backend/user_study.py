@@ -668,14 +668,19 @@ async def get_study_results():
         with _votes_lock:
             records = list(_votes)
     dist: dict[str, int] = defaultdict(int)
+    reason_dist: dict[str, int] = defaultdict(int)
     for r in records:
         dist[r.get("voted_model", "?")] += 1
+        rk = r.get("reason", "")
+        if rk:
+            reason_dist[rk] += 1
     with _users_lock:
         unique_users = len(_unique_users)
     return {
         "total_votes": len(records),
         "unique_users": unique_users,
         "vote_distribution": dict(sorted(dist.items(), key=lambda x: -x[1])),
+        "reason_distribution": dict(sorted(reason_dist.items(), key=lambda x: -x[1])),
     }
 
 

@@ -482,68 +482,99 @@ function DivergenceBanner({ divergence }) {
   )
 }
 
-// ── Aggregate stats (top panel, always accessible) ────────────────────────────
-function AggregateStats({ refreshTrigger }) {
+// ── Aggregate panel — always visible, right column ────────────────────────────
+function AggregatePanel({ refreshTrigger }) {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   async function load() {
-    setIsOpen(true); setLoading(true)
+    setLoading(true)
     try { const r = await fetch(`${API_BASE}/api/user-study/results`); setData(await r.json()) } catch {}
     setLoading(false)
   }
 
+  useEffect(() => { load() }, [])
+
   useEffect(() => {
-    if (refreshTrigger > 0 && isOpen) {
-      setLoading(true)
-      fetch(`${API_BASE}/api/user-study/results`).then(r => r.json()).then(d => { setData(d); setLoading(false) }).catch(() => setLoading(false))
-    }
+    if (refreshTrigger > 0) load()
   }, [refreshTrigger])
 
-  if (!isOpen) {
-    return (
-      <button onClick={load} style={{ padding: '9px 22px', borderRadius: 8, border: '1px solid rgba(0,255,224,0.4)', background: 'rgba(0,255,224,0.07)', color: 'rgba(0,255,224,0.9)', fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-        View Aggregate Vote Results ▼
-      </button>
-    )
+  const REASON_LABELS = {
+    mathematical_accuracy: 'Mathematical Accuracy',
+    clarity:               'Clarity of Explanation',
+    thoroughness:          'Thoroughness',
+    presentation:          'Presentation Quality',
+    trustworthiness:       'Statistical Trustworthiness',
   }
+  const REASON_ORDER = ['mathematical_accuracy', 'clarity', 'thoroughness', 'presentation', 'trustworthiness']
 
   return (
-    <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ color: 'rgba(0,255,224,0.8)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
+    <div style={{ background: 'rgba(0,255,224,0.02)', border: '1px solid rgba(0,255,224,0.12)', borderRadius: 14, padding: '24px 22px', display: 'flex', flexDirection: 'column', gap: 0 }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+        <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
           AGGREGATE VOTES
-          {data ? ` — ${data.total_votes} vote${data.total_votes !== 1 ? 's' : ''}` : ''}
-          {data?.unique_users ? <span style={{ color: 'rgba(167,139,250,0.8)', marginLeft: 10 }}>· {data.unique_users} unique user{data.unique_users !== 1 ? 's' : ''}</span> : null}
+          {data ? <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: 8 }}>— {data.total_votes} vote{data.total_votes !== 1 ? 's' : ''}</span> : null}
+          {data?.unique_users ? <span style={{ color: 'rgba(167,139,250,0.7)', marginLeft: 8 }}>· {data.unique_users} participant{data.unique_users !== 1 ? 's' : ''}</span> : null}
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={() => { setLoading(true); fetch(`${API_BASE}/api/user-study/results`).then(r => r.json()).then(d => { setData(d); setLoading(false) }).catch(() => setLoading(false)) }} disabled={loading} style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid rgba(0,255,224,0.3)', background: 'rgba(0,255,224,0.06)', color: 'rgba(0,255,224,0.8)', fontSize: 10, fontWeight: 700, cursor: loading ? 'wait' : 'pointer', fontFamily: 'var(--font-mono)' }}>↻ REFRESH</button>
-          <button onClick={() => setIsOpen(false)} style={{ padding: '4px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.15)', background: 'transparent', color: 'rgba(255,255,255,0.5)', fontSize: 10, fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-mono)' }}>▲ CLOSE</button>
-        </div>
+        <button onClick={load} disabled={loading} style={{ padding: '3px 10px', borderRadius: 5, border: '1px solid rgba(0,255,224,0.25)', background: 'transparent', color: 'rgba(0,255,224,0.7)', fontSize: 10, fontWeight: 700, cursor: loading ? 'wait' : 'pointer', fontFamily: 'var(--font-mono)' }}>↻</button>
       </div>
+
       {loading ? (
-        <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>Loading...</div>
+        <div style={{ color: 'var(--text-muted)', fontSize: 12, padding: '12px 0' }}>Loading...</div>
       ) : !data || data.total_votes === 0 ? (
-        <div style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'var(--font-mono)' }}>No votes yet. Be the first to submit a question and vote!</div>
-      ) : (() => {
-        const dist = data.vote_distribution
-        const max = Math.max(...Object.values(dist), 1)
-        return Object.entries(dist).map(([id, count]) => {
-          const meta = MODEL_META[id] || { name: id, color: '#8BAFC0' }
-          const pct = Math.round((count / data.total_votes) * 100)
-          return (
-            <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{ width: 110, fontSize: 11, color: meta.color, fontFamily: 'var(--font-mono)', fontWeight: 600, flexShrink: 0 }}>{meta.name}</div>
-              <div style={{ flex: 1, height: 12, borderRadius: 6, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
-                <motion.div initial={{ width: 0 }} animate={{ width: `${(count / max) * 100}%` }} transition={{ duration: 0.6, ease: 'easeOut' }} style={{ height: '100%', background: meta.color + 'cc', borderRadius: 6 }}/>
+        <div style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'var(--font-mono)', padding: '12px 0', lineHeight: 1.6 }}>No votes yet. Submit a question and be the first to vote.</div>
+      ) : (
+        <>
+          {/* Model vote bars */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9, marginBottom: 22 }}>
+            {(() => {
+              const dist = data.vote_distribution
+              const max = Math.max(...Object.values(dist), 1)
+              return Object.entries(dist).map(([id, count]) => {
+                const meta = MODEL_META[id] || { name: id, color: '#8BAFC0' }
+                const pct = Math.round((count / data.total_votes) * 100)
+                return (
+                  <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 96, fontSize: 10, color: meta.color, fontFamily: 'var(--font-mono)', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{meta.name}</div>
+                    <div style={{ flex: 1, height: 10, borderRadius: 5, background: 'rgba(255,255,255,0.05)', overflow: 'hidden' }}>
+                      <motion.div initial={{ width: 0 }} animate={{ width: `${(count / max) * 100}%` }} transition={{ duration: 0.7, ease: 'easeOut' }} style={{ height: '100%', background: meta.color + 'bb', borderRadius: 5 }}/>
+                    </div>
+                    <div style={{ width: 52, textAlign: 'right', fontSize: 10, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>{count} ({pct}%)</div>
+                  </div>
+                )
+              })
+            })()}
+          </div>
+
+          {/* Reason breakdown */}
+          {data.reason_distribution && Object.keys(data.reason_distribution).length > 0 && (
+            <>
+              <div style={{ color: 'rgba(0,255,224,0.5)', fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700, marginBottom: 10 }}>WHY DID USERS CHOOSE</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+                {REASON_ORDER.map(key => {
+                  const count = data.reason_distribution[key] || 0
+                  const total = Object.values(data.reason_distribution).reduce((a, b) => a + b, 0)
+                  const pct = total > 0 ? Math.round((count / total) * 100) : 0
+                  const max = Math.max(...Object.values(data.reason_distribution), 1)
+                  return (
+                    <div key={key}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                        <span style={{ fontSize: 10, color: 'rgba(200,220,230,0.75)' }}>{REASON_LABELS[key] || key}</span>
+                        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-mono)' }}>{count} ({pct}%)</span>
+                      </div>
+                      <div style={{ height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.05)', overflow: 'hidden' }}>
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${(count / max) * 100}%` }} transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }} style={{ height: '100%', background: 'rgba(0,255,224,0.45)', borderRadius: 3 }}/>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
-              <div style={{ width: 60, textAlign: 'right', fontSize: 11, color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>{count} ({pct}%)</div>
-            </div>
-          )
-        })
-      })()}
-    </motion.div>
+            </>
+          )}
+        </>
+      )}
+    </div>
   )
 }
 
@@ -691,63 +722,117 @@ export default function UserStudy() {
           </p>
         </motion.div>
 
-        {/* Aggregate stats */}
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }} style={{ background: 'rgba(0,255,224,0.02)', border: '1px solid rgba(0,255,224,0.1)', borderRadius: 12, padding: '16px 24px', marginBottom: 8 }}>
-          <AggregateStats refreshTrigger={voteRefresh} />
-        </motion.div>
-        {/* Input panel */}
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} style={{ background: 'rgba(0,255,224,0.03)', border: '1px solid rgba(0,255,224,0.15)', borderRadius: 14, padding: '28px 32px', marginBottom: 36, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
-            YOUR QUESTION
-          </div>
+        {/* 2-column: Question left | Aggregate right */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 36, alignItems: 'start' }}>
 
-          <textarea
-            value={question}
-            onChange={e => setQuestion(e.target.value)}
-            placeholder="e.g. A coin is flipped 10 times and lands heads 7 times. Using a Beta(2,2) prior, what is the posterior distribution and its mean?"
-            rows={5}
-            style={{ background: 'rgba(0,255,224,0.04)', border: '1px solid rgba(0,255,224,0.18)', borderRadius: 9, padding: '14px 16px', color: '#e8f4f8', fontSize: 14, lineHeight: 1.7, resize: 'vertical', fontFamily: 'inherit', outline: 'none', width: '100%', boxSizing: 'border-box', transition: 'border-color 0.18s' }}
-            onFocus={e => e.target.style.borderColor = 'rgba(0,255,224,0.45)'}
-            onBlur={e => e.target.style.borderColor = 'rgba(0,255,224,0.18)'}
-          />
+          {/* LEFT: Question input + inline registration */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} style={{ background: 'rgba(0,255,224,0.03)', border: '1px solid rgba(0,255,224,0.15)', borderRadius: 14, padding: '28px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ color: 'rgba(0,255,224,0.75)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', fontWeight: 700 }}>
+              YOUR QUESTION
+            </div>
 
-          {/* Image upload */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-            <button onClick={() => fileRef.current?.click()} style={{ padding: '8px 18px', borderRadius: 8, border: '1.5px solid rgba(0,255,224,0.65)', background: 'rgba(0,255,224,0.10)', color: 'rgba(0,255,224,0.95)', fontSize: 12, cursor: 'pointer', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 7, fontWeight: 600 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              Attach image
-            </button>
-            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/gif,image/webp" style={{ display: 'none' }} onChange={e => handleImage(e.target.files?.[0])}/>
-            {imagePreview && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <img src={imagePreview} alt="preview" style={{ height: 48, width: 72, objectFit: 'cover', borderRadius: 6, border: '1px solid rgba(0,255,224,0.25)' }}/>
-                <button onClick={clearImage} style={{ width: 24, height: 24, borderRadius: 5, border: '1px solid rgba(255,100,100,0.3)', background: 'rgba(255,100,100,0.08)', color: '#FF6B6B', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
-                <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{imageFile?.name}</span>
-              </div>
+            <textarea
+              value={question}
+              onChange={e => setQuestion(e.target.value)}
+              placeholder="e.g. A coin is flipped 10 times and lands heads 7 times. Using a Beta(2,2) prior, what is the posterior distribution and its mean?"
+              rows={5}
+              style={{ background: 'rgba(0,255,224,0.04)', border: '1px solid rgba(0,255,224,0.18)', borderRadius: 9, padding: '14px 16px', color: '#e8f4f8', fontSize: 14, lineHeight: 1.7, resize: 'vertical', fontFamily: 'inherit', outline: 'none', width: '100%', boxSizing: 'border-box', transition: 'border-color 0.18s' }}
+              onFocus={e => e.target.style.borderColor = 'rgba(0,255,224,0.45)'}
+              onBlur={e => e.target.style.borderColor = 'rgba(0,255,224,0.18)'}
+            />
+
+            {/* Image upload */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+              <button onClick={() => fileRef.current?.click()} style={{ padding: '7px 16px', borderRadius: 8, border: '1.5px solid rgba(0,255,224,0.65)', background: 'rgba(0,255,224,0.10)', color: 'rgba(0,255,224,0.95)', fontSize: 11, cursor: 'pointer', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600 }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Attach image
+              </button>
+              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/gif,image/webp" style={{ display: 'none' }} onChange={e => handleImage(e.target.files?.[0])}/>
+              {imagePreview && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <img src={imagePreview} alt="preview" style={{ height: 40, width: 60, objectFit: 'cover', borderRadius: 5, border: '1px solid rgba(0,255,224,0.25)' }}/>
+                  <button onClick={clearImage} style={{ width: 22, height: 22, borderRadius: 4, border: '1px solid rgba(255,100,100,0.3)', background: 'rgba(255,100,100,0.08)', color: '#FF6B6B', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
+                  <span style={{ fontSize: 10, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{imageFile?.name}</span>
+                </div>
+              )}
+              {!imagePreview && (
+                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Optional — attach a chart or equation</span>
+              )}
+            </div>
+
+            {/* Inline registration form */}
+            <AnimatePresence>
+              {showRegForm && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div style={{ background: 'rgba(0,255,224,0.04)', border: '1px solid rgba(0,255,224,0.2)', borderRadius: 10, padding: '20px 20px 16px' }}>
+                    <div style={{ color: '#00FFE0', fontSize: 13, fontWeight: 700, marginBottom: 4 }}>Before you begin</div>
+                    <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, lineHeight: 1.55, marginBottom: 16 }}>
+                      Research study — provide your details so we can count unique participants.
+                    </div>
+                    {[
+                      { label: 'First Name', val: regName, set: setRegName, ph: 'e.g. Albert' },
+                      { label: 'Surname',    val: regSurname, set: setRegSurname, ph: 'e.g. Simonyan' },
+                      { label: 'Email',      val: regEmail, set: setRegEmail, ph: 'e.g. name@example.com' },
+                    ].map(({ label, val, set, ph }) => (
+                      <div key={label} style={{ marginBottom: 12 }}>
+                        <div style={{ color: 'rgba(0,255,224,0.65)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 5 }}>{label.toUpperCase()}</div>
+                        <input
+                          type={label === 'Email' ? 'email' : 'text'}
+                          value={val}
+                          onChange={e => set(e.target.value)}
+                          placeholder={ph}
+                          style={{ width: '100%', boxSizing: 'border-box', background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(0,255,224,0.18)', borderRadius: 7, padding: '9px 13px', color: '#E8F4F8', fontSize: 13, outline: 'none', fontFamily: 'inherit' }}
+                          onFocus={e => { e.target.style.borderColor = 'rgba(0,255,224,0.55)' }}
+                          onBlur={e => { e.target.style.borderColor = 'rgba(0,255,224,0.18)' }}
+                        />
+                      </div>
+                    ))}
+                    {regError && (
+                      <div style={{ color: '#FF6B6B', fontSize: 12, marginBottom: 12, padding: '7px 11px', background: 'rgba(255,107,107,0.08)', borderRadius: 6 }}>{regError}</div>
+                    )}
+                    <button
+                      onClick={submitRegistration}
+                      disabled={regLoading}
+                      style={{ width: '100%', padding: '11px 0', background: 'linear-gradient(135deg, rgba(0,255,224,0.16), rgba(0,180,216,0.10))', border: '1px solid rgba(0,255,224,0.4)', borderRadius: 8, color: '#00FFE0', fontSize: 13, fontWeight: 700, cursor: regLoading ? 'not-allowed' : 'pointer', transition: 'all 0.18s', opacity: regLoading ? 0.7 : 1 }}
+                    >
+                      {regLoading ? 'Registering…' : 'Register & Start'}
+                    </button>
+                    <div style={{ color: 'rgba(255,255,255,0.18)', fontSize: 10, textAlign: 'center', marginTop: 10 }}>Used only for research participant counting. Never shared.</div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {error && (
+              <div style={{ color: '#FF6B6B', fontSize: 13, fontFamily: 'var(--font-mono)', padding: '8px 12px', background: 'rgba(255,107,107,0.08)', borderRadius: 7, border: '1px solid rgba(255,107,107,0.2)' }}>{error}</div>
             )}
-            <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 'auto' }}>
-              {imageFile ? 'All 5 models respond — DeepSeek & Mistral use AI image description' : 'Optional — attach a chart, equation, or problem statement'}
-            </span>
-          </div>
 
-          {error && (
-            <div style={{ color: '#FF6B6B', fontSize: 13, fontFamily: 'var(--font-mono)', padding: '8px 12px', background: 'rgba(255,107,107,0.08)', borderRadius: 7, border: '1px solid rgba(255,107,107,0.2)' }}>{error}</div>
-          )}
+            <button
+              onClick={submit}
+              disabled={loading || question.trim().length < 5}
+              style={{ alignSelf: 'flex-start', padding: '12px 36px', borderRadius: 9, border: '1.5px solid #00FFE0', background: (loading || question.trim().length < 5) ? 'transparent' : 'rgba(0,255,224,0.10)', color: (loading || question.trim().length < 5) ? 'var(--text-muted)' : '#00FFE0', fontSize: 13, fontWeight: 700, cursor: (loading || question.trim().length < 5) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', transition: 'all 0.18s' }}
+            >
+              {loading ? 'QUERYING 5 MODELS...' : 'RUN COMPARISON'}
+            </button>
+          </motion.div>
 
-          <button
-            onClick={submit}
-            disabled={loading || question.trim().length < 5}
-            style={{ alignSelf: 'flex-start', padding: '12px 36px', borderRadius: 9, border: '1.5px solid #00FFE0', background: (loading || question.trim().length < 5) ? 'transparent' : 'rgba(0,255,224,0.10)', color: (loading || question.trim().length < 5) ? 'var(--text-muted)' : '#00FFE0', fontSize: 13, fontWeight: 700, cursor: (loading || question.trim().length < 5) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', transition: 'all 0.18s' }}
-          >
-            {loading ? 'QUERYING 5 MODELS...' : 'RUN COMPARISON'}
-          </button>
-        </motion.div>
+          {/* RIGHT: Aggregate votes — always visible */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+            <AggregatePanel refreshTrigger={voteRefresh} />
+          </motion.div>
 
-        {/* Response grid */}
+        </div>
+
+        {/* Response grid — full width below */}
         <AnimatePresence mode="wait">
           {(loading || responses) && (
             <motion.div key={loading ? 'skeletons' : 'responses'} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-              {/* Divergence banner */}
               {!loading && divergence && <DivergenceBanner divergence={divergence} />}
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 32 }}>
@@ -772,7 +857,6 @@ export default function UserStudy() {
                 }
               </div>
 
-              {/* Vote submitted message */}
               {voteSubmitted && (
                 <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} style={{ background: 'rgba(0,255,224,0.06)', border: '1px solid rgba(0,255,224,0.3)', borderRadius: 10, padding: '14px 24px', color: '#00FFE0', fontFamily: 'var(--font-mono)', fontSize: 13, textAlign: 'center', marginBottom: 24 }}>
                   Vote recorded for{' '}
@@ -786,102 +870,6 @@ export default function UserStudy() {
         </AnimatePresence>
 
       </div>
-
-      {/* Registration modal */}
-      <AnimatePresence>
-        {showRegForm && (
-          <motion.div
-            key="reg-modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            onClick={() => setShowRegForm(false)}
-            style={{
-              position: 'fixed', inset: 0, zIndex: 999990,
-              background: 'rgba(0,0,0,0.88)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: 24,
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.93, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.93, y: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              onClick={e => e.stopPropagation()}
-              style={{
-                width: '100%', maxWidth: 460,
-                background: 'rgba(6,12,26,0.98)',
-                border: '1px solid rgba(0,255,224,0.25)',
-                borderRadius: 16, padding: '32px 36px',
-                boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
-              }}
-            >
-              <div style={{ color: '#00FFE0', fontSize: 16, fontWeight: 700, marginBottom: 6 }}>
-                Before you begin
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, lineHeight: 1.6, marginBottom: 24 }}>
-                This is a research study. Please provide your details so we can count unique participants. Your information is only used for research statistics.
-              </div>
-
-              {[
-                { label: 'First Name', val: regName, set: setRegName, ph: 'e.g. Albert' },
-                { label: 'Surname',    val: regSurname, set: setRegSurname, ph: 'e.g. Simonyan' },
-                { label: 'Email',      val: regEmail, set: setRegEmail, ph: 'e.g. name@example.com' },
-              ].map(({ label, val, set, ph }) => (
-                <div key={label} style={{ marginBottom: 16 }}>
-                  <div style={{ color: 'rgba(0,255,224,0.7)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6 }}>
-                    {label.toUpperCase()}
-                  </div>
-                  <input
-                    type={label === 'Email' ? 'email' : 'text'}
-                    value={val}
-                    onChange={e => set(e.target.value)}
-                    placeholder={ph}
-                    style={{
-                      width: '100%', boxSizing: 'border-box',
-                      background: 'rgba(0,0,0,0.4)',
-                      border: '1px solid rgba(0,255,224,0.2)',
-                      borderRadius: 8, padding: '10px 14px',
-                      color: '#E8F4F8', fontSize: 14, outline: 'none',
-                      fontFamily: 'inherit',
-                    }}
-                    onFocus={e => { e.target.style.borderColor = 'rgba(0,255,224,0.6)' }}
-                    onBlur={e => { e.target.style.borderColor = 'rgba(0,255,224,0.2)' }}
-                  />
-                </div>
-              ))}
-
-              {regError && (
-                <div style={{ color: '#FF6B6B', fontSize: 12, marginBottom: 14, padding: '8px 12px', background: 'rgba(255,107,107,0.08)', borderRadius: 7 }}>
-                  {regError}
-                </div>
-              )}
-
-              <button
-                onClick={submitRegistration}
-                disabled={regLoading}
-                style={{
-                  width: '100%', padding: '13px 0',
-                  background: 'linear-gradient(135deg, rgba(0,255,224,0.18), rgba(0,180,216,0.12))',
-                  border: '1px solid rgba(0,255,224,0.45)',
-                  borderRadius: 9, color: '#00FFE0',
-                  fontSize: 14, fontWeight: 700, cursor: regLoading ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.18s', marginTop: 4,
-                  opacity: regLoading ? 0.7 : 1,
-                }}
-              >
-                {regLoading ? 'Registering…' : 'Register & Start'}
-              </button>
-
-              <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11, textAlign: 'center', marginTop: 14 }}>
-                Used only for research participant counting. Never shared.
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }
