@@ -1005,8 +1005,8 @@ function BenchmarkSection() {
 
           {/* Outer rotating ring */}
           <div style={{ position:'absolute', left:'50%', top:'50%', width:'78%', height:'78%',
-            animation:'ringRotate 70s linear infinite', borderRadius:'50%',
-            border:'1px dashed rgba(0,255,224,0.12)', transform:'translate(-50%,-50%)' }}>
+            animation:'ringRotate 32s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(0,255,224,0.18)', transform:'translate(-50%,-50%)' }}>
             <div style={{ position:'absolute', top:'-4px', left:'50%', transform:'translateX(-50%)', width:7, height:7, borderRadius:'50%', background:'rgba(0,255,224,0.7)', boxShadow:'0 0 8px rgba(0,255,224,0.6)' }}/>
             <div style={{ position:'absolute', bottom:'-4px', left:'50%', transform:'translateX(-50%)', width:5, height:5, borderRadius:'50%', background:'rgba(0,255,224,0.4)', boxShadow:'0 0 6px rgba(0,255,224,0.4)' }}/>
             <div style={{ position:'absolute', top:'50%', right:'-4px', transform:'translateY(-50%)', width:5, height:5, borderRadius:'50%', background:'rgba(0,180,216,0.5)', boxShadow:'0 0 6px rgba(0,180,216,0.5)' }}/>
@@ -1015,8 +1015,8 @@ function BenchmarkSection() {
 
           {/* Inner counter-rotating ring */}
           <div style={{ position:'absolute', left:'50%', top:'50%', width:'58%', height:'58%',
-            animation:'ringCCW 45s linear infinite', borderRadius:'50%',
-            border:'1px dashed rgba(0,180,216,0.09)', transform:'translate(-50%,-50%)' }}>
+            animation:'ringCCW 20s linear infinite', borderRadius:'50%',
+            border:'1px dashed rgba(0,180,216,0.18)', transform:'translate(-50%,-50%)' }}>
             <div style={{ position:'absolute', top:'-4px', left:'50%', transform:'translateX(-50%)', width:6, height:6, borderRadius:'50%', background:'rgba(0,180,216,0.5)', boxShadow:'0 0 7px rgba(0,180,216,0.5)' }}/>
             <div style={{ position:'absolute', bottom:'-4px', left:'50%', transform:'translateX(-50%)', width:4, height:4, borderRadius:'50%', background:'rgba(0,180,216,0.3)', boxShadow:'0 0 5px rgba(0,180,216,0.4)' }}/>
             <div style={{ position:'absolute', top:'50%', right:'-4px', transform:'translateY(-50%)', width:4, height:4, borderRadius:'50%', background:'rgba(0,255,224,0.4)', boxShadow:'0 0 5px rgba(0,255,224,0.4)' }}/>
@@ -1909,10 +1909,10 @@ const RQS = [
 ]
 
 const ABOUT_FINDINGS = [
-  { text:'Claude leads overall (0.683) across all 171 tasks', color:'#00FFE0' },
-  { text:'MARKOV & STATIONARY hardest (avg 0.32) — all models struggle with Markov chain computations', color:'#FF6B6B' },
-  { text:'E3 Assumption Violation most common (119 cases) — models proceed without stating priors, iid, or distributional assumptions', color:'#A78BFA' },
-  { text:'Semantic perturbations cause largest score drops — surface framing shifts reasoning more than numerical changes', color:'#4A90D9' },
+  { title:'Claude leads overall', stat:'0.683', statLabel:'avg score · 171 tasks', text:'Claude tops all 5 models. Gemini 2nd (0.651). Mistral lowest (0.521). 14.6% performance gap from top to bottom.', color:'#00FFE0' },
+  { title:'Hardest task types', stat:'0.32', statLabel:'avg score · MARKOV + STATIONARY', text:'All 5 models fail >70% of Markov chain tasks — the clear frontier of LLM statistical reasoning.', color:'#FF6B6B' },
+  { title:'Top failure mode', stat:'119', statLabel:'of 143 total failures (E3)', text:'Assumption Violation dominates. Models compute correct math but skip prior specs, iid conditions, and distributional families.', color:'#A78BFA' },
+  { title:'Robustness finding', stat:'0.91', statLabel:'avg robustness · 375 synthetic runs', text:'Semantic reframings cause the largest score drops. ChatGPT most robust (0.931). Surface framing shifts reasoning more than changing numbers.', color:'#4A90D9' },
 ]
 
 // ─── About findings SVG icons (no emoji) ─────────────────────
@@ -1973,29 +1973,20 @@ function About() {
 
       {/* § 1 — Research Questions (TOP) */}
       <FadeIn>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>FIVE RESEARCH QUESTIONS</div>
-        <p style={{ color:'var(--text-secondary)', fontSize:13, textAlign:'center', maxWidth:680, margin:'0 auto 24px', lineHeight:1.7 }}>
-          Each question maps to a scoring dimension (N·M·A·C·R = 0.20 each).
-          RQ4 uses 375 additional synthetic perturbation runs across 3 perturbation types.
-        </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:14, maxWidth:1300, margin:'0 auto 52px' }}>
+        <div style={{ display:'flex', gap:16, maxWidth:1300, margin:'0 auto 52px', alignItems:'flex-start' }}>
           {RQS.map((q,i) => (
             <motion.div key={i}
-              whileHover={{ y:-4, boxShadow:`0 8px 32px ${q.color}22` }}
+              style={{ flex:1, marginTop: i % 2 === 1 ? 36 : 0, borderRadius:14 }}
+              whileHover={{ y:-6, boxShadow:`0 14px 44px ${q.color}30` }}
               transition={{ type:'spring', stiffness:400, damping:28 }}
             >
-              <Card style={{ padding:'20px 18px', height:'100%', boxSizing:'border-box', borderLeft:`3px solid ${q.color}`, borderRadius:'0 12px 12px 0' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:12 }}>
-                  <div style={{ width:38, height:38, borderRadius:8, background:`${q.color}18`, border:`1.5px solid ${q.color}`, display:'flex', alignItems:'center', justifyContent:'center', color:q.color, fontWeight:800, fontSize:13, flexShrink:0 }}>{q.id}</div>
-                  <div>
-                    <div style={{ color:'var(--text-primary)', fontSize:13, fontWeight:700, lineHeight:1.3 }}>{q.label}</div>
-                    <div style={{ color:q.color, fontSize:9, fontWeight:700, letterSpacing:'0.08em', marginTop:2 }}>{q.metric}</div>
-                  </div>
-                </div>
-                <p style={{ color:'var(--text-secondary)', fontSize:11.5, lineHeight:1.7, margin:'0 0 10px' }}>{q.detail}</p>
-                <div style={{ background:`${q.color}0D`, border:`1px solid ${q.color}22`, borderRadius:6, padding:'6px 10px', fontSize:10, color:q.color, fontStyle:'italic' }}>
-                  {q.result}
-                </div>
+              <Card style={{ padding:'20px 14px', boxSizing:'border-box', borderTop:`3px solid ${q.color}`, borderRadius:'0 0 14px 14px', height:'100%' }}>
+                <div style={{ color:q.color, fontSize:42, fontWeight:900, fontFamily:'var(--font-mono)', opacity:0.08, textAlign:'right', lineHeight:1, marginBottom:-10, userSelect:'none' }}>{i+1}</div>
+                <div style={{ width:34, height:34, borderRadius:8, background:`${q.color}18`, border:`1.5px solid ${q.color}`, display:'flex', alignItems:'center', justifyContent:'center', color:q.color, fontWeight:800, fontSize:11, marginBottom:10 }}>{q.id}</div>
+                <div style={{ color:'var(--text-primary)', fontSize:11.5, fontWeight:700, marginBottom:4, lineHeight:1.3 }}>{q.label}</div>
+                <div style={{ color:q.color, fontSize:9, fontWeight:700, letterSpacing:'0.08em', marginBottom:10 }}>{q.metric}</div>
+                <p style={{ color:'var(--text-secondary)', fontSize:10.5, lineHeight:1.65, margin:'0 0 10px' }}>{q.detail}</p>
+                <div style={{ background:`${q.color}0D`, border:`1px solid ${q.color}22`, borderRadius:6, padding:'5px 8px', fontSize:9, color:q.color, fontStyle:'italic' }}>{q.result}</div>
               </Card>
             </motion.div>
           ))}
@@ -2032,29 +2023,37 @@ function About() {
 
       {/* § 3 — Key Findings (left) + Radar (right) */}
       <FadeIn delay={100}>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, maxWidth:1300, margin:'0 auto 52px', alignItems:'start' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, maxWidth:1300, margin:'0 auto 52px', alignItems:'stretch' }}>
           {/* Left: Key Findings */}
-          <div>
+          <div style={{ display:'flex', flexDirection:'column' }}>
             <div style={{ color:'var(--aqua)', fontSize:13, fontWeight:700, letterSpacing:'0.14em', marginBottom:20, textAlign:'center' }}>KEY FINDINGS</div>
-            <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:12, flex:1 }}>
               {ABOUT_FINDINGS.map((f,i) => (
                 <motion.div
                   key={i}
-                  whileHover={{ y:-3, scale:1.01, boxShadow:'var(--glow-md)' }}
+                  style={{ flex:1, borderRadius:16 }}
+                  whileHover={{ y:-3, boxShadow:`0 8px 32px ${f.color}22` }}
                   transition={{ type:'spring', stiffness:400, damping:28 }}
                 >
-                  <Card style={{ padding:'18px 16px', boxSizing:'border-box' }}>
-                    <div style={{ color:f.color, marginBottom:10, display:'flex', alignItems:'center' }}>{ABOUT_FINDING_ICONS[i]}</div>
-                    <div style={{ color:f.color, fontSize:12, lineHeight:1.65 }}>{f.text}</div>
+                  <Card style={{ padding:'18px 20px', boxSizing:'border-box', height:'100%' }}>
+                    <div style={{ display:'flex', alignItems:'flex-start', gap:14, marginBottom:10 }}>
+                      <div style={{ color:f.color, flexShrink:0, marginTop:2 }}>{ABOUT_FINDING_ICONS[i]}</div>
+                      <div>
+                        <div style={{ color:f.color, fontSize:22, fontWeight:800, fontFamily:'var(--font-mono)', lineHeight:1 }}>{f.stat}</div>
+                        <div style={{ color:'rgba(255,255,255,0.35)', fontSize:9, letterSpacing:'0.06em', marginTop:2 }}>{f.statLabel}</div>
+                      </div>
+                    </div>
+                    <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:700, marginBottom:5 }}>{f.title}</div>
+                    <div style={{ color:f.color, fontSize:11, lineHeight:1.65, opacity:0.85 }}>{f.text}</div>
                   </Card>
                 </motion.div>
               ))}
             </div>
           </div>
           {/* Right: Radar */}
-          <div>
+          <div style={{ display:'flex', flexDirection:'column' }}>
             <div style={{ color:'var(--aqua)', fontSize:13, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
-            <Card style={{ padding:'20px 12px', display:'flex', flexDirection:'column', alignItems:'center' }}>
+            <Card style={{ padding:'20px 12px', display:'flex', flexDirection:'column', alignItems:'center', flex:1 }}>
               <MultiModelRadar/>
             </Card>
           </div>
@@ -2071,17 +2070,14 @@ function About() {
 function References() {
   return (
     <Section id="references" minHeight="auto">
-      <SectionTitle sub="Papers and textbooks that define the scope and methodology of this benchmark">References</SectionTitle>
+      <SectionTitle>References</SectionTitle>
 
       {/* Research Papers */}
       <FadeIn>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>5 REFERENCED RESEARCH PAPERS</div>
-        <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
-          Papers that directly shaped our benchmark design, prompting strategies, and evaluation methodology.
-        </p>
+        <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>5 REFERENCED RESEARCH PAPERS</div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 44px' }}>
           {ABOUT_REFS.map((r,i) => (
-            <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
+            <motion.div key={i} style={{ borderRadius:16 }} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
               <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
                 <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
@@ -2100,13 +2096,10 @@ function References() {
 
       {/* Graduate Textbooks */}
       <FadeIn delay={80}>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:8 }}>7 GRADUATE TEXTBOOKS</div>
-        <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
-          Graduate-level Bayesian statistics texts that define the scope and task types of this benchmark.
-        </p>
+        <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>7 GRADUATE TEXTBOOKS</div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 48px' }}>
           {TEXTBOOKS.map((b,i) => (
-            <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
+            <motion.div key={i} style={{ borderRadius:16 }} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
               <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
                 <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
                   <div style={{ display:'flex', alignItems:'flex-start', gap:10 }}>

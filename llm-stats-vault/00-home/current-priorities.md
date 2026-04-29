@@ -94,6 +94,10 @@ Commit c86cb39. See [[2026-04-30-ui-session30b]].
 4 fixes: How It Works container 640→800px, more particles on all orbit rings (3 per ring) + outer rings, center hub text → "Benchmarking", filter sidebar sticky removed (alignSelf:start only — no top:96 offset), page sizes 9/18/36/72 → 16/32/64/All.
 See [[2026-04-30-ui-session30c]].
 
+### 4h. Website Session 30d ✅ DONE (2026-04-30)
+9 fixes: outer orbit rings faster (32s/20s), remove FIVE RQS header+para, RQ staggered flex layout, Key Findings richer stats, equal height grid stretch, References subtitle/paras removed, header font 10→16px, rounded hover glow (borderRadius:16 on motion.div wrappers).
+See [[2026-04-30-ui-session30d]].
+
 ---
 
 ## Phase 5 — Paper Writing
