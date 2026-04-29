@@ -114,7 +114,7 @@ ggsave("figures/07_latency_accuracy.png", combined,
        width = 2200, height = 1000, units = "px", dpi = 200, bg = DARK_BG)
 message("Saved: figures/07_latency_accuracy.png")
 
-# ── Interactive plotly: grouped horizontal bars ───────────────
+# ── Interactive plotly: clean grouped horizontal bars ─────────
 model_long <- model_agg %>%
   mutate(
     acc_pct = round(avg_score * 100, 1),
@@ -123,53 +123,75 @@ model_long <- model_agg %>%
 
 fig_acc <- plot_ly(
   model_long %>% arrange(avg_score),
-  x    = ~avg_score, y = ~label,
-  type = "bar", orientation = "h",
-  marker = list(color = ~color, opacity = 0.9),
-  text  = ~paste0(label, "<br>Score: ", acc_pct, "%<br>Pass rate: ",
-                  round(pass_rate*100,1), "%"),
+  x         = ~avg_score, y = ~label,
+  type      = "bar", orientation = "h",
+  marker    = list(color = ~color, opacity = 0.92,
+                   line = list(color = "rgba(255,255,255,0.1)", width = 0.5)),
+  text      = ~paste0(acc_pct, "%"),
+  textposition = "outside",
+  cliponaxis   = FALSE,
+  hovertext = ~paste0("<b>", label, "</b><br>Score: ", acc_pct,
+                      "%<br>Pass rate: ", round(pass_rate * 100, 1), "%"),
   hoverinfo = "text",
-  name = "Score"
+  name      = "Score"
 ) %>%
   layout(
-    title  = list(text = "Average Benchmark Score", font = list(color = ACCENT, size = 13)),
+    title  = list(text = "Average Benchmark Score",
+                  font = list(color = ACCENT, size = 13)),
     xaxis  = list(title = "Score", tickformat = ".0%", color = TEXT_CLR,
-                  gridcolor = "#1E2A50", range = c(0, 0.85)),
-    yaxis  = list(title = "", color = TEXT_CLR),
+                  gridcolor = "#1E2A50", range = c(0, 0.95),
+                  tickfont  = list(color = TEXT_CLR)),
+    yaxis  = list(title = "", color = TEXT_CLR,
+                  tickfont = list(color = TEXT_CLR, size = 12)),
     paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
     font   = list(color = TEXT_CLR),
-    shapes = list(list(type="line", x0=0.5, x1=0.5, y0=0, y1=1, yref="paper",
-                       line=list(color=ACCENT, dash="dash", width=1.5)))
+    margin = list(l = 90, r = 40, t = 50, b = 50),
+    shapes = list(list(type = "line", x0 = 0.5, x1 = 0.5,
+                       y0 = 0, y1 = 1, yref = "paper",
+                       line = list(color = ACCENT, dash = "dash", width = 1.5)))
   )
 
 fig_lat <- plot_ly(
   model_long %>% arrange(desc(lat_sec)),
-  x    = ~lat_sec, y = ~label,
-  type = "bar", orientation = "h",
-  marker = list(color = ~color, opacity = 0.9),
-  text  = ~paste0(label, "<br>Avg latency: ", lat_s, "s"),
+  x         = ~lat_sec, y = ~label,
+  type      = "bar", orientation = "h",
+  marker    = list(color = ~color, opacity = 0.92,
+                   line = list(color = "rgba(255,255,255,0.1)", width = 0.5)),
+  text      = ~paste0(lat_s, "s"),
+  textposition = "outside",
+  cliponaxis   = FALSE,
+  hovertext = ~paste0("<b>", label, "</b><br>Latency: ", lat_s, "s"),
   hoverinfo = "text",
-  name = "Latency"
+  name      = "Latency"
 ) %>%
   layout(
-    title  = list(text = "Avg Response Time (lower=faster)", font = list(color = ACCENT, size = 13)),
-    xaxis  = list(title = "Seconds", color = TEXT_CLR, gridcolor = "#1E2A50"),
-    yaxis  = list(title = "", color = TEXT_CLR),
+    title  = list(text = "Avg Response Time (lower = faster)",
+                  font = list(color = ACCENT, size = 13)),
+    xaxis  = list(title = "Seconds", color = TEXT_CLR, gridcolor = "#1E2A50",
+                  range = c(0, max(model_long$lat_sec) * 1.28),
+                  tickfont = list(color = TEXT_CLR)),
+    yaxis  = list(title = "", color = TEXT_CLR,
+                  tickfont = list(color = TEXT_CLR, size = 12)),
     paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
-    font   = list(color = TEXT_CLR)
-  )
-
-fig_combined <- subplot(fig_acc, fig_lat, nrows = 1,
-                        titleX = TRUE, titleY = TRUE,
-                        shareX = FALSE, shareY = FALSE) %>%
-  layout(
-    title  = list(text = "Speed vs. Accuracy — All 5 Models",
-                  font = list(color = ACCENT, size = 17)),
-    paper_bgcolor = DARK_BG,
     font   = list(color = TEXT_CLR),
-    showlegend = FALSE
+    margin = list(l = 90, r = 50, t = 50, b = 50)
   )
 
-htmlwidgets::saveWidget(fig_combined, "interactive/07_latency_accuracy.html", selfcontained = FALSE)
+fig_combined <- subplot(
+  fig_acc, fig_lat,
+  nrows = 1, titleX = TRUE, titleY = TRUE,
+  shareX = FALSE, shareY = FALSE, margin = 0.08
+) %>%
+  layout(
+    title      = list(text = "Speed vs. Accuracy — All 5 Models",
+                      font = list(color = ACCENT, size = 17)),
+    paper_bgcolor = DARK_BG,
+    font       = list(color = TEXT_CLR),
+    showlegend = FALSE,
+    margin     = list(l = 20, r = 20, t = 70, b = 40)
+  )
+
+htmlwidgets::saveWidget(fig_combined, "interactive/07_latency_accuracy.html",
+                        selfcontained = FALSE)
 message("Saved: interactive/07_latency_accuracy.html")
 message("07_latency_accuracy.R complete.\n")

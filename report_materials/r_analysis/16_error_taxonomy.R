@@ -65,17 +65,27 @@ dark_theme_horiz <- theme_minimal(base_size = 12) +
   )
 
 # ── Figure 1: Error distribution ─────────────────────────────
-error_df <- data.frame(
+# Build from full error_labels set (fills 0 for missing types like E8, E9)
+data_dist <- data.frame(
   error_type = names(data$error_distribution),
-  count      = as.integer(unlist(data$error_distribution))
+  count      = as.integer(unlist(data$error_distribution)),
+  stringsAsFactors = FALSE
+)
+
+error_df <- data.frame(
+  error_type = names(error_labels),
+  stringsAsFactors = FALSE
 ) %>%
-  filter(error_type %in% names(error_labels)) %>%
-  mutate(label = error_labels[error_type]) %>%
+  left_join(data_dist, by = "error_type") %>%
+  mutate(
+    count = ifelse(is.na(count), 0L, count),
+    label = error_labels[error_type]
+  ) %>%
   arrange(desc(count)) %>%
   mutate(
     label  = factor(label, levels = rev(label)),
     color  = ERR_COLORS[error_type],
-    pct    = count / sum(count) * 100
+    pct    = ifelse(sum(count) > 0, count / sum(count) * 100, 0)
   )
 
 p1 <- ggplot(error_df, aes(x = count, y = label, fill = error_type)) +

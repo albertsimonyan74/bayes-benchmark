@@ -7,6 +7,7 @@ import resultsData from './data/results_summary.json'
 import GlobeBackground from './components/GlobeBackground'
 import Navbar          from './components/Navbar'
 import NeuralNetwork   from './components/NeuralNetwork'
+import MobiusStrip     from './components/MobiusStrip'
 import ResultsSection  from './pages/ResultsSection'
 import VizGallery      from './pages/VizGallery'
 import UserStudy       from './pages/UserStudy'
@@ -739,7 +740,7 @@ function RadarChart({ model }) {
 const MODEL_COLORS = { claude:'#00CED1', gemini:'#FF6B6B', chatgpt:'#7FFFD4', deepseek:'#4A90D9', mistral:'#A78BFA' }
 function MultiModelRadar() {
   const [hoveredModel, setHoveredModel] = useState(null)
-  const pad=80, inner=320, size=inner+pad*2
+  const pad=96, inner=320, size=inner+pad*2
   const cx=size/2, cy=size/2, R=130, n=5
   const step = (Math.PI*2)/n
   const rings = [0.25,0.5,0.75,1].map(s =>
@@ -747,7 +748,7 @@ function MultiModelRadar() {
   )
   const axes = Array.from({length:n},(_,i)=>{
     const a=i*step-Math.PI/2
-    const lx=cx+(R+52)*Math.cos(a), ly=cy+(R+52)*Math.sin(a)
+    const lx=cx+(R+60)*Math.cos(a), ly=cy+(R+60)*Math.sin(a)
     const anchor = lx < cx-5 ? 'end' : lx > cx+5 ? 'start' : 'middle'
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
@@ -762,7 +763,7 @@ function MultiModelRadar() {
               <g key={i}>
                 <line x1={cx} y1={cy} x2={ax.ex} y2={ax.ey} stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
                 {lines.map((l,j)=>(
-                  <text key={j} x={ax.lx} y={ax.ly+(j*13)-(lines.length>1?6.5:0)} textAnchor={ax.anchor} dominantBaseline="middle" fontSize="10" fill="rgba(200,220,230,0.9)" fontWeight="500">{l}</text>
+                  <text key={j} x={ax.lx} y={ax.ly+(j*14)-(lines.length>1?7:0)} textAnchor={ax.anchor} dominantBaseline="middle" fontSize="12" fill="rgba(200,220,230,0.95)" fontWeight="600">{l}</text>
                 ))}
               </g>
             )
@@ -811,16 +812,16 @@ function MultiModelRadar() {
         )}
       </div>
       {/* Legend — right side */}
-      <div style={{ display:'flex', flexDirection:'column', gap:12, minWidth:140 }}>
+      <div style={{ display:'flex', flexDirection:'column', gap:14, minWidth:160 }}>
         {Object.keys(RADAR_VALS).map(id=>(
           <div
             key={id}
-            style={{ display:'flex', alignItems:'center', gap:8, fontSize:11, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s', padding:'4px 8px', borderRadius:6, background: hoveredModel===id ? MODEL_COLORS[id]+'14' : 'transparent' }}
+            style={{ display:'flex', alignItems:'center', gap:10, fontSize:14, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s', padding:'5px 10px', borderRadius:6, background: hoveredModel===id ? MODEL_COLORS[id]+'14' : 'transparent' }}
             onMouseEnter={()=>setHoveredModel(id)}
             onMouseLeave={()=>setHoveredModel(null)}
           >
-            <div style={{ width:14, height:4, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0', flexShrink:0 }}/>
-            <span style={{ fontFamily:'var(--font-mono)', fontWeight: hoveredModel===id ? 700 : 500 }}>{id.toUpperCase()}</span>
+            <div style={{ width:16, height:4, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0', flexShrink:0 }}/>
+            <span style={{ fontFamily:'var(--font-mono)', fontWeight: hoveredModel===id ? 700 : 600 }}>{id.toUpperCase()}</span>
           </div>
         ))}
       </div>
@@ -847,6 +848,7 @@ function Overview() {
       <HeroOrbs />
       <div style={{ position:'absolute', inset:0, overflow:'hidden', zIndex:0, pointerEvents:'none' }}>
         <div className="hero-watermark">BAYESIAN</div>
+        <MobiusStrip opacity={0.45} />
       </div>
 
       <div style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', minHeight:'calc(100vh - 200px)' }}>
@@ -1173,7 +1175,7 @@ function BenchmarkSection() {
 
       {/* Tier Ladder + Scoring — stacked vertically, each full-width */}
       <FadeIn delay={180}>
-        <div style={{ display:'flex', flexDirection:'column', gap:20, maxWidth:960, margin:'0 auto' }}>
+        <div style={{ display:'flex', flexDirection:'column', gap:20, maxWidth:1200, margin:'0 auto' }}>
           <Card><TierLadder/></Card>
           <Card>
             <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:20 }}>SCORING FORMULA</div>
@@ -1363,11 +1365,10 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
 
         {/* Filter sidebar */}
         <motion.div
-          style={{ position:'sticky', top:96 }}
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ position:'sticky', top:96, alignSelf:'flex-start' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           <Card>
             <div style={{ textAlign:'center', paddingBottom:16, borderBottom:'1px solid var(--border-default)', marginBottom:16 }}>
@@ -1659,7 +1660,7 @@ function TaskCard({ task, onClick, onCopy, copied }) {
       <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.6, margin:'8px 0 12px', flex:1, overflow:'hidden' }}>
         {(() => {
           const desc = task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
-          return desc.slice(0,155) + (desc.length>155 ? '…' : '')
+          return desc.slice(0,280) + (desc.length>280 ? '…' : '')
         })()}
       </p>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexShrink:0 }}>
@@ -1936,7 +1937,7 @@ function About() {
           Each question maps to a scoring dimension (N·M·A·C·R = 0.20 each).
           RQ4 uses 375 additional synthetic perturbation runs across 3 perturbation types.
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:14, maxWidth:960, margin:'0 auto 52px' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:14, maxWidth:1300, margin:'0 auto 52px' }}>
           {RQS.map((q,i) => (
             <motion.div key={i}
               whileHover={{ y:-4, boxShadow:`0 8px 32px ${q.color}22` }}
@@ -1962,7 +1963,7 @@ function About() {
 
       {/* § 2 — Research Overview + CountUp stats */}
       <FadeIn delay={60}>
-        <Card style={{ maxWidth:900, margin:'0 auto 48px', padding:'36px 40px', textAlign:'center' }}>
+        <Card style={{ maxWidth:1100, margin:'0 auto 48px', padding:'36px 40px', textAlign:'center' }}>
           <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.85, margin:'0 0 36px' }}>
             The first benchmark dedicated to Bayesian and inferential statistical reasoning,
             covering both classical conjugate models and advanced computational methods
@@ -1988,31 +1989,35 @@ function About() {
         </Card>
       </FadeIn>
 
-      {/* § 3 — Key Findings */}
+      {/* § 3 — Key Findings (left) + Radar (right) */}
       <FadeIn delay={100}>
-        <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>KEY FINDINGS</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(210px,1fr))', gap:14, maxWidth:900, margin:'0 auto 52px' }}>
-          {ABOUT_FINDINGS.map((f,i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y:-4, scale:1.02, boxShadow:'var(--glow-md)' }}
-              transition={{ type:'spring', stiffness:400, damping:28 }}
-            >
-              <Card style={{ padding:'22px 18px', height:'100%', boxSizing:'border-box' }}>
-                <div style={{ color:f.color, marginBottom:12, display:'flex', alignItems:'center' }}>{ABOUT_FINDING_ICONS[i]}</div>
-                <div style={{ color:f.color, fontSize:12, lineHeight:1.65 }}>{f.text}</div>
-              </Card>
-            </motion.div>
-          ))}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, maxWidth:1300, margin:'0 auto 52px', alignItems:'start' }}>
+          {/* Left: Key Findings */}
+          <div>
+            <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', marginBottom:20 }}>KEY FINDINGS</div>
+            <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+              {ABOUT_FINDINGS.map((f,i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ y:-4, scale:1.01, boxShadow:'var(--glow-md)' }}
+                  transition={{ type:'spring', stiffness:400, damping:28 }}
+                >
+                  <Card style={{ padding:'22px 18px', boxSizing:'border-box' }}>
+                    <div style={{ color:f.color, marginBottom:12, display:'flex', alignItems:'center' }}>{ABOUT_FINDING_ICONS[i]}</div>
+                    <div style={{ color:f.color, fontSize:12, lineHeight:1.65 }}>{f.text}</div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          {/* Right: Radar */}
+          <div>
+            <div style={{ color:'var(--aqua)', fontSize:14, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
+            <Card style={{ padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center' }}>
+              <MultiModelRadar/>
+            </Card>
+          </div>
         </div>
-      </FadeIn>
-
-      {/* § 4 — Multi-model radar (scoring framework removed — see Benchmark section) */}
-      <FadeIn delay={140}>
-        <Card style={{ padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', maxWidth:900, margin:'0 auto 52px' }}>
-          <div style={{ color:'var(--aqua)', fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:16, textAlign:'center' }}>MODEL CAPABILITY OVERVIEW</div>
-          <MultiModelRadar/>
-        </Card>
       </FadeIn>
 
     </Section>
@@ -2033,7 +2038,7 @@ function References() {
         <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
           Papers that directly shaped our benchmark design, prompting strategies, and evaluation methodology.
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:960, margin:'0 auto 44px' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 44px' }}>
           {ABOUT_REFS.map((r,i) => (
             <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
               <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
@@ -2058,7 +2063,7 @@ function References() {
         <p style={{ color:'var(--text-secondary)', fontSize:12, textAlign:'center', maxWidth:640, margin:'0 auto 20px', lineHeight:1.6 }}>
           Graduate-level Bayesian statistics texts that define the scope and task types of this benchmark.
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:960, margin:'0 auto 48px' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 48px' }}>
           {TEXTBOOKS.map((b,i) => (
             <motion.div key={i} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
               <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
@@ -2128,6 +2133,31 @@ export default function App() {
       <UserStudy/>
       <SectionDivider/>
       <References/>
+
+      {/* Footer */}
+      <footer style={{ borderTop:'1px solid rgba(0,255,224,0.1)', padding:'28px 64px 32px', textAlign:'center', background:'rgba(0,0,0,0.25)' }}>
+        <nav style={{ display:'flex', justifyContent:'center', flexWrap:'wrap', gap:'6px 20px', marginBottom:14 }}>
+          {['overview','about','benchmark','models','tasks','visualizations','user-study','references'].map(id => (
+            <a key={id} href={`#${id}`}
+              style={{ color:'rgba(0,255,224,0.5)', fontSize:11, fontWeight:600, letterSpacing:'0.08em', textDecoration:'none', textTransform:'uppercase', transition:'color 0.18s' }}
+              onMouseEnter={e=>e.currentTarget.style.color='#00FFE0'}
+              onMouseLeave={e=>e.currentTarget.style.color='rgba(0,255,224,0.5)'}
+            >
+              {id.replace(/-/g,' ')}
+            </a>
+          ))}
+        </nav>
+        <div style={{ color:'rgba(255,255,255,0.45)', fontSize:13, lineHeight:1.9 }}>
+          <a href="https://www.linkedin.com/in/albert-simonyan-3b0560311/" target="_blank" rel="noopener noreferrer"
+            style={{ color:'var(--aqua)', textDecoration:'none', fontWeight:700 }}>Albert Simonyan
+          </a>
+          {' '}· DS 299 Capstone · American University of Armenia · 2026
+        </div>
+        <div style={{ color:'rgba(255,255,255,0.2)', fontSize:11, marginTop:4 }}>
+          Bayes Bench · 171 tasks · 5 models · 38 task types
+        </div>
+      </footer>
+
       <BackToTop/>
     </motion.div>
 

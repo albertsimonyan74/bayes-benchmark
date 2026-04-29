@@ -675,7 +675,7 @@ export default function UserStudy() {
 
   return (
     <section id="user-study" style={{ padding: '80px 0', position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 32px' }}>
+      <div style={{ maxWidth: 1300, margin: '0 auto', padding: '0 64px' }}>
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ marginBottom: 32 }}>
