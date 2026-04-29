@@ -100,20 +100,39 @@ function extractFinalAnswer(text) {
   return ''
 }
 
-const NUMERIC_TOLERANCE = 0.005
+const NUMERIC_TOLERANCE = 0.02
 
 function normalizeAnswerStr(s) {
-  return s.toLowerCase()
-    .replace(/\b\d+\.\d+\b/g, n => parseFloat(n).toFixed(2))
-    .replace(/\s+/g, ' ').trim().slice(0, 100)
+  // Normalize percentages to decimals (e.g. "43%" → "0.43")
+  let norm = s.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => (parseFloat(n) / 100).toFixed(4))
+  norm = norm.toLowerCase()
+    .replace(/\b\d+\.\d+\b/g, n => parseFloat(n).toFixed(3))
+    .replace(/[,;]/g, ' ')
+    .replace(/\s+/g, ' ').trim().slice(0, 120)
+  return norm
 }
 
-// Extract first numeric value from an answer string; null if no number found
+// Extract first numeric value from an answer string; null if no number found.
+// Handles percentages by dividing by 100.
 function extractFirstNum(s) {
+  // Check for percentage first
+  const pct = s.match(/(-?\d+(?:\.\d+)?)\s*%/)
+  if (pct) {
+    const n = parseFloat(pct[1]) / 100
+    return isFinite(n) ? n : null
+  }
   const m = s.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/i)
   if (!m) return null
   const n = parseFloat(m[0])
   return isFinite(n) ? n : null
+}
+
+// Extract all numeric values from an answer string
+function extractAllNums(s) {
+  // Normalize percentages first
+  const norm = s.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, n) => String(parseFloat(n) / 100))
+  const matches = norm.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi) || []
+  return matches.map(m => parseFloat(m)).filter(n => isFinite(n))
 }
 
 // Cluster [{model_id, num}] by tolerance (sort-then-chain approach)
@@ -139,9 +158,10 @@ function computeDivergence(responses) {
     model_id: r.model_id,
     rawAnswer: extractFinalAnswer(r.response),
     normAnswer: normalizeAnswerStr(extractFinalAnswer(r.response)),
+    allNums: extractAllNums(extractFinalAnswer(r.response)),
   }))
 
-  // Try numeric clustering first
+  // Try numeric clustering on first number
   const numericPairs = extracted.map(e => ({ model_id: e.model_id, num: extractFirstNum(e.rawAnswer) }))
   const allNumeric = numericPairs.every(p => p.num !== null)
 
@@ -150,12 +170,36 @@ function computeDivergence(responses) {
     const clusters = clusterNumeric(numericPairs, NUMERIC_TOLERANCE)
     groups = clusters.map((cluster, i) => [String(i), cluster.map(p => p.model_id)])
   } else {
-    const strGroups = {}
+    // String comparison with tolerance: two answers match if their first numbers
+    // are within tolerance, or if they have no numbers and text matches
+    const assigned = new Map() // model_id → group index
+    const groupMembers = [] // [[model_id, ...], ...]
     for (const e of extracted) {
-      if (!strGroups[e.normAnswer]) strGroups[e.normAnswer] = []
-      strGroups[e.normAnswer].push(e.model_id)
+      let matched = -1
+      for (let gi = 0; gi < groupMembers.length; gi++) {
+        const repId = groupMembers[gi][0]
+        const rep = extracted.find(x => x.model_id === repId)
+        if (!rep) continue
+        // Try numeric comparison of first number
+        const n1 = extractFirstNum(e.rawAnswer)
+        const n2 = extractFirstNum(rep.rawAnswer)
+        if (n1 !== null && n2 !== null && Math.abs(n1 - n2) <= NUMERIC_TOLERANCE) {
+          matched = gi; break
+        }
+        // String match after normalization
+        if (n1 === null && n2 === null && e.normAnswer === rep.normAnswer) {
+          matched = gi; break
+        }
+      }
+      if (matched === -1) {
+        groupMembers.push([e.model_id])
+        assigned.set(e.model_id, groupMembers.length - 1)
+      } else {
+        groupMembers[matched].push(e.model_id)
+        assigned.set(e.model_id, matched)
+      }
     }
-    groups = Object.entries(strGroups)
+    groups = groupMembers.map((members, i) => [String(i), members])
   }
 
   const groupList = [...groups].sort((a, b) => b[1].length - a[1].length)

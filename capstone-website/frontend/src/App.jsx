@@ -752,8 +752,8 @@ function MultiModelRadar() {
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
   return (
-    <div style={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
-      <div style={{ position:'relative' }}>
+    <div style={{ display:'flex', flexDirection:'row', alignItems:'center', gap:24, justifyContent:'center', flexWrap:'wrap' }}>
+      <div style={{ position:'relative', flexShrink:0 }}>
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
           {axes.map((ax,i)=>{
@@ -810,16 +810,17 @@ function MultiModelRadar() {
           </div>
         )}
       </div>
-      <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:10, marginTop:6 }}>
+      {/* Legend — right side */}
+      <div style={{ display:'flex', flexDirection:'column', gap:12, minWidth:140 }}>
         {Object.keys(RADAR_VALS).map(id=>(
           <div
             key={id}
-            style={{ display:'flex', alignItems:'center', gap:4, fontSize:9, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s' }}
+            style={{ display:'flex', alignItems:'center', gap:8, fontSize:11, color: hoveredModel===id ? MODEL_COLORS[id] : 'var(--text-secondary)', cursor:'pointer', transition:'color 0.2s', padding:'4px 8px', borderRadius:6, background: hoveredModel===id ? MODEL_COLORS[id]+'14' : 'transparent' }}
             onMouseEnter={()=>setHoveredModel(id)}
             onMouseLeave={()=>setHoveredModel(null)}
           >
-            <div style={{ width:12, height:3, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0' }}/>
-            {id.toUpperCase()}
+            <div style={{ width:14, height:4, borderRadius:2, background:MODEL_COLORS[id]||'#00FFE0', flexShrink:0 }}/>
+            <span style={{ fontFamily:'var(--font-mono)', fontWeight: hoveredModel===id ? 700 : 500 }}>{id.toUpperCase()}</span>
           </div>
         ))}
       </div>
@@ -857,7 +858,7 @@ function Overview() {
         >
           {/* Eyebrow */}
           <motion.div variants={fadeUp} style={{ color:'var(--aqua)', fontSize:11, letterSpacing:'0.28em', marginBottom:20, fontFamily:'var(--font-mono)' }}>
-            // DS 299 · CAPSTONE · 2026
+            // BAYES BENCH · LLM EVALUATION
           </motion.div>
 
           {/* Hero title */}
@@ -869,8 +870,10 @@ function Overview() {
           </motion.h1>
 
           <motion.p variants={fadeUp} style={{ color:'var(--text-secondary)', fontSize:15, marginBottom:44, lineHeight:1.7 }}>
-            Evaluating <b style={{ color:'var(--text-primary)' }}>Claude · Gemini · ChatGPT · DeepSeek · Mistral</b>
-            <br/>on 171 benchmark tasks across 38 Bayesian topic areas
+            American University of Armenia
+            <br/><b style={{ color:'var(--text-primary)' }}>Student: Albert Simonyan</b>
+            {' · '}
+            <b style={{ color:'var(--text-primary)' }}>Supervisor: Dr. Vahe Movsisyan</b>
           </motion.p>
 
           {/* Quote */}
@@ -1930,7 +1933,7 @@ const SCORE_DIMS = [
 function About() {
   return (
     <Section id="about" minHeight="auto">
-      <SectionTitle sub="DS 299 Capstone — evaluating LLM statistical reasoning at graduate level">About This Research</SectionTitle>
+      <SectionTitle sub="Evaluating LLM statistical reasoning on Bayesian benchmark tasks">About This Research</SectionTitle>
 
       {/* § 1 — Research Questions (TOP) */}
       <FadeIn>
@@ -2137,7 +2140,7 @@ export default function App() {
         transition={{ duration: 0.6 }}
         style={{ textAlign:'center', padding:'28px 48px', borderTop:'1px solid var(--border-default)', color:'var(--text-muted)', fontSize:12, zIndex:1, position:'relative' }}
       >
-        DS 299 Capstone · LLM Bayesian Benchmark · 2026 ·{' '}
+        Bayes Bench · LLM Bayesian Benchmark ·{' '}
         <span style={{ color:'var(--aqua)', fontFamily:'var(--font-mono)' }}>171 tasks · 5 models · 38 task types</span>
       </motion.footer>
       <BackToTop/>

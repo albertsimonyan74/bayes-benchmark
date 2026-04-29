@@ -25,11 +25,19 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
-DATA_DIR = Path(__file__).parent / "data"
+# DATA_DIR: configurable via env var for persistent disk mounts (Render Disks, etc.)
+# On Render standard plan, files are wiped on redeploy — set DATA_DIR to a persistent disk path,
+# or configure Supabase for true cross-deploy persistence.
+_data_dir_env = os.environ.get("DATA_DIR", "")
+if _data_dir_env:
+    DATA_DIR = Path(_data_dir_env)
+else:
+    DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 RESULTS_PATH    = DATA_DIR / "user_study_results.json"
 QUESTIONS_PATH  = DATA_DIR / "question_summaries.json"
 VOTE_MEMORY_PATH = DATA_DIR / "vote_memory.json"
+USERS_PATH      = DATA_DIR / "unique_users.json"
 
 # ── Supabase config (optional — set env vars for persistent storage) ──────────
 # Create a free project at supabase.com, then set:
@@ -92,6 +100,44 @@ _votes_lock = threading.Lock()
 _questions: list[dict] = []
 _questions_loaded: bool = False
 _questions_lock = threading.Lock()
+
+# ── Unique user tracking (by IP) ─────────────────────────────────────────────
+_unique_users: set[str] = set()
+_users_lock = threading.Lock()
+
+def _track_user(ip: str) -> int:
+    """Record IP as a unique user. Returns total unique user count."""
+    with _users_lock:
+        _unique_users.add(ip)
+        count = len(_unique_users)
+    # Persist asynchronously (fire-and-forget, errors silently ignored)
+    try:
+        USERS_PATH.write_text(json.dumps(list(_unique_users)))
+    except Exception:
+        pass
+    return count
+
+def _load_users() -> None:
+    global _unique_users
+    with _users_lock:
+        if USERS_PATH.exists():
+            try:
+                data = json.loads(USERS_PATH.read_text())
+                _unique_users = set(data) if isinstance(data, list) else set()
+            except Exception:
+                _unique_users = set()
+
+# Load unique users on module import
+_load_users()
+
+# ── Concurrency limiter — max 5 parallel model-query requests ─────────────────
+_query_semaphore: asyncio.Semaphore | None = None
+
+def _get_semaphore() -> asyncio.Semaphore:
+    global _query_semaphore
+    if _query_semaphore is None:
+        _query_semaphore = asyncio.Semaphore(5)
+    return _query_semaphore
 
 
 def _ensure_loaded() -> None:
@@ -467,14 +513,18 @@ async def submit_question(
         media_type = ct
         image_b64 = base64.b64encode(img_bytes).decode()
 
-    results = await asyncio.gather(
-        call_claude(q, image_b64, media_type),
-        call_gpt4(q, image_b64, media_type),
-        call_gemini(q, image_b64, media_type),
-        call_deepseek(q, image_b64, media_type),
-        call_mistral(q, image_b64, media_type),
-        return_exceptions=False,
-    )
+    # Track unique user and enforce concurrency limit
+    _track_user(ip)
+    sem = _get_semaphore()
+    async with sem:
+        results = await asyncio.gather(
+            call_claude(q, image_b64, media_type),
+            call_gpt4(q, image_b64, media_type),
+            call_gemini(q, image_b64, media_type),
+            call_deepseek(q, image_b64, media_type),
+            call_mistral(q, image_b64, media_type),
+            return_exceptions=False,
+        )
 
     return StudyResponse(
         session_id=str(uuid.uuid4())[:8],
@@ -578,8 +628,11 @@ async def get_study_results():
     dist: dict[str, int] = defaultdict(int)
     for r in records:
         dist[r.get("voted_model", "?")] += 1
+    with _users_lock:
+        unique_users = len(_unique_users)
     return {
         "total_votes": len(records),
+        "unique_users": unique_users,
         "vote_distribution": dict(sorted(dist.items(), key=lambda x: -x[1])),
     }
 

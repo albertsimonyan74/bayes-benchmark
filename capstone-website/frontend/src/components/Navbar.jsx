@@ -62,17 +62,27 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div className="nav-logo" onClick={() => scrollTo('overview')} role="button" tabIndex={0} aria-label="Go to top" onKeyDown={e => e.key === 'Enter' && scrollTo('overview')}>
-          <motion.svg
-            width="28" height="28" viewBox="0 0 30 30" fill="none"
-            whileHover={{ rotate: 180 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+          <motion.div
+            whileHover={{ scale: 1.08, filter: 'drop-shadow(0 0 8px #00FFE0)' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            style={{
+              width: 36, height: 36,
+              background: 'linear-gradient(135deg, rgba(0,255,224,0.15), rgba(0,180,216,0.1))',
+              border: '1.5px solid rgba(0,255,224,0.5)',
+              borderRadius: 8,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 14, fontWeight: 900,
+              letterSpacing: '-0.04em',
+              color: '#00FFE0',
+              textShadow: '0 0 12px rgba(0,255,224,0.8)',
+              flexShrink: 0,
+            }}
           >
-            <polygon points="15,3 27,24 3,24" stroke="#00FFE0" strokeWidth="2" fill="rgba(0,255,224,0.08)"/>
-            <polygon points="15,9 23,24 7,24" stroke="#00B4D8" strokeWidth="1.2" fill="none"/>
-          </motion.svg>
+            BB
+          </motion.div>
           <div>
-            <div className="nav-logo-title">LLM Benchmark</div>
-            <div className="nav-logo-sub">DS 299 · Capstone</div>
+            <div className="nav-logo-title">Bayes Bench</div>
           </div>
         </div>
 
