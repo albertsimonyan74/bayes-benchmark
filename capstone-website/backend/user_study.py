@@ -34,10 +34,11 @@ if _data_dir_env:
 else:
     DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-RESULTS_PATH    = DATA_DIR / "user_study_results.json"
-QUESTIONS_PATH  = DATA_DIR / "question_summaries.json"
-VOTE_MEMORY_PATH = DATA_DIR / "vote_memory.json"
-USERS_PATH      = DATA_DIR / "unique_users.json"
+RESULTS_PATH      = DATA_DIR / "user_study_results.json"
+QUESTIONS_PATH    = DATA_DIR / "question_summaries.json"
+VOTE_MEMORY_PATH  = DATA_DIR / "vote_memory.json"
+USERS_PATH        = DATA_DIR / "unique_users.json"
+REGISTERED_PATH   = DATA_DIR / "registered_users.json"
 
 # ── Supabase config (optional — set env vars for persistent storage) ──────────
 # Create a free project at supabase.com, then set:
@@ -129,6 +130,47 @@ def _load_users() -> None:
 
 # Load unique users on module import
 _load_users()
+
+# ── Registered users (name / surname / email) ─────────────────────────────────
+_registered_lock = threading.Lock()
+
+def _load_registered() -> list[dict]:
+    if REGISTERED_PATH.exists():
+        try:
+            data = json.loads(REGISTERED_PATH.read_text())
+            return data if isinstance(data, list) else []
+        except Exception:
+            pass
+    return []
+
+def _save_registered(users: list[dict]) -> None:
+    try:
+        REGISTERED_PATH.write_text(json.dumps(users, indent=2))
+    except Exception:
+        pass
+
+
+@router.post("/api/register-user")
+async def register_user(
+    name:    str = Form(...),
+    surname: str = Form(...),
+    email:   str = Form(...),
+):
+    email_lower = email.strip().lower()
+    with _registered_lock:
+        users = _load_registered()
+        existing = next((u for u in users if u.get("email", "").lower() == email_lower), None)
+        if not existing:
+            users.append({
+                "name": name.strip(),
+                "surname": surname.strip(),
+                "email": email_lower,
+                "registered_at": datetime.utcnow().isoformat() + "Z",
+            })
+            _save_registered(users)
+        unique_count = len({u["email"] for u in users if u.get("email")})
+    return {"status": "ok", "unique_users": unique_count}
+
 
 # ── Concurrency limiter — max 5 parallel model-query requests ─────────────────
 _query_semaphore: asyncio.Semaphore | None = None

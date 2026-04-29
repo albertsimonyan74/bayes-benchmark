@@ -1279,9 +1279,8 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
 
   const filtered = useMemo(() => tasksData.filter(t => {
     if (tiers.length && !tiers.includes(t.tier)) return false
-    if (category==='conceptual'          && t.category!=='conceptual')          return false
-    if (category==='numeric'             && t.category!=='numeric')             return false
-    if (category==='computational_bayes' && t.category!=='computational_bayes') return false
+    if (category==='conceptual' && t.category!=='conceptual') return false
+    if (category==='numeric'    && t.category==='conceptual') return false
     if (searchId    && !t.task_id.toUpperCase().includes(searchId.toUpperCase()))   return false
     if (searchTopic) {
       const hay = (t.task_id+' '+t.description+' '+(t.notes_topic||'')).toLowerCase()
@@ -1308,7 +1307,7 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
     : null
 
   const toggleTier = t => setTiers(p => p.includes(t) ? p.filter(x=>x!==t) : [...p,t])
-  const clearAll   = () => { setTiers([]); setCategory('all'); setIdInput(''); setTopicInput(''); setSearchId(''); setSearchTopic('') }
+  const clearAll   = () => { setTiers([]); setCategory('all'); setIdInput(''); setTopicInput(''); setSearchId(''); setSearchTopic('')}
   const copyId     = (id, e) => {
     e.stopPropagation()
     navigator.clipboard.writeText(id).catch(()=>{})
@@ -1422,19 +1421,18 @@ function Tasks({ onOpenModal, isOpen, onToggle }) {
               <div style={{ color:'var(--text-secondary)', fontSize:10, fontWeight:700, letterSpacing:'0.1em', marginBottom:10 }}>CATEGORY</div>
               <div style={{ display:'flex', gap:6 }}>
                 {[
-                  { key:'all',                  label:'All' },
-                  { key:'numeric',              label:'Numeric' },
-                  { key:'conceptual',           label:'Concept' },
-                  { key:'computational_bayes',  label:'MCMC · VB · ABC' },
+                  { key:'all',         label:'All' },
+                  { key:'numeric',     label:'Numeric' },
+                  { key:'conceptual',  label:'Concept' },
                 ].map(({ key: cat, label }) => (
                   <motion.button
                     key={cat}
                     onClick={() => setCategory(cat)}
                     whileTap={{ scale: 0.95 }}
                     style={{ flex:1, padding:'6px 4px', borderRadius:6, fontSize:10, fontWeight:700, cursor:'pointer',
-                      border:`1px solid ${category===cat ? (cat==='computational_bayes'?'#A78BFA':'var(--aqua)') : 'var(--border-default)'}`,
+                      border:`1px solid ${category===cat ? 'var(--aqua)' : 'var(--border-default)'}`,
                       background:category===cat?'var(--bg-card-hover)':'transparent',
-                      color:category===cat ? (cat==='computational_bayes'?'#A78BFA':'var(--aqua)') : 'var(--text-secondary)',
+                      color:category===cat ? 'var(--aqua)' : 'var(--text-secondary)',
                       transition:'all 0.18s' }}
                   >
                     {label}
@@ -1631,11 +1629,11 @@ function TaskCard({ task, onClick, onCopy, copied }) {
     <motion.div
       className="task-card card"
       onClick={onClick}
-      style={{ '--tier-color': tc, cursor:'pointer', padding:'18px 18px 18px 16px' }}
+      style={{ '--tier-color': tc, cursor:'pointer', padding:'18px 18px 18px 16px', height:260, display:'flex', flexDirection:'column' }}
       whileHover={{ y: -3, boxShadow: 'var(--glow-md)', borderColor: 'var(--border-hover)' }}
       transition={{ type: 'spring', stiffness: 400, damping: 28 }}
     >
-      <div className="task-id-row" style={{ justifyContent:'space-between', marginBottom:8 }}>
+      <div className="task-id-row" style={{ justifyContent:'space-between', marginBottom:8, flexShrink:0 }}>
         <div className="task-id-row">
           <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--cyan)', fontWeight:700 }}>
             {task.task_id}
@@ -1652,21 +1650,21 @@ function TaskCard({ task, onClick, onCopy, copied }) {
         </span>
       </div>
       <Tooltip text={tipContent}>
-        <div style={{ color:'var(--blue)', fontSize:10, fontWeight:600, marginBottom:8,
+        <div style={{ color:'var(--blue)', fontSize:10, fontWeight:600, marginBottom:8, flexShrink:0,
           letterSpacing:'0.05em', cursor:'help',
           borderBottom:'1px dashed rgba(0,180,216,0.3)', paddingBottom:4, display:'inline-block' }}>
           {task.task_type}
         </div>
       </Tooltip>
-      <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.6, margin:'8px 0 12px' }}>
+      <p style={{ color:'var(--text-secondary)', fontSize:13, lineHeight:1.6, margin:'8px 0 12px', flex:1, overflow:'hidden' }}>
         {(() => {
           const desc = task.description || TASK_TYPE_TOOLTIPS[task.task_type]?.description || ''
-          return desc.slice(0,160) + (desc.length>160 ? '…' : '')
+          return desc.slice(0,155) + (desc.length>155 ? '…' : '')
         })()}
       </p>
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <Pill color={task.category==='conceptual' ? C.aquaLight : task.category==='computational_bayes' ? '#A78BFA' : C.blue}>
-          {task.category==='computational_bayes' ? 'COMP. BAYES' : task.category.toUpperCase()}
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexShrink:0 }}>
+        <Pill color={task.category==='conceptual' ? C.aquaLight : C.blue}>
+          {task.category==='computational_bayes' ? 'NUMERIC' : task.category.toUpperCase()}
         </Pill>
         <span style={{ color:'var(--aqua)', fontSize:10, fontWeight:700 }}>VIEW →</span>
       </div>
@@ -1706,7 +1704,7 @@ function TaskModal({ task, onClose }) {
               { label:'TIER',       value:`${task.tier} — ${TIER_LABELS[task.tier]}` },
               { label:'DIFFICULTY', value:(task.difficulty||'').toUpperCase() },
               { label:'TYPE',       value:task.task_type },
-              { label:'CATEGORY',   value:task.category==='computational_bayes' ? 'COMP. BAYES' : task.category.toUpperCase() },
+              { label:'CATEGORY',   value:task.category==='computational_bayes' ? 'NUMERIC' : task.category.toUpperCase() },
             ].map(({ label, value }) => (
               <div key={label} style={{ background:'rgba(0,255,224,0.04)', border:'1px solid rgba(0,255,224,0.12)', borderRadius:8, padding:'12px 16px', minHeight:72 }}>
                 <div style={{ fontSize:10, fontWeight:700, color:'#00FFE0', letterSpacing:'0.1em', marginBottom:8 }}>{label}</div>
@@ -1815,10 +1813,10 @@ function Results() {
 // ═══════════════════════════════════════════════════════════════
 //  6. VISUALIZATIONS
 // ═══════════════════════════════════════════════════════════════
-function Visualizations({ setFullImg, onOpenGif }) {
+function Visualizations({ setFullImg, onOpenGif, onOpenInteractive }) {
   return (
     <Section id="visualizations" minHeight="auto">
-      <VizGallery setFullImg={setFullImg} onOpenGif={onOpenGif} />
+      <VizGallery setFullImg={setFullImg} onOpenGif={onOpenGif} onOpenInteractive={onOpenInteractive} />
     </Section>
   )
 }
@@ -2087,16 +2085,17 @@ function References() {
 //  ROOT APP
 // ═══════════════════════════════════════════════════════════════
 export default function App() {
-  const [modal,        setModal]        = useState(null)
-  const [fullImg,      setFullImg]      = useState(null)
-  const [gifModal,     setGifModal]     = useState(null)
-  const [gifLoading,   setGifLoading]   = useState(false)
-  const [gifError,     setGifError]     = useState(false)
-  const [tasksOpen,    setTasksOpen]    = useState(false)
+  const [modal,             setModal]             = useState(null)
+  const [fullImg,           setFullImg]           = useState(null)
+  const [gifModal,          setGifModal]          = useState(null)
+  const [gifLoading,        setGifLoading]        = useState(false)
+  const [gifError,          setGifError]          = useState(false)
+  const [tasksOpen,         setTasksOpen]         = useState(false)
+  const [interactiveModal,  setInteractiveModal]  = useState(null)
 
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === 'Escape') { setModal(null); setFullImg(null); setGifModal(null) }
+      if (e.key === 'Escape') { setModal(null); setFullImg(null); setGifModal(null); setInteractiveModal(null) }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -2124,21 +2123,11 @@ export default function App() {
       <SectionDivider/>
       <Tasks onOpenModal={setModal} isOpen={tasksOpen} onToggle={()=>setTasksOpen(o=>!o)}/>
       <SectionDivider/>
-      <Visualizations setFullImg={setFullImg} onOpenGif={url => { setGifModal(url); setGifLoading(true); setGifError(false) }}/>
+      <Visualizations setFullImg={setFullImg} onOpenGif={url => { setGifModal(url); setGifLoading(true); setGifError(false) }} onOpenInteractive={(url, title) => setInteractiveModal({ url, title })}/>
       <SectionDivider/>
       <UserStudy/>
       <SectionDivider/>
       <References/>
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        style={{ textAlign:'center', padding:'28px 48px', borderTop:'1px solid var(--border-default)', color:'var(--text-muted)', fontSize:12, zIndex:1, position:'relative' }}
-      >
-        Bayes Bench · LLM Bayesian Benchmark ·{' '}
-        <span style={{ color:'var(--aqua)', fontFamily:'var(--font-mono)' }}>171 tasks · 5 models · 38 task types</span>
-      </motion.footer>
       <BackToTop/>
     </motion.div>
 
@@ -2280,6 +2269,67 @@ export default function App() {
                 style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 8, display: gifError ? 'none' : 'block', opacity: gifLoading ? 0 : 1, transition: 'opacity 0.3s' }}
               />
             </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Interactive viz modal — full-screen iframe lightbox */}
+    <AnimatePresence>
+      {interactiveModal && (
+        <motion.div
+          key="interactive-modal-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={() => setInteractiveModal(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999990,
+            background: 'rgba(0,0,0,0.92)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 24,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.93, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.93, y: 20 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: '92vw', maxWidth: 1200, height: '88vh',
+              background: 'rgba(6,12,26,0.98)',
+              border: '1px solid rgba(0,255,224,0.2)',
+              borderRadius: 16,
+              display: 'flex', flexDirection: 'column',
+              overflow: 'hidden',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
+            }}
+          >
+            <div style={{
+              flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '12px 20px', borderBottom: '1px solid rgba(0,255,224,0.1)',
+            }}>
+              <div style={{ color: '#00FFE0', fontSize: 14, fontWeight: 700 }}>{interactiveModal.title}</div>
+              <button
+                onClick={() => setInteractiveModal(null)}
+                style={{
+                  width: 34, height: 34, borderRadius: 8,
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  background: 'rgba(255,255,255,0.05)',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: 16, cursor: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}
+              >✕</button>
+            </div>
+            <iframe
+              key={interactiveModal.url}
+              src={interactiveModal.url}
+              title={interactiveModal.title}
+              style={{ flex: 1, border: 'none', background: '#050a16' }}
+            />
           </motion.div>
         </motion.div>
       )}

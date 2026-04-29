@@ -563,6 +563,41 @@ export default function UserStudy() {
   const [divergence,    setDivergence]    = useState(null)
   const fileRef = useRef()
 
+  // Registration gate
+  const [userRegistered, setUserRegistered] = useState(() => {
+    try { return !!localStorage.getItem('bb_user_registered') } catch { return false }
+  })
+  const [showRegForm, setShowRegForm] = useState(false)
+  const [regName,    setRegName]    = useState('')
+  const [regSurname, setRegSurname] = useState('')
+  const [regEmail,   setRegEmail]   = useState('')
+  const [regLoading, setRegLoading] = useState(false)
+  const [regError,   setRegError]   = useState(null)
+
+  async function submitRegistration() {
+    const n = regName.trim(); const s = regSurname.trim(); const e = regEmail.trim()
+    if (!n || !s) { setRegError('Name and surname are required.'); return }
+    if (!e.includes('@')) { setRegError('Enter a valid email address.'); return }
+    setRegError(null); setRegLoading(true)
+    try {
+      const fd = new FormData()
+      fd.append('name', n); fd.append('surname', s); fd.append('email', e)
+      const r = await fetch(`${API_BASE}/api/register-user`, { method: 'POST', body: fd })
+      if (!r.ok) { const d = await r.json().catch(() => ({})); setRegError(d.detail || 'Registration failed.'); return }
+      try { localStorage.setItem('bb_user_registered', '1') } catch {}
+      setUserRegistered(true)
+      setShowRegForm(false)
+    } catch {
+      setRegError('Could not reach the server. Your response is still welcome.')
+      // Allow proceeding even if registration fails
+      try { localStorage.setItem('bb_user_registered', '1') } catch {}
+      setUserRegistered(true)
+      setShowRegForm(false)
+    } finally {
+      setRegLoading(false)
+    }
+  }
+
   function handleImage(file) {
     if (!file) return
     setImageFile(file)
@@ -584,6 +619,7 @@ export default function UserStudy() {
   }
 
   async function submit() {
+    if (!userRegistered) { setShowRegForm(true); return }
     const q = question.trim()
     if (q.length < 5)    { setError('Question too short (min 5 characters).'); return }
     if (q.length > 2000) { setError('Question too long (max 2000 characters).'); return }
@@ -750,6 +786,102 @@ export default function UserStudy() {
         </AnimatePresence>
 
       </div>
+
+      {/* Registration modal */}
+      <AnimatePresence>
+        {showRegForm && (
+          <motion.div
+            key="reg-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            onClick={() => setShowRegForm(false)}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 999990,
+              background: 'rgba(0,0,0,0.88)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 24,
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.93, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.93, y: 20 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+              style={{
+                width: '100%', maxWidth: 460,
+                background: 'rgba(6,12,26,0.98)',
+                border: '1px solid rgba(0,255,224,0.25)',
+                borderRadius: 16, padding: '32px 36px',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
+              }}
+            >
+              <div style={{ color: '#00FFE0', fontSize: 16, fontWeight: 700, marginBottom: 6 }}>
+                Before you begin
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, lineHeight: 1.6, marginBottom: 24 }}>
+                This is a research study. Please provide your details so we can count unique participants. Your information is only used for research statistics.
+              </div>
+
+              {[
+                { label: 'First Name', val: regName, set: setRegName, ph: 'e.g. Albert' },
+                { label: 'Surname',    val: regSurname, set: setRegSurname, ph: 'e.g. Simonyan' },
+                { label: 'Email',      val: regEmail, set: setRegEmail, ph: 'e.g. name@example.com' },
+              ].map(({ label, val, set, ph }) => (
+                <div key={label} style={{ marginBottom: 16 }}>
+                  <div style={{ color: 'rgba(0,255,224,0.7)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6 }}>
+                    {label.toUpperCase()}
+                  </div>
+                  <input
+                    type={label === 'Email' ? 'email' : 'text'}
+                    value={val}
+                    onChange={e => set(e.target.value)}
+                    placeholder={ph}
+                    style={{
+                      width: '100%', boxSizing: 'border-box',
+                      background: 'rgba(0,0,0,0.4)',
+                      border: '1px solid rgba(0,255,224,0.2)',
+                      borderRadius: 8, padding: '10px 14px',
+                      color: '#E8F4F8', fontSize: 14, outline: 'none',
+                      fontFamily: 'inherit',
+                    }}
+                    onFocus={e => { e.target.style.borderColor = 'rgba(0,255,224,0.6)' }}
+                    onBlur={e => { e.target.style.borderColor = 'rgba(0,255,224,0.2)' }}
+                  />
+                </div>
+              ))}
+
+              {regError && (
+                <div style={{ color: '#FF6B6B', fontSize: 12, marginBottom: 14, padding: '8px 12px', background: 'rgba(255,107,107,0.08)', borderRadius: 7 }}>
+                  {regError}
+                </div>
+              )}
+
+              <button
+                onClick={submitRegistration}
+                disabled={regLoading}
+                style={{
+                  width: '100%', padding: '13px 0',
+                  background: 'linear-gradient(135deg, rgba(0,255,224,0.18), rgba(0,180,216,0.12))',
+                  border: '1px solid rgba(0,255,224,0.45)',
+                  borderRadius: 9, color: '#00FFE0',
+                  fontSize: 14, fontWeight: 700, cursor: regLoading ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.18s', marginTop: 4,
+                  opacity: regLoading ? 0.7 : 1,
+                }}
+              >
+                {regLoading ? 'Registering…' : 'Register & Start'}
+              </button>
+
+              <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11, textAlign: 'center', marginTop: 14 }}>
+                Used only for research participant counting. Never shared.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

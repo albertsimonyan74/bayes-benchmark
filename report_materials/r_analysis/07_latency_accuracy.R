@@ -1,23 +1,18 @@
 ## 07_latency_accuracy.R
-## Scatter: avg latency × avg score per model.
-## Point size = pass count. 4 quadrant annotations. Error bars ±SE.
+## Side-by-side ranked bar comparison: accuracy rank (left) + speed rank (right).
+## 5 models, clear ranking, no ambiguous scatter with 5 points.
 ## Exports PNG and HTML.
 
-pkgs <- c("dplyr", "ggplot2", "ggrepel", "plotly", "htmlwidgets", "scales", "tibble", "stringr")
+pkgs <- c("dplyr", "ggplot2", "plotly", "htmlwidgets", "scales", "patchwork")
 for (pkg in pkgs) {
   if (!requireNamespace(pkg, quietly = TRUE))
     install.packages(pkg, repos = "https://cloud.r-project.org")
 }
-library(dplyr)
-library(ggplot2)
-library(ggrepel)
-library(plotly)
-library(htmlwidgets)
-library(scales)
-library(tibble)
-library(stringr)
+suppressPackageStartupMessages({
+  library(dplyr); library(ggplot2); library(plotly)
+  library(htmlwidgets); library(scales); library(patchwork)
+})
 
-# ── Palette & theme ───────────────────────────────────────────────────────────
 PALETTE <- c(
   claude   = "#00CED1",
   chatgpt  = "#7FFFD4",
@@ -25,207 +20,156 @@ PALETTE <- c(
   deepseek = "#4A90D9",
   gemini   = "#FF6B6B"
 )
+MODEL_LABELS <- c(claude="Claude", chatgpt="ChatGPT", mistral="Mistral",
+                  deepseek="DeepSeek", gemini="Gemini")
 DARK_BG    <- "#0A0F1E"
 DARK_PANEL <- "#12193A"
 TEXT_CLR   <- "#E8F4F8"
 ACCENT     <- "#00FFE0"
 
-dark_theme <- theme_minimal(base_size = 13) +
-  theme(
-    plot.background   = element_rect(fill = DARK_BG,    color = NA),
-    panel.background  = element_rect(fill = DARK_PANEL, color = NA),
-    panel.grid.major  = element_line(color = "#1E2A50"),
-    panel.grid.minor  = element_blank(),
-    axis.text         = element_text(color = TEXT_CLR),
-    axis.title        = element_text(color = TEXT_CLR),
-    plot.title        = element_text(color = ACCENT, size = 16, face = "bold", hjust = 0.5),
-    plot.subtitle     = element_text(color = TEXT_CLR, size = 10, hjust = 0.5),
-    legend.background = element_rect(fill = DARK_BG, color = NA),
-    legend.text       = element_text(color = TEXT_CLR),
-    legend.title      = element_text(color = TEXT_CLR),
-    plot.caption      = element_text(color = TEXT_CLR, size = 8)
-  )
-
-# ── Load data ─────────────────────────────────────────────────────────────────
-RDS_PATH <- "data/benchmark_clean.rds"
-if (!file.exists(RDS_PATH)) { source("00_load_data.R") }
-df <- readRDS(RDS_PATH)
-
+if (!file.exists("data/benchmark_clean.rds")) stop("Run 00_load_data.R first.")
+df <- readRDS("data/benchmark_clean.rds")
 df_complete <- df %>% filter(!is.na(model_family))
 
-# ── Aggregate per model ───────────────────────────────────────────────────────
 model_agg <- df_complete %>%
   group_by(model_family) %>%
   summarise(
-    n_tasks      = n(),
-    avg_score    = mean(final_score, na.rm = TRUE),
-    se_score     = sd(final_score, na.rm = TRUE) / sqrt(n()),
-    avg_latency  = mean(latency_ms, na.rm = TRUE),
-    se_latency   = sd(latency_ms, na.rm = TRUE) / sqrt(n()),
-    pass_count   = sum(pass, na.rm = TRUE),
-    pass_rate    = mean(pass, na.rm = TRUE),
-    .groups      = "drop"
+    avg_score   = mean(final_score, na.rm = TRUE),
+    avg_latency = mean(latency_ms,  na.rm = TRUE),
+    pass_rate   = mean(pass,        na.rm = TRUE),
+    n_tasks     = n(),
+    .groups     = "drop"
   ) %>%
   mutate(
-    score_lo = avg_score - 1.96 * se_score,
-    score_hi = avg_score + 1.96 * se_score,
-    lat_lo   = avg_latency - 1.96 * se_latency,
-    lat_hi   = avg_latency + 1.96 * se_latency,
-    color    = PALETTE[model_family],
-    label    = stringr::str_to_title(model_family)
-  )
+    label       = MODEL_LABELS[model_family],
+    color       = PALETTE[model_family],
+    acc_rank    = rank(-avg_score),
+    speed_rank  = rank(avg_latency),
+    lat_sec     = avg_latency / 1000
+  ) %>%
+  arrange(acc_rank)
 
-# ── Quadrant boundaries ───────────────────────────────────────────────────────
-mid_lat   <- mean(model_agg$avg_latency)
-mid_score <- mean(model_agg$avg_score)
-
-# Quadrant labels
-quad_labels <- tibble::tibble(
-  x     = c(mid_lat * 0.68, mid_lat * 1.35, mid_lat * 0.68, mid_lat * 1.35),
-  y     = c(mid_score * 1.12, mid_score * 1.12, mid_score * 0.88, mid_score * 0.88),
-  label = c("Fast &\nAccurate", "Slow &\nAccurate", "Fast &\nInaccurate", "Slow &\nInaccurate"),
-  color = c("#00FFE0", "#7FFFD4", "#A78BFA", "#FF6B6B")
-)
-
-# ── ggplot2 ───────────────────────────────────────────────────────────────────
-p_lat <- ggplot(model_agg,
-                aes(x = avg_latency, y = avg_score,
-                    size = pass_count, color = model_family,
-                    label = label)) +
-  # Quadrant guide lines
-  geom_vline(xintercept = mid_lat, linetype = "dotted",
-             color = "#3A4A70", linewidth = 0.8) +
-  geom_hline(yintercept = mid_score, linetype = "dotted",
-             color = "#3A4A70", linewidth = 0.8) +
-  # Quadrant annotations
-  geom_text(data = quad_labels,
-            aes(x = x, y = y, label = label, color = color),
-            size = 3.2, fontface = "italic", inherit.aes = FALSE, alpha = 0.7) +
-  # Error bars — latency
-  geom_errorbarh(
-    aes(xmin = lat_lo, xmax = lat_hi),
-    height = 0.012, linewidth = 0.6, alpha = 0.6
-  ) +
-  # Error bars — score
-  geom_errorbar(
-    aes(ymin = score_lo, ymax = score_hi),
-    width = 200, linewidth = 0.6, alpha = 0.6
-  ) +
-  geom_point(alpha = 0.90) +
-  ggrepel::geom_label_repel(
-    size = 4, fontface = "bold",
-    box.padding   = 0.4,
-    point.padding = 0.3,
-    min.segment.length = 0.2,
-    fill  = DARK_BG, label.size = 0.3
-  ) +
-  scale_color_manual(values = PALETTE, guide = "none") +
-  scale_size_continuous(
-    name   = "Tasks Passed",
-    range  = c(5, 18),
-    breaks = c(50, 75, 90, 100, 110, 120)
-  ) +
-  scale_x_continuous(labels = comma_format(suffix = " ms")) +
-  scale_y_continuous(limits = c(0.4, 0.85),
-                     labels = number_format(accuracy = 0.01)) +
-  labs(
-    title    = "Latency vs. Accuracy Trade-off",
-    subtitle = "Point size = tasks passed  |  Error bars = ±1.96 × SE",
-    x        = "Average Latency (ms)",
-    y        = "Average Final Score",
-    caption  = "n = 136 tasks per model. Quadrant lines at grand mean latency and score."
-  ) +
-  dark_theme +
+dark_bar <- function() {
+  theme_minimal(base_size = 12) +
   theme(
-    legend.position = c(0.85, 0.25),
-    legend.background = element_rect(fill = "#0D1535", color = "#1E2A50")
+    plot.background   = element_rect(fill = DARK_BG,    color = NA),
+    panel.background  = element_rect(fill = DARK_PANEL, color = NA),
+    panel.grid.major.x = element_line(color = "#1E2A50", linewidth = 0.35),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor  = element_blank(),
+    axis.text         = element_text(color = TEXT_CLR, size = 11),
+    axis.title        = element_text(color = TEXT_CLR, size = 10),
+    plot.title        = element_text(color = ACCENT, face = "bold", size = 13, hjust = 0.5),
+    plot.subtitle     = element_text(color = "#8BAFC0", size = 9, hjust = 0.5),
+    legend.position   = "none",
+    plot.margin       = margin(12, 16, 12, 16)
   )
+}
 
-if (!dir.exists("figures")) dir.create("figures", recursive = TRUE)
+# ── Panel A: Accuracy (sorted best → worst) ───────────────────
+agg_acc <- model_agg %>% arrange(avg_score) %>%
+  mutate(label = factor(label, levels = label))
 
-png_path <- "figures/07_latency_accuracy.png"
-ggsave(png_path, p_lat, width = 1400, height = 1000, units = "px", dpi = 150)
-message("Saved: ", png_path)
+pA <- ggplot(agg_acc, aes(x = avg_score, y = label, fill = model_family)) +
+  geom_col(width = 0.62, alpha = 0.92) +
+  geom_text(aes(label = sprintf("%.1f%%", avg_score * 100)),
+            hjust = -0.12, size = 3.5, fontface = "bold", color = TEXT_CLR) +
+  geom_vline(xintercept = 0.5, linetype = "dashed",
+             color = ACCENT, linewidth = 0.7, alpha = 0.7) +
+  scale_fill_manual(values = PALETTE) +
+  scale_x_continuous(limits = c(0, 0.85), labels = percent_format(accuracy = 1)) +
+  labs(title = "Average Score", subtitle = "Higher = better", x = NULL, y = NULL) +
+  dark_bar()
 
-# ── Interactive plotly ────────────────────────────────────────────────────────
-fig_plotly <- plot_ly(model_agg) %>%
-  # Quadrant shading via shapes
-  add_segments(
-    x = ~mid_lat, xend = ~mid_lat,
-    y = 0.3, yend = 0.95,
-    line = list(color = "#3A4A70", dash = "dot", width = 1.5),
-    showlegend = FALSE
-  ) %>%
-  add_segments(
-    x = min(model_agg$avg_latency) * 0.85,
-    xend = max(model_agg$avg_latency) * 1.15,
-    y = ~mid_score, yend = ~mid_score,
-    line = list(color = "#3A4A70", dash = "dot", width = 1.5),
-    showlegend = FALSE
-  ) %>%
-  add_trace(
-    x    = ~avg_latency,
-    y    = ~avg_score,
-    type = "scatter",
-    mode = "markers+text",
-    text = ~label,
-    textposition = "top center",
-    textfont = list(color = model_agg$color, size = 13),
-    marker = list(
-      size    = ~sqrt(pass_count) * 3,
-      color   = ~color,
-      opacity = 0.85,
-      line    = list(color = "white", width = 1.5)
-    ),
-    error_x = list(
-      type       = "data",
-      array      = model_agg$se_latency * 1.96,
-      color      = model_agg$color,
-      thickness  = 1.5, width = 4
-    ),
-    error_y = list(
-      type       = "data",
-      array      = model_agg$se_score * 1.96,
-      color      = model_agg$color,
-      thickness  = 1.5, width = 4
-    ),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "<b>", label, "</b>",
-      "<br>Avg Score: ", round(avg_score, 3),
-      "<br>Avg Latency: ", round(avg_latency, 0), " ms",
-      "<br>Pass Rate: ", scales::percent(pass_rate, accuracy = 0.1),
-      "<br>Tasks Passed: ", pass_count, "/", n_tasks
-    ),
-    showlegend = FALSE
-  ) %>%
-  layout(
-    title  = list(text = "Latency vs. Accuracy Trade-off",
-                  font = list(color = ACCENT, size = 17)),
-    xaxis  = list(title = "Average Latency (ms)",
-                  color = TEXT_CLR, tickformat = ",.0f"),
-    yaxis  = list(title = "Average Final Score",
-                  color = TEXT_CLR, range = c(0.38, 0.85)),
-    paper_bgcolor = DARK_BG,
-    plot_bgcolor  = DARK_PANEL,
-    font   = list(color = TEXT_CLR),
-    annotations = list(
-      list(x = mid_lat * 0.70, y = mid_score + 0.06,
-           text = "Fast & Accurate",
-           font = list(color = "#00FFE0", size = 11), showarrow = FALSE),
-      list(x = mid_lat * 1.30, y = mid_score + 0.06,
-           text = "Slow & Accurate",
-           font = list(color = "#7FFFD4", size = 11), showarrow = FALSE),
-      list(x = mid_lat * 0.70, y = mid_score - 0.06,
-           text = "Fast & Inaccurate",
-           font = list(color = "#A78BFA", size = 11), showarrow = FALSE),
-      list(x = mid_lat * 1.30, y = mid_score - 0.06,
-           text = "Slow & Inaccurate",
-           font = list(color = "#FF6B6B", size = 11), showarrow = FALSE)
+# ── Panel B: Speed (sorted fastest → slowest) ─────────────────
+agg_spd <- model_agg %>% arrange(desc(avg_latency)) %>%
+  mutate(label = factor(label, levels = label))
+
+pB <- ggplot(agg_spd, aes(x = lat_sec, y = label, fill = model_family)) +
+  geom_col(width = 0.62, alpha = 0.92) +
+  geom_text(aes(label = sprintf("%.1fs", lat_sec)),
+            hjust = -0.12, size = 3.5, fontface = "bold", color = TEXT_CLR) +
+  scale_fill_manual(values = PALETTE) +
+  scale_x_continuous(limits = c(0, max(agg_spd$lat_sec) * 1.22),
+                     labels = number_format(suffix = "s", accuracy = 0.1)) +
+  labs(title = "Avg Response Time", subtitle = "Lower = faster", x = NULL, y = NULL) +
+  dark_bar()
+
+combined <- pA + pB +
+  plot_annotation(
+    title   = "Speed vs. Accuracy — All 5 Models",
+    subtitle = "Left: benchmark score (higher = better)   ·   Right: response latency (lower = faster)",
+    theme = theme(
+      plot.background = element_rect(fill = DARK_BG, color = NA),
+      plot.title      = element_text(color = ACCENT, face = "bold", size = 15, hjust = 0.5),
+      plot.subtitle   = element_text(color = "#8BAFC0", size = 9, hjust = 0.5),
+      plot.margin     = margin(16, 8, 8, 8)
     )
   )
 
-html_path <- "figures/07_latency_accuracy.html"
-htmlwidgets::saveWidget(fig_plotly, file = html_path, selfcontained = FALSE)
-message("Saved: ", html_path)
+dir.create("figures",     showWarnings = FALSE)
+dir.create("interactive", showWarnings = FALSE)
+
+ggsave("figures/07_latency_accuracy.png", combined,
+       width = 2200, height = 1000, units = "px", dpi = 200, bg = DARK_BG)
+message("Saved: figures/07_latency_accuracy.png")
+
+# ── Interactive plotly: grouped horizontal bars ───────────────
+model_long <- model_agg %>%
+  mutate(
+    acc_pct = round(avg_score * 100, 1),
+    lat_s   = round(lat_sec, 2)
+  )
+
+fig_acc <- plot_ly(
+  model_long %>% arrange(avg_score),
+  x    = ~avg_score, y = ~label,
+  type = "bar", orientation = "h",
+  marker = list(color = ~color, opacity = 0.9),
+  text  = ~paste0(label, "<br>Score: ", acc_pct, "%<br>Pass rate: ",
+                  round(pass_rate*100,1), "%"),
+  hoverinfo = "text",
+  name = "Score"
+) %>%
+  layout(
+    title  = list(text = "Average Benchmark Score", font = list(color = ACCENT, size = 13)),
+    xaxis  = list(title = "Score", tickformat = ".0%", color = TEXT_CLR,
+                  gridcolor = "#1E2A50", range = c(0, 0.85)),
+    yaxis  = list(title = "", color = TEXT_CLR),
+    paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
+    font   = list(color = TEXT_CLR),
+    shapes = list(list(type="line", x0=0.5, x1=0.5, y0=0, y1=1, yref="paper",
+                       line=list(color=ACCENT, dash="dash", width=1.5)))
+  )
+
+fig_lat <- plot_ly(
+  model_long %>% arrange(desc(lat_sec)),
+  x    = ~lat_sec, y = ~label,
+  type = "bar", orientation = "h",
+  marker = list(color = ~color, opacity = 0.9),
+  text  = ~paste0(label, "<br>Avg latency: ", lat_s, "s"),
+  hoverinfo = "text",
+  name = "Latency"
+) %>%
+  layout(
+    title  = list(text = "Avg Response Time (lower=faster)", font = list(color = ACCENT, size = 13)),
+    xaxis  = list(title = "Seconds", color = TEXT_CLR, gridcolor = "#1E2A50"),
+    yaxis  = list(title = "", color = TEXT_CLR),
+    paper_bgcolor = DARK_BG, plot_bgcolor = DARK_PANEL,
+    font   = list(color = TEXT_CLR)
+  )
+
+fig_combined <- subplot(fig_acc, fig_lat, nrows = 1,
+                        titleX = TRUE, titleY = TRUE,
+                        shareX = FALSE, shareY = FALSE) %>%
+  layout(
+    title  = list(text = "Speed vs. Accuracy — All 5 Models",
+                  font = list(color = ACCENT, size = 17)),
+    paper_bgcolor = DARK_BG,
+    font   = list(color = TEXT_CLR),
+    showlegend = FALSE
+  )
+
+htmlwidgets::saveWidget(fig_combined, "interactive/07_latency_accuracy.html", selfcontained = FALSE)
+message("Saved: interactive/07_latency_accuracy.html")
 message("07_latency_accuracy.R complete.\n")

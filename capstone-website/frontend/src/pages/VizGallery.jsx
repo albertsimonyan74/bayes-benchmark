@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'motion/react'
-import { VISUALIZATIONS, FEATURED_IDS, VIZ_FILTERS, VIZ_FILTER_MAP } from '../data/visualizations'
+import { VISUALIZATIONS, FEATURED_IDS } from '../data/visualizations'
 import summaryData from '../data/results_summary.json'
 
 // ─── Model metadata ───────────────────────────────────────────
@@ -139,9 +139,8 @@ function LeaderCard({ modelId, data, rank }) {
 }
 
 // ─── VizCard (standard gallery card) ─────────────────────────
-function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
+function VizCard({ viz, index, setFullImg, onOpenGif, onOpenInteractive }) {
   const [imgLoaded, setImgLoaded] = useState(false)
-  const [iframeOpen, setIframeOpen] = useState(false)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, amount: 0.1 })
   const hasInteractive = viz.interactive !== null
@@ -152,19 +151,21 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
         initial={{ opacity: 0, y: 32 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: (index % 4) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ y: -4, boxShadow: featured ? '0 16px 48px rgba(0,255,224,0.2)' : '0 12px 40px rgba(0,255,224,0.15)' }}
+        whileHover={{ y: -4, boxShadow: '0 12px 40px rgba(0,255,224,0.15)' }}
         style={{
-          background: featured ? 'rgba(0,255,224,0.025)' : 'rgba(255,255,255,0.025)',
-          border: featured ? '1px solid rgba(0,255,224,0.18)' : '1px solid rgba(0,255,224,0.1)',
+          background: 'rgba(255,255,255,0.025)',
+          border: '1px solid rgba(0,255,224,0.1)',
           borderRadius: 16,
           overflow: 'hidden',
           transition: 'border-color 0.2s',
           cursor: 'none',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         data-hover="true"
       >
         {/* Image preview */}
-        <div style={{ position: 'relative', aspectRatio: featured ? '16/9' : '16/10', overflow: 'hidden', background: '#050a16' }}>
+        <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden', background: '#050a16' }}>
           <img
             src={viz.png}
             alt={viz.title}
@@ -201,20 +202,6 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
             {viz.type}
           </div>
 
-          {/* Featured badge */}
-          {featured && (
-            <div style={{
-              position: 'absolute', top: 10, left: 10,
-              background: 'rgba(0,255,224,0.15)',
-              border: '1px solid rgba(0,255,224,0.4)',
-              backdropFilter: 'blur(6px)',
-              borderRadius: 5, padding: '2px 8px',
-              fontSize: 9, fontWeight: 700, color: '#00FFE0', letterSpacing: '0.1em',
-            }}>
-              KEY INSIGHT
-            </div>
-          )}
-
           {/* Zoom overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -231,8 +218,8 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
         </div>
 
         {/* Card body */}
-        <div style={{ padding: featured ? '18px 20px 20px' : '16px 18px 18px' }}>
-          <div style={{ fontSize: featured ? 16 : 15, fontWeight: 700, color: '#fff', marginBottom: 3 }}>
+        <div style={{ padding: '16px 18px 18px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 3 }}>
             {viz.title}
           </div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 12, letterSpacing: '0.02em' }}>
@@ -256,13 +243,14 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
             color: 'rgba(255,255,255,0.75)',
             lineHeight: 1.6,
             marginBottom: 14,
+            flex: 1,
           }}>
             <span style={{ color: 'rgba(0,255,224,0.7)', fontWeight: 700, fontSize: 10, letterSpacing: '0.07em', display: 'block', marginBottom: 3 }}>KEY FINDING</span>
             {viz.insight}
           </div>
 
-          {/* Action buttons */}
-          <div style={{ display: 'flex', gap: 8 }}>
+          {/* Action buttons — always at bottom */}
+          <div style={{ display: 'flex', gap: 8, marginTop: 'auto' }}>
             <button
               data-hover="true"
               onClick={() => setFullImg(viz.png)}
@@ -291,11 +279,11 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
             {hasInteractive ? (
               <button
                 data-hover="true"
-                onClick={() => viz.isGif ? onOpenGif(viz.interactive) : setIframeOpen(v => !v)}
+                onClick={() => viz.isGif ? onOpenGif(viz.interactive) : onOpenInteractive(viz.interactive, viz.title)}
                 style={{
                   flex: 1, padding: '9px 0',
-                  background: iframeOpen && !viz.isGif ? 'rgba(0,255,224,0.18)' : 'rgba(0,255,224,0.1)',
-                  border: `1px solid ${iframeOpen && !viz.isGif ? 'rgba(0,255,224,0.55)' : 'rgba(0,255,224,0.3)'}`,
+                  background: 'rgba(0,255,224,0.1)',
+                  border: '1px solid rgba(0,255,224,0.3)',
                   borderRadius: 7, color: '#00FFE0',
                   fontSize: 12, fontWeight: 600, cursor: 'none',
                   transition: 'background 0.18s, border-color 0.18s',
@@ -305,11 +293,11 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
                   e.currentTarget.style.borderColor = 'rgba(0,255,224,0.5)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = iframeOpen && !viz.isGif ? 'rgba(0,255,224,0.18)' : 'rgba(0,255,224,0.1)'
-                  e.currentTarget.style.borderColor = iframeOpen && !viz.isGif ? 'rgba(0,255,224,0.55)' : 'rgba(0,255,224,0.3)'
+                  e.currentTarget.style.background = 'rgba(0,255,224,0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(0,255,224,0.3)'
                 }}
               >
-                {viz.isGif ? 'View Animation ▶' : iframeOpen ? 'Close Interactive ▲' : 'Open Interactive ▼'}
+                {viz.isGif ? 'View Animation ▶' : 'Open Interactive ▶'}
               </button>
             ) : (
               <div
@@ -328,36 +316,14 @@ function VizCard({ viz, index, setFullImg, onOpenGif, featured = false }) {
             )}
           </div>
 
-          {/* Inline interactive iframe panel */}
-          <AnimatePresence>
-            {iframeOpen && !viz.isGif && viz.interactive && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 520 }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                style={{ overflow: 'hidden', borderTop: '1px solid rgba(0,255,224,0.15)', marginTop: 12 }}
-              >
-                <iframe
-                  src={viz.interactive}
-                  title={`${viz.title} interactive`}
-                  style={{ width: '100%', height: 520, border: 'none', background: '#050a16', borderRadius: '0 0 12px 12px' }}
-                  loading="lazy"
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </motion.div>
   )
 }
 
 // ─── Main VizGallery Component ────────────────────────────────
-export default function VizGallery({ setFullImg, onOpenGif }) {
-  const [activeFilter, setActiveFilter] = useState('All')
-  const [galleryExpanded, setGalleryExpanded] = useState(false)
+export default function VizGallery({ setFullImg, onOpenGif, onOpenInteractive }) {
   const [sectionOpen, setSectionOpen] = useState(false)
-  const GALLERY_PREVIEW = 6
   const summary = summaryData
 
   const allModels = ['claude', 'chatgpt', 'mistral', 'deepseek', 'gemini']
@@ -369,19 +335,6 @@ export default function VizGallery({ setFullImg, onOpenGif }) {
     ...rankings,
     ...allModels.filter(m => !complete.includes(m)),
   ]
-
-  const featuredViz = VISUALIZATIONS.filter(v => FEATURED_IDS.includes(v.id))
-  const galleryViz  = VISUALIZATIONS.filter(v => !FEATURED_IDS.includes(v.id))
-  const filtered    = activeFilter === 'All'
-    ? galleryViz
-    : galleryViz.filter(VIZ_FILTER_MAP[activeFilter])
-
-  // Also allow filtering featured vizs when user picks a filter
-  const filteredFeatured = activeFilter === 'All'
-    ? featuredViz
-    : featuredViz.filter(VIZ_FILTER_MAP[activeFilter])
-
-  const showFeatured = filteredFeatured.length > 0
 
   return (
     <>
@@ -489,148 +442,23 @@ export default function VizGallery({ setFullImg, onOpenGif }) {
         </motion.div>
       </FadeIn>
 
-      {/* ── Filter tabs ──────────────────────────────────────── */}
+      {/* ── Full gallery — one flat grid ─────────────────────── */}
       <FadeIn delay={100}>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 28, flexWrap: 'wrap' }}>
-          {VIZ_FILTERS.map(f => (
-            <motion.button
-              key={f}
-              data-hover="true"
-              onClick={() => setActiveFilter(f)}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                padding: '7px 18px', borderRadius: 8,
-                background: activeFilter === f ? 'rgba(0,255,224,0.12)' : 'transparent',
-                border: `1px solid ${activeFilter === f ? 'rgba(0,255,224,0.5)' : 'rgba(0,255,224,0.12)'}`,
-                color: activeFilter === f ? '#00FFE0' : 'rgba(255,255,255,0.45)',
-                fontSize: 13, fontWeight: 600, cursor: 'none',
-                transition: 'all 0.18s',
-              }}
-            >
-              {f}
-              {f === 'All' && (
-                <span style={{ marginLeft: 6, fontSize: 10, color: 'rgba(0,255,224,0.5)' }}>
-                  {VISUALIZATIONS.length}
-                </span>
-              )}
-            </motion.button>
-          ))}
-        </div>
-      </FadeIn>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeFilter}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          {/* ── Featured 2×2 grid ───────────────────────────── */}
-          {showFeatured && (
-            <div style={{ marginBottom: 40 }}>
-              <div style={{
-                color: 'rgba(0,255,224,0.55)', fontSize: 10, fontWeight: 700,
-                letterSpacing: '0.2em', marginBottom: 16,
-              }}>
-                KEY VISUALIZATIONS
-              </div>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
-                gap: 24,
-              }}>
-                {filteredFeatured.map((viz, i) => (
-                  <VizCard key={viz.id} viz={viz} index={i} setFullImg={setFullImg} onOpenGif={onOpenGif} featured />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ── Remaining gallery ────────────────────────────── */}
-          {filtered.length > 0 && (
-            <div>
-              {showFeatured && activeFilter === 'All' && (
-                <div style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  marginBottom: 16,
-                }}>
-                  <div style={{ color: 'rgba(0,255,224,0.55)', fontSize: 10, fontWeight: 700, letterSpacing: '0.2em' }}>
-                    FULL GALLERY
-                  </div>
-                  <motion.button
-                    data-hover="true"
-                    onClick={() => setGalleryExpanded(v => !v)}
-                    whileTap={{ scale: 0.95 }}
-                    style={{
-                      padding: '5px 14px', borderRadius: 7, cursor: 'none',
-                      background: galleryExpanded ? 'rgba(0,255,224,0.1)' : 'transparent',
-                      border: '1px solid rgba(0,255,224,0.25)',
-                      color: '#00FFE0', fontSize: 11, fontWeight: 600,
-                      transition: 'all 0.18s',
-                    }}
-                  >
-                    {galleryExpanded ? '▲ Show Less' : `▼ Show All (${filtered.length})`}
-                  </motion.button>
-                </div>
-              )}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-                gap: 24,
-              }}>
-                {(galleryExpanded || activeFilter !== 'All' ? filtered : filtered.slice(0, GALLERY_PREVIEW)).map((viz, i) => (
-                  <VizCard key={viz.id} viz={viz} index={i} setFullImg={setFullImg} onOpenGif={onOpenGif} />
-                ))}
-              </div>
-              {!galleryExpanded && activeFilter === 'All' && filtered.length > GALLERY_PREVIEW && (
-                <div style={{ textAlign: 'center', marginTop: 20 }}>
-                  <motion.button
-                    data-hover="true"
-                    onClick={() => setGalleryExpanded(true)}
-                    whileTap={{ scale: 0.95 }}
-                    style={{
-                      padding: '9px 28px', borderRadius: 8, cursor: 'none',
-                      background: 'rgba(0,255,224,0.06)',
-                      border: '1px solid rgba(0,255,224,0.25)',
-                      color: '#00FFE0', fontSize: 13, fontWeight: 600,
-                      transition: 'all 0.18s',
-                    }}
-                  >
-                    Show {filtered.length - GALLERY_PREVIEW} More Visualizations ▼
-                  </motion.button>
-                </div>
-              )}
-            </div>
-          )}
-
-          {showFeatured === false && filtered.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '60px 0', color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>
-              No visualizations in this category.
-            </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* ── Footer note ──────────────────────────────────────── */}
-      <FadeIn delay={200}>
         <div style={{
-          marginTop: 48, padding: '16px 20px',
-          background: 'rgba(0,255,224,0.03)',
-          border: '1px solid rgba(0,255,224,0.08)',
-          borderRadius: 10,
-          fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
+          gap: 24,
         }}>
-          <span style={{ color: 'rgba(0,255,224,0.5)', fontWeight: 700 }}>Note:</span>{' '}
-          Charts generated with R (ggplot2 + Plotly). To regenerate after new runs:{' '}
-          <code style={{ fontFamily: 'monospace', color: 'rgba(0,255,224,0.6)', fontSize: 11 }}>
-            python scripts/summarize_results.py
-          </code>{' '}
-          then{' '}
-          <code style={{ fontFamily: 'monospace', color: 'rgba(0,255,224,0.6)', fontSize: 11 }}>
-            Rscript report_materials/r_analysis/run_all.R
-          </code>.{' '}
-          Last generated: {new Date(summary.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}.
+          {VISUALIZATIONS.map((viz, i) => (
+            <VizCard
+              key={viz.id}
+              viz={viz}
+              index={i}
+              setFullImg={setFullImg}
+              onOpenGif={onOpenGif}
+              onOpenInteractive={onOpenInteractive}
+            />
+          ))}
         </div>
       </FadeIn>
 
