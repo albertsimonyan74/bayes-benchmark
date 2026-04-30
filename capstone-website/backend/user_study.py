@@ -40,6 +40,21 @@ VOTE_MEMORY_PATH  = DATA_DIR / "vote_memory.json"
 USERS_PATH        = DATA_DIR / "unique_users.json"
 REGISTERED_PATH   = DATA_DIR / "registered_users.json"
 
+
+def _atomic_write_json(path: Path, data) -> None:
+    """Write JSON atomically: write to .tmp, then os.replace. Crash-safe."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    try:
+        tmp.write_text(json.dumps(data, indent=2))
+        os.replace(tmp, path)
+    except Exception:
+        try:
+            if tmp.exists():
+                tmp.unlink()
+        except Exception:
+            pass
+
+
 # ── Supabase config (optional — set env vars for persistent storage) ──────────
 # Create a free project at supabase.com, then set:
 #   SUPABASE_URL=https://xxxx.supabase.co
@@ -113,7 +128,7 @@ def _track_user(ip: str) -> int:
         count = len(_unique_users)
     # Persist asynchronously (fire-and-forget, errors silently ignored)
     try:
-        USERS_PATH.write_text(json.dumps(list(_unique_users)))
+        _atomic_write_json(USERS_PATH, list(_unique_users))
     except Exception:
         pass
     return count
@@ -145,7 +160,7 @@ def _load_registered() -> list[dict]:
 
 def _save_registered(users: list[dict]) -> None:
     try:
-        REGISTERED_PATH.write_text(json.dumps(users, indent=2))
+        _atomic_write_json(REGISTERED_PATH, users)
     except Exception:
         pass
 
@@ -172,13 +187,13 @@ async def register_user(
     return {"status": "ok", "unique_users": unique_count}
 
 
-# ── Concurrency limiter — max 5 parallel model-query requests ─────────────────
+# ── Concurrency limiter — max 3 parallel model-query requests ─────────────────
 _query_semaphore: asyncio.Semaphore | None = None
 
 def _get_semaphore() -> asyncio.Semaphore:
     global _query_semaphore
     if _query_semaphore is None:
-        _query_semaphore = asyncio.Semaphore(5)
+        _query_semaphore = asyncio.Semaphore(3)
     return _query_semaphore
 
 
@@ -315,7 +330,7 @@ class VoteRequest(BaseModel):
     divergence_data: Optional[dict] = None
 
 
-# ── Rate limiter (10 req/hr per IP) ───────────────────────────────────────────
+# ── Rate limiters ─────────────────────────────────────────────────────────────
 _rate_store: dict[str, list[float]] = defaultdict(list)
 
 def _check_rate(ip: str, limit: int = 10, window: int = 3600) -> bool:
@@ -324,6 +339,28 @@ def _check_rate(ip: str, limit: int = 10, window: int = 3600) -> bool:
     if len(_rate_store[ip]) >= limit:
         return False
     _rate_store[ip].append(now)
+    return True
+
+
+_rate_store_burst: dict[str, list[float]] = defaultdict(list)
+
+def _check_rate_burst(ip: str, limit: int = 3, window: int = 60) -> bool:
+    now = time.time()
+    _rate_store_burst[ip] = [t for t in _rate_store_burst[ip] if now - t < window]
+    if len(_rate_store_burst[ip]) >= limit:
+        return False
+    _rate_store_burst[ip].append(now)
+    return True
+
+
+_rate_store_vote: dict[str, list[float]] = defaultdict(list)
+
+def _check_rate_vote(ip: str, limit: int = 30, window: int = 3600) -> bool:
+    now = time.time()
+    _rate_store_vote[ip] = [t for t in _rate_store_vote[ip] if now - t < window]
+    if len(_rate_store_vote[ip]) >= limit:
+        return False
+    _rate_store_vote[ip].append(now)
     return True
 
 
@@ -536,6 +573,8 @@ async def submit_question(
     ip = request.client.host if request.client else "unknown"
     if not _check_rate(ip):
         raise HTTPException(status_code=429, detail="Rate limit: 10 requests/hour per IP")
+    if not _check_rate_burst(ip):
+        raise HTTPException(status_code=429, detail="Too many requests — wait a minute")
 
     q = question.strip()
     if len(q) < 5:
@@ -565,19 +604,47 @@ async def submit_question(
             call_gemini(q, image_b64, media_type),
             call_deepseek(q, image_b64, media_type),
             call_mistral(q, image_b64, media_type),
-            return_exceptions=False,
+            return_exceptions=True,
         )
+
+    model_ids = ["claude", "chatgpt", "gemini", "deepseek", "mistral"]
+    model_names = {
+        "claude":   "Claude Sonnet 4.6",
+        "chatgpt":  "GPT-4.1",
+        "gemini":   "Gemini 2.5 Flash",
+        "deepseek": "DeepSeek V4 Flash",
+        "mistral":  "Mistral Large",
+    }
+    responses: list[ModelResponse] = []
+    for mid, res in zip(model_ids, results):
+        if isinstance(res, ModelResponse):
+            responses.append(res)
+        else:
+            # Unexpected exception escaped the call_* function
+            responses.append(ModelResponse(
+                model_id=mid,
+                model_name=model_names[mid],
+                response="",
+                latency_ms=0,
+                error="unavailable",
+                color=MODEL_COLORS[mid],
+            ))
+    if all(r.error and not r.response for r in responses):
+        raise HTTPException(status_code=502, detail="All models unavailable")
 
     return StudyResponse(
         session_id=str(uuid.uuid4())[:8],
         question=q,
-        responses=list(results),
+        responses=responses,
         timestamp=datetime.utcnow().isoformat(),
     )
 
 
 @router.post("/api/user-study/vote")
-async def submit_vote(vote: VoteRequest):
+async def submit_vote(vote: VoteRequest, request: Request):
+    ip = request.client.host if request.client else "unknown"
+    if not _check_rate_vote(ip):
+        raise HTTPException(status_code=429, detail="Vote rate limit reached")
     _ensure_loaded()
     _ensure_questions_loaded()
 
@@ -623,11 +690,11 @@ async def submit_vote(vote: VoteRequest):
         )
     else:
         try:
-            RESULTS_PATH.write_text(json.dumps(votes_snapshot, indent=2))
+            _atomic_write_json(RESULTS_PATH, votes_snapshot)
         except Exception:
             pass
         try:
-            QUESTIONS_PATH.write_text(json.dumps(questions_snapshot, indent=2))
+            _atomic_write_json(QUESTIONS_PATH, questions_snapshot)
         except Exception:
             pass
 
@@ -651,7 +718,7 @@ async def submit_vote(vote: VoteRequest):
             "divergence_verdict_distribution": dict(divergence_counts),
             "last_updated": datetime.utcnow().isoformat(),
         }
-        VOTE_MEMORY_PATH.write_text(json.dumps(memory, indent=2))
+        _atomic_write_json(VOTE_MEMORY_PATH, memory)
     except Exception:
         pass
 

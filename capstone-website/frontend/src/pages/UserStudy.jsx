@@ -360,7 +360,9 @@ function ResponseCard({ resp, divergenceStatus, voted, onVote, voteSubmitted, ag
 
       {/* Body */}
       {isError ? (
-        <div style={{ color: '#FF6B6B', fontSize: 13, fontFamily: 'var(--font-mono)' }}>Error: {resp.error}</div>
+        resp.error === 'unavailable'
+          ? <div style={{ color: 'rgba(200,220,230,0.35)', fontSize: 13, fontFamily: 'var(--font-mono)', fontStyle: 'italic' }}>Model unavailable — try again later</div>
+          : <div style={{ color: '#FF6B6B', fontSize: 13, fontFamily: 'var(--font-mono)' }}>Error: {resp.error}</div>
       ) : (
         <MarkdownRenderer text={resp.response} color={meta.color} />
       )}
@@ -664,7 +666,7 @@ export default function UserStudy() {
 
     try {
       const r = await fetch(`${API_BASE}/api/user-study`, { method: 'POST', body: fd })
-      if (r.status === 429) { setError('Rate limit reached (10 requests/hour per IP). Try again later.'); return }
+      if (r.status === 429) { const d = await r.json().catch(() => ({})); setError(d.detail || 'Rate limit reached. Try again later.'); return }
       if (!r.ok) { const d = await r.json().catch(() => ({})); setError(d.detail || `Server error: ${r.status}`); return }
       const data = await r.json()
       setResponses(data.responses)
@@ -816,7 +818,7 @@ export default function UserStudy() {
             <button
               onClick={submit}
               disabled={loading || question.trim().length < 5}
-              style={{ alignSelf: 'flex-start', padding: '12px 36px', borderRadius: 9, border: '1.5px solid #00FFE0', background: (loading || question.trim().length < 5) ? 'transparent' : 'rgba(0,255,224,0.10)', color: (loading || question.trim().length < 5) ? 'var(--text-muted)' : '#00FFE0', fontSize: 13, fontWeight: 700, cursor: (loading || question.trim().length < 5) ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', transition: 'all 0.18s' }}
+              style={{ alignSelf: 'flex-start', padding: '12px 36px', borderRadius: 9, border: '1.5px solid #00FFE0', background: (loading || question.trim().length < 5) ? 'transparent' : 'rgba(0,255,224,0.10)', color: (loading || question.trim().length < 5) ? 'var(--text-muted)' : '#00FFE0', fontSize: 13, fontWeight: 700, cursor: (loading || question.trim().length < 5) ? 'not-allowed' : 'pointer', opacity: (loading || question.trim().length < 5) ? 0.5 : 1, fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', transition: 'all 0.18s' }}
             >
               {loading ? 'QUERYING 5 MODELS...' : 'RUN COMPARISON'}
             </button>

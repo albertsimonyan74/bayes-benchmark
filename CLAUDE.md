@@ -199,3 +199,10 @@ Phase 2 solvers use `np.random.seed(42)` — true values are seeded MC estimates
 2. Ground-truth fn in `baseline/bayesian/ground_truth.py` if needed
 3. `_prompt_<type>()` in `llm_runner/prompt_builder.py`; register in `_DISPATCH`
 4. Regenerate: `python -m baseline.bayesian.build_tasks_bayesian`
+
+**User Study hardening** (`capstone-website/backend/user_study.py`):
+- Concurrency: `asyncio.Semaphore(3)` — max 3 parallel 5-model fan-outs (15 in-flight LLM calls)
+- Per-model timeout: 60s (`TIMEOUT = 60.0`)
+- Rate limits: 10/hour + 3/minute per IP on `POST /api/user-study`; 30/hour per IP on `POST /api/user-study/vote`
+- Atomic JSON writes: `_atomic_write_json()` writes to `.tmp` then `os.replace()` — crash-safe on all 5 paths
+- Partial-failure tolerance: `return_exceptions=True` on gather; returns 200 with up to 4 working models; raises 502 only if all 5 fail
