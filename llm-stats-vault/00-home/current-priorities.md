@@ -123,3 +123,10 @@ Key sections:
 | 3 | New task types benchmarked | ⏳ Optional |
 | 4 | Viz audit + website deployment | ✅ Complete |
 | 5 | Error taxonomy + user study + paper | ⏳ In progress (§5 live, paper remaining) |
+
+---
+
+## Poster Sprint Log (May 8 deadline)
+
+2026-04-30: Day 1 poster sprint — built llm_judge_rubric.py, ran 10-sample test
+2026-04-30: Pre-launch fixes complete — RJMCMC verified, VB_04 resolved, task_type helper centralized, BIAS_VAR helper kept

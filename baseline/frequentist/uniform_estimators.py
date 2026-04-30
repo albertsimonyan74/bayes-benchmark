@@ -195,6 +195,24 @@ def optimal_scaled_estimator_uniform(n: int, theta_true: float) -> Dict[str, Any
     }
 
 
+def bias_variance_decomp_uniform_max(n: int, theta: float) -> Dict[str, float]:
+    """
+    Closed-form bias-variance decomposition for d2 = max(X_i) under Uniform(0, theta).
+
+    Extracted from build_tasks_bayesian.py:293-295 so the perturbation generator
+    can recompute ground truth without duplicating the formulas.
+
+    Returns dict with keys: bias, var_d2, mse_d2.
+    """
+    if not isinstance(n, (int, np.integer)) or n < 1:
+        raise ValueError(f"n must be an integer >= 1, got {n}")
+    _require_positive(theta, "theta")
+    bias = -theta / (n + 1)
+    var_d2 = n * theta ** 2 / ((n + 1) ** 2 * (n + 2))
+    mse_d2 = 2 * theta ** 2 / ((n + 1) * (n + 2))
+    return {"bias": float(bias), "var_d2": float(var_d2), "mse_d2": float(mse_d2)}
+
+
 def compare_mse(
     theta_true: float,
     estimators: Dict[str, np.ndarray],

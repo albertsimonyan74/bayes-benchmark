@@ -1,12 +1,23 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-04-28T18:45:01.243Z"
+---
+
 # STATE
 
 ## Project
+
 DS 299 Capstone — LLM Bayesian Benchmark (Completion Phase)
 
 ## Current Phase
+
 Phase 1 — Gemini Completion + Results Pipeline
 
 ## Status
+
 - Codebase map: DONE (.planning/codebase/ — 7 docs)
 - Research gap closures: DONE (bc470f1 — llm_judge, task_validator, fewshot, PoT, bibliography)
 - Phase 1 benchmark (4 models): DONE (136+35=171 tasks each)
@@ -18,6 +29,7 @@ Phase 1 — Gemini Completion + Results Pipeline
 - Visualizations: need overhaul
 
 ## Run Status (as of 2026-04-26)
+
 | Model | Phase 1 | Phase 2 | Synthetic |
 |-------|---------|---------|-----------|
 | claude | 136/136 ✅ | 35/35 ✅ | 0/75 |
@@ -27,6 +39,7 @@ Phase 1 — Gemini Completion + Results Pipeline
 | gemini | 74/136 ❌ | 0/35 ❌ | 0/75 |
 
 ## Key Files
+
 - tasks: data/benchmark_v1/tasks_all.json (171 tasks)
 - runs: experiments/results_v1/runs.jsonl (~620+ records)
 - results: experiments/results_v1/results.json (EMPTY)
@@ -34,12 +47,16 @@ Phase 1 — Gemini Completion + Results Pipeline
 - R report: report_materials/r_analysis/benchmark_report.html
 
 ## Next Action
+
 Resume Gemini Phase 1:
+
 ```bash
 source .venv/bin/activate
 python -m llm_runner.run_all_tasks --models gemini
 ```
+
 Then Phase 2:
+
 ```bash
 python -m llm_runner.run_all_tasks --models gemini --tasks data/benchmark_v1/tasks_advanced.json --delay 5
 ```

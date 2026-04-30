@@ -1,0 +1,302 @@
+[
+  {
+    "run_id": "509f78f3-627b-4d44-be79-dc4bea17de1a",
+    "task_id": "BIAS_VAR_03",
+    "model_family": "claude",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including independence and identically distributed (iid) and the distributional assumption of Uniform(0, \u03b8), correctly.",
+    "response_excerpt": "I'll solve this step-by-step using the given analytical formulas for the MLE estimator d\u2082 = max(X\u2081, \u2026, X\u2099).\n\n**Given information:**\n- n = 20\n- \u03b8 = 3.0\n- d\u2082 = max(X\u2081, \u2026, X\u2099) is the MLE for \u03b8\n- Analytical formulas provided\n\n**Part (a): Compute Bias(d\u2082)**\n\nUsing the formula: Bias(d\u2082) = -\u03b8 / (n + 1)\n\nBias(d\u2082) = -3.0 / (20 + 1)\nBias(d\u2082) = -3.0 / 21\nBias(d\u2082) = -0.142857...\nBias(d\u2082) \u2248 -0.1429\n\n**Part (b): Compute Var(d\u2082)**\n\nUsing the formula: Var(d\u2082) = n\u00b7\u03b8\u00b2 / [(n+1)\u00b2\u00b7(n+2)]\n\nVar(d\u2082) = 20 \u00d7 (3.0)\u00b2 / [(2"
+  },
+  {
+    "run_id": "8069e638-97ee-4603-ac7b-bb4e662576d6",
+    "task_id": "BIAS_VAR_05",
+    "model_family": "claude",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including independence and identically distributed (iid) and the distributional assumption of Uniform(0, \u03b8), correctly.",
+    "response_excerpt": "I'll solve this step-by-step using the given analytical formulas for the MLE estimator d\u2082 = max(X\u2081, \u2026, X\u2099).\n\n**Given information:**\n- n = 15\n- \u03b8 = 5.0\n- d\u2082 = max(X\u2081, \u2026, X\u2099) is the MLE for \u03b8\n- Formulas provided for Bias, Variance, and MSE\n\n## (a) Computing Bias(d\u2082)\n\nUsing the formula: Bias(d\u2082) = -\u03b8 / (n + 1)\n\nBias(d\u2082) = -5.0 / (15 + 1)\nBias(d\u2082) = -5.0 / 16\nBias(d\u2082) = -0.3125\n\n## (b) Computing Var(d\u2082)\n\nUsing the formula: Var(d\u2082) = n\u00b7\u03b8\u00b2 / [(n+1)\u00b2\u00b7(n+2)]\n\nVar(d\u2082) = 15 \u00d7 (5.0)\u00b2 / [(15+1)\u00b2 \u00d7 (15+2)]\nV"
+  },
+  {
+    "run_id": "4ad3d73f-f6c9-4ec4-9eb3-7a971f490c65",
+    "task_id": "MSE_COMPARE_04",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as independence and distributional assumption, despite using them implicitly.",
+    "response_excerpt": "I'll solve this step-by-step, computing the MSE for each estimator and then ranking them.\n\n**Given Information:**\n- n = 8 i.i.d. draws from Uniform(0, \u03b8 = 4.0)\n- \u03b8 = 4.0\n- Three estimators:\n  - d\u2081 = 2\u00b7X\u0304 (unbiased)\n  - d\u2082 = max(X\u1d62) (MLE, biased)\n  - d_c = c*\u00b7max(X\u1d62) with c* = (n+2)/(n+1) (optimal scaled)\n\n**MSE Formulas:**\n- MSE(d\u2081) = \u03b8\u00b2/(3n)\n- MSE(d\u2082) = 2\u03b8\u00b2/[(n+1)(n+2)]\n- MSE(d_c*) = \u03b8\u00b2/(n+1)\u00b2\n\n**Step 1: Calculate MSE(d\u2081)**\n\nMSE(d\u2081) = \u03b8\u00b2/(3n)\nMSE(d\u2081) = (4.0)\u00b2/(3 \u00d7 8)\nMSE(d\u2081) = 16/24\nMSE(d\u2081) = 2"
+  },
+  {
+    "run_id": "137294b7-db8a-4e96-af0a-1455dfc3e1b1",
+    "task_id": "MSE_COMPARE_05",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as stating i.i.d and the distributional assumption of Uniform(0, \u03b8).",
+    "response_excerpt": "I need to compute the Mean Squared Errors (MSE) for three estimators of \u03b8 when \u03b8 = 5.0 and n = 15.\n\nGiven information:\n- n = 15 i.i.d. draws from Uniform(0, \u03b8 = 5.0)\n- Three estimators: d\u2081 = 2\u00b7X\u0304, d\u2082 = max(X\u1d62), d_c = c*\u00b7max(X\u1d62) where c* = (n+2)/(n+1)\n- MSE formulas provided\n\n**Step 1: Compute MSE(d\u2081)**\n\nUsing the formula: MSE(d\u2081) = \u03b8\u00b2/(3n)\n\nMSE(d\u2081) = (5.0)\u00b2/(3 \u00d7 15)\nMSE(d\u2081) = 25/(45)\nMSE(d\u2081) = 25/45\nMSE(d\u2081) = 5/9\nMSE(d\u2081) = 0.555555...\nMSE(d\u2081) \u2248 0.5556\n\n**Step 2: Compute MSE(d\u2082)**\n\nUsing the form"
+  },
+  {
+    "run_id": "6a79974e-9872-4ec9-bc1d-389765901158",
+    "task_id": "MARKOV_02",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing_boundaries_at_0_and_M.",
+    "response_excerpt": "I'll solve this gambler's ruin problem step by step.\n\n## Given Information\n- Initial fortune: i = 3\n- Win probability: p = 0.5\n- Lose probability: q = 0.5\n- Lower boundary (ruin): 0\n- Upper boundary (win): M = 10\n\n## Theory\n\nFor the gambler's ruin problem, when p = q = 0.5 (fair game), the probability of ruin starting from fortune i is:\n\n$$P(\\text{ruin} | \\text{start} = i) = \\frac{M - i}{M}$$\n\nAnd since the game must end in either ruin or winning:\n\n$$P(\\text{win} | \\text{start} = i) = 1 - P(\\tex"
+  },
+  {
+    "run_id": "44dffed4-19d2-42d4-9b1f-43bc4a198eaf",
+    "task_id": "ORDER_STAT_01",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as independence and uniform support, although it implies them.",
+    "response_excerpt": "I need to find the PDF of the 3rd order statistic from 5 i.i.d. Uniform[0,1] random variables, evaluated at y = 0.4.\n\n**Step 1: Identify the parameters**\n- n = 5 (total number of observations)\n- k = 3 (we want the 3rd order statistic)\n- y = 0.4 (evaluation point)\n\n**Step 2: Write out the general formula for the PDF of the k-th order statistic**\n\nFor i.i.d. Uniform[0,1] random variables, the PDF of the k-th order statistic is:\n\ng_(k)(y) = (n!)/([(k-1)!(n-k)!]) \u00b7 y^(k-1) \u00b7 (1-y)^(n-k)\n\n**Step 3: S"
+  },
+  {
+    "run_id": "a994d581-feda-47fd-954e-4aaf2e94093a",
+    "task_id": "ORDER_STAT_02",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as i.i.d. and uniform support [0,1].",
+    "response_excerpt": "I need to find the PDF of the first order statistic (minimum) of 4 i.i.d. Uniform[0,1] random variables, evaluated at y = 0.2.\n\n**Step 1: Identify the parameters**\n- n = 4 (number of random variables)\n- k = 1 (we want the 1st order statistic, i.e., the minimum)\n- y = 0.2 (evaluation point)\n\n**Step 2: Write the general formula for the PDF of the k-th order statistic**\n\nFor i.i.d. Uniform[0,1] random variables, the PDF of the k-th order statistic is:\n\ng_(k)(y) = n! / [(k-1)! (n-k)!] \u00b7 y^(k-1) \u00b7 (1"
+  },
+  {
+    "run_id": "21fa5227-c526-4d76-bba5-831531acb2c6",
+    "task_id": "BOX_MULLER_02",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption that U and V are independent and uniformly distributed between 0 and 1.",
+    "response_excerpt": "I'll use the Box-Muller transform to generate two independent standard normal values from U = 0.2 and V = 0.5.\n\n**Given:**\n- U = 0.2\n- V = 0.5\n- Formulas:\n  - z\u2081 = \u221a(\u22122\u00b7ln(U)) \u00b7 cos(2\u03c0\u00b7V)\n  - z\u2082 = \u221a(\u22122\u00b7ln(U)) \u00b7 sin(2\u03c0\u00b7V)\n\n**Step 1: Calculate ln(U)**\nln(U) = ln(0.2)\nln(0.2) = ln(1/5) = -ln(5)\nln(0.2) \u2248 -1.6094379124341003\n\n**Step 2: Calculate \u22122\u00b7ln(U)**\n\u22122\u00b7ln(U) = \u22122 \u00d7 (\u22121.6094379124341003)\n\u22122\u00b7ln(U) = 3.2188758248682006\n\n**Step 3: Calculate \u221a(\u22122\u00b7ln(U))**\n\u221a(\u22122\u00b7ln(U)) = \u221a(3.2188758248682006)\n\u221a(\u22122\u00b7l"
+  },
+  {
+    "run_id": "dc54d21b-3d8c-481e-9247-d4565606cb6d",
+    "task_id": "BOX_MULLER_04",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption that U and V are independent and uniformly distributed between 0 and 1.",
+    "response_excerpt": "I'll use the Box-Muller transform to generate two independent standard normal values from U = 0.05 and V = 0.75.\n\n**Given:**\n- U = 0.05\n- V = 0.75\n- Formulas:\n  - z\u2081 = \u221a(\u22122\u00b7ln(U)) \u00b7 cos(2\u03c0\u00b7V)\n  - z\u2082 = \u221a(\u22122\u00b7ln(U)) \u00b7 sin(2\u03c0\u00b7V)\n\n**Step 1: Calculate ln(U)**\nln(U) = ln(0.05)\nln(0.05) = -2.995732274\n\n**Step 2: Calculate -2\u00b7ln(U)**\n-2\u00b7ln(U) = -2 \u00d7 (-2.995732274)\n-2\u00b7ln(U) = 5.991464547\n\n**Step 3: Calculate \u221a(\u22122\u00b7ln(U))**\n\u221a(\u22122\u00b7ln(U)) = \u221a(5.991464547)\n\u221a(\u22122\u00b7ln(U)) = 2.447746831\n\n**Step 4: Calculate 2\u03c0\u00b7V**\n2"
+  },
+  {
+    "run_id": "8f4f2409-713b-4a1d-a2ce-3f4523dbbbee",
+    "task_id": "GAMBLER_01",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "I'll solve this Gambler's Ruin problem step by step.\n\n**Given Information:**\n- Initial fortune: i = 3\n- Ruin level: 0\n- Win level: M = 8\n- Probability of winning each bet: p = 0.6\n- Probability of losing each bet: q = 0.4\n- Formula: P(ruin | start=i) = [(q/p)^i \u2212 (q/p)^M] / [1 \u2212 (q/p)^M]\n\n**Step 1: Calculate q/p**\n\nq/p = 0.4/0.6 = 2/3 \u2248 0.666667\n\n**Step 2: Calculate (q/p)^i where i = 3**\n\n(q/p)^3 = (2/3)^3 = 8/27 \u2248 0.296296\n\n**Step 3: Calculate (q/p)^M where M = 8**\n\n(q/p)^8 = (2/3)^8 = 256/6561"
+  },
+  {
+    "run_id": "5df02ecc-cf09-4b41-8f5b-88fa037e29dc",
+    "task_id": "GAMBLER_02",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "I'll solve this Gambler's Ruin problem step by step.\n\n**Given Information:**\n- Initial fortune: i = 7\n- Ruin boundary: 0\n- Win boundary: M = 15\n- Probability of winning each bet: p = 0.5\n- Probability of losing each bet: q = 0.5\n\nSince p = q = 0.5, this is a fair game.\n\n**Step 1: Apply the Gambler's Ruin Formula for a Fair Game**\n\nFor a fair game (p = 0.5), the probability of ruin starting from fortune i is:\n\nP(ruin | start = i) = (M - i) / M\n\n**Step 2: Calculate the Probability of Ruin**\n\nSubst"
+  },
+  {
+    "run_id": "441f62bd-aea7-4ff6-8908-e77b37da26f3",
+    "task_id": "GAMBLER_03",
+    "model_family": "claude",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "I'll solve this Gambler's Ruin problem step by step.\n\n**Given Information:**\n- Initial fortune: i = 2\n- Ruin level: 0\n- Win level: M = 10\n- Probability of winning each bet: p = 0.3\n- Probability of losing each bet: q = 0.7\n\n**Formula:**\nP(ruin | start=i) = [(q/p)^i \u2212 (q/p)^M] / [1 \u2212 (q/p)^M]\n\n**Step 1: Calculate q/p**\nq/p = 0.7/0.3 = 7/3 \u2248 2.333333...\n\n**Step 2: Calculate (q/p)^i where i = 2**\n(q/p)^2 = (7/3)^2 = 49/9 \u2248 5.444444...\n\n**Step 3: Calculate (q/p)^M where M = 10**\n(q/p)^10 = (7/3)^10\n"
+  },
+  {
+    "run_id": "d20f1650-0ebb-4308-b9b7-1bc687fdd9f8",
+    "task_id": "MARKOV_02",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "Let's proceed step by step.\n\n**Given:**  \n- Initial fortune, \\( i = 3 \\)  \n- Win amount, \\( M = 10 \\)  \n- Probability to win or lose one step, \\( p = 0.5 \\), \\( q = 0.5 \\)  \n- The gambler is ruined at \\( 0 \\), or succeeds at \\( M = 10 \\).\n\n**(a) Probability of ruin**\n\nThe formula for probability of ruin when \\( p = q \\) (i.e., when the game is fair) is:\n\\[\nP(\\text{ruin} \\mid i) = \\frac{M - i}{M}\n\\]\n\nPlug in \\( i = 3 \\), \\( M = 10 \\):\n\n\\[\nP(\\text{ruin} \\mid i = 3) = \\frac{10 - 3}{10} = \\frac{7}{1"
+  },
+  {
+    "run_id": "5b048216-2baf-4043-b1d2-f8a01a3d5c32",
+    "task_id": "MARKOV_03",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "Given data:\n- Initial fortune \\( i = 5 \\)\n- Probability of win in each step \\( p = 0.4 \\)\n- Probability of loss in each step \\( q = 0.6 \\)\n- Target fortune for winning \\( M = 10 \\)\n\nThe formula for the probability of ruin is:\n\\[\nP(\\text{ruin} \\mid \\text{start} = i) = \\frac{\\left(\\frac{q}{p}\\right)^i - \\left(\\frac{q}{p}\\right)^M}{1 - \\left(\\frac{q}{p}\\right)^M}\n\\]\n\nStep 1: Compute \\( \\frac{q}{p} \\)\n\\[\n\\frac{q}{p} = \\frac{0.6}{0.4} = 1.5\n\\]\n\nStep 2: Compute relevant powers of 1.5\n\\[\n(1.5)^i = (1.5"
+  },
+  {
+    "run_id": "20d24d40-3ca8-4c6c-a8ec-35ca0babb75d",
+    "task_id": "ORDER_STAT_01",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as independence and identically distributed Uniform[0,1] variables.",
+    "response_excerpt": "Let's start by organizing the information:\n\n- \\( n = 5 \\) (number of variables)\n- \\( k = 3 \\) (we're interested in the 3rd order statistic)\n- PDF of the \\( k \\)-th order statistic for i.i.d. Uniform[0,1]:\n\n\\[\ng_{(k)}(y) = \\frac{n!}{(k-1)!(n-k)!} y^{k-1} (1-y)^{n-k}\n\\]\n\nWe want \\( g_{(3)}(y=0.4) \\).\n\n### Step 1: Plug values into the formula\n\n- \\( n! = 5! = 120 \\)\n- \\( (k-1)! = 2! = 2 \\)\n- \\( (n-k)! = (5-3)! = 2! = 2 \\)\n- \\( k-1 = 2 \\), so \\( y^{k-1} = y^2 \\)\n- \\( n-k = 2 \\), so \\( (1-y)^{n-k} = ("
+  },
+  {
+    "run_id": "2619386b-c4a8-4863-8e2f-be2e05d25fe7",
+    "task_id": "ORDER_STAT_02",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as i.i.d. Uniform[0,1] random variables and uniform support [0,1].",
+    "response_excerpt": "Let's follow the steps as instructed:\n\n**Step 1: Recognize the PDF of the 1st order statistic**\n\nFor i.i.d. Uniform[0,1] random variables, the PDF of the \\( k \\)-th order statistic is:\n\\[\ng_{(k)}(y) = \\frac{n!}{(k-1)!(n-k)!} y^{k-1} (1-y)^{n-k}, \\quad y \\in [0,1]\n\\]\n\nHere, \\( n = 4 \\), \\( k = 1 \\). \n\nSo:\n\\[\ng_{(1)}(y) = \\frac{4!}{(1-1 )!(4-1)!} y^{1-1} (1-y)^{4-1}\n\\]\n\n**Step 2: Plug in values**\n\nCalculate the factorials:\n- \\( 4! = 24 \\)\n- \\( (1-1)! = 0! = 1 \\)\n- \\( (4-1)! = 3! = 6 \\)\n\nSo:\n\\[\ng_{"
+  },
+  {
+    "run_id": "3dd4616c-0db1-4d9e-aaea-3afc11e01538",
+    "task_id": "BAYES_FACTOR_01",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the distributional assumption by mentioning the Beta distribution for both models.",
+    "response_excerpt": "Given:\n- Data: \\( x = 3 \\), \\( n = 10 \\)\n- Model M\u2081: Beta(\\(\\alpha_1 = 1.0\\), \\(\\beta_1 = 1.0\\))\n- Model M\u2082: Beta(\\(\\alpha_2 = 0.5\\), \\(\\beta_2 = 0.5\\))\n- Marginal likelihood:  \n  \\(\\log p(x|M) = \\log B(\\alpha + x, \\beta + n - x) - \\log B(\\alpha, \\beta)\\)\n  where \\(B(\\cdot, \\cdot)\\) is the Beta function.\n\nLet's solve step by step:\n\n## Step 1: Plug in values for each model\n\n### For M\u2081 (Beta(1, 1)):\n\n\\[\n\\log p(x|M_1) = \\log B(1 + 3, 1 + 10 - 3) - \\log B(1, 1)\n\\]\n\\[\n= \\log B(4, 8) - \\log B(1, 1)\n\\]"
+  },
+  {
+    "run_id": "e0a056fd-943d-4b65-a0d3-c5f8e86b1182",
+    "task_id": "BAYES_FACTOR_03",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the distributional assumption, which is the use of the Beta distribution for the prior in both models.",
+    "response_excerpt": "Let\u2019s proceed step by step:\n\n### 1. Data and Priors\n- Data: \\( x = 5 \\), \\( n = 20 \\)\n- Model 1: \\( \\alpha_1 = 1.0, \\beta_1 = 1.0 \\)  (Beta(1,1))\n- Model 2: \\( \\alpha_2 = 0.5, \\beta_2 = 0.5 \\)  (Beta(0.5,0.5))\n\n### 2. Log Marginal Likelihood Formula\n\nGiven:\n\\[\n\\log p(x|M) = \\log B(\\alpha + x, \\beta + n - x) - \\log B(\\alpha, \\beta)\n\\]\nWhere \\( B(a, b) = \\frac{\\Gamma(a)\\Gamma(b)}{\\Gamma(a+b)} \\).\n\n### 3. Compute Arguments for Beta Functions\n\n#### Model 1:\n- \\( \\alpha_1 + x = 1 + 5 = 6 \\)\n- \\( \\bet"
+  },
+  {
+    "run_id": "bfa4bfb3-35a6-40b4-a403-4815b7ba6aff",
+    "task_id": "CI_CREDIBLE_01",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including the distributional assumption of Normal and constant variance.",
+    "response_excerpt": "Let's proceed step by step.\n\n### (1) Compute the 95% Frequentist Confidence Interval\n\nFormula:\n\\[\nx\u0304 \\pm 1.96 \\cdot \\frac{\\sigma}{\\sqrt{n}}\n\\]\n\nGiven values:\n- \\( x\u0304 = 5.0375 \\)\n- \\( \\sigma = 1.0 \\)\n- \\( n = 20 \\)\n\nCalculate standard error:\n\\[\nSE = \\frac{1.0}{\\sqrt{20}} = \\frac{1.0}{4.4721} \\approx 0.2236\n\\]\n\nMargin for 95% CI:\n\\[\n1.96 \\times 0.2236 \\approx 0.4383\n\\]\n\nLower limit:\n\\[\n5.0375 - 0.4383 = 4.5992\n\\]\n\nUpper limit:\n\\[\n5.0375 + 0.4383 = 5.4758\n\\]\n\nSo frequentist CI: \\( (4.5992, 5.4758) "
+  },
+  {
+    "run_id": "c438a81a-9bf5-462b-b78a-c9b0f0b103d6",
+    "task_id": "CI_CREDIBLE_02",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including states_distributional_assumption and constant_variance, and they are correct.",
+    "response_excerpt": "Let's solve the problem step by step.\n\n## (1) Frequentist 95% Confidence Interval\n\nGiven:\n- \\( n = 20 \\)\n- \\( x\u0304 = 4.9503 \\)\n- \\( \u03c3^2 = 1.0 \\implies \u03c3 = 1.0 \\)\n- The formula: \\( x\u0304 \\pm 1.96 \\cdot \\frac{\u03c3}{\\sqrt{n}} \\)\n\nCalculate the standard error:\n\\[\n\\frac{\u03c3}{\\sqrt{n}} = \\frac{1.0}{\\sqrt{20}} \\approx \\frac{1.0}{4.4721} \\approx 0.2236\n\\]\n\nCalculate the margin:\n\\[\n1.96 \\cdot 0.2236 \\approx 0.4383\n\\]\n\nSo,\n\\[\n\\text{Lower} = x\u0304 - 0.4383 = 4.9503 - 0.4383 = 4.5120\n\\]\n\\[\n\\text{Upper} = x\u0304 + 0.4383 = 4"
+  },
+  {
+    "run_id": "abac7fca-8910-4f8a-a24c-33d51cbd6216",
+    "task_id": "CI_CREDIBLE_04",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including the distributional assumption of Normal and constant variance.",
+    "response_excerpt": "Let's work step by step:\n\n**(1) Compute the 95% frequentist confidence interval**\n\nGiven:\n- \\( n = 15 \\)\n- \\( \\bar{x} = 4.4436 \\)\n- \\( \\sigma^2 = 1.0 \\rightarrow \\sigma = 1.0 \\)\n- 95% CI: \\( \\bar{x} \\pm 1.96 \\cdot \\frac{\\sigma}{\\sqrt{n}} \\)\n\nFirst, compute the standard error:\n\n\\[\nSE = \\frac{\\sigma}{\\sqrt{n}} = \\frac{1.0}{\\sqrt{15}}\n\\]\n\n\\[\n\\sqrt{15} \\approx 3.87298\n\\]\n\n\\[\nSE \\approx \\frac{1.0}{3.87298} \\approx 0.2582\n\\]\n\nCalculate interval:\n\n\\[\n\\text{Margin} = 1.96 \\cdot SE = 1.96 \\cdot 0.2582 \\a"
+  },
+  {
+    "run_id": "6f0eeb65-d80e-41d8-91c4-764e2c87e10d",
+    "task_id": "CI_CREDIBLE_05",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including states_distributional_assumption and constant_variance, and they are correct.",
+    "response_excerpt": "Let's proceed step by step:\n\n### (1) Frequentist 95% Confidence Interval\n\nGiven:\n- \\( n = 5 \\)\n- \\( \\bar{x} = -0.1636 \\)\n- \\( \\sigma^2 = 1.0 \\implies \\sigma = 1.0 \\)\n\nThe 95% CI formula:\n\\[\n\\text{CI} = \\bar{x} \\pm 1.96 \\cdot \\frac{\\sigma}{\\sqrt{n}}\n\\]\n\nPlugging in the values:\n- \\( \\frac{\\sigma}{\\sqrt{n}} = \\frac{1}{\\sqrt{5}} \\approx 0.4472 \\)\n- \\( 1.96 \\cdot 0.4472 \\approx 0.8765 \\)\n- Lower bound: \\( -0.1636 - 0.8765 = -1.0401 \\)\n- Upper bound: \\( -0.1636 + 0.8765 = 0.7129 \\)\n\nSo,\n\\[\n\\text{freq\\"
+  },
+  {
+    "run_id": "b4f613ed-1437-46a0-817d-9e594dfdb6b6",
+    "task_id": "GAMBLER_01",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "Let's break down the calculation step by step.\n\nWe are given:\n- Initial fortune \\( i = 3 \\)\n- Goal \\( M = 8 \\)\n- Probability of winning each bet \\( p = 0.6 \\)\n- Probability of losing each bet \\( q = 0.4 \\)\n\nGambler's Ruin probability formula (for \\( p \\neq q \\)):\n\\[\nP(\\text{ruin} \\mid \\text{start}=i) = \\frac{(q/p)^i - (q/p)^M}{1 - (q/p)^M}\n\\]\n\n**Step 1: Compute \\( q/p \\)**\n\\[\nq/p = 0.4 / 0.6 = 2/3 \\approx 0.6667\n\\]\n\n**Step 2: Compute \\( (q/p)^i \\) and \\( (q/p)^M \\)**\n\\[\n(q/p)^i = (2/3)^3 = 8/27 "
+  },
+  {
+    "run_id": "563640cb-a1c5-49a0-8845-ed1dc142a0a1",
+    "task_id": "GAMBLER_02",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "Let's solve step by step:\n\n**Given:**\n- Starting fortune, \\( i = 7 \\)\n- Target fortune, \\( M = 15 \\)\n- Probability of winning each bet, \\( p = 0.5 \\)\n- Probability of losing each bet, \\( q = 0.5 \\)\n\nSince the game is fair (\\( p = q = 0.5 \\)), the probability of ruin starting from \\( i \\) is\n\n\\[\nP(\\text{ruin} \\mid \\text{start}=i) = \\frac{M - i}{M}\n\\]\n\n**(a) Probability of ruin:**\n\nPlug in the values:\n\\[\nP(\\text{ruin} \\mid i=7) = \\frac{15 - 7}{15} = \\frac{8}{15}\n\\]\n\nCompute the decimal value:\n\\[\n\\"
+  },
+  {
+    "run_id": "39adff24-1888-4142-a411-9f9eab2c6899",
+    "task_id": "GAMBLER_03",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption of absorbing boundaries at 0 and M.",
+    "response_excerpt": "Let's proceed step by step:\n\nGiven:\n- Starting fortune \\( i = 2 \\)\n- Goal \\( M = 10 \\)\n- Probability of win per bet \\( p = 0.3 \\), probability of loss per bet \\( q = 0.7 \\)\n\nWe use the provided Gambler's Ruin formula:\n\n\\[\nP(\\text{ruin} \\mid i) = \\frac{\\left(\\frac{q}{p}\\right)^i - \\left(\\frac{q}{p}\\right)^M}{1 - \\left(\\frac{q}{p}\\right)^M}\n\\]\n\nLet\u2019s compute each component:\n\n### 1. Compute \\( q/p \\):\n\n\\[\n\\frac{q}{p} = \\frac{0.7}{0.3} = \\frac{7}{3} \\approx 2.3333\n\\]\n\n### 2. Compute \\( (q/p)^i \\) an"
+  },
+  {
+    "run_id": "a839032b-60d2-4b06-b0dc-c56ec072175e",
+    "task_id": "RANGE_DIST_03",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumptions, such as independence and identically distributed (iid) or uniform support [0,1].",
+    "response_excerpt": "Let's break down the problem step by step:\n\n**(a) State the parameters \u03b1 and \u03b2 of the Beta distribution for the sample range R from Uniform[0, 1] when n = 12.**\n\nGiven:\n- \\( n = 12 \\)\n- The sample is drawn from Uniform[0,1].\n- The sample range \\( R = \\max(X_i) - \\min(X_i) \\).\n- The hint: \\( R \\sim \\text{Beta}(n-1, 2) \\).\n\nThe range of a Uniform[0,1] sample of size \\( n \\) is known to follow a Beta distribution with parameters:\n- \\( \\alpha = n-1 \\)\n- \\( \\beta = 2 \\)\n\nSo for \\( n = 12 \\):\n- \\( \\al"
+  },
+  {
+    "run_id": "8bb48130-0b2d-4bb0-b558-a6fcf2423d90",
+    "task_id": "MLE_EFFICIENCY_01",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including states_regularity_conditions and states_unbiasedness_assumption, and they are correct.",
+    "response_excerpt": "Let's tackle the problem step by step.\n\n---\n\n## (1) Fisher information \\( I(\\theta) \\) for a single observation\n\nThe binomial is a sum of Bernoulli random variables.\n\nFor a single Bernoulli(p), the log-likelihood is:\n\\[\n\\ell(\\theta; x) = x \\log(\\theta) + (1-x) \\log(1-\\theta)\n\\]\nThe Fisher information is:\n\\[\nI(\\theta) = -\\mathbb{E}\\left[ \\frac{\\partial^2}{\\partial\\theta^2} \\ell(\\theta; X) \\right]\n\\]\nCompute the second derivative:\n\\[\n\\frac{\\partial}{\\partial\\theta} \\ell(\\theta; x) = \\frac{x}{\\thet"
+  },
+  {
+    "run_id": "f235b41b-d067-45c6-85d7-573701fa0265",
+    "task_id": "MLE_EFFICIENCY_02",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including states_regularity_conditions and states_unbiasedness_assumption, and they are correct.",
+    "response_excerpt": "Let\u2019s break it down, step by step.\n\n---\n\n### (1) Fisher Information \\( I(\\theta) \\) for one observation\n\nFor a Poisson(\u03b8) observation, the likelihood is:\n\\[ f(x; \\theta) = \\frac{\\theta^x e^{-\\theta}}{x!} \\]\n\nLog-likelihood for one observation:\n\\[ \\ell(\\theta) = x\\log\\theta - \\theta - \\log x! \\]\n\nFirst derivative:\n\\[ \\frac{\\partial \\ell}{\\partial \\theta} = \\frac{x}{\\theta} - 1 \\]\n\nSecond derivative:\n\\[ \\frac{\\partial^2 \\ell}{\\partial \\theta^2} = -\\frac{x}{\\theta^2} \\]\n\nThe Fisher information is:\n"
+  },
+  {
+    "run_id": "012fe48c-c3eb-4396-836e-26c720866abc",
+    "task_id": "MLE_EFFICIENCY_03",
+    "model_family": "chatgpt",
+    "kw_assumption_score": 0.0,
+    "judge_assumption_score": 1.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response explicitly states the required assumptions, including regularity conditions and unbiasedness assumption, and they are correct.",
+    "response_excerpt": "Let's proceed step by step:\n\n### 1. **Fisher Information \\( I(\\theta) \\) for a single observation**\n\n#### **Assumptions:**\n- Since the parameter is \u03b8 = 2.0, we need to clarify: is \u03b8 a mean or a variance?\n- Typical default: unless otherwise stated, \u03b8 for Normal often refers to the mean (\u03bc).  \n- Normal likelihood for \\( X \\sim N(\\theta, \\sigma^2) \\), if \u03c3\u00b2 is known. Standard is \u03c3\u00b2 = 1 (unless stated).\n- We'll proceed assuming \u03c3\u00b2 = 1.\n\n#### **Log-likelihood for single observation \\( x \\):**\n\\[\n\\ell"
+  },
+  {
+    "run_id": "0e97502e-16c9-49fd-9242-41c4f98eff58",
+    "task_id": "DISC_MEDIAN_04",
+    "model_family": "deepseek",
+    "kw_assumption_score": 1.0,
+    "judge_assumption_score": 0.0,
+    "abs_diff": 1.0,
+    "judge_justification": "The response does not explicitly state the required assumption that values_are_ordered, although it is implied by the step-by-step calculation.",
+    "response_excerpt": "Alright, let's go step-by-step.  \n\nWe have:  \nValues: \\( \\theta \\in \\{2, 4, 6, 8\\} \\)  \nProbabilities: \\( [0.25, 0.25, 0.25, 0.25] \\)  \n\n---\n\n**Step 1: Compute the cumulative distribution function \\( F(v) = P(\\theta \\le v) \\).**\n\nFor \\( v < 2 \\): \\( F(v) = 0 \\)  \nAt \\( v = 2 \\): \\( F(2) = 0.25 \\)  \nAt \\( v = 4 \\): \\( F(4) = 0.25 + 0.25 = 0.50 \\)  \nAt \\( v = 6 \\): \\( F(6) = 0.25 + 0.25 + 0.25 = 0.75 \\)  \nAt \\( v = 8 \\): \\( F(8) = 1.00 \\)  \n\nSo:  \n\\[\nF(2) = 0.25, \\quad F(4) = 0.50, \\quad F(6) = 0."
+  }
+]
