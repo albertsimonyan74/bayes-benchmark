@@ -2015,14 +2015,15 @@ function About() {
                 animate={{ boxShadow: isOpen ? `0 0 0 2px ${q.color}60` : 'none' }}
                 transition={{ type:'spring', stiffness:400, damping:28 }}
               >
-                <Card style={{ padding:'20px 14px', boxSizing:'border-box', borderTop:`3px solid ${q.color}`, borderRadius:'0 0 14px 14px', height:'100%', userSelect:'none' }}>
-                  <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between' }}>
-                    <div style={{ color:q.color, fontSize:42, fontWeight:900, fontFamily:'var(--font-mono)', opacity:0.08, lineHeight:1, marginBottom:-10, userSelect:'none' }}>{i+1}</div>
-                    <motion.svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={q.color} strokeWidth="2.5" strokeLinecap="round"
-                      animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration:0.25 }} style={{ flexShrink:0, marginTop:4, opacity:0.7 }}>
-                      <polyline points="6 9 12 15 18 9"/>
-                    </motion.svg>
-                  </div>
+                <Card style={{ padding:'20px 14px', boxSizing:'border-box', borderTop:`3px solid ${q.color}`, borderRadius:'0 0 14px 14px', height:'100%', userSelect:'none', position:'relative', overflow:'hidden' }}>
+                  {/* Ghost number — top-right decorative */}
+                  <div style={{ position:'absolute', top:6, right:10, color:q.color, fontSize:52, fontWeight:900, fontFamily:'var(--font-mono)', opacity:0.07, lineHeight:1, userSelect:'none', pointerEvents:'none' }}>{i+1}</div>
+                  {/* Chevron — top-right, above ghost number */}
+                  <motion.svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={q.color} strokeWidth="2.5" strokeLinecap="round"
+                    animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration:0.25 }}
+                    style={{ position:'absolute', top:14, right:14, opacity:0.7, zIndex:1 }}>
+                    <polyline points="6 9 12 15 18 9"/>
+                  </motion.svg>
                   <div style={{ width:34, height:34, borderRadius:8, background:`${q.color}18`, border:`1.5px solid ${q.color}`, display:'flex', alignItems:'center', justifyContent:'center', color:q.color, fontWeight:800, fontSize:11, marginBottom:10 }}>{q.id}</div>
                   <div style={{ color:'var(--text-primary)', fontSize:11.5, fontWeight:700, marginBottom:4, lineHeight:1.3 }}>{q.label}</div>
                   <div style={{ color:q.color, fontSize:9, fontWeight:700, letterSpacing:'0.08em', marginBottom:10 }}>{q.metric}</div>
