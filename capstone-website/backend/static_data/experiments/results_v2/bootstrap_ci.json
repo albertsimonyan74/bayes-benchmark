@@ -1,0 +1,183 @@
+{
+  "B": 10000,
+  "seed": 42,
+  "method": "non-parametric bootstrap on per-run final_score (accuracy) and per-run paired delta (robustness); 95% percentile CI",
+  "accuracy": {
+    "claude": {
+      "mean": 0.679092,
+      "ci_lower": 0.654786,
+      "ci_upper": 0.70238,
+      "n": 171
+    },
+    "chatgpt": {
+      "mean": 0.613943,
+      "ci_lower": 0.586144,
+      "ci_upper": 0.641493,
+      "n": 171
+    },
+    "gemini": {
+      "mean": 0.67357,
+      "ci_lower": 0.647315,
+      "ci_upper": 0.699668,
+      "n": 171
+    },
+    "deepseek": {
+      "mean": 0.621219,
+      "ci_lower": 0.593506,
+      "ci_upper": 0.647917,
+      "n": 171
+    },
+    "mistral": {
+      "mean": 0.632322,
+      "ci_lower": 0.606291,
+      "ci_upper": 0.658613,
+      "n": 171
+    }
+  },
+  "robustness": {
+    "claude": {
+      "mean_delta": 0.019446,
+      "ci_lower": 0.009586,
+      "ci_upper": 0.029404,
+      "n": 473
+    },
+    "chatgpt": {
+      "mean_delta": -0.000736,
+      "ci_lower": -0.010691,
+      "ci_upper": 0.009161,
+      "n": 473
+    },
+    "gemini": {
+      "mean_delta": 0.01599,
+      "ci_lower": 0.001114,
+      "ci_upper": 0.030835,
+      "n": 473
+    },
+    "deepseek": {
+      "mean_delta": 0.000595,
+      "ci_lower": -0.012165,
+      "ci_upper": 0.013468,
+      "n": 473
+    },
+    "mistral": {
+      "mean_delta": 0.01353,
+      "ci_lower": 0.003529,
+      "ci_upper": 0.023684,
+      "n": 473
+    }
+  },
+  "separability": {
+    "accuracy": [
+      [
+        "claude",
+        "chatgpt",
+        "separable"
+      ],
+      [
+        "claude",
+        "gemini",
+        "not_separable"
+      ],
+      [
+        "claude",
+        "deepseek",
+        "separable"
+      ],
+      [
+        "claude",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "chatgpt",
+        "gemini",
+        "separable"
+      ],
+      [
+        "chatgpt",
+        "deepseek",
+        "not_separable"
+      ],
+      [
+        "chatgpt",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "gemini",
+        "deepseek",
+        "not_separable"
+      ],
+      [
+        "gemini",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "deepseek",
+        "mistral",
+        "not_separable"
+      ]
+    ],
+    "robustness": [
+      [
+        "claude",
+        "chatgpt",
+        "separable"
+      ],
+      [
+        "claude",
+        "gemini",
+        "not_separable"
+      ],
+      [
+        "claude",
+        "deepseek",
+        "not_separable"
+      ],
+      [
+        "claude",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "chatgpt",
+        "gemini",
+        "not_separable"
+      ],
+      [
+        "chatgpt",
+        "deepseek",
+        "not_separable"
+      ],
+      [
+        "chatgpt",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "gemini",
+        "deepseek",
+        "not_separable"
+      ],
+      [
+        "gemini",
+        "mistral",
+        "not_separable"
+      ],
+      [
+        "deepseek",
+        "mistral",
+        "not_separable"
+      ]
+    ]
+  },
+  "calibration_note": "ECE is a per-model point estimate using 4 fixed confidence buckets. A bootstrap CI requires binned resampling (resample within each bucket and re-aggregate). Deferred to paper scope. Point ECE values reported as-is from calibration.json.",
+  "calibration_ece_points": {
+    "claude": 0.0665989159891599,
+    "chatgpt": 0.06260162601626021,
+    "gemini": 0.09728997289972899,
+    "deepseek": 0.17947154471544713,
+    "mistral": 0.08401084010840104
+  }
+}

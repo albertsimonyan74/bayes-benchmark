@@ -1,0 +1,226 @@
+{
+  "base": {
+    "chatgpt": {
+      "assumption_compliance": {
+        "mean": 0.437,
+        "n": 246,
+        "std": 0.4707
+      },
+      "method_structure": {
+        "mean": 0.939,
+        "n": 246,
+        "std": 0.1872
+      },
+      "reasoning_completeness": {
+        "mean": 0.9512,
+        "n": 246,
+        "std": 0.1554
+      },
+      "reasoning_quality": {
+        "mean": 0.875,
+        "n": 246,
+        "std": 0.1656
+      }
+    },
+    "claude": {
+      "assumption_compliance": {
+        "mean": 0.4533,
+        "n": 246,
+        "std": 0.4747
+      },
+      "method_structure": {
+        "mean": 0.9614,
+        "n": 246,
+        "std": 0.1482
+      },
+      "reasoning_completeness": {
+        "mean": 0.9715,
+        "n": 246,
+        "std": 0.1161
+      },
+      "reasoning_quality": {
+        "mean": 0.9217,
+        "n": 246,
+        "std": 0.1306
+      }
+    },
+    "deepseek": {
+      "assumption_compliance": {
+        "mean": 0.4065,
+        "n": 246,
+        "std": 0.4688
+      },
+      "method_structure": {
+        "mean": 0.9126,
+        "n": 246,
+        "std": 0.2247
+      },
+      "reasoning_completeness": {
+        "mean": 0.939,
+        "n": 246,
+        "std": 0.176
+      },
+      "reasoning_quality": {
+        "mean": 0.8689,
+        "n": 246,
+        "std": 0.1576
+      }
+    },
+    "gemini": {
+      "assumption_compliance": {
+        "mean": 0.5549,
+        "n": 246,
+        "std": 0.4887
+      },
+      "method_structure": {
+        "mean": 0.9817,
+        "n": 246,
+        "std": 0.1137
+      },
+      "reasoning_completeness": {
+        "mean": 0.9878,
+        "n": 246,
+        "std": 0.0773
+      },
+      "reasoning_quality": {
+        "mean": 0.9563,
+        "n": 246,
+        "std": 0.1077
+      }
+    },
+    "mistral": {
+      "assumption_compliance": {
+        "mean": 0.3801,
+        "n": 246,
+        "std": 0.4682
+      },
+      "method_structure": {
+        "mean": 0.937,
+        "n": 246,
+        "std": 0.1997
+      },
+      "reasoning_completeness": {
+        "mean": 0.9593,
+        "n": 246,
+        "std": 0.1442
+      },
+      "reasoning_quality": {
+        "mean": 0.8913,
+        "n": 246,
+        "std": 0.1468
+      }
+    }
+  },
+  "perturbation": {
+    "chatgpt": {
+      "assumption_compliance": {
+        "mean": 0.4503,
+        "n": 473,
+        "std": 0.4785
+      },
+      "method_structure": {
+        "mean": 0.9144,
+        "n": 473,
+        "std": 0.2245
+      },
+      "reasoning_completeness": {
+        "mean": 0.9387,
+        "n": 473,
+        "std": 0.1674
+      },
+      "reasoning_quality": {
+        "mean": 0.8663,
+        "n": 473,
+        "std": 0.1729
+      }
+    },
+    "claude": {
+      "assumption_compliance": {
+        "mean": 0.4186,
+        "n": 473,
+        "std": 0.464
+      },
+      "method_structure": {
+        "mean": 0.9397,
+        "n": 473,
+        "std": 0.1927
+      },
+      "reasoning_completeness": {
+        "mean": 0.9598,
+        "n": 473,
+        "std": 0.1361
+      },
+      "reasoning_quality": {
+        "mean": 0.908,
+        "n": 473,
+        "std": 0.1456
+      }
+    },
+    "deepseek": {
+      "assumption_compliance": {
+        "mean": 0.3581,
+        "n": 472,
+        "std": 0.4431
+      },
+      "method_structure": {
+        "mean": 0.9036,
+        "n": 472,
+        "std": 0.2366
+      },
+      "reasoning_completeness": {
+        "mean": 0.9354,
+        "n": 472,
+        "std": 0.171
+      },
+      "reasoning_quality": {
+        "mean": 0.8294,
+        "n": 472,
+        "std": 0.1837
+      }
+    },
+    "gemini": {
+      "assumption_compliance": {
+        "mean": 0.5444,
+        "n": 473,
+        "std": 0.4894
+      },
+      "method_structure": {
+        "mean": 0.9651,
+        "n": 473,
+        "std": 0.1573
+      },
+      "reasoning_completeness": {
+        "mean": 0.9831,
+        "n": 473,
+        "std": 0.0905
+      },
+      "reasoning_quality": {
+        "mean": 0.945,
+        "n": 473,
+        "std": 0.1245
+      }
+    },
+    "mistral": {
+      "assumption_compliance": {
+        "mean": 0.4249,
+        "n": 473,
+        "std": 0.4707
+      },
+      "method_structure": {
+        "mean": 0.9482,
+        "n": 473,
+        "std": 0.1952
+      },
+      "reasoning_completeness": {
+        "mean": 0.9736,
+        "n": 473,
+        "std": 0.112
+      },
+      "reasoning_quality": {
+        "mean": 0.8959,
+        "n": 473,
+        "std": 0.1565
+      }
+    }
+  }
+}

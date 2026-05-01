@@ -8,8 +8,10 @@ from collections import defaultdict
 
 try:
     from backend.user_study import router as user_study_router
+    from backend.v2_routes import router as v2_router
 except ModuleNotFoundError:
     from user_study import router as user_study_router
+    from v2_routes import router as v2_router
 
 app = FastAPI(title="LLM Bayesian Benchmark API")
 
@@ -26,6 +28,7 @@ app.add_middleware(
 )
 
 app.include_router(user_study_router)
+app.include_router(v2_router)
 
 BASE_DIR   = Path(os.environ.get("DATA_ROOT", str(Path(__file__).parent.parent.parent)))
 TASKS_FILE = BASE_DIR / "data" / "benchmark_v1" / "tasks_all.json"
@@ -106,7 +109,11 @@ def root():
         "status": "ok",
         "service": "capstone-llm-stats-api",
         "endpoints": ["/api/status", "/api/leaderboard", "/api/tasks",
-                      "/api/results/summary", "/api/user-study"],
+                      "/api/results/summary", "/api/user-study",
+                      "/api/v2/health", "/api/v2/headline_numbers",
+                      "/api/v2/rankings", "/api/v2/error_taxonomy",
+                      "/api/v2/robustness", "/api/v2/agreement",
+                      "/api/v2/calibration", "/api/v2/literature"],
     }
 
 
