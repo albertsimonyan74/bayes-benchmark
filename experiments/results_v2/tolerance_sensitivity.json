@@ -1,0 +1,130 @@
+{
+  "tolerance_levels": {
+    "tight": {
+      "absolute": 0.005,
+      "relative": 0.025
+    },
+    "default": {
+      "absolute": 0.01,
+      "relative": 0.05
+    },
+    "loose": {
+      "absolute": 0.02,
+      "relative": 0.1
+    }
+  },
+  "results": {
+    "tight": {
+      "claude": {
+        "n_correct": 133,
+        "n_total": 236,
+        "accuracy": 0.5635593220338984
+      },
+      "chatgpt": {
+        "n_correct": 135,
+        "n_total": 236,
+        "accuracy": 0.5720338983050848
+      },
+      "gemini": {
+        "n_correct": 121,
+        "n_total": 236,
+        "accuracy": 0.5127118644067796
+      },
+      "deepseek": {
+        "n_correct": 126,
+        "n_total": 236,
+        "accuracy": 0.5338983050847458
+      },
+      "mistral": {
+        "n_correct": 123,
+        "n_total": 236,
+        "accuracy": 0.5211864406779662
+      }
+    },
+    "default": {
+      "claude": {
+        "n_correct": 138,
+        "n_total": 236,
+        "accuracy": 0.5847457627118644
+      },
+      "chatgpt": {
+        "n_correct": 135,
+        "n_total": 236,
+        "accuracy": 0.5720338983050848
+      },
+      "gemini": {
+        "n_correct": 125,
+        "n_total": 236,
+        "accuracy": 0.5296610169491526
+      },
+      "deepseek": {
+        "n_correct": 127,
+        "n_total": 236,
+        "accuracy": 0.538135593220339
+      },
+      "mistral": {
+        "n_correct": 127,
+        "n_total": 236,
+        "accuracy": 0.538135593220339
+      }
+    },
+    "loose": {
+      "claude": {
+        "n_correct": 144,
+        "n_total": 236,
+        "accuracy": 0.6101694915254238
+      },
+      "chatgpt": {
+        "n_correct": 137,
+        "n_total": 236,
+        "accuracy": 0.5805084745762712
+      },
+      "gemini": {
+        "n_correct": 132,
+        "n_total": 236,
+        "accuracy": 0.559322033898305
+      },
+      "deepseek": {
+        "n_correct": 130,
+        "n_total": 236,
+        "accuracy": 0.5508474576271186
+      },
+      "mistral": {
+        "n_correct": 132,
+        "n_total": 236,
+        "accuracy": 0.559322033898305
+      }
+    }
+  },
+  "rankings": {
+    "tight": [
+      "chatgpt",
+      "claude",
+      "deepseek",
+      "mistral",
+      "gemini"
+    ],
+    "default": [
+      "claude",
+      "chatgpt",
+      "deepseek",
+      "mistral",
+      "gemini"
+    ],
+    "loose": [
+      "claude",
+      "chatgpt",
+      "gemini",
+      "mistral",
+      "deepseek"
+    ]
+  },
+  "ranking_stable_across_levels": false,
+  "n_runs_total": 1230,
+  "n_runs_scored_per_level": {
+    "tight": 1180,
+    "default": 1180,
+    "loose": 1180
+  },
+  "rule": "|parsed - true| <= max(absolute, relative * |true|); run correct iff length matches and all targets within tolerance"
+}

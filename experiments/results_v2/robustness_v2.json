@@ -1,0 +1,999 @@
+{
+  "n_perturbations": 2365,
+  "n_base_scores": 855,
+  "missing_base": 0,
+  "per_model": {
+    "claude": {
+      "n": 473,
+      "base_mean": 0.6799,
+      "pert_mean": 0.6604,
+      "delta": 0.0194,
+      "robustness": 0.9806,
+      "per_perturbation_type": {
+        "rephrase": {
+          "n": 171,
+          "base_mean": 0.6791,
+          "pert_mean": 0.6614,
+          "delta": 0.0177
+        },
+        "numerical": {
+          "n": 131,
+          "base_mean": 0.682,
+          "pert_mean": 0.6612,
+          "delta": 0.0208
+        },
+        "semantic": {
+          "n": 171,
+          "base_mean": 0.6791,
+          "pert_mean": 0.6589,
+          "delta": 0.0202
+        }
+      }
+    },
+    "chatgpt": {
+      "n": 473,
+      "base_mean": 0.6104,
+      "pert_mean": 0.6111,
+      "delta": -0.0007,
+      "robustness": 1.0007,
+      "per_perturbation_type": {
+        "rephrase": {
+          "n": 171,
+          "base_mean": 0.6139,
+          "pert_mean": 0.616,
+          "delta": -0.0021
+        },
+        "numerical": {
+          "n": 131,
+          "base_mean": 0.601,
+          "pert_mean": 0.6075,
+          "delta": -0.0064
+        },
+        "semantic": {
+          "n": 171,
+          "base_mean": 0.6139,
+          "pert_mean": 0.6089,
+          "delta": 0.005
+        }
+      }
+    },
+    "gemini": {
+      "n": 473,
+      "base_mean": 0.6661,
+      "pert_mean": 0.6501,
+      "delta": 0.016,
+      "robustness": 0.984,
+      "per_perturbation_type": {
+        "rephrase": {
+          "n": 171,
+          "base_mean": 0.6736,
+          "pert_mean": 0.6405,
+          "delta": 0.0331
+        },
+        "numerical": {
+          "n": 131,
+          "base_mean": 0.6466,
+          "pert_mean": 0.6671,
+          "delta": -0.0205
+        },
+        "semantic": {
+          "n": 171,
+          "base_mean": 0.6736,
+          "pert_mean": 0.6467,
+          "delta": 0.0269
+        }
+      }
+    },
+    "deepseek": {
+      "n": 473,
+      "base_mean": 0.6162,
+      "pert_mean": 0.6156,
+      "delta": 0.0006,
+      "robustness": 0.9994,
+      "per_perturbation_type": {
+        "rephrase": {
+          "n": 171,
+          "base_mean": 0.6212,
+          "pert_mean": 0.6237,
+          "delta": -0.0025
+        },
+        "numerical": {
+          "n": 131,
+          "base_mean": 0.6031,
+          "pert_mean": 0.607,
+          "delta": -0.0039
+        },
+        "semantic": {
+          "n": 171,
+          "base_mean": 0.6212,
+          "pert_mean": 0.6141,
+          "delta": 0.0071
+        }
+      }
+    },
+    "mistral": {
+      "n": 473,
+      "base_mean": 0.6303,
+      "pert_mean": 0.6168,
+      "delta": 0.0135,
+      "robustness": 0.9865,
+      "per_perturbation_type": {
+        "rephrase": {
+          "n": 171,
+          "base_mean": 0.6323,
+          "pert_mean": 0.6208,
+          "delta": 0.0115
+        },
+        "numerical": {
+          "n": 131,
+          "base_mean": 0.6251,
+          "pert_mean": 0.6202,
+          "delta": 0.005
+        },
+        "semantic": {
+          "n": 171,
+          "base_mean": 0.6323,
+          "pert_mean": 0.6102,
+          "delta": 0.0221
+        }
+      }
+    }
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "model": "chatgpt",
+      "delta": -0.0007,
+      "robustness": 1.0007
+    },
+    {
+      "rank": 2,
+      "model": "deepseek",
+      "delta": 0.0006,
+      "robustness": 0.9994
+    },
+    {
+      "rank": 3,
+      "model": "mistral",
+      "delta": 0.0135,
+      "robustness": 0.9865
+    },
+    {
+      "rank": 4,
+      "model": "gemini",
+      "delta": 0.016,
+      "robustness": 0.984
+    },
+    {
+      "rank": 5,
+      "model": "claude",
+      "delta": 0.0194,
+      "robustness": 0.9806
+    }
+  ],
+  "per_task_type_heatmap": {
+    "claude": {
+      "ABC": {
+        "n": 10,
+        "delta": -0.1209
+      },
+      "BAYES_FACTOR": {
+        "n": 15,
+        "delta": 0.0777
+      },
+      "BAYES_REG": {
+        "n": 15,
+        "delta": -0.0036
+      },
+      "BAYES_RISK": {
+        "n": 15,
+        "delta": 0.0167
+      },
+      "BETA_BINOM": {
+        "n": 3,
+        "delta": 0.0
+      },
+      "BIAS_VAR": {
+        "n": 15,
+        "delta": 0.0552
+      },
+      "BINOM_FLAT": {
+        "n": 15,
+        "delta": -0.0298
+      },
+      "BOX_MULLER": {
+        "n": 15,
+        "delta": -0.0106
+      },
+      "CI_CREDIBLE": {
+        "n": 15,
+        "delta": 0.0197
+      },
+      "CONCEPTUAL": {
+        "n": 20,
+        "delta": 0.1716
+      },
+      "DIRICHLET": {
+        "n": 3,
+        "delta": 0.0293
+      },
+      "DISC_MEDIAN": {
+        "n": 15,
+        "delta": 0.0121
+      },
+      "FISHER_INFO": {
+        "n": 15,
+        "delta": -0.0236
+      },
+      "GAMBLER": {
+        "n": 9,
+        "delta": 0.0229
+      },
+      "GAMMA_POISSON": {
+        "n": 3,
+        "delta": -0.0303
+      },
+      "GIBBS": {
+        "n": 10,
+        "delta": 0.0152
+      },
+      "HIERARCHICAL": {
+        "n": 10,
+        "delta": 0.0065
+      },
+      "HMC": {
+        "n": 10,
+        "delta": -0.027
+      },
+      "HPD": {
+        "n": 15,
+        "delta": 0.0747
+      },
+      "JEFFREYS": {
+        "n": 15,
+        "delta": -0.0015
+      },
+      "LOG_ML": {
+        "n": 15,
+        "delta": 0.0427
+      },
+      "MARKOV": {
+        "n": 15,
+        "delta": 0.0622
+      },
+      "MH": {
+        "n": 10,
+        "delta": -0.0477
+      },
+      "MINIMAX": {
+        "n": 15,
+        "delta": 0.0067
+      },
+      "MLE_EFFICIENCY": {
+        "n": 9,
+        "delta": -0.0468
+      },
+      "MLE_MAP": {
+        "n": 15,
+        "delta": 0.0388
+      },
+      "MSE_COMPARE": {
+        "n": 15,
+        "delta": 0.0959
+      },
+      "NORMAL_GAMMA": {
+        "n": 3,
+        "delta": 0.015
+      },
+      "OPT_SCALED": {
+        "n": 15,
+        "delta": -0.0067
+      },
+      "ORDER_STAT": {
+        "n": 15,
+        "delta": 0.0097
+      },
+      "PPC": {
+        "n": 15,
+        "delta": 0.0437
+      },
+      "RANGE_DIST": {
+        "n": 9,
+        "delta": 0.0388
+      },
+      "RC_BOUND": {
+        "n": 15,
+        "delta": 0.0354
+      },
+      "REGRESSION": {
+        "n": 15,
+        "delta": -0.0171
+      },
+      "RJMCMC": {
+        "n": 15,
+        "delta": -0.0085
+      },
+      "STATIONARY": {
+        "n": 9,
+        "delta": -0.0044
+      },
+      "UNIFORM_MLE": {
+        "n": 15,
+        "delta": 0.0009
+      },
+      "VB": {
+        "n": 10,
+        "delta": 0.0009
+      }
+    },
+    "chatgpt": {
+      "ABC": {
+        "n": 10,
+        "delta": 0.0524
+      },
+      "BAYES_FACTOR": {
+        "n": 15,
+        "delta": -0.0884
+      },
+      "BAYES_REG": {
+        "n": 15,
+        "delta": 0.0105
+      },
+      "BAYES_RISK": {
+        "n": 15,
+        "delta": 0.0121
+      },
+      "BETA_BINOM": {
+        "n": 3,
+        "delta": -0.0875
+      },
+      "BIAS_VAR": {
+        "n": 15,
+        "delta": -0.0174
+      },
+      "BINOM_FLAT": {
+        "n": 15,
+        "delta": -0.0211
+      },
+      "BOX_MULLER": {
+        "n": 15,
+        "delta": -0.071
+      },
+      "CI_CREDIBLE": {
+        "n": 15,
+        "delta": -0.0217
+      },
+      "CONCEPTUAL": {
+        "n": 20,
+        "delta": 0.1399
+      },
+      "DIRICHLET": {
+        "n": 3,
+        "delta": -0.0047
+      },
+      "DISC_MEDIAN": {
+        "n": 15,
+        "delta": -0.0084
+      },
+      "FISHER_INFO": {
+        "n": 15,
+        "delta": -0.0079
+      },
+      "GAMBLER": {
+        "n": 9,
+        "delta": -0.0007
+      },
+      "GAMMA_POISSON": {
+        "n": 3,
+        "delta": 0.0587
+      },
+      "GIBBS": {
+        "n": 10,
+        "delta": 0.011
+      },
+      "HIERARCHICAL": {
+        "n": 10,
+        "delta": -0.0106
+      },
+      "HMC": {
+        "n": 10,
+        "delta": -0.0697
+      },
+      "HPD": {
+        "n": 15,
+        "delta": -0.0029
+      },
+      "JEFFREYS": {
+        "n": 15,
+        "delta": 0.0162
+      },
+      "LOG_ML": {
+        "n": 15,
+        "delta": 0.0126
+      },
+      "MARKOV": {
+        "n": 15,
+        "delta": 0.035
+      },
+      "MH": {
+        "n": 10,
+        "delta": -0.04
+      },
+      "MINIMAX": {
+        "n": 15,
+        "delta": 0.0209
+      },
+      "MLE_EFFICIENCY": {
+        "n": 9,
+        "delta": -0.0231
+      },
+      "MLE_MAP": {
+        "n": 15,
+        "delta": 0.0131
+      },
+      "MSE_COMPARE": {
+        "n": 15,
+        "delta": -0.0191
+      },
+      "NORMAL_GAMMA": {
+        "n": 3,
+        "delta": 0.0333
+      },
+      "OPT_SCALED": {
+        "n": 15,
+        "delta": -0.0207
+      },
+      "ORDER_STAT": {
+        "n": 15,
+        "delta": -0.0142
+      },
+      "PPC": {
+        "n": 15,
+        "delta": 0.0257
+      },
+      "RANGE_DIST": {
+        "n": 9,
+        "delta": 0.0249
+      },
+      "RC_BOUND": {
+        "n": 15,
+        "delta": -0.0019
+      },
+      "REGRESSION": {
+        "n": 15,
+        "delta": -0.0233
+      },
+      "RJMCMC": {
+        "n": 15,
+        "delta": 0.0061
+      },
+      "STATIONARY": {
+        "n": 9,
+        "delta": -0.0019
+      },
+      "UNIFORM_MLE": {
+        "n": 15,
+        "delta": 0.0055
+      },
+      "VB": {
+        "n": 10,
+        "delta": -0.0165
+      }
+    },
+    "gemini": {
+      "ABC": {
+        "n": 10,
+        "delta": -0.1208
+      },
+      "BAYES_FACTOR": {
+        "n": 15,
+        "delta": -0.0516
+      },
+      "BAYES_REG": {
+        "n": 15,
+        "delta": -0.0466
+      },
+      "BAYES_RISK": {
+        "n": 15,
+        "delta": -0.0338
+      },
+      "BETA_BINOM": {
+        "n": 3,
+        "delta": 0.1277
+      },
+      "BIAS_VAR": {
+        "n": 15,
+        "delta": 0.0819
+      },
+      "BINOM_FLAT": {
+        "n": 15,
+        "delta": 0.0617
+      },
+      "BOX_MULLER": {
+        "n": 15,
+        "delta": 0.0393
+      },
+      "CI_CREDIBLE": {
+        "n": 15,
+        "delta": -0.0002
+      },
+      "CONCEPTUAL": {
+        "n": 20,
+        "delta": 0.2748
+      },
+      "DIRICHLET": {
+        "n": 3,
+        "delta": -0.0161
+      },
+      "DISC_MEDIAN": {
+        "n": 15,
+        "delta": 0.0372
+      },
+      "FISHER_INFO": {
+        "n": 15,
+        "delta": 0.0516
+      },
+      "GAMBLER": {
+        "n": 9,
+        "delta": 0.0091
+      },
+      "GAMMA_POISSON": {
+        "n": 3,
+        "delta": -0.0115
+      },
+      "GIBBS": {
+        "n": 10,
+        "delta": -0.0204
+      },
+      "HIERARCHICAL": {
+        "n": 10,
+        "delta": 0.0071
+      },
+      "HMC": {
+        "n": 10,
+        "delta": 0.0084
+      },
+      "HPD": {
+        "n": 15,
+        "delta": -0.0111
+      },
+      "JEFFREYS": {
+        "n": 15,
+        "delta": -0.1241
+      },
+      "LOG_ML": {
+        "n": 15,
+        "delta": -0.0136
+      },
+      "MARKOV": {
+        "n": 15,
+        "delta": 0.0338
+      },
+      "MH": {
+        "n": 10,
+        "delta": 0.1394
+      },
+      "MINIMAX": {
+        "n": 15,
+        "delta": 0.0397
+      },
+      "MLE_EFFICIENCY": {
+        "n": 9,
+        "delta": 0.0257
+      },
+      "MLE_MAP": {
+        "n": 15,
+        "delta": -0.0623
+      },
+      "MSE_COMPARE": {
+        "n": 15,
+        "delta": 0.1077
+      },
+      "NORMAL_GAMMA": {
+        "n": 3,
+        "delta": 0.012
+      },
+      "OPT_SCALED": {
+        "n": 15,
+        "delta": 0.0678
+      },
+      "ORDER_STAT": {
+        "n": 15,
+        "delta": -0.0977
+      },
+      "PPC": {
+        "n": 15,
+        "delta": 0.0282
+      },
+      "RANGE_DIST": {
+        "n": 9,
+        "delta": -0.1352
+      },
+      "RC_BOUND": {
+        "n": 15,
+        "delta": 0.0412
+      },
+      "REGRESSION": {
+        "n": 15,
+        "delta": -0.0292
+      },
+      "RJMCMC": {
+        "n": 15,
+        "delta": 0.0161
+      },
+      "STATIONARY": {
+        "n": 9,
+        "delta": 0.0443
+      },
+      "UNIFORM_MLE": {
+        "n": 15,
+        "delta": 0.0185
+      },
+      "VB": {
+        "n": 10,
+        "delta": -0.0218
+      }
+    },
+    "deepseek": {
+      "ABC": {
+        "n": 10,
+        "delta": 0.0456
+      },
+      "BAYES_FACTOR": {
+        "n": 15,
+        "delta": 0.0709
+      },
+      "BAYES_REG": {
+        "n": 15,
+        "delta": 0.0283
+      },
+      "BAYES_RISK": {
+        "n": 15,
+        "delta": -0.0042
+      },
+      "BETA_BINOM": {
+        "n": 3,
+        "delta": -0.1787
+      },
+      "BIAS_VAR": {
+        "n": 15,
+        "delta": -0.0138
+      },
+      "BINOM_FLAT": {
+        "n": 15,
+        "delta": -0.0435
+      },
+      "BOX_MULLER": {
+        "n": 15,
+        "delta": -0.0724
+      },
+      "CI_CREDIBLE": {
+        "n": 15,
+        "delta": -0.1156
+      },
+      "CONCEPTUAL": {
+        "n": 20,
+        "delta": 0.1333
+      },
+      "DIRICHLET": {
+        "n": 3,
+        "delta": -0.1685
+      },
+      "DISC_MEDIAN": {
+        "n": 15,
+        "delta": 0.1351
+      },
+      "FISHER_INFO": {
+        "n": 15,
+        "delta": 0.0091
+      },
+      "GAMBLER": {
+        "n": 9,
+        "delta": -0.0141
+      },
+      "GAMMA_POISSON": {
+        "n": 3,
+        "delta": -0.286
+      },
+      "GIBBS": {
+        "n": 10,
+        "delta": -0.065
+      },
+      "HIERARCHICAL": {
+        "n": 10,
+        "delta": -0.0196
+      },
+      "HMC": {
+        "n": 10,
+        "delta": -0.0126
+      },
+      "HPD": {
+        "n": 15,
+        "delta": -0.0787
+      },
+      "JEFFREYS": {
+        "n": 15,
+        "delta": 0.0432
+      },
+      "LOG_ML": {
+        "n": 15,
+        "delta": -0.0812
+      },
+      "MARKOV": {
+        "n": 15,
+        "delta": 0.0194
+      },
+      "MH": {
+        "n": 10,
+        "delta": 0.0271
+      },
+      "MINIMAX": {
+        "n": 15,
+        "delta": 0.0116
+      },
+      "MLE_EFFICIENCY": {
+        "n": 9,
+        "delta": 0.081
+      },
+      "MLE_MAP": {
+        "n": 15,
+        "delta": 0.0285
+      },
+      "MSE_COMPARE": {
+        "n": 15,
+        "delta": -0.0053
+      },
+      "NORMAL_GAMMA": {
+        "n": 3,
+        "delta": -0.0935
+      },
+      "OPT_SCALED": {
+        "n": 15,
+        "delta": -0.036
+      },
+      "ORDER_STAT": {
+        "n": 15,
+        "delta": 0.1271
+      },
+      "PPC": {
+        "n": 15,
+        "delta": -0.0632
+      },
+      "RANGE_DIST": {
+        "n": 9,
+        "delta": 0.1398
+      },
+      "RC_BOUND": {
+        "n": 15,
+        "delta": 0.0363
+      },
+      "REGRESSION": {
+        "n": 15,
+        "delta": -0.1561
+      },
+      "RJMCMC": {
+        "n": 15,
+        "delta": -0.0156
+      },
+      "STATIONARY": {
+        "n": 9,
+        "delta": 0.0453
+      },
+      "UNIFORM_MLE": {
+        "n": 15,
+        "delta": 0.0217
+      },
+      "VB": {
+        "n": 10,
+        "delta": 0.0088
+      }
+    },
+    "mistral": {
+      "ABC": {
+        "n": 10,
+        "delta": -0.0027
+      },
+      "BAYES_FACTOR": {
+        "n": 15,
+        "delta": 0.0325
+      },
+      "BAYES_REG": {
+        "n": 15,
+        "delta": -0.0038
+      },
+      "BAYES_RISK": {
+        "n": 15,
+        "delta": 0.0042
+      },
+      "BETA_BINOM": {
+        "n": 3,
+        "delta": -0.027
+      },
+      "BIAS_VAR": {
+        "n": 15,
+        "delta": -0.0215
+      },
+      "BINOM_FLAT": {
+        "n": 15,
+        "delta": 0.0106
+      },
+      "BOX_MULLER": {
+        "n": 15,
+        "delta": -0.0121
+      },
+      "CI_CREDIBLE": {
+        "n": 15,
+        "delta": -0.0516
+      },
+      "CONCEPTUAL": {
+        "n": 20,
+        "delta": 0.1162
+      },
+      "DIRICHLET": {
+        "n": 3,
+        "delta": 0.0213
+      },
+      "DISC_MEDIAN": {
+        "n": 15,
+        "delta": 0.0029
+      },
+      "FISHER_INFO": {
+        "n": 15,
+        "delta": 0.0197
+      },
+      "GAMBLER": {
+        "n": 9,
+        "delta": 0.0722
+      },
+      "GAMMA_POISSON": {
+        "n": 3,
+        "delta": 0.006
+      },
+      "GIBBS": {
+        "n": 10,
+        "delta": -0.025
+      },
+      "HIERARCHICAL": {
+        "n": 10,
+        "delta": -0.0122
+      },
+      "HMC": {
+        "n": 10,
+        "delta": -0.0427
+      },
+      "HPD": {
+        "n": 15,
+        "delta": 0.0841
+      },
+      "JEFFREYS": {
+        "n": 15,
+        "delta": 0.0266
+      },
+      "LOG_ML": {
+        "n": 15,
+        "delta": 0.0528
+      },
+      "MARKOV": {
+        "n": 15,
+        "delta": 0.0044
+      },
+      "MH": {
+        "n": 10,
+        "delta": 0.0024
+      },
+      "MINIMAX": {
+        "n": 15,
+        "delta": -0.0084
+      },
+      "MLE_EFFICIENCY": {
+        "n": 9,
+        "delta": -0.0764
+      },
+      "MLE_MAP": {
+        "n": 15,
+        "delta": 0.0363
+      },
+      "MSE_COMPARE": {
+        "n": 15,
+        "delta": 0.0648
+      },
+      "NORMAL_GAMMA": {
+        "n": 3,
+        "delta": 0.0167
+      },
+      "OPT_SCALED": {
+        "n": 15,
+        "delta": -0.0422
+      },
+      "ORDER_STAT": {
+        "n": 15,
+        "delta": -0.0359
+      },
+      "PPC": {
+        "n": 15,
+        "delta": -0.0267
+      },
+      "RANGE_DIST": {
+        "n": 9,
+        "delta": 0.071
+      },
+      "RC_BOUND": {
+        "n": 15,
+        "delta": 0.1217
+      },
+      "REGRESSION": {
+        "n": 15,
+        "delta": -0.0291
+      },
+      "RJMCMC": {
+        "n": 15,
+        "delta": 0.0097
+      },
+      "STATIONARY": {
+        "n": 9,
+        "delta": -0.0041
+      },
+      "UNIFORM_MLE": {
+        "n": 15,
+        "delta": 0.0393
+      },
+      "VB": {
+        "n": 10,
+        "delta": 0.0091
+      }
+    }
+  },
+  "task_types": [
+    "ABC",
+    "BAYES_FACTOR",
+    "BAYES_REG",
+    "BAYES_RISK",
+    "BETA_BINOM",
+    "BIAS_VAR",
+    "BINOM_FLAT",
+    "BOX_MULLER",
+    "CI_CREDIBLE",
+    "CONCEPTUAL",
+    "DIRICHLET",
+    "DISC_MEDIAN",
+    "FISHER_INFO",
+    "GAMBLER",
+    "GAMMA_POISSON",
+    "GIBBS",
+    "HIERARCHICAL",
+    "HMC",
+    "HPD",
+    "JEFFREYS",
+    "LOG_ML",
+    "MARKOV",
+    "MH",
+    "MINIMAX",
+    "MLE_EFFICIENCY",
+    "MLE_MAP",
+    "MSE_COMPARE",
+    "NORMAL_GAMMA",
+    "OPT_SCALED",
+    "ORDER_STAT",
+    "PPC",
+    "RANGE_DIST",
+    "RC_BOUND",
+    "REGRESSION",
+    "RJMCMC",
+    "STATIONARY",
+    "UNIFORM_MLE",
+    "VB"
+  ],
+  "models": [
+    "claude",
+    "chatgpt",
+    "gemini",
+    "deepseek",
+    "mistral"
+  ],
+  "perturbation_types": [
+    "rephrase",
+    "numerical",
+    "semantic"
+  ],
+  "notes": "robustness = 1 - delta where delta = mean(base_score) - mean(pert_score). Lower delta = more robust. Base scores from experiments/results_v1/runs.jsonl. Pert scores from experiments/results_v2/perturbation_runs.jsonl."
+}

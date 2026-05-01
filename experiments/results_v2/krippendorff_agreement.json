@@ -1,0 +1,140 @@
+{
+  "_methodology_citation": "Methodology follows Park et al. (2025) [arxiv 2506.13639]; reliability concerns raised by 'When Judgment Becomes Noise' (arxiv 2509.20293).",
+  "n_joined": 1095,
+  "n_excluded_empty_assumption": 135,
+  "bootstrap_B": 1000,
+  "bootstrap_seed": 42,
+  "level_of_measurement": "ordinal (11-bin discretisation of [0,1])",
+  "thresholds": {
+    "questionable": "\u03b1 < 0.667",
+    "acceptable": "0.667 \u2264 \u03b1 \u2264 0.8",
+    "strong": "\u03b1 > 0.8"
+  },
+  "overall": {
+    "method_structure": {
+      "alpha": -0.042038537012678345,
+      "ci_lower": -0.09720178234128923,
+      "ci_upper": 0.01495555735726096,
+      "n": 1095
+    },
+    "assumption_compliance": {
+      "alpha": 0.5502247401317146,
+      "ci_lower": 0.5040888254588395,
+      "ci_upper": 0.5950602592865847,
+      "n": 1095
+    },
+    "reasoning_quality": {
+      "alpha": -0.13298413391400188,
+      "ci_lower": -0.2278798392880979,
+      "ci_upper": -0.039230774706326674,
+      "n": 460
+    }
+  },
+  "per_model": {
+    "chatgpt": {
+      "method_structure": {
+        "alpha": -0.06023081086229731,
+        "ci_lower": -0.1734640053236937,
+        "ci_upper": 0.06289309939011846,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5765336507897275,
+        "ci_lower": 0.4642288204925422,
+        "ci_upper": 0.6676262630946102,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.19296688653074923,
+        "ci_lower": -0.3705938782905371,
+        "ci_upper": -0.022250195442225548,
+        "n": 115
+      }
+    },
+    "claude": {
+      "method_structure": {
+        "alpha": -0.03454391104827592,
+        "ci_lower": -0.12308385287844287,
+        "ci_upper": 0.08611773188437208,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5008237936387732,
+        "ci_lower": 0.38369498515737466,
+        "ci_upper": 0.5975698493198213,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.12682914157754444,
+        "ci_lower": -0.31252850251627107,
+        "ci_upper": 0.044082796233679625,
+        "n": 115
+      }
+    },
+    "deepseek": {
+      "method_structure": {
+        "alpha": -0.10446159456478044,
+        "ci_lower": -0.21949448542704778,
+        "ci_upper": 0.020139725737861137,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5371143852578493,
+        "ci_lower": 0.416271419574732,
+        "ci_upper": 0.6343457254195459,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.2001986028600693,
+        "ci_lower": -0.36940460958410537,
+        "ci_upper": -0.03339684466071218,
+        "n": 115
+      }
+    },
+    "gemini": {
+      "method_structure": {
+        "alpha": -0.10271835208011071,
+        "ci_lower": -0.16433112172934627,
+        "ci_upper": -0.0032588860755973755,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5387103041862089,
+        "ci_lower": 0.4322318491877503,
+        "ci_upper": 0.6316191622360228,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": NaN,
+        "ci_lower": NaN,
+        "ci_upper": NaN,
+        "n": 0
+      }
+    },
+    "mistral": {
+      "method_structure": {
+        "alpha": 0.011256363723627927,
+        "ci_lower": -0.11407116627256433,
+        "ci_upper": 0.14567890408864917,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5941708159667488,
+        "ci_lower": 0.49059375144475226,
+        "ci_upper": 0.6829435656676063,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.05566656218427202,
+        "ci_lower": -0.23093227503354216,
+        "ci_upper": 0.11183558121289047,
+        "n": 115
+      }
+    }
+  },
+  "interpretation": {
+    "method_structure": "questionable",
+    "assumption_compliance": "questionable",
+    "reasoning_quality": "questionable"
+  }
+}

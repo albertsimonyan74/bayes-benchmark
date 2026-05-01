@@ -1,30 +1,30 @@
 {
-  "n_joined": 1094,
-  "n_with_both_assumption_scores": 1094,
+  "n_joined": 1095,
+  "n_with_both_assumption_scores": 1095,
   "overall_per_dimension": {
     "method_structure": {
-      "n": 1094,
-      "spearman_rho": -0.00986665457914776,
-      "pearson_r": -0.018276436737926678,
-      "cohen_kappa_pass_fail": 0.007679748442885659,
-      "mean_abs_diff": 0.16179159049360145,
+      "n": 1095,
+      "spearman_rho": -0.009685121773967877,
+      "pearson_r": -0.018117178756862393,
+      "cohen_kappa_pass_fail": 0.0077027639329406705,
+      "mean_abs_diff": 0.16164383561643836,
       "major_disagreements_gt_0_5": 51,
-      "kw_mean": 0.8779707495429616,
-      "judge_mean": 0.9405850091407678,
-      "kw_pass_rate": 0.9616087751371115,
-      "judge_pass_rate": 0.9817184643510055
+      "kw_mean": 0.8780821917808219,
+      "judge_mean": 0.9406392694063926,
+      "kw_pass_rate": 0.9616438356164384,
+      "judge_pass_rate": 0.9817351598173516
     },
     "assumption_compliance": {
-      "n": 1094,
-      "spearman_rho": 0.5914497458378479,
-      "pearson_r": 0.5809249841202105,
-      "cohen_kappa_pass_fail": 0.4068363126626179,
-      "mean_abs_diff": 0.26614868982327844,
+      "n": 1095,
+      "spearman_rho": 0.5919117049313085,
+      "pearson_r": 0.5813740986988143,
+      "cohen_kappa_pass_fail": 0.407181952027888,
+      "mean_abs_diff": 0.2659056316590563,
       "major_disagreements_gt_0_5": 120,
-      "kw_mean": 0.5650517976843388,
-      "judge_mean": 0.44149908592321757,
-      "kw_pass_rate": 0.6864716636197441,
-      "judge_pass_rate": 0.4853747714808044
+      "kw_mean": 0.56544901065449,
+      "judge_mean": 0.4420091324200913,
+      "kw_pass_rate": 0.6867579908675799,
+      "judge_pass_rate": 0.4858447488584475
     },
     "reasoning_quality": {
       "n": 460,
@@ -185,28 +185,28 @@
     },
     "mistral": {
       "method_structure": {
-        "n": 218,
-        "spearman_rho": 0.04910053612965792,
-        "pearson_r": 0.028532172559980522,
-        "cohen_kappa_pass_fail": -0.03346346904629116,
-        "mean_abs_diff": 0.1731651376146789,
+        "n": 219,
+        "spearman_rho": 0.050022903063490685,
+        "pearson_r": 0.02936222051047148,
+        "cohen_kappa_pass_fail": -0.033305578684429626,
+        "mean_abs_diff": 0.1723744292237443,
         "major_disagreements_gt_0_5": 13,
-        "kw_mean": 0.8627675840978593,
-        "judge_mean": 0.9334862385321101,
-        "kw_pass_rate": 0.944954128440367,
-        "judge_pass_rate": 0.9770642201834863
+        "kw_mean": 0.8633942161339421,
+        "judge_mean": 0.9337899543378996,
+        "kw_pass_rate": 0.9452054794520548,
+        "judge_pass_rate": 0.9771689497716894
       },
       "assumption_compliance": {
-        "n": 218,
-        "spearman_rho": 0.6603799543343419,
-        "pearson_r": 0.6477775326055972,
-        "cohen_kappa_pass_fail": 0.49045242056889315,
-        "mean_abs_diff": 0.25,
+        "n": 219,
+        "spearman_rho": 0.6624781490078702,
+        "pearson_r": 0.650130136896913,
+        "cohen_kappa_pass_fail": 0.49215894352081124,
+        "mean_abs_diff": 0.24885844748858446,
         "major_disagreements_gt_0_5": 17,
-        "kw_mean": 0.5275229357798165,
-        "judge_mean": 0.36926605504587157,
-        "kw_pass_rate": 0.6697247706422018,
-        "judge_pass_rate": 0.40825688073394495
+        "kw_mean": 0.5296803652968036,
+        "judge_mean": 0.3721461187214612,
+        "kw_pass_rate": 0.6712328767123288,
+        "judge_pass_rate": 0.410958904109589
       },
       "reasoning_quality": {
         "n": 115,
@@ -254,28 +254,28 @@
     },
     "BAYES_FACTOR": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.46,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.54,
+        "cohen_kappa_pass_fail": 0.0,
+        "mean_abs_diff": 0.4625,
+        "major_disagreements_gt_0_5": 1,
+        "kw_mean": 0.5375,
         "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
+        "kw_pass_rate": 0.975,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": -0.17991366215827537,
-        "pearson_r": -0.19907439821819864,
-        "cohen_kappa_pass_fail": -0.14678899082568808,
-        "mean_abs_diff": 0.48,
-        "major_disagreements_gt_0_5": 7,
-        "kw_mean": 0.68,
-        "judge_mean": 0.72,
-        "kw_pass_rate": 0.68,
-        "judge_pass_rate": 0.92
+        "n": 40,
+        "spearman_rho": -0.003225121899010986,
+        "pearson_r": -0.03980937143290166,
+        "cohen_kappa_pass_fail": -0.12244897959183665,
+        "mean_abs_diff": 0.3375,
+        "major_disagreements_gt_0_5": 8,
+        "kw_mean": 0.8,
+        "judge_mean": 0.7875,
+        "kw_pass_rate": 0.8,
+        "judge_pass_rate": 0.925
       },
       "reasoning_quality": {
         "n": 20,
@@ -288,93 +288,6 @@
         "judge_mean": 0.925,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
-      }
-    },
-    "BAYES_FACTOR_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.6,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BAYES_FACTOR_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.4,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BAYES_FACTOR_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.6,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 1.0,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "BAYES_REG": {
@@ -417,7 +330,7 @@
     },
     "BETA_BINOM": {
       "method_structure": {
-        "n": 5,
+        "n": 20,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -429,16 +342,16 @@
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 5,
+        "n": 20,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
         "mean_abs_diff": 0.5,
         "major_disagreements_gt_0_5": 0,
         "kw_mean": 0.5,
-        "judge_mean": 0.6,
+        "judge_mean": 0.35,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.6
+        "judge_pass_rate": 0.35
       },
       "reasoning_quality": {
         "n": 4,
@@ -453,96 +366,9 @@
         "judge_pass_rate": 1.0
       }
     },
-    "BETA_BINOM_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BETA_BINOM_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BETA_BINOM_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.4,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "BIAS_VAR": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -554,16 +380,16 @@
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": 0.6442443679814404,
-        "pearson_r": 0.6666937223947134,
-        "cohen_kappa_pass_fail": 0.5819397993311037,
-        "mean_abs_diff": 0.18,
-        "major_disagreements_gt_0_5": 4,
-        "kw_mean": 0.3,
-        "judge_mean": 0.44,
-        "kw_pass_rate": 0.32,
-        "judge_pass_rate": 0.44
+        "n": 40,
+        "spearman_rho": 0.6040412468337292,
+        "pearson_r": 0.6043600889943641,
+        "cohen_kappa_pass_fail": 0.5907928388746804,
+        "mean_abs_diff": 0.2,
+        "major_disagreements_gt_0_5": 7,
+        "kw_mean": 0.4,
+        "judge_mean": 0.425,
+        "kw_pass_rate": 0.425,
+        "judge_pass_rate": 0.425
       },
       "reasoning_quality": {
         "n": 20,
@@ -578,114 +404,27 @@
         "judge_pass_rate": 1.0
       }
     },
-    "BIAS_VAR_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 1.0,
-        "pearson_r": 0.9999999999999999,
-        "cohen_kappa_pass_fail": 1.0,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.2,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 0.2,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BIAS_VAR_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.408248290463863,
-        "pearson_r": 0.408248290463863,
-        "cohen_kappa_pass_fail": 0.2857142857142857,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.6,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BIAS_VAR_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": -0.25,
-        "pearson_r": -0.24999999999999994,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.9,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "BINOM_FLAT": {
       "method_structure": {
-        "n": 25,
+        "n": 55,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.09333333333333334,
+        "mean_abs_diff": 0.09696969696969697,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9066666666666666,
+        "kw_mean": 0.903030303030303,
         "judge_mean": 1.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 55,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
+        "mean_abs_diff": 0.5181818181818182,
+        "major_disagreements_gt_0_5": 2,
+        "kw_mean": 0.5181818181818182,
         "judge_mean": 0.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 0.0
@@ -703,204 +442,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "BINOM_FLAT_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BINOM_FLAT_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.7999999999999999,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.6,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BINOM_FLAT_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BINOM_FLAT_02_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BINOM_FLAT_02_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.6,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BINOM_FLAT_02_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "BOX_MULLER": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6000000000000001,
-        "major_disagreements_gt_0_5": 14,
-        "kw_mean": 0.3999999999999999,
+        "mean_abs_diff": 0.55,
+        "major_disagreements_gt_0_5": 23,
+        "kw_mean": 0.45,
         "judge_mean": 1.0,
-        "kw_pass_rate": 0.44,
+        "kw_pass_rate": 0.425,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": 0.524749767832802,
-        "pearson_r": 0.5247497678328021,
-        "cohen_kappa_pass_fail": 0.43181818181818177,
-        "mean_abs_diff": 0.16,
-        "major_disagreements_gt_0_5": 4,
-        "kw_mean": 0.24,
-        "judge_mean": 0.08,
-        "kw_pass_rate": 0.24,
-        "judge_pass_rate": 0.08
+        "n": 40,
+        "spearman_rho": 0.3322052985133746,
+        "pearson_r": 0.3322052985133746,
+        "cohen_kappa_pass_fail": 0.2857142857142858,
+        "mean_abs_diff": 0.175,
+        "major_disagreements_gt_0_5": 7,
+        "kw_mean": 0.2,
+        "judge_mean": 0.075,
+        "kw_pass_rate": 0.2,
+        "judge_pass_rate": 0.075
       },
       "reasoning_quality": {
         "n": 20,
@@ -915,96 +480,9 @@
         "judge_pass_rate": 1.0
       }
     },
-    "BOX_MULLER_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5333333333333334,
-        "major_disagreements_gt_0_5": 4,
-        "kw_mean": 0.4666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.2,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.4,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BOX_MULLER_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.33333333333333337,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.6666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "BOX_MULLER_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5333333333333334,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 0.4666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.0,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "CI_CREDIBLE": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -1016,16 +494,16 @@
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": -0.2533201985524494,
-        "pearson_r": -0.25332019855244947,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
+        "n": 40,
+        "spearman_rho": -0.03765550294190571,
+        "pearson_r": 0.05771206647715621,
+        "cohen_kappa_pass_fail": 0.16230366492146608,
+        "mean_abs_diff": 0.525,
         "major_disagreements_gt_0_5": 8,
-        "kw_mean": 0.34,
-        "judge_mean": 0.94,
-        "kw_pass_rate": 0.68,
-        "judge_pass_rate": 1.0
+        "kw_mean": 0.3875,
+        "judge_mean": 0.9125,
+        "kw_pass_rate": 0.775,
+        "judge_pass_rate": 0.975
       },
       "reasoning_quality": {
         "n": 20,
@@ -1038,93 +516,6 @@
         "judge_mean": 1.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
-      }
-    },
-    "CI_CREDIBLE_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "CI_CREDIBLE_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.7453559924999299,
-        "pearson_r": 0.801783725737273,
-        "cohen_kappa_pass_fail": 1.0,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.4,
-        "judge_mean": 0.6,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "CI_CREDIBLE_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "DIRICHLET": {
@@ -1167,28 +558,28 @@
     },
     "DISC_MEDIAN": {
       "method_structure": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
+        "n": 40,
+        "spearman_rho": 0.9999999999999999,
+        "pearson_r": 1.0,
+        "cohen_kappa_pass_fail": 0.0,
+        "mean_abs_diff": 0.0125,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
+        "kw_mean": 0.9875,
+        "judge_mean": 0.975,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
+        "judge_pass_rate": 0.975
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": 0.24242424242424235,
-        "pearson_r": 0.24242424242424235,
-        "cohen_kappa_pass_fail": 0.24242424242424243,
-        "mean_abs_diff": 0.14,
+        "n": 40,
+        "spearman_rho": 0.1793740008335438,
+        "pearson_r": 0.17937400083354377,
+        "cohen_kappa_pass_fail": 0.1724137931034483,
+        "mean_abs_diff": 0.1125,
         "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.12,
-        "judge_mean": 0.06,
-        "kw_pass_rate": 0.12,
-        "judge_pass_rate": 0.12
+        "kw_mean": 0.075,
+        "judge_mean": 0.0625,
+        "kw_pass_rate": 0.075,
+        "judge_pass_rate": 0.125
       },
       "reasoning_quality": {
         "n": 20,
@@ -1203,117 +594,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "DISC_MEDIAN_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.1,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "DISC_MEDIAN_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "DISC_MEDIAN_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": 1.0,
-        "pearson_r": 0.9999999999999999,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.1,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "FISHER_INFO": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.48,
+        "mean_abs_diff": 0.4875,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.52,
+        "kw_mean": 0.5125,
         "judge_mean": 1.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.12,
+        "mean_abs_diff": 0.075,
         "major_disagreements_gt_0_5": 1,
         "kw_mean": 0.0,
-        "judge_mean": 0.12,
+        "judge_mean": 0.075,
         "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.2
+        "judge_pass_rate": 0.125
       },
       "reasoning_quality": {
         "n": 20,
@@ -1328,96 +632,9 @@
         "judge_pass_rate": 1.0
       }
     },
-    "FISHER_INFO_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "FISHER_INFO_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "FISHER_INFO_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "GAMBLER": {
       "method_structure": {
-        "n": 15,
+        "n": 30,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -1429,16 +646,16 @@
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 15,
+        "n": 30,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.8,
-        "major_disagreements_gt_0_5": 12,
+        "mean_abs_diff": 0.7,
+        "major_disagreements_gt_0_5": 21,
         "kw_mean": 1.0,
-        "judge_mean": 0.2,
+        "judge_mean": 0.3,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.2
+        "judge_pass_rate": 0.3
       },
       "reasoning_quality": {
         "n": 12,
@@ -1451,93 +668,6 @@
         "judge_mean": 1.0,
         "kw_pass_rate": 0.75,
         "judge_pass_rate": 1.0
-      }
-    },
-    "GAMBLER_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.8,
-        "major_disagreements_gt_0_5": 4,
-        "kw_mean": 1.0,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "GAMBLER_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 1.0,
-        "judge_mean": 0.6,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.6
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "GAMBLER_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 1.0,
-        "judge_mean": 0.4,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "GAMMA_POISSON": {
@@ -1667,26 +797,26 @@
     },
     "HPD": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.02,
+        "mean_abs_diff": 0.025,
         "major_disagreements_gt_0_5": 0,
         "kw_mean": 1.0,
-        "judge_mean": 0.98,
+        "judge_mean": 0.975,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
+        "mean_abs_diff": 0.025,
         "major_disagreements_gt_0_5": 0,
         "kw_mean": 1.0,
-        "judge_mean": 1.0,
+        "judge_mean": 0.975,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
@@ -1703,108 +833,21 @@
         "judge_pass_rate": 1.0
       }
     },
-    "HPD_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "HPD_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "HPD_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "JEFFREYS": {
       "method_structure": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 7,
-        "kw_mean": 1.0,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.72
+        "n": 40,
+        "spearman_rho": -0.05856678416471355,
+        "pearson_r": -0.10894907134746859,
+        "cohen_kappa_pass_fail": -0.04838709677419373,
+        "mean_abs_diff": 0.3958333333333333,
+        "major_disagreements_gt_0_5": 13,
+        "kw_mean": 0.975,
+        "judge_mean": 0.6125,
+        "kw_pass_rate": 0.975,
+        "judge_pass_rate": 0.7
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
@@ -1828,116 +871,29 @@
         "judge_pass_rate": 1.0
       }
     },
-    "JEFFREYS_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "JEFFREYS_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 1.0,
-        "major_disagreements_gt_0_5": 5,
-        "kw_mean": 1.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "JEFFREYS_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": -0.3227486121839514,
-        "pearson_r": -0.4082482904638629,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3666666666666667,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.7999999999999999,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "LOG_ML": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.06,
+        "mean_abs_diff": 0.05,
         "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.94,
+        "kw_mean": 0.95,
         "judge_mean": 1.0,
-        "kw_pass_rate": 0.96,
+        "kw_pass_rate": 0.975,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.26,
+        "mean_abs_diff": 0.3,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.26,
+        "kw_mean": 0.3,
         "judge_mean": 0.0,
-        "kw_pass_rate": 0.52,
+        "kw_pass_rate": 0.6,
         "judge_pass_rate": 0.0
       },
       "reasoning_quality": {
@@ -1953,117 +909,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "LOG_ML_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.4,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "LOG_ML_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.2,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "LOG_ML_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "MARKOV": {
       "method_structure": {
-        "n": 20,
+        "n": 35,
         "spearman_rho": null,
         "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.18333333333333335,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8166666666666667,
+        "cohen_kappa_pass_fail": 0.0,
+        "mean_abs_diff": 0.1523809523809524,
+        "major_disagreements_gt_0_5": 1,
+        "kw_mean": 0.8476190476190476,
         "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
+        "kw_pass_rate": 0.9714285714285714,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 20,
-        "spearman_rho": 0.22941573387056174,
-        "pearson_r": 0.22941573387056183,
-        "cohen_kappa_pass_fail": 0.09999999999999998,
-        "mean_abs_diff": 0.45,
+        "n": 35,
+        "spearman_rho": 0.27116307227332015,
+        "pearson_r": 0.2711630722733202,
+        "cohen_kappa_pass_fail": 0.1369863013698629,
+        "mean_abs_diff": 0.2571428571428571,
         "major_disagreements_gt_0_5": 9,
-        "kw_mean": 0.5,
-        "judge_mean": 0.05,
-        "kw_pass_rate": 0.5,
-        "judge_pass_rate": 0.05
+        "kw_mean": 0.2857142857142857,
+        "judge_mean": 0.02857142857142857,
+        "kw_pass_rate": 0.2857142857142857,
+        "judge_pass_rate": 0.02857142857142857
       },
       "reasoning_quality": {
         "n": 16,
@@ -2076,93 +945,6 @@
         "judge_mean": 0.875,
         "kw_pass_rate": 0.375,
         "judge_pass_rate": 1.0
-      }
-    },
-    "MARKOV_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.06666666666666668,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9333333333333333,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MARKOV_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.8666666666666668,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MARKOV_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "MH": {
@@ -2196,28 +978,28 @@
     },
     "MLE_EFFICIENCY": {
       "method_structure": {
-        "n": 15,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.13333333333333336,
+        "n": 30,
+        "spearman_rho": 0.1530203224483213,
+        "pearson_r": 0.2710389733295721,
+        "cohen_kappa_pass_fail": 0.0,
+        "mean_abs_diff": 0.14444444444444446,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
+        "kw_mean": 0.8555555555555556,
+        "judge_mean": 0.9666666666666667,
+        "kw_pass_rate": 0.9666666666666667,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 15,
-        "spearman_rho": -0.06804138174397717,
-        "pearson_r": -0.06804138174397723,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 5,
+        "n": 30,
+        "spearman_rho": 0.16193756890782393,
+        "pearson_r": 0.15161960871578062,
+        "cohen_kappa_pass_fail": 0.0625,
+        "mean_abs_diff": 0.5,
+        "major_disagreements_gt_0_5": 6,
         "kw_mean": 0.3,
-        "judge_mean": 0.9,
+        "judge_mean": 0.7333333333333333,
         "kw_pass_rate": 0.6,
-        "judge_pass_rate": 1.0
+        "judge_pass_rate": 0.8666666666666667
       },
       "reasoning_quality": {
         "n": 12,
@@ -2232,116 +1014,29 @@
         "judge_pass_rate": 1.0
       }
     },
-    "MLE_EFFICIENCY_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": -0.408248290463863,
-        "pearson_r": -0.4082482904638631,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.23333333333333334,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8666666666666666,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.16666666666666669,
-        "pearson_r": 0.16666666666666674,
-        "cohen_kappa_pass_fail": 0.16666666666666663,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.3,
-        "judge_mean": 0.3,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 0.6
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MLE_EFFICIENCY_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": 0.7905694150420948,
-        "pearson_r": 0.7905694150420948,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.2333333333333334,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.6666666666666666,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": -0.5590169943749475,
-        "pearson_r": -0.5345224838248487,
-        "cohen_kappa_pass_fail": -0.4285714285714286,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.1,
-        "judge_mean": 0.4,
-        "kw_pass_rate": 0.2,
-        "judge_pass_rate": 0.6
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MLE_EFFICIENCY_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "MLE_MAP": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.16,
-        "major_disagreements_gt_0_5": 4,
+        "mean_abs_diff": 0.1375,
+        "major_disagreements_gt_0_5": 5,
         "kw_mean": 1.0,
-        "judge_mean": 0.84,
+        "judge_mean": 0.8625,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.84
+        "judge_pass_rate": 0.875
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.46,
+        "mean_abs_diff": 0.4375,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.46,
+        "kw_mean": 0.4375,
         "judge_mean": 0.0,
-        "kw_pass_rate": 0.92,
+        "kw_pass_rate": 0.875,
         "judge_pass_rate": 0.0
       },
       "reasoning_quality": {
@@ -2357,117 +1052,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "MLE_MAP_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 1.0,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.4,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MLE_MAP_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MLE_MAP_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.3,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "MSE_COMPARE": {
       "method_structure": {
-        "n": 25,
-        "spearman_rho": -0.12030741729521699,
-        "pearson_r": -0.0912870929175277,
-        "cohen_kappa_pass_fail": -0.05633802816901423,
-        "mean_abs_diff": 0.37,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 0.65,
-        "judge_mean": 0.96,
-        "kw_pass_rate": 0.92,
-        "judge_pass_rate": 0.96
+        "n": 40,
+        "spearman_rho": 0.05250808657999055,
+        "pearson_r": 0.11148365158854884,
+        "cohen_kappa_pass_fail": 0.23076923076923073,
+        "mean_abs_diff": 0.35625,
+        "major_disagreements_gt_0_5": 5,
+        "kw_mean": 0.64375,
+        "judge_mean": 0.9375,
+        "kw_pass_rate": 0.875,
+        "judge_pass_rate": 0.95
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": 0.4923659639173309,
-        "pearson_r": 0.49236596391733084,
-        "cohen_kappa_pass_fail": 0.3902439024390244,
-        "mean_abs_diff": 0.24,
-        "major_disagreements_gt_0_5": 6,
-        "kw_mean": 0.36,
-        "judge_mean": 0.12,
-        "kw_pass_rate": 0.36,
-        "judge_pass_rate": 0.12
+        "n": 40,
+        "spearman_rho": 0.4909012304667828,
+        "pearson_r": 0.49558389400541875,
+        "cohen_kappa_pass_fail": 0.3264248704663212,
+        "mean_abs_diff": 0.2875,
+        "major_disagreements_gt_0_5": 10,
+        "kw_mean": 0.4375,
+        "judge_mean": 0.15,
+        "kw_pass_rate": 0.475,
+        "judge_pass_rate": 0.15
       },
       "reasoning_quality": {
         "n": 20,
@@ -2480,93 +1088,6 @@
         "judge_mean": 1.0,
         "kw_pass_rate": 0.5,
         "judge_pass_rate": 1.0
-      }
-    },
-    "MSE_COMPARE_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": 0.5590169943749473,
-        "pearson_r": 0.4564354645876385,
-        "cohen_kappa_pass_fail": 0.5454545454545454,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.5,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 0.8
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.6123724356957945,
-        "pearson_r": 0.6123724356957946,
-        "cohen_kappa_pass_fail": 0.5454545454545454,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.4,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MSE_COMPARE_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.35,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.65,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 0.6,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.6,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "MSE_COMPARE_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.25,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.75,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 1.0,
-        "pearson_r": 1.0,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.3,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.7,
-        "judge_mean": 0.4,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "NORMAL_GAMMA": {
@@ -2609,28 +1130,28 @@
     },
     "OPT_SCALED": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
+        "mean_abs_diff": 0.008333333333333335,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
+        "kw_mean": 0.9916666666666666,
         "judge_mean": 1.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.08,
+        "n": 40,
+        "spearman_rho": 0.6262242910851494,
+        "pearson_r": 0.8067842963896241,
+        "cohen_kappa_pass_fail": 1.0,
+        "mean_abs_diff": 0.075,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.92,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
+        "kw_mean": 0.85,
+        "judge_mean": 0.925,
+        "kw_pass_rate": 0.925,
+        "judge_pass_rate": 0.925
       },
       "reasoning_quality": {
         "n": 20,
@@ -2645,117 +1166,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "OPT_SCALED_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "OPT_SCALED_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.06666666666666668,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9333333333333332,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 1.0,
-        "pearson_r": 1.0,
-        "cohen_kappa_pass_fail": 1.0,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.4,
-        "judge_mean": 0.4,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "OPT_SCALED_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.8,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "ORDER_STAT": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.3,
+        "mean_abs_diff": 0.2625,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.7,
+        "kw_mean": 0.7375,
         "judge_mean": 1.0,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": 0.2738095238095238,
-        "pearson_r": 0.28253903306663525,
-        "cohen_kappa_pass_fail": 0.07407407407407418,
-        "mean_abs_diff": 0.44,
-        "major_disagreements_gt_0_5": 5,
-        "kw_mean": 0.74,
-        "judge_mean": 0.46,
-        "kw_pass_rate": 0.96,
-        "judge_pass_rate": 0.48
+        "n": 40,
+        "spearman_rho": 0.07498901175332089,
+        "pearson_r": 0.11116760445984518,
+        "cohen_kappa_pass_fail": 0.12442396313364068,
+        "mean_abs_diff": 0.5,
+        "major_disagreements_gt_0_5": 11,
+        "kw_mean": 0.725,
+        "judge_mean": 0.425,
+        "kw_pass_rate": 0.925,
+        "judge_pass_rate": 0.45
       },
       "reasoning_quality": {
         "n": 20,
@@ -2768,93 +1202,6 @@
         "judge_mean": 0.9125,
         "kw_pass_rate": 0.4,
         "judge_pass_rate": 1.0
-      }
-    },
-    "ORDER_STAT_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.25,
-        "pearson_r": 0.24999999999999994,
-        "cohen_kappa_pass_fail": 0.11764705882352955,
-        "mean_abs_diff": 0.6,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 0.8,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "ORDER_STAT_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": -1.0,
-        "pearson_r": -1.0,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.7,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.7,
-        "judge_mean": 0.6,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.6
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "ORDER_STAT_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.17677669529663687,
-        "pearson_r": 0.13363062095621217,
-        "cohen_kappa_pass_fail": 0.2857142857142857,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.6,
-        "judge_mean": 0.3,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "PPC": {
@@ -2935,28 +1282,28 @@
     },
     "RC_BOUND": {
       "method_structure": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
+        "n": 40,
+        "spearman_rho": 0.2971852760805762,
+        "pearson_r": 0.29718527608057627,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
+        "mean_abs_diff": 0.1,
         "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
+        "kw_mean": 0.8875,
+        "judge_mean": 0.9875,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
+        "n": 40,
+        "spearman_rho": 0.3361964710249493,
+        "pearson_r": 0.3100868364730211,
+        "cohen_kappa_pass_fail": 0.21875,
+        "mean_abs_diff": 0.25,
+        "major_disagreements_gt_0_5": 8,
+        "kw_mean": 0.8,
+        "judge_mean": 0.75,
+        "kw_pass_rate": 0.8,
+        "judge_pass_rate": 0.8
       },
       "reasoning_quality": {
         "n": 20,
@@ -2971,117 +1318,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "RC_BOUND_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.5,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.7,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 0.0,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "RC_BOUND_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": 0.408248290463863,
-        "pearson_r": 0.4082482904638629,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.7,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": -0.408248290463863,
-        "pearson_r": -0.408248290463863,
-        "cohen_kappa_pass_fail": -0.36363636363636354,
-        "mean_abs_diff": 0.5,
-        "major_disagreements_gt_0_5": 2,
-        "kw_mean": 0.4,
-        "judge_mean": 0.1,
-        "kw_pass_rate": 0.4,
-        "judge_pass_rate": 0.2
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "RC_BOUND_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.8,
-        "major_disagreements_gt_0_5": 3,
-        "kw_mean": 1.0,
-        "judge_mean": 0.2,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.4
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "REGRESSION": {
       "method_structure": {
-        "n": 25,
-        "spearman_rho": 0.32308083830512463,
-        "pearson_r": 0.29442471050670116,
+        "n": 40,
+        "spearman_rho": 0.3235371693026244,
+        "pearson_r": 0.32029890646552805,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.29,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.69,
-        "judge_mean": 0.54,
-        "kw_pass_rate": 0.72,
+        "mean_abs_diff": 0.24375,
+        "major_disagreements_gt_0_5": 1,
+        "kw_mean": 0.74375,
+        "judge_mean": 0.7125,
+        "kw_pass_rate": 0.8,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.04,
+        "mean_abs_diff": 0.025,
         "major_disagreements_gt_0_5": 1,
         "kw_mean": 0.0,
-        "judge_mean": 0.04,
+        "judge_mean": 0.025,
         "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.04
+        "judge_pass_rate": 0.025
       },
       "reasoning_quality": {
         "n": 20,
@@ -3094,93 +1354,6 @@
         "judge_mean": 0.5125,
         "kw_pass_rate": 0.5,
         "judge_pass_rate": 1.0
-      }
-    },
-    "REGRESSION_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.6,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "REGRESSION_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.05,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.95,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "REGRESSION_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.05,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.95,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
       }
     },
     "RJMCMC": {
@@ -3214,19 +1387,19 @@
     },
     "STATIONARY": {
       "method_structure": {
-        "n": 15,
-        "spearman_rho": -0.13363062095621217,
-        "pearson_r": -0.1336306209562122,
-        "cohen_kappa_pass_fail": null,
+        "n": 30,
+        "spearman_rho": -0.11920540257484746,
+        "pearson_r": -0.1122721782847679,
+        "cohen_kappa_pass_fail": 0.0,
         "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
+        "major_disagreements_gt_0_5": 1,
         "kw_mean": 0.9333333333333333,
         "judge_mean": 0.9666666666666667,
-        "kw_pass_rate": 1.0,
+        "kw_pass_rate": 0.9666666666666667,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 15,
+        "n": 30,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -3250,96 +1423,9 @@
         "judge_pass_rate": 1.0
       }
     },
-    "STATIONARY_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "STATIONARY_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.13333333333333336,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 0.8666666666666668,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 0.8,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "STATIONARY_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": -0.25,
-        "pearson_r": -0.24999999999999997,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.16666666666666669,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9333333333333332,
-        "judge_mean": 0.9,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.0,
-        "judge_mean": 0.0,
-        "kw_pass_rate": 0.0,
-        "judge_pass_rate": 0.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "UNIFORM_MLE": {
       "method_structure": {
-        "n": 25,
+        "n": 40,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
@@ -3351,16 +1437,16 @@
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 25,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.08,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 0.92,
+        "n": 40,
+        "spearman_rho": 0.4142548181614656,
+        "pearson_r": 0.47699146421803273,
+        "cohen_kappa_pass_fail": 0.0,
+        "mean_abs_diff": 0.1375,
+        "major_disagreements_gt_0_5": 1,
+        "kw_mean": 0.975,
+        "judge_mean": 0.8375,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
+        "judge_pass_rate": 0.95
       },
       "reasoning_quality": {
         "n": 20,
@@ -3375,117 +1461,30 @@
         "judge_pass_rate": 1.0
       }
     },
-    "UNIFORM_MLE_01_numerical": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.6123724356957945,
-        "pearson_r": 0.6123724356957945,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.1,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 0.8,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "UNIFORM_MLE_01_rephrase": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.4,
-        "major_disagreements_gt_0_5": 1,
-        "kw_mean": 1.0,
-        "judge_mean": 0.6,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
-    "UNIFORM_MLE_01_semantic": {
-      "method_structure": {
-        "n": 5,
-        "spearman_rho": null,
-        "pearson_r": null,
-        "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.0,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 1.0,
-        "judge_mean": 1.0,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 1.0
-      },
-      "assumption_compliance": {
-        "n": 5,
-        "spearman_rho": 0.7905694150420948,
-        "pearson_r": 0.875,
-        "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.2,
-        "major_disagreements_gt_0_5": 0,
-        "kw_mean": 0.9,
-        "judge_mean": 0.7,
-        "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.8
-      },
-      "reasoning_quality": {
-        "n": 0
-      }
-    },
     "VB": {
       "method_structure": {
-        "n": 24,
+        "n": 25,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": null,
-        "mean_abs_diff": 0.08333333333333333,
+        "mean_abs_diff": 0.08,
         "major_disagreements_gt_0_5": 0,
         "kw_mean": 1.0,
-        "judge_mean": 0.9166666666666666,
+        "judge_mean": 0.92,
         "kw_pass_rate": 1.0,
         "judge_pass_rate": 1.0
       },
       "assumption_compliance": {
-        "n": 24,
+        "n": 25,
         "spearman_rho": null,
         "pearson_r": null,
         "cohen_kappa_pass_fail": 0.0,
-        "mean_abs_diff": 0.1875,
+        "mean_abs_diff": 0.18,
         "major_disagreements_gt_0_5": 2,
         "kw_mean": 1.0,
-        "judge_mean": 0.8125,
+        "judge_mean": 0.82,
         "kw_pass_rate": 1.0,
-        "judge_pass_rate": 0.9166666666666666
+        "judge_pass_rate": 0.92
       },
       "reasoning_quality": {
         "n": 0
@@ -3495,11 +1494,139 @@
   "pass_flip_assumption": {
     "keyword_pass_judge_fail": 274,
     "keyword_fail_judge_pass": 54,
-    "n_compared": 1094,
-    "kw_pass_judge_fail_pct": 25.045703839122485
+    "n_compared": 1095,
+    "kw_pass_judge_fail_pct": 25.022831050228312
   },
   "judge_completeness_alone": {
-    "mean": 0.9570383912248629,
-    "n": 1094
+    "mean": 0.9570776255707762,
+    "n": 1095
+  },
+  "_methodology_citation": "Methodology follows Park et al. (2025) [arxiv 2506.13639]; reliability concerns raised by 'When Judgment Becomes Noise' (arxiv 2509.20293).",
+  "alpha_overall": {
+    "method_structure": {
+      "alpha": -0.042038537012678345,
+      "ci_lower": -0.09720178234128923,
+      "ci_upper": 0.01495555735726096,
+      "n": 1095
+    },
+    "assumption_compliance": {
+      "alpha": 0.5502247401317146,
+      "ci_lower": 0.5040888254588395,
+      "ci_upper": 0.5950602592865847,
+      "n": 1095
+    },
+    "reasoning_quality": {
+      "alpha": -0.13298413391400188,
+      "ci_lower": -0.2278798392880979,
+      "ci_upper": -0.039230774706326674,
+      "n": 460
+    }
+  },
+  "alpha_per_dim_interpretation": {
+    "method_structure": "questionable",
+    "assumption_compliance": "questionable",
+    "reasoning_quality": "questionable"
+  },
+  "alpha_per_model": {
+    "chatgpt": {
+      "method_structure": {
+        "alpha": -0.06023081086229731,
+        "ci_lower": -0.1734640053236937,
+        "ci_upper": 0.06289309939011846,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5765336507897275,
+        "ci_lower": 0.4642288204925422,
+        "ci_upper": 0.6676262630946102,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.19296688653074923,
+        "ci_lower": -0.3705938782905371,
+        "ci_upper": -0.022250195442225548,
+        "n": 115
+      }
+    },
+    "claude": {
+      "method_structure": {
+        "alpha": -0.03454391104827592,
+        "ci_lower": -0.12308385287844287,
+        "ci_upper": 0.08611773188437208,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5008237936387732,
+        "ci_lower": 0.38369498515737466,
+        "ci_upper": 0.5975698493198213,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.12682914157754444,
+        "ci_lower": -0.31252850251627107,
+        "ci_upper": 0.044082796233679625,
+        "n": 115
+      }
+    },
+    "deepseek": {
+      "method_structure": {
+        "alpha": -0.10446159456478044,
+        "ci_lower": -0.21949448542704778,
+        "ci_upper": 0.020139725737861137,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5371143852578493,
+        "ci_lower": 0.416271419574732,
+        "ci_upper": 0.6343457254195459,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.2001986028600693,
+        "ci_lower": -0.36940460958410537,
+        "ci_upper": -0.03339684466071218,
+        "n": 115
+      }
+    },
+    "gemini": {
+      "method_structure": {
+        "alpha": -0.10271835208011071,
+        "ci_lower": -0.16433112172934627,
+        "ci_upper": -0.0032588860755973755,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5387103041862089,
+        "ci_lower": 0.4322318491877503,
+        "ci_upper": 0.6316191622360228,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": NaN,
+        "ci_lower": NaN,
+        "ci_upper": NaN,
+        "n": 0
+      }
+    },
+    "mistral": {
+      "method_structure": {
+        "alpha": 0.011256363723627927,
+        "ci_lower": -0.11407116627256433,
+        "ci_upper": 0.14567890408864917,
+        "n": 219
+      },
+      "assumption_compliance": {
+        "alpha": 0.5941708159667488,
+        "ci_lower": 0.49059375144475226,
+        "ci_upper": 0.6829435656676063,
+        "n": 219
+      },
+      "reasoning_quality": {
+        "alpha": -0.05566656218427202,
+        "ci_lower": -0.23093227503354216,
+        "ci_upper": 0.11183558121289047,
+        "n": 115
+      }
+    }
   }
 }
