@@ -8,7 +8,7 @@ import rehypeKatex from 'rehype-katex'
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
 const MODEL_META = {
-  claude:   { name: 'Claude Sonnet 4.6', color: '#00CED1', initials: 'CL' },
+  claude:   { name: 'Claude Sonnet 4.5', color: '#00CED1', initials: 'CL' },
   chatgpt:  { name: 'GPT-4.1',           color: '#7FFFD4', initials: 'GP' },
   gemini:   { name: 'Gemini 2.5 Flash',  color: '#FF6B6B', initials: 'GM' },
   deepseek: { name: 'DeepSeek V4 Flash', color: '#4A90D9', initials: 'DS' },

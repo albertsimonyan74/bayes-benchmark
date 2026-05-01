@@ -260,6 +260,21 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
 .nav-drawer-btn:hover { color: var(--text-primary); background: rgba(0,255,224,0.05); }
 .nav-drawer-btn.active { color: var(--aqua); }
 
+/* Tap-outside backdrop for nav drawer */
+.nav-drawer-backdrop {
+  position: fixed;
+  top: 64px; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 198;
+  cursor: pointer;
+}
+
+/* Min 44x44px tap targets on coarse pointers (a11y) */
+@media (pointer: coarse) {
+  .nav-drawer-btn { min-height: 44px; }
+  .nav-hamburger { min-width: 44px; min-height: 44px; }
+}
+
 /* ─── Card System ────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);

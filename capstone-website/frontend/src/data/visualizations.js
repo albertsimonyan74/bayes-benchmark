@@ -1,126 +1,148 @@
-// Manifest of all R-generated visualizations.
-// PNG/GIF files served from /visualizations/png/
-// Interactive Plotly HTMLs served from /visualizations/interactive/
+// Manifest of all v2 visualizations.
+// PNG files served from /visualizations/png/v2/
+// Source files referenced relative to repo root (experiments/results_v2/*).
+
+export const VIZ_CATEGORIES = [
+  { id: 'rankings',      label: 'The Three Rankings', subtitle: 'Hero — accuracy, robustness, calibration', color: '#00FFE0' },
+  { id: 'judge',         label: 'Judge Validation',   subtitle: 'RQ1 PRIMARY · 25% pass-flip · α = 0.55',   color: '#00B4D8' },
+  { id: 'robustness',    label: 'Robustness',         subtitle: 'RQ4 · Perturbation analysis',              color: '#4A90D9' },
+  { id: 'errors',        label: 'Error Taxonomy',     subtitle: 'RQ3 · 46.9% assumption violations',        color: '#A78BFA' },
+  { id: 'calibration',   label: 'Calibration',        subtitle: 'RQ5 · Hedge-heavy vs overconfident',       color: '#7FFFD4' },
+  { id: 'tasks',         label: 'Task Breakdown',     subtitle: 'RQ2 · REGRESSION cluster ~0.30',           color: '#FFB347' },
+]
 
 export const VISUALIZATIONS = [
-  // ── FEATURED 4 ──────────────────────────────────────────────
+  // ── 1. THREE RANKINGS (hero) ──────────────────────────────────
   {
-    id: 'heatmap',
-    featured: true,
-    title: 'Performance Heatmap',
-    subtitle: 'Every model × every task type at a glance',
-    description: 'Which model aced or failed each statistical topic? Each cell shows how a model (column) scored on a task type (row), averaged across all runs. Bright cyan = near-perfect. Dark = struggling. Rows sorted hardest to easiest.',
-    png: '/visualizations/png/01_model_heatmap.png',
-    interactive: '/visualizations/interactive/01_model_heatmap.html',
-    type: 'Heatmap',
-    category: 'Heatmaps',
-    insight: 'REGRESSION and BAYES_FACTOR are consistently dark across every model — all 5 LLMs struggle with these. MINIMAX and RC_BOUND are bright cyan — nearly all models solve them correctly.',
+    id: 'three_rankings', category: 'rankings', featured: true,
+    title: 'The Three Rankings',
+    subtitle: 'Accuracy ≠ Robustness ≠ Calibration',
+    caption: 'Side-by-side rankings of all 5 models on three orthogonal lenses — single-metric leaderboards mislead.',
+    source: 'experiments/results_v2/bootstrap_ci.json + robustness_v2.json + calibration.json',
+    png: '/visualizations/png/v2/three_rankings.png',
   },
   {
-    id: 'distributions',
-    featured: true,
-    title: 'Score Distributions',
-    subtitle: 'How consistent is each model?',
-    description: 'A wide, flat curve means the model is unpredictable — sometimes great, sometimes terrible. A tall, narrow peak means it\'s consistent. Each ridge shows the full spread of per-task scores for one model, not just the average.',
-    png: '/visualizations/png/03_distributions.png',
-    interactive: '/visualizations/interactive/03_distributions.html',
-    type: 'Density',
-    category: 'Distributions',
-    insight: 'Claude has a bimodal shape — it either nails a task or completely fails it. Mistral and ChatGPT show smoother distributions, meaning more predictable (if slightly lower average) performance.',
+    id: 'a6_aggregate_ranking', category: 'rankings',
+    title: 'Aggregate Score Ranking',
+    subtitle: 'Composite of accuracy + robustness + reasoning',
+    caption: 'Composite ranking with bootstrap-derived bars. Top-2 overlap on accuracy.',
+    source: 'experiments/results_v2/bootstrap_ci.json',
+    png: '/visualizations/png/v2/a6_aggregate_ranking.png',
   },
   {
-    id: 'pass_rate',
-    featured: true,
-    title: 'Tier Breakdown',
-    subtitle: 'Pass rates: Basic → Expert difficulty',
-    description: 'The benchmark has 4 difficulty tiers — from Tier 1 (basic conjugate Bayes) to Tier 4 (graduate-level theory). This shows what percent of tasks each model passes at each tier. Where does each model hit its ceiling?',
-    png: '/visualizations/png/13_pass_rate.png',
-    interactive: '/visualizations/interactive/13_pass_rate.html',
-    type: 'Heatmap',
-    category: 'Heatmaps',
-    insight: 'All 5 models pass Tier 1 near-perfectly (the basics are easy). Tier 4 is where models diverge sharply — Claude passes 69% while DeepSeek passes only 38% of expert tasks.',
-  },
-  {
-    id: 'failure_analysis',
-    featured: true,
-    title: 'Best & Worst Task Types',
-    subtitle: 'Where every model succeeds and fails',
-    description: 'Ranked by failure rate — how often each task type scores below the 0.5 pass threshold. Each bar is stacked by model so you can see whether a task is universally hard or just hard for specific models.',
-    png: '/visualizations/png/05_failure_analysis.png',
-    interactive: '/visualizations/interactive/05_failure_analysis.html',
-    type: 'Bar Chart',
-    category: 'Comparisons',
-    insight: 'REGRESSION alone accounts for ~40% of all benchmark failures. This one task type — requiring multi-line output — overwhelms every model\'s token budget (1024-token cap). MINIMAX and RC_BOUND have zero failures.',
+    id: 'bootstrap_ci', category: 'rankings',
+    title: 'Bootstrap CI on Accuracy',
+    subtitle: 'Claude 0.679 [0.655, 0.702] · Gemini 0.674 [0.647, 0.700]',
+    caption: '10 000 bootstrap resamples per model. Top-2 not statistically separable.',
+    source: 'experiments/results_v2/bootstrap_ci.json',
+    png: '/visualizations/png/v2/bootstrap_ci.png',
   },
 
-  // ── GALLERY ──────────────────────────────────────────────────
+  // ── 2. JUDGE VALIDATION (RQ1 PRIMARY) ─────────────────────────
   {
-    id: 'radar',
-    title: 'Radar: Tier vs Model',
-    subtitle: 'Multi-dimensional capability profile',
-    description: 'Spider chart showing how each model\'s performance changes across the 4 difficulty tiers. A model that holds its shape from center to edge is consistent across difficulty. Models that shrink sharply toward the edge struggle on harder tasks.',
-    png: '/visualizations/png/02_tier_radar_bar.png',
-    interactive: '/visualizations/interactive/02_tier_radar.html',
-    type: 'Radar',
-    category: 'Distributions',
-    insight: 'All models are near-perfect on Tier 1. Claude maintains the largest area on Tiers 3–4, confirming its edge on expert-level statistical reasoning.',
+    id: 'agreement_metrics', category: 'judge', featured: true,
+    title: 'Agreement Metrics — Keyword vs External Judge',
+    subtitle: 'Krippendorff α = 0.55 · Spearman ρ = 0.59',
+    caption: 'Both metrics agree: keyword and Llama judge are not interchangeable raters on assumption_compliance.',
+    source: 'experiments/results_v2/krippendorff_agreement.json + keyword_vs_judge_agreement.json',
+    png: '/visualizations/png/v2/agreement_metrics_comparison.png',
   },
   {
-    id: 'latency_accuracy',
-    title: 'Speed vs Accuracy',
-    subtitle: 'Is slower always better?',
-    description: 'Each dot is a model. X-axis = how long it takes to respond (milliseconds). Y-axis = average benchmark score. The ideal model is fast AND accurate — top-left corner. Bubble size = number of completed tasks.',
-    png: '/visualizations/png/07_latency_accuracy.png',
-    interactive: '/visualizations/interactive/07_latency_accuracy.html',
-    type: 'Scatter',
-    category: 'Comparisons',
-    insight: 'Gemini is the fastest model. Claude achieves the highest accuracy with moderate latency. DeepSeek has the worst speed-accuracy ratio — slow and less accurate than Claude.',
+    id: 'judge_scatter', category: 'judge',
+    title: 'Judge vs Keyword — Per-Run Scatter',
+    subtitle: '274 / 1094 runs flip pass/fail',
+    caption: 'Each point is a single run scored by both raters. Off-diagonal mass = the 25% pass-flip headline.',
+    source: 'experiments/results_v2/keyword_vs_judge_agreement.json',
+    png: '/visualizations/png/v2/judge_validation_scatter.png',
   },
   {
-    id: 'difficulty_line',
-    title: 'Difficulty Progression',
-    subtitle: 'Where does each model hit its wall?',
-    description: 'Tasks are sorted from easiest to hardest (left to right). Smoothed curves show how each model\'s score degrades as difficulty increases. Vertical bands mark tier boundaries. The moment a curve drops sharply reveals each model\'s practical capability ceiling.',
-    png: '/visualizations/png/14_difficulty.png',
-    interactive: '/visualizations/interactive/14_difficulty.html',
-    type: 'Line Chart',
-    category: 'Distributions',
-    insight: 'Models maintain scores above 0.7 through roughly the first 60% of tasks, then drop sharply — not gradually — once hitting a complexity threshold. This non-linear cliff effect is consistent across all 5 models.',
+    id: 'judge_by_model', category: 'judge',
+    title: 'Judge vs Keyword — Per Model',
+    subtitle: 'Pass-flip rate decomposed by model family',
+    caption: 'All 5 models show the keyword overstatement; magnitude varies. Highest disagreement on REGRESSION cluster.',
+    source: 'experiments/results_v2/keyword_vs_judge_agreement.json',
+    png: '/visualizations/png/v2/judge_validation_by_model.png',
+  },
+
+  // ── 3. ROBUSTNESS (RQ4) ───────────────────────────────────────
+  {
+    id: 'robustness_heatmap', category: 'robustness', featured: true,
+    title: 'Robustness Heatmap',
+    subtitle: 'Δ (perturbed − base) per model × task type',
+    caption: 'Three uniformly-robust types: HIERARCHICAL, RJMCMC, VB. Mistral degrades most.',
+    source: 'experiments/results_v2/robustness_v2.json',
+    png: '/visualizations/png/v2/robustness_heatmap.png',
   },
   {
-    id: 'bar_race',
-    title: 'Ranking Animation',
-    subtitle: 'Watch the leaderboard evolve task by task',
-    description: 'An animated race showing how cumulative scores change as each benchmark task is revealed in order of difficulty. The final frame is the definitive ranking. Watch to see if the order was ever different mid-benchmark.',
-    png: '/visualizations/png/15_bar_race.png',
-    interactive: '/visualizations/png/15_bar_race.gif',
-    type: 'Animation',
-    category: 'Animation',
-    isGif: true,
-    insight: 'Rankings lock in after ~80 tasks and barely shift — the benchmark has enough statistical power to definitively rank models. Claude leads throughout; the middle pack (Mistral, Gemini, DeepSeek, ChatGPT) shuffles slightly but stays close.',
+    id: 'robustness_perttype', category: 'robustness',
+    title: 'Robustness by Perturbation Type',
+    subtitle: 'rephrase / numerical / semantic',
+    caption: 'Semantic reframings drive the largest score drops, not numerical changes.',
+    source: 'experiments/results_v2/robustness_v2.json',
+    png: '/visualizations/png/v2/a4_robustness_by_perttype.png',
+  },
+
+  // ── 4. ERROR TAXONOMY (RQ3) ──────────────────────────────────
+  {
+    id: 'taxonomy_sunburst', category: 'errors', featured: true,
+    title: 'Error Taxonomy — Hierarchical',
+    subtitle: 'L1 buckets × L2 codes · 143 base failures',
+    caption: 'ASSUMPTION_VIOLATION 67 · MATHEMATICAL_ERROR 48 · FORMATTING 18 · CONCEPTUAL 10 · HALLUCINATION 0.',
+    source: 'experiments/results_v2/error_taxonomy_v2.json',
+    png: '/visualizations/png/v2/error_taxonomy_hierarchical.png',
   },
   {
-    id: 'error-distribution',
-    title: 'Error Taxonomy: Overview',
-    subtitle: '143 failures classified into 8 categories',
-    description: 'Every failed run (score < 0.5) was classified into one of 8 error types using a hybrid rule-based + LLM-as-Judge pipeline. This chart shows how often each error type occurs across all 5 models and all 171 tasks.',
-    png: '/visualizations/png/16a_error_distribution.png',
-    interactive: null,
-    type: 'Bar',
-    category: 'Error Analysis',
-    insight: 'The #1 failure reason (E3 Assumption Violation, 119 cases) is a reasoning gap — models skip stating priors, iid assumptions, or distributional assumptions. #2 (E7 Truncation, 93 cases) is a system limit — 1024 tokens cut off multi-target answers.',
+    id: 'failure_by_tasktype', category: 'errors',
+    title: 'Failure Rate by Task Type',
+    subtitle: 'Where each task type ranks for failure share',
+    caption: 'REGRESSION dominates. Markov chain types follow.',
+    source: 'experiments/results_v2/error_taxonomy_v2.json',
+    png: '/visualizations/png/v2/a1_failure_by_tasktype.png',
+  },
+  {
+    id: 'failure_heatmap', category: 'errors',
+    title: 'Failure Heatmap (Model × Task Type)',
+    subtitle: 'Where each model misses',
+    caption: 'Per-model breakdown — REGRESSION, BAYES_FACTOR, MCMC tasks remain hard for every model.',
+    source: 'experiments/results_v2/error_taxonomy_v2.json',
+    png: '/visualizations/png/v2/a3_failure_heatmap.png',
+  },
+
+  // ── 5. CALIBRATION (RQ5) ─────────────────────────────────────
+  {
+    id: 'calibration_reliability', category: 'calibration', featured: true,
+    title: 'Calibration Reliability — Verbalized',
+    subtitle: '3-bucket ECE (0.3 / 0.5 / 0.6) · empty 0.9 bucket',
+    caption: 'Hedge-heavy default-to-medium behaviour. No high-confidence records across any model.',
+    source: 'experiments/results_v2/calibration.json',
+    png: '/visualizations/png/v2/calibration_reliability.png',
+  },
+  {
+    id: 'calibration_a5', category: 'calibration',
+    title: 'Calibration — Per-Model Reliability',
+    subtitle: 'Per-model ECE breakdown',
+    caption: 'All five models cluster around medium-confidence — none escape into well-calibrated high-bucket.',
+    source: 'experiments/results_v2/calibration.json',
+    png: '/visualizations/png/v2/a5_calibration_reliability.png',
+  },
+  {
+    id: 'self_consistency', category: 'calibration',
+    title: 'Self-Consistency Calibration (B3 proxy)',
+    subtitle: 'Agreement-rate as confidence — top-failure stratum',
+    caption: 'Reveals overconfidence on hard tasks that verbalized extraction missed.',
+    source: 'experiments/results_v2/self_consistency_calibration.json',
+    png: '/visualizations/png/v2/self_consistency_calibration.png',
+  },
+
+  // ── 6. TASK BREAKDOWN (RQ2) ──────────────────────────────────
+  {
+    id: 'accuracy_by_category', category: 'tasks', featured: true,
+    title: 'Accuracy by Bayesian Category',
+    subtitle: 'REGRESSION cluster ~0.30 across all 5 models',
+    caption: 'Hardest categories: REGRESSION, MCMC, ADVANCED. Easiest: closed-form conjugate models.',
+    source: 'experiments/results_v2/bootstrap_ci.json + tasks_all.json',
+    png: '/visualizations/png/v2/a2_accuracy_by_category.png',
   },
 ]
 
-export const FEATURED_IDS = ['heatmap', 'distributions', 'pass_rate', 'failure_analysis']
-
-export const VIZ_FILTER_MAP = {
-  'All':           () => true,
-  'Heatmaps':      v => v.category === 'Heatmaps',
-  'Distributions': v => v.category === 'Distributions',
-  'Comparisons':   v => v.category === 'Comparisons',
-  'Animation':     v => v.category === 'Animation',
-  'Error Analysis':v => v.category === 'Error Analysis',
-}
-
-export const VIZ_FILTERS = ['All', 'Heatmaps', 'Distributions', 'Comparisons', 'Animation', 'Error Analysis']
+export const FEATURED_IDS = VISUALIZATIONS.filter(v => v.featured).map(v => v.id)

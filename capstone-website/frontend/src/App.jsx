@@ -8,9 +8,12 @@ import GlobeBackground from './components/GlobeBackground'
 import Navbar          from './components/Navbar'
 import NeuralNetwork   from './components/NeuralNetwork'
 import HeroNetworkBg   from './components/HeroNetworkBg'
-import ResultsSection  from './pages/ResultsSection'
+import KeyFindings     from './components/KeyFindings'
 import VizGallery      from './pages/VizGallery'
 import UserStudy       from './pages/UserStudy'
+import Methodology     from './pages/Methodology'
+import Limitations     from './pages/Limitations'
+import References      from './pages/References'
 import { TOOLTIP_MAP } from './data/TooltipMap'
 import { ParamTooltip } from './components/ParamTooltip'
 
@@ -78,18 +81,18 @@ const PIPELINE = [
   { label:'Standardized Prompting',   title:'Zero-Shot CoT Protocol',
     stat:'3 prompting strategies',
     desc:'All models receive identical prompts requiring step-by-step reasoning (Wei et al., 2022). Three prompting modes implemented: Zero-shot CoT (baseline), Few-shot CoT (2 exemplars), Program-of-Thoughts (Chen et al., 2022).' },
-  { label:'Multi-Model Evaluation',   title:'5 Leading LLMs',
-    stat:'1,230 total runs',
-    desc:'Claude, ChatGPT, Mistral, DeepSeek, Gemini evaluated under identical conditions via standardized Model Context Protocol. 1,230 total runs across all tasks and models.' },
+  { label:'Multi-Model Evaluation',   title:'5 Leading LLMs + 1 External Judge',
+    stat:'1,230 base runs · Llama 3.3 70B judge',
+    desc:'Claude, ChatGPT, Mistral, DeepSeek, Gemini evaluated under identical conditions. External Llama 3.3 70B Instruct judge (Together AI) provides cross-provider validation following Park et al. (2025).' },
   { label:'Five-Dimensional Scoring', title:'N·M·A·C·R Rubric',
     stat:'N=M=A=C=R=0.20',
-    desc:'Each response scored on: Numerical Accuracy (N), Method Selection (M), Assumption Compliance (A), Confidence Calibration (C), Reasoning Quality (R). Equal weights (0.20 each). Pass threshold: 0.50.' },
+    desc:'Numerical Accuracy (N), Method Selection (M), Assumption Compliance (A), Confidence Calibration (C), Reasoning Quality (R). Equal weights, pass threshold 0.50. Two scoring paths kept in sync.' },
   { label:'Robustness Testing',       title:'RQ4: Perturbation Analysis',
-    stat:'375 synthetic runs',
-    desc:'75 base tasks × 3 perturbation types (numerical, rephrase, semantic) = 225 robustness run combinations per model. Tests whether models rely on surface patterns vs. genuine statistical understanding.' },
-  { label:'Error Taxonomy',           title:'Systematic Error Classification',
-    stat:'143 failures · 8 categories',
-    desc:'143 failures classified into 8 error types (E1-E8) using hybrid rule-based + LLM-as-Judge pipeline. Most common: E3 Assumption Violation (119 cases), E7 Truncation (93 cases from 1024-token cap).' },
+    stat:'2,365 perturbation runs · 0 errors',
+    desc:'473 perturbations × 5 models. Three orthogonal types (rephrase / numerical / semantic) following BrittleBench (2026). Bootstrap-CI separability tests on per-model robustness Δ.' },
+  { label:'Error Taxonomy',           title:'Hierarchical L1 / L2 Taxonomy',
+    stat:'143 failures · 4 L1 buckets',
+    desc:'L1: ASSUMPTION_VIOLATION 67 (46.9%) · MATHEMATICAL_ERROR 48 · FORMATTING 18 · CONCEPTUAL 10 · HALLUCINATION 0. Llama 3.3 70B judge classifies; only 4 of 9 L2 codes activate (E1, E3, E6, E7).' },
 ]
 
 // ─── Pipeline SVG icons (monoline, no emoji) ─────────────────
@@ -709,8 +712,8 @@ function RadarChart({ model }) {
   const poly = pts.map(p=>`${p.x},${p.y}`).join(' ')
 
   return (
-    <div className="radar-wrap">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+    <div className="radar-wrap" style={{ width:'100%', maxWidth:size, margin:'16px auto' }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} preserveAspectRatio="xMidYMid meet" style={{ width:'100%', height:'auto', display:'block' }}>
         {rings.map((r,i)=>(
           <polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.1)" strokeWidth="1"/>
         ))}
@@ -753,9 +756,9 @@ function MultiModelRadar() {
     return { ex:cx+R*Math.cos(a), ey:cy+R*Math.sin(a), lx, ly, anchor }
   })
   return (
-    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:16 }}>
-      <div style={{ position:'relative', flexShrink:0 }}>
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:16, width:'100%' }}>
+      <div className="radar-wrap" style={{ position:'relative', width:'100%', maxWidth:size }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} preserveAspectRatio="xMidYMid meet" style={{ width:'100%', height:'auto', display:'block' }}>
           {rings.map((r,i)=><polygon key={i} points={r} fill="none" stroke="rgba(0,255,224,0.08)" strokeWidth="1"/>)}
           {axes.map((ax,i)=>{
             const lines=RADAR_DIMS[i].split('\n')
@@ -897,7 +900,15 @@ function Overview() {
           </motion.div>
 
           {/* Divider */}
-          <motion.div variants={fadeUp} style={{ width:'60%', height:1, background:'linear-gradient(90deg,transparent,var(--aqua),transparent)', margin:'44px auto', opacity:0.3 }}/>
+          <motion.div variants={fadeUp} style={{ width:'60%', height:1, background:'linear-gradient(90deg,transparent,var(--aqua),transparent)', margin:'44px auto 32px', opacity:0.3 }}/>
+
+          {/* Key Findings — live data fetch */}
+          <motion.div variants={fadeUp} style={{ width:'100%', textAlign:'left', marginBottom:32 }}>
+            <div style={{ color:'var(--aqua)', fontSize:11, fontWeight:700, letterSpacing:'0.16em', textAlign:'center', marginBottom:16 }}>
+              KEY FINDINGS · v2
+            </div>
+            <KeyFindings/>
+          </motion.div>
 
           {/* CTAs */}
           <motion.div variants={fadeUp} style={{ display:'flex', gap:14, justifyContent:'center', flexWrap:'wrap' }}>
@@ -953,9 +964,9 @@ const HOW_EXTRA = [
     title:'Research Question Integration',
     icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>,
     lines:[
-      'N·M·A·C·R scoring dimensions map 1-to-1 to RQ1–RQ5',
-      'Every task tagged to ≥1 RQ; weights equally 0.20 each',
-      'RQ4: 375 synthetic perturbation runs across 3 types',
+      'RQ1 PRIMARY (40%): external-judge validation — 25% pass-flip, α = 0.55',
+      'RQ2-5 SUPPORTING (15% each): hardest categories, failure mode, robustness, calibration',
+      'RQ4: 2,365 perturbation runs across 3 types (rephrase / numerical / semantic)',
     ],
   },
   {
@@ -1001,7 +1012,7 @@ function BenchmarkSection() {
 
       {/* Circular pipeline diagram */}
       <FadeIn>
-        <div style={{ position:'relative', width:'100%', maxWidth:800, height:800, margin:'0 auto 8px' }}>
+        <div className="pipeline-circle" style={{ position:'relative', width:'100%', maxWidth:800, height:800, margin:'0 auto 8px' }}>
 
           {/* Outer rotating ring */}
           <div style={{ position:'absolute', left:'50%', top:'50%', width:'78%', height:'78%',
@@ -1842,23 +1853,12 @@ function TaskModal({ task, onClose }) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  5. RESULTS
-// ═══════════════════════════════════════════════════════════════
-function Results() {
-  return (
-    <Section id="results" minHeight="auto">
-      <ResultsSection />
-    </Section>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════
 //  6. VISUALIZATIONS
 // ═══════════════════════════════════════════════════════════════
-function Visualizations({ setFullImg, onOpenGif, onOpenInteractive }) {
+function Visualizations({ setFullImg }) {
   return (
     <Section id="visualizations" minHeight="auto">
-      <VizGallery setFullImg={setFullImg} onOpenGif={onOpenGif} onOpenInteractive={onOpenInteractive} />
+      <VizGallery setFullImg={setFullImg} />
     </Section>
   )
 }
@@ -1866,83 +1866,54 @@ function Visualizations({ setFullImg, onOpenGif, onOpenInteractive }) {
 // ═══════════════════════════════════════════════════════════════
 //  7. ABOUT
 // ═══════════════════════════════════════════════════════════════
-const TEXTBOOKS = [
-  { text:'Bolstad — Introduction to Bayesian Statistics (2nd ed.)', color:'#00FFE0',
-    desc:'Foundational text covering conjugate models, credible intervals, and HPD regions. Directly mapped to BETA_BINOM, BINOM_FLAT, HPD task types.',
-    url:'https://www.wiley.com/en-us/Introduction+to+Bayesian+Statistics%2C+3rd+Edition-p-9781118593226' },
-  { text:'Bishop — Pattern Recognition and Machine Learning', color:'#00B4D8',
-    desc:'Comprehensive reference for variational Bayes (Ch.10) and Dirichlet-Multinomial models (Ch.2). Core for VB and DIRICHLET tasks.',
-    url:'https://link.springer.com/book/9780387310732' },
-  { text:'Ghosh, Delampady & Samanta — Introduction to Bayesian Analysis', color:'#7FFFD4',
-    desc:'Graduate-level treatment of Jeffreys priors, Fisher information, and Rao-Cramér bounds. Primary reference for JEFFREYS, FISHER_INFO, RC_BOUND.',
-    url:'https://link.springer.com/book/9780387400846' },
-  { text:'Hoff — A First Course in Bayesian Statistical Methods', color:'#4A90D9',
-    desc:'Accessible introduction to Normal-Gamma models, posterior predictive checks, and Gibbs sampling. Open access. Covers NORMAL_GAMMA, PPC, GIBBS.',
-    url:'https://pdhoff.github.io/book/' },
-  { text:'Carlin & Louis — Bayesian Methods for Data Analysis (3rd ed.)', color:'#00FFE0',
-    desc:'Advanced Bayesian computation including MCMC methods (Gibbs, MH, HMC), Bayesian regression, and hierarchical models. Core for Phase 2 tasks.',
-    url:'https://www.taylorfrancis.com/books/mono/10.1201/b14884/bayesian-methods-data-analysis-bradley-carlin-thomas-louis' },
-  { text:'Goldstein & Wooff — Bayes Linear Statistics', color:'#7FFFD4',
-    desc:'Specialized reference for Bayes linear methodology. Provides theoretical background for linear approximation methods in the benchmark.',
-    url:'https://www.wiley.com/en-us/Bayes+Linear+Statistics%3A+Theory+and+Methods-p-9780470015629' },
-  { text:'Lee — Bayesian Statistics: An Introduction (4th ed.)', color:'#00B4D8',
-    desc:'Clear introduction to Bayesian inference fundamentals. Key reference for CI_CREDIBLE comparison tasks and BAYES_FACTOR analysis.',
-    url:'https://www.wiley.com/en-us/Bayesian+Statistics%3A+An+Introduction%2C+4th+Edition-p-9781118332573' },
-]
-
 const RQS = [
-  { id:'RQ1', label:'Numerical & Statistical Accuracy',   color:'#00FFE0',
-    detail:'Do LLMs compute correct numerical answers? Tests exact posterior parameters, credible intervals, and predictive distributions against deterministic ground-truth values computed in Python.',
-    result:'Claude 88.9% pass · avg N-score 0.683 across all 5 models', metric:'N = 0.20', icon:'#',
-    expandedStats:[
-      { label:'Claude N-score', value:'0.683' }, { label:'Gemini N-score', value:'0.642' },
-      { label:'ChatGPT N-score', value:'0.621' }, { label:'DeepSeek N-score', value:'0.625' }, { label:'Mistral N-score', value:'0.644' },
-    ],
-    expandedDetail:'Numeric answers are extracted from a required "ANSWER: <value>" line at the end of each response. Ground truth is computed in Python using analytic formulas or seeded Monte Carlo. Tolerance varies by task type: ±0.01 for discrete medians, ±0.05 for MCMC tasks, ±0.10 for variational methods. Partial credit is awarded on a linear scale between full-credit and zero-credit tolerances. CONCEPTUAL tasks skip this dimension entirely — scored on rubric only.',
+  { id:'RQ1', tier:'PRIMARY', weight:'40%', color:'#00FFE0',
+    label:'External-Judge Validation',
+    question:'How does external-judge validation differ from keyword scoring?',
+    headline:'25% pass-flip · α = 0.55 (questionable, Park et al. 2025)',
+    viewLink:'judge',
+    detail:'Methodology contribution: keyword rubrics systematically overstate assumption-checking quality on Bayesian tasks. The Llama 3.3 70B external judge (Together AI) reveals 274 of 1094 runs that pass keyword rubric but fail the judge on assumption_compliance. Krippendorff α = 0.55 (95% CI [0.51, 0.59]); Spearman ρ = 0.59. Both metrics agree: keyword and judge are not interchangeable raters.',
+    grounding:'Park et al. 2025 (arXiv:2506.13639) — α-over-ρ for inter-rater reliability. Liu et al. 2025 — multi-dim rubric baseline.',
   },
-  { id:'RQ2', label:'Method Selection Accuracy',           color:'#00B4D8',
-    detail:'Do models choose the correct statistical method and show appropriate derivation steps? Evaluates whether the response uses the right conjugate family, MCMC variant, or frequentist procedure.',
-    result:'Structure rubric active · Phase 2 tasks test 7 computational Bayes methods', metric:'M = 0.20', icon:'M',
-    expandedStats:[
-      { label:'Phase 1 task types', value:'31' }, { label:'Phase 2 methods', value:'7' },
-      { label:'Hardest type', value:'MARKOV' }, { label:'Avg M-score', value:'~0.65' }, { label:'MCMC pass rate', value:'<30%' },
-    ],
-    expandedDetail:'Each task specifies required_structure_checks — a list of observable derivation steps (e.g. "states_prior", "applies_bayes_theorem", "shows_posterior_update"). The scorer uses keyword matching across 40+ structure patterns mapped to expected vocabulary. Phase 2 tasks cover 7 computational Bayes methods: Gibbs sampling, Metropolis-Hastings, HMC, RJMCMC, Hierarchical Bayes, Variational Bayes, and ABC. These are the frontier where all models struggle most.',
+  { id:'RQ2', tier:'SUPPORTING', weight:'15%', color:'#FFB347',
+    label:'Hardest Bayesian Categories',
+    question:'Which Bayesian categories are hardest?',
+    headline:'REGRESSION cluster ~0.30 mean accuracy across all 5 models',
+    viewLink:'tasks',
+    detail:'Domain-specific failure surface that prior benchmarks cannot expose. REGRESSION cluster, MCMC, and ADVANCED tasks score below cohort mean across every model.',
+    grounding:'Liu et al. 2025 (MathEval) — task-category convention. Boye & Moell 2026 (Math-Reasoning-Failures) — unwarranted-assumption category.',
   },
-  { id:'RQ3', label:'Assumption Compliance',               color:'#7FFFD4',
-    detail:'Do models state and verify the assumptions required for their chosen method — prior specification, iid conditions, distributional families? Failures here indicate shallow statistical reasoning.',
-    result:'E3 Assumption Violation is the #1 failure mode (119/143 failures)', metric:'A = 0.20', icon:'A',
-    expandedStats:[
-      { label:'Total failures', value:'143' }, { label:'E3 violations', value:'119' },
-      { label:'E3 share', value:'83%' }, { label:'Error types', value:'E1–E9' }, { label:'LLM judge calls', value:'≤100' },
-    ],
-    expandedDetail:'Each task specifies required_assumption_checks — e.g. "prior_specified", "iid_stated", "likelihood_family_named". Models frequently compute correct posteriors while omitting the distributional assumptions that justify the computation. This is the dominant failure mode across all 5 models. Error taxonomy runs post-hoc via analyze_errors.py using Claude as an LLM judge (with --no-llm flag for rule-based fallback). Nine error categories: E1 extraction, E2 formula, E3 assumption, E4 setup, E5 conceptual, E6 rounding, E7 interpretation, E8 overfit, E9 other.',
+  { id:'RQ3', tier:'SUPPORTING', weight:'15%', color:'#A78BFA',
+    label:'Dominant Failure Mode',
+    question:'What is the dominant failure mode?',
+    headline:'46.9% of failures are assumption violations, not math errors',
+    viewLink:'errors',
+    detail:'ASSUMPTION_VIOLATION 67/143 base failures · MATHEMATICAL_ERROR 48 · FORMATTING 18 · CONCEPTUAL 10 · HALLUCINATION 0. Failure mode is silent assumption-skipping, not arithmetic error.',
+    grounding:'Du et al. 2025 (Ice Cream) — independent ~47% reproduction on causal-inference tasks. Math-Reasoning-Failures 2026.',
   },
-  { id:'RQ4', label:'Robustness to Prompt Variations',     color:'#4A90D9',
-    detail:'Are model scores stable across rephrasings, numerical changes, and semantic reframings of the same problem? Tests whether LLMs understand statistics or rely on surface pattern matching.',
-    result:'375 synthetic runs · avg robustness 0.91 · ChatGPT most robust (0.931)', metric:'RQ4 ≈ 0.91', icon:'R',
-    expandedStats:[
-      { label:'Synthetic runs', value:'375' }, { label:'Base tasks', value:'25' },
-      { label:'Perturbation types', value:'3' }, { label:'ChatGPT robustness', value:'0.931' }, { label:'Semantic drop', value:'largest' },
-    ],
-    expandedDetail:'25 base tasks each perturbed 3 ways: rephrase (same math, reworded), numerical (new numbers with recomputed GT), semantic (same math in new real-world framing). Semantic reframings caused the largest score drops across all models — surface framing shifts reasoning more than changing actual numbers. ChatGPT is most robust (0.931 avg), followed by Claude. Robustness score = perturbed_score / base_score, clamped to [0,1]. All perturbations generated by GPT-4.1 and validated against ground-truth recalculation.',
+  { id:'RQ4', tier:'SUPPORTING', weight:'15%', color:'#4A90D9',
+    label:'Robustness to Perturbation',
+    question:'Are accuracy rankings robust to prompt perturbation?',
+    headline:'Rankings change: accuracy ≠ robustness ≠ calibration',
+    viewLink:'robustness',
+    detail:'2,365 perturbation runs (5 models × 473 perturbations, 0 errors). Three uniformly-robust task types: HIERARCHICAL, RJMCMC, VB. ChatGPT/DeepSeek noise-equivalent (Δ ≈ 0).',
+    grounding:'BrittleBench 2026 — perturbation taxonomy. ReasonBench 2025 — variance-as-first-class. Statistical Fragility 2025 — separability tests.',
   },
-  { id:'RQ5', label:'Confidence & Trust Calibration',      color:'#A78BFA',
-    detail:'Does expressed certainty match actual accuracy? Overconfident-wrong answers are penalized 1.5× more than well-calibrated wrong answers. Extracted from linguistic hedges and explicit percentages.',
-    result:'C=0.20 active · calibration extracted across all 1,230 runs', metric:'C = 0.20', icon:'C',
-    expandedStats:[
-      { label:'Total calibration scores', value:'1,230' }, { label:'Penalty multiplier', value:'1.5×' },
-      { label:'Underconfident discount', value:'0.8×' }, { label:'Hedge phrases tracked', value:'10+' }, { label:'Weight in final score', value:'20%' },
-    ],
-    expandedDetail:'Confidence is extracted from linguistic signals: explicit percentages ("I am 90% confident"), hedge words ("approximately", "roughly", "I think"), or certainty markers ("clearly", "definitely"). Overconfident-wrong is penalized 1.5× — the model expressed high certainty but got the wrong answer. Underconfident-right is discounted by 0.8×. Well-calibrated responses (confident+correct, uncertain+wrong) score 1.0. This dimension incentivizes epistemic honesty over bluster. Calibration is extracted in response_parser.py via extract_confidence().',
+  { id:'RQ5', tier:'SUPPORTING', weight:'15%', color:'#7FFFD4',
+    label:'Confidence Calibration',
+    question:'Are LLM confidence claims calibrated?',
+    headline:'Hedge-heavy under verbalized; overconfident under consistency-based',
+    viewLink:'calibration',
+    detail:'Zero high-confidence records across all 5 models (verbalized extraction). 3-bucket ECE (0.3 / 0.5 / 0.6) — empty 0.9 bucket. Self-consistency proxy (B3) reveals overconfidence on hard tasks.',
+    grounding:'FermiEval 2025 — overconfidence contrast. Multi-Answer Confidence 2026 — consistency-based path. Nagarkar et al. 2026.',
   },
 ]
 
 const ABOUT_FINDINGS = [
-  { title:'Claude leads overall', stat:'0.683', statLabel:'avg score · 171 tasks', text:'Claude tops all 5 models. Gemini 2nd (0.651). Mistral lowest (0.521). 14.6% performance gap from top to bottom.', color:'#00FFE0' },
-  { title:'Hardest task types', stat:'0.32', statLabel:'avg score · MARKOV + STATIONARY', text:'All 5 models fail >70% of Markov chain tasks — the clear frontier of LLM statistical reasoning.', color:'#FF6B6B' },
-  { title:'Top failure mode', stat:'119', statLabel:'of 143 total failures (E3)', text:'Assumption Violation dominates. Models compute correct math but skip prior specs, iid conditions, and distributional families.', color:'#A78BFA' },
-  { title:'Robustness finding', stat:'0.91', statLabel:'avg robustness · 375 synthetic runs', text:'Semantic reframings cause the largest score drops. ChatGPT most robust (0.931). Surface framing shifts reasoning more than changing numbers.', color:'#4A90D9' },
+  { title:'External judge disagrees', stat:'25%', statLabel:'pass-flip on assumption_compliance', text:'274/1094 runs pass keyword rubric but fail the Llama 3.3 70B judge. Methodology contribution — keyword overstates assumption checking.', color:'#00FFE0' },
+  { title:'REGRESSION is the wall', stat:'~0.30', statLabel:'mean accuracy · all 5 models', text:'REGRESSION cluster is the hardest category across every model. MCMC and ADVANCED follow.', color:'#FFB347' },
+  { title:'Failure mode is silent', stat:'46.9%', statLabel:'of 143 base failures', text:'Assumption violations dominate (67/143). Models compute correct math but skip prior specs, iid conditions, distributional families.', color:'#A78BFA' },
+  { title:'Three rankings disagree', stat:'3 ≠', statLabel:'accuracy · robustness · calibration', text:'Single-metric leaderboards mislead. ChatGPT/DeepSeek noise-equivalent on robustness; Top-2 accuracy CIs overlap.', color:'#4A90D9' },
 ]
 
 // ─── About findings SVG icons (no emoji) ─────────────────────
@@ -1971,23 +1942,6 @@ const ABOUT_FINDING_ICONS = [
     <line x1="4" y1="4" x2="9" y2="9"/>
   </svg>,
 ]
-const ABOUT_REFS = [
-  { authors:'Lu et al.', year:2025, title:'StatEval: Benchmarking LLMs on Statistical Reasoning',
-    id:'arXiv:2510.09517', url:'https://arxiv.org/abs/2510.09517',
-    desc:'Closest prior work. Benchmarks LLMs on descriptive + hypothesis-testing statistics using multiple-choice format. Our work extends to Bayesian inference with free-response scoring.' },
-  { authors:'Nagarkar et al.', year:2026, title:'Can LLM Reasoning Be Trusted in Statistical Domains',
-    id:'arXiv:2601.14479', url:'https://arxiv.org/abs/2601.14479',
-    desc:'Investigates reliability and hallucination patterns in statistical reasoning tasks. Motivates our confidence calibration dimension (RQ5).' },
-  { authors:'Liu et al.', year:2025, title:'MathEval: A Comprehensive Benchmark for Mathematical Reasoning',
-    id:'DOI:10.1007/s44366-025-0053-z', url:'https://doi.org/10.1007/s44366-025-0053-z',
-    desc:'Comprehensive mathematical reasoning benchmark across 17 datasets. Provides comparative baseline for our 5-dimensional Bayesian scoring rubric.' },
-  { authors:'Chen et al.', year:2022, title:'Program of Thoughts Prompting: Disentangling Computation from Reasoning',
-    id:'arXiv:2211.12588', url:'https://arxiv.org/abs/2211.12588',
-    desc:'Introduces Program-of-Thoughts (PoT) prompting where models write executable code. One of 3 prompting strategies implemented in our benchmark runner.' },
-  { authors:'Wei et al.', year:2022, title:'Chain-of-Thought Prompting Elicits Reasoning in Large Language Models',
-    id:'arXiv:2201.11903', url:'https://arxiv.org/abs/2201.11903',
-    desc:'Foundational paper establishing Chain-of-Thought (CoT) as the primary prompting strategy. Zero-shot CoT is our baseline prompting mode for all 1,230 benchmark runs.' },
-]
 const SCORE_DIMS = [
   { dim:'N', name:'Numerical Accuracy',     color:'#00FFE0' },
   { dim:'M', name:'Method Selection',       color:'#00B4D8' },
@@ -2002,78 +1956,113 @@ function About() {
     <Section id="about" minHeight="auto">
       <SectionTitle>About This Research</SectionTitle>
 
-      {/* § 1 — Research Questions (TOP) */}
+      {/* § 1 — Research Questions (RQ1 PRIMARY + RQ2-5 SUPPORTING grid) */}
       <FadeIn>
-        <div style={{ display:'flex', gap:16, maxWidth:1300, margin:'0 auto 16px', alignItems:'flex-start' }}>
-          {RQS.map((q,i) => {
-            const isOpen = openRQ === i
+        {(() => {
+          const primary = RQS[0]
+          const supporting = RQS.slice(1)
+          const renderCard = (q, i, isPrimary) => {
+            const isOpen = openRQ === (isPrimary ? 0 : i + 1)
+            const idx = isPrimary ? 0 : i + 1
             return (
-              <motion.div key={i}
-                style={{ flex:1, marginTop: i % 2 === 1 ? 36 : 0, borderRadius:14, cursor:'pointer' }}
-                onClick={() => setOpenRQ(isOpen ? null : i)}
-                whileHover={{ y: isOpen ? 0 : -6, boxShadow:`0 14px 44px ${q.color}${isOpen ? '50' : '30'}` }}
+              <motion.div
+                key={q.id}
+                onClick={() => setOpenRQ(isOpen ? null : idx)}
+                whileHover={{ y: -4, boxShadow: `0 14px 44px ${q.color}33` }}
                 animate={{ boxShadow: isOpen ? `0 0 0 2px ${q.color}60` : 'none' }}
-                transition={{ type:'spring', stiffness:400, damping:28 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                style={{
+                  cursor: 'pointer',
+                  background: 'rgba(255,255,255,0.025)',
+                  border: `1px solid ${q.color}33`,
+                  borderTop: `3px solid ${q.color}`,
+                  borderRadius: 14,
+                  padding: isPrimary ? '28px 32px' : '20px 22px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  height: '100%',
+                  boxSizing: 'border-box',
+                }}
               >
-                <Card style={{ padding:'20px 14px', boxSizing:'border-box', borderTop:`3px solid ${q.color}`, borderRadius:'0 0 14px 14px', height:'100%', userSelect:'none', position:'relative', overflow:'hidden' }}>
-                  {/* Ghost number — top-right decorative */}
-                  <div style={{ position:'absolute', top:6, right:10, color:q.color, fontSize:52, fontWeight:900, fontFamily:'var(--font-mono)', opacity:0.07, lineHeight:1, userSelect:'none', pointerEvents:'none' }}>{i+1}</div>
-                  {/* Chevron — top-right, above ghost number */}
-                  <motion.svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={q.color} strokeWidth="2.5" strokeLinecap="round"
-                    animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration:0.25 }}
-                    style={{ position:'absolute', top:14, right:14, opacity:0.7, zIndex:1 }}>
-                    <polyline points="6 9 12 15 18 9"/>
-                  </motion.svg>
-                  <div style={{ width:34, height:34, borderRadius:8, background:`${q.color}18`, border:`1.5px solid ${q.color}`, display:'flex', alignItems:'center', justifyContent:'center', color:q.color, fontWeight:800, fontSize:11, marginBottom:10 }}>{q.id}</div>
-                  <div style={{ color:'var(--text-primary)', fontSize:11.5, fontWeight:700, marginBottom:4, lineHeight:1.3 }}>{q.label}</div>
-                  <div style={{ color:q.color, fontSize:9, fontWeight:700, letterSpacing:'0.08em', marginBottom:10 }}>{q.metric}</div>
-                  <p style={{ color:'var(--text-secondary)', fontSize:10.5, lineHeight:1.65, margin:'0 0 10px' }}>{q.detail}</p>
-                  <div style={{ background:`${q.color}0D`, border:`1px solid ${q.color}22`, borderRadius:6, padding:'5px 8px', fontSize:9, color:q.color, fontStyle:'italic' }}>{q.result}</div>
-                </Card>
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* Expanded panel — full width below the row */}
-        <AnimatePresence mode="wait">
-          {openRQ !== null && (() => {
-            const q = RQS[openRQ]
-            return (
-              <motion.div key={openRQ}
-                initial={{ opacity:0, height:0 }}
-                animate={{ opacity:1, height:'auto' }}
-                exit={{ opacity:0, height:0 }}
-                transition={{ duration:0.3, ease:'easeInOut' }}
-                style={{ overflow:'hidden', maxWidth:1300, margin:'0 auto' }}
-              >
-                <div style={{ border:`1px solid ${q.color}30`, borderRadius:14, background:`${q.color}06`, padding:'28px 32px', marginBottom:8 }}>
-                  <div style={{ display:'flex', gap:40, alignItems:'flex-start', flexWrap:'wrap' }}>
-                    {/* Left: stats grid */}
-                    <div style={{ flexShrink:0 }}>
-                      <div style={{ color:q.color, fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:14 }}>KEY NUMBERS</div>
-                      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'10px 24px' }}>
-                        {q.expandedStats.map((s,j) => (
-                          <div key={j}>
-                            <div style={{ color:q.color, fontSize:18, fontWeight:800, fontFamily:'var(--font-mono)', lineHeight:1 }}>{s.value}</div>
-                            <div style={{ color:'rgba(255,255,255,0.4)', fontSize:9, letterSpacing:'0.06em', marginTop:2 }}>{s.label}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {/* Divider */}
-                    <div style={{ width:1, alignSelf:'stretch', background:`${q.color}20`, flexShrink:0 }}/>
-                    {/* Right: detailed explanation */}
-                    <div style={{ flex:1, minWidth:240 }}>
-                      <div style={{ color:q.color, fontSize:10, fontWeight:700, letterSpacing:'0.12em', marginBottom:12 }}>HOW IT'S MEASURED</div>
-                      <p style={{ color:'var(--text-secondary)', fontSize:12, lineHeight:1.8, margin:0 }}>{q.expandedDetail}</p>
-                    </div>
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10, flexWrap: 'wrap' }}>
+                  <div style={{
+                    width: isPrimary ? 44 : 34, height: isPrimary ? 44 : 34, borderRadius: 8,
+                    background: `${q.color}18`, border: `1.5px solid ${q.color}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: q.color, fontWeight: 800, fontSize: isPrimary ? 14 : 11, fontFamily: 'var(--font-mono)',
+                  }}>{q.id}</div>
+                  <span style={{
+                    background: q.tier === 'PRIMARY' ? q.color : `${q.color}22`,
+                    color: q.tier === 'PRIMARY' ? '#050a16' : q.color,
+                    fontSize: 9, fontWeight: 800, letterSpacing: '0.14em',
+                    padding: '4px 8px', borderRadius: 4,
+                  }}>{q.tier} · {q.weight}</span>
                 </div>
+                <div style={{
+                  color: '#fff', fontSize: isPrimary ? 18 : 13.5, fontWeight: 700,
+                  marginBottom: 6, lineHeight: 1.3,
+                }}>{q.label}</div>
+                <div style={{
+                  color: 'rgba(232,244,248,0.65)', fontSize: isPrimary ? 13 : 11.5,
+                  lineHeight: 1.55, marginBottom: 10, fontStyle: 'italic',
+                }}>{q.question}</div>
+                <div style={{
+                  background: `${q.color}10`, border: `1px solid ${q.color}33`, borderRadius: 8,
+                  padding: '10px 12px', marginBottom: 10,
+                }}>
+                  <div style={{ color: q.color, fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', marginBottom: 4 }}>HEADLINE</div>
+                  <div style={{ color: '#fff', fontSize: isPrimary ? 14 : 12, fontWeight: 700, lineHeight: 1.45 }}>{q.headline}</div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      const el = document.getElementById('visualizations')
+                      if (el) {
+                        const top = el.getBoundingClientRect().top + window.scrollY - 80
+                        window.scrollTo({ top, behavior: 'smooth' })
+                      }
+                    }}
+                    style={{ color: q.color, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                  >View results →</span>
+                  <span style={{ color: q.color, fontSize: 10, opacity: 0.7 }}>{isOpen ? 'Hide details ▲' : 'Show details ▼'}</span>
+                </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: 'auto', marginTop: 14 }}
+                      exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ borderTop: `1px solid ${q.color}33`, paddingTop: 12 }}>
+                        <p style={{ color: 'rgba(232,244,248,0.78)', fontSize: 12, lineHeight: 1.7, margin: '0 0 10px' }}>{q.detail}</p>
+                        <div style={{ color: q.color, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', marginBottom: 4 }}>GROUNDING</div>
+                        <p style={{ color: 'rgba(232,244,248,0.6)', fontSize: 11, lineHeight: 1.6, margin: 0 }}>{q.grounding}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             )
-          })()}
-        </AnimatePresence>
+          }
+
+          return (
+            <div style={{ maxWidth: 1300, margin: '0 auto 24px' }}>
+              <div style={{ marginBottom: 16 }}>
+                {renderCard(primary, 0, true)}
+              </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: 14,
+              }}>
+                {supporting.map((q, i) => renderCard(q, i, false))}
+              </div>
+            </div>
+          )
+        })()}
 
         <div style={{ height:36 }}/>
       </FadeIn>
@@ -2082,18 +2071,18 @@ function About() {
       <FadeIn delay={60}>
         <Card style={{ maxWidth:1100, margin:'0 auto 48px', padding:'36px 40px', textAlign:'center' }}>
           <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.85, margin:'0 0 36px' }}>
-            The first benchmark dedicated to Bayesian and inferential statistical reasoning,
-            covering both classical conjugate models and advanced computational methods
-            (MCMC, Variational Bayes, ABC, Hierarchical Bayes). Five leading LLMs evaluated
-            across five scoring dimensions. Supervised by Dr. Vahe Movsisyan, AUA.
+            The first free-response Bayesian-inference benchmark with externally-validated rubric
+            scoring. 171 tasks (136 Phase 1 + 35 Phase 2), 5 frontier LLMs, 5-dimensional
+            N·M·A·C·R rubric, external Llama 3.3 70B judge, 398 v2 perturbations, bootstrap-CI
+            separability tests. Supervised by Dr. Vahe Movsisyan, AUA.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'28px 40px' }}>
             {[
               { target:171,  label:'Tasks' },
               { target:5,    label:'Models' },
-              { target:1230, label:'Total Runs' },
+              { target:2365, label:'Perturbation Runs' },
               { target:38,   label:'Task Types' },
-              { target:8,    label:'Error Categories' },
+              { target:143,  label:'Failures Audited' },
             ].map(({ target, label }) => (
               <div key={label} style={{ textAlign:'center', minWidth:80 }}>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:40, fontWeight:800, color:'var(--aqua)', lineHeight:1 }}>
@@ -2149,61 +2138,7 @@ function About() {
   )
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  REFERENCES — Research Papers + Graduate Textbooks (bottom of page)
-// ═══════════════════════════════════════════════════════════════
-function References() {
-  return (
-    <Section id="references" minHeight="auto">
-      <SectionTitle>References</SectionTitle>
-
-      {/* Research Papers */}
-      <FadeIn>
-        <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>5 REFERENCED RESEARCH PAPERS</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 44px' }}>
-          {ABOUT_REFS.map((r,i) => (
-            <motion.div key={i} style={{ borderRadius:16 }} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
-              <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
-                <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
-                  <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
-                    <span style={{ color:'var(--text-muted)', fontSize:10 }}>{r.authors}</span>
-                    <span style={{ background:'rgba(0,255,224,0.12)', color:'var(--aqua)', fontSize:9, fontWeight:700, padding:'2px 6px', borderRadius:4 }}>{r.year}</span>
-                  </div>
-                  <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:700, marginBottom:8, lineHeight:1.4 }}>{r.title}</div>
-                  <p style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.6, margin:'0 0 8px' }}>{r.desc}</p>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--aqua)', opacity:0.7 }}>{r.id} ↗</div>
-                </Card>
-              </a>
-            </motion.div>
-          ))}
-        </div>
-      </FadeIn>
-
-      {/* Graduate Textbooks */}
-      <FadeIn delay={80}>
-        <div style={{ color:'var(--aqua)', fontSize:16, fontWeight:700, letterSpacing:'0.14em', textAlign:'center', marginBottom:20 }}>7 GRADUATE TEXTBOOKS</div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(290px,1fr))', gap:12, maxWidth:1300, margin:'0 auto 48px' }}>
-          {TEXTBOOKS.map((b,i) => (
-            <motion.div key={i} style={{ borderRadius:16 }} whileHover={{ y:-3, boxShadow:'var(--glow-md)' }} transition={{ type:'spring', stiffness:400, damping:28 }}>
-              <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none', display:'block', height:'100%' }}>
-                <Card style={{ padding:'16px 18px', height:'100%', boxSizing:'border-box', cursor:'pointer' }}>
-                  <div style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
-                    <div style={{ width:8, height:8, borderRadius:'50%', background:b.color, flexShrink:0, marginTop:5, boxShadow:`0 0 6px ${b.color}` }}/>
-                    <div>
-                      <div style={{ color:'var(--text-primary)', fontSize:12, fontWeight:700, marginBottom:6, lineHeight:1.4 }}>{b.text}</div>
-                      <p style={{ color:'var(--text-secondary)', fontSize:11, lineHeight:1.6, margin:'0 0 6px' }}>{b.desc}</p>
-                      <span style={{ color:b.color, fontSize:9, fontWeight:700, opacity:0.8 }}>View book ↗</span>
-                    </div>
-                  </div>
-                </Card>
-              </a>
-            </motion.div>
-          ))}
-        </div>
-      </FadeIn>
-    </Section>
-  )
-}
+// References component is now imported from ./pages/References (fetches /api/v2/literature)
 
 // ═══════════════════════════════════════════════════════════════
 //  ROOT APP
@@ -2241,22 +2176,26 @@ export default function App() {
       <SectionDivider/>
       <About/>
       <SectionDivider/>
+      <Methodology/>
+      <SectionDivider/>
       <BenchmarkSection/>
       <SectionDivider/>
       <Models/>
       <SectionDivider/>
       <Tasks onOpenModal={setModal} isOpen={tasksOpen} onToggle={()=>setTasksOpen(o=>!o)}/>
       <SectionDivider/>
-      <Visualizations setFullImg={setFullImg} onOpenGif={url => { setGifModal(url); setGifLoading(true); setGifError(false) }} onOpenInteractive={(url, title) => setInteractiveModal({ url, title })}/>
+      <Visualizations setFullImg={setFullImg}/>
       <SectionDivider/>
       <UserStudy/>
+      <SectionDivider/>
+      <Limitations/>
       <SectionDivider/>
       <References/>
 
       {/* Footer */}
       <footer style={{ borderTop:'1px solid rgba(0,255,224,0.1)', padding:'28px 64px 32px', textAlign:'center', background:'rgba(0,0,0,0.25)' }}>
         <nav style={{ display:'flex', justifyContent:'center', flexWrap:'wrap', gap:'6px 20px', marginBottom:14 }}>
-          {['overview','about','benchmark','models','tasks','visualizations','user-study','references'].map(id => (
+          {['overview','about','methodology','benchmark','models','tasks','visualizations','user-study','limitations','references'].map(id => (
             <a key={id} href={`#${id}`}
               style={{ color:'rgba(0,255,224,0.5)', fontSize:11, fontWeight:600, letterSpacing:'0.08em', textDecoration:'none', textTransform:'uppercase', transition:'color 0.18s' }}
               onMouseEnter={e=>e.currentTarget.style.color='#00FFE0'}

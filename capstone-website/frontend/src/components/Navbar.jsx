@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 const NAV_SECTIONS = [
-  { id: 'overview',      label: 'Overview'     },
-  { id: 'about',         label: 'Research'     },
-  { id: 'benchmark',     label: 'How It Works' },
-  { id: 'models',        label: 'Models'       },
-  { id: 'tasks',         label: 'Tasks'        },
-  { id: 'visualizations',label: 'Visualizations' },
-  { id: 'user-study',    label: 'User Study'   },
+  { id: 'overview',       label: 'Overview'     },
+  { id: 'about',          label: 'Research'     },
+  { id: 'methodology',    label: 'Methodology'  },
+  { id: 'benchmark',      label: 'How It Works' },
+  { id: 'models',         label: 'Models'       },
+  { id: 'tasks',          label: 'Tasks'        },
+  { id: 'visualizations', label: 'Visualizations' },
+  { id: 'limitations',    label: 'Limitations'  },
+  { id: 'references',     label: 'References'   },
 ]
 
 export default function Navbar() {
@@ -133,26 +135,39 @@ export default function Navbar() {
         </button>
       </motion.header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer + tap-outside backdrop */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            className="nav-drawer"
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-          >
-            {NAV_SECTIONS.map(({ id, label }) => (
-              <button
-                key={id}
-                className={`nav-drawer-btn${active === id ? ' active' : ''}`}
-                onClick={() => scrollTo(id)}
-              >
-                {label}
-              </button>
-            ))}
-          </motion.div>
+          <>
+            <motion.div
+              key="nav-drawer-backdrop"
+              className="nav-drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMenuOpen(false)}
+              aria-hidden="true"
+            />
+            <motion.div
+              key="nav-drawer"
+              className="nav-drawer"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              {NAV_SECTIONS.map(({ id, label }) => (
+                <button
+                  key={id}
+                  className={`nav-drawer-btn${active === id ? ' active' : ''}`}
+                  onClick={() => scrollTo(id)}
+                >
+                  {label}
+                </button>
+              ))}
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
