@@ -34,6 +34,8 @@ V2_FILES = {
     "judge_dimension_means": RESULTS_V2 / "judge_dimension_means.json",
     "tolerance_sensitivity": RESULTS_V2 / "tolerance_sensitivity.json",
     "perturbations_all": BASE_DIR / "data" / "synthetic" / "perturbations_all.json",
+    "pass_flip": RESULTS_V2 / "combined_pass_flip_analysis.json",
+    "keyword_degradation": RESULTS_V2 / "keyword_degradation_check.json",
 }
 
 # Files required for /api/v2/health to report ok
@@ -41,9 +43,14 @@ HEALTH_REQUIRED = [
     "agreement_keyword_judge",
     "krippendorff",
     "calibration_verbalized",
+    "calibration_consistency",
     "robustness",
     "bootstrap_ci",
     "error_taxonomy",
+    "judge_dimension_means",
+    "tolerance_sensitivity",
+    "pass_flip",
+    "keyword_degradation",
 ]
 
 # ─── mtime-keyed cache ────────────────────────────────────────────
@@ -311,7 +318,7 @@ def rankings() -> Dict[str, Any]:
         },
         "calibration": {
             "verbalized_ece": bs.get("calibration_ece_points", {}),
-            "consistency_ece": sc.get("ece_comparison", {}),
+            "consistency_ece": sc.get("ece_comparison_full") or sc.get("ece_comparison", {}),
             "note": bs.get("calibration_note"),
         },
         "models": rob.get("models", list(bs.get("accuracy", {}).keys())),
@@ -409,10 +416,31 @@ def calibration() -> Dict[str, Any]:
             "stratification": cons.get("stratification", {}),
             "selected_task_ids": cons.get("selected_task_ids", []),
             "per_model": cons.get("per_model", {}),
-            "ece_comparison": cons.get("ece_comparison", {}),
+            "ece_comparison": cons.get("ece_comparison_full") or cons.get("ece_comparison", {}),
             "session_cost_usd": cons.get("session_cost_usd"),
             "aborted_partial": cons.get("aborted_partial"),
             "methodology_citation": cons.get("_methodology_citation"),
+        },
+    }
+
+
+# ─── Pass-flip (combined base + perturbation) ─────────────────────
+@router.get("/pass_flip")
+def pass_flip() -> Dict[str, Any]:
+    """Combined base + perturbation pass-flip analysis (Phase 1.5)."""
+    pf = _load_json(V2_FILES["pass_flip"])
+    deg = _load_json(V2_FILES["keyword_degradation"])
+    return {
+        "base": pf.get("base", {}),
+        "perturbation": pf.get("perturbation", {}),
+        "combined": pf.get("combined", {}),
+        "comparison": pf.get("comparison", {}),
+        "keyword_degradation": {
+            "base": deg.get("base", {}),
+            "perturbation": deg.get("perturbation", {}),
+            "drops": deg.get("drops", {}),
+            "per_perturbation_type": deg.get("per_perturbation_type", {}),
+            "verdict": deg.get("verdict", ""),
         },
     }
 

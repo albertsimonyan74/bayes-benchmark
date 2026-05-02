@@ -1,160 +1,122 @@
 {
-  "_methodology_citation": "Methodology grounded in Multi-Answer Confidence (arxiv 2602.07842) and SelfCheckGPT (Manakul et al., 2023). Contrast with FermiEval (arxiv 2510.26995). Addresses audit finding F-12 / P-3.",
-  "n_tasks": 30,
+  "_methodology_citation": "Methodology grounded in Multi-Answer Confidence (arxiv 2602.07842) and SelfCheckGPT (Manakul et al., 2023). Phase 1C full-task expansion of stratified B3.",
+  "_supersedes": "self_consistency_calibration.json (stratified B3, archived to llm-stats-vault/90-archive/phase_1c_superseded/)",
+  "n_tasks": 161,
+  "n_total_tasks_in_corpus": 171,
+  "n_excluded_conceptual": 10,
   "n_models": 5,
   "n_runs_per_pair": 3,
   "temperature": 0.7,
   "top_p": 0.95,
-  "stratification": {
-    "BAYESIAN_CORE": [
-      "BAYES_REG_04",
-      "BAYES_REG_05",
-      "BAYES_REG_01",
-      "BAYES_REG_03",
-      "BAYES_REG_02"
-    ],
-    "MLE_FREQ": [
-      "FISHER_INFO_02",
-      "FISHER_INFO_03",
-      "FISHER_INFO_01",
-      "FISHER_INFO_04",
-      "MLE_EFFICIENCY_03"
-    ],
-    "MCMC": [
-      "STATIONARY_03",
-      "STATIONARY_01",
-      "MH_05",
-      "HMC_04",
-      "GIBBS_03"
-    ],
-    "REGRESSION": [
-      "REGRESSION_05",
-      "REGRESSION_04",
-      "REGRESSION_02",
-      "REGRESSION_03",
-      "REGRESSION_01"
-    ],
-    "CAUSAL_PRED": [
-      "MARKOV_01",
-      "MARKOV_04",
-      "MARKOV_05",
-      "MARKOV_03",
-      "MARKOV_02"
-    ],
-    "ADVANCED": [
-      "BOX_MULLER_02",
-      "BOX_MULLER_04",
-      "BOX_MULLER_03",
-      "BOX_MULLER_01",
-      "LOG_ML_02"
-    ]
-  },
-  "selected_task_ids": [
-    "BAYES_REG_04",
-    "BAYES_REG_05",
-    "BAYES_REG_01",
-    "BAYES_REG_03",
-    "BAYES_REG_02",
-    "FISHER_INFO_02",
-    "FISHER_INFO_03",
-    "FISHER_INFO_01",
-    "FISHER_INFO_04",
-    "MLE_EFFICIENCY_03",
-    "STATIONARY_03",
-    "STATIONARY_01",
-    "MH_05",
-    "HMC_04",
-    "GIBBS_03",
-    "REGRESSION_05",
-    "REGRESSION_04",
-    "REGRESSION_02",
-    "REGRESSION_03",
-    "REGRESSION_01",
-    "MARKOV_01",
-    "MARKOV_04",
-    "MARKOV_05",
-    "MARKOV_03",
-    "MARKOV_02",
-    "BOX_MULLER_02",
-    "BOX_MULLER_04",
-    "BOX_MULLER_03",
-    "BOX_MULLER_01",
-    "LOG_ML_02"
-  ],
   "per_model": {
     "claude": {
-      "n_pairs_with_3_runs": 30,
-      "n_high": 0,
-      "n_med": 0,
-      "n_low": 30,
-      "consistency_ece": 0.33,
-      "consistency_brier": 0.10890000000000005,
-      "accuracy_overall": 0.0
+      "n_pairs_with_3_runs": 161,
+      "n_high": 89,
+      "n_med": 16,
+      "n_low": 56,
+      "high_bucket_accuracy": 0.0,
+      "med_bucket_accuracy": 0.0,
+      "low_bucket_accuracy": 0.0,
+      "ece_consistency": 0.7341614906832299,
+      "brier": 0.6352844720496895,
+      "accuracy_overall": 0.0,
+      "failures": 0
     },
     "chatgpt": {
-      "n_pairs_with_3_runs": 30,
-      "n_high": 14,
-      "n_med": 0,
-      "n_low": 16,
-      "consistency_ece": 0.6426666666666667,
-      "consistency_brier": 0.5247466666666667,
-      "accuracy_overall": 0.0
+      "n_pairs_with_3_runs": 161,
+      "n_high": 91,
+      "n_med": 6,
+      "n_low": 64,
+      "high_bucket_accuracy": 0.0,
+      "med_bucket_accuracy": 0.0,
+      "low_bucket_accuracy": 0.0,
+      "ece_consistency": 0.7213664596273291,
+      "brier": 0.6252360248447205,
+      "accuracy_overall": 0.0,
+      "failures": 1
     },
     "gemini": {
-      "n_pairs_with_3_runs": 30,
-      "n_high": 7,
-      "n_med": 7,
-      "n_low": 16,
-      "consistency_ece": 0.5656666666666668,
-      "consistency_brier": 0.39615666666666666,
-      "accuracy_overall": 0.0
+      "n_pairs_with_3_runs": 161,
+      "n_high": 58,
+      "n_med": 22,
+      "n_low": 81,
+      "high_bucket_accuracy": 0.0,
+      "med_bucket_accuracy": 0.0,
+      "low_bucket_accuracy": 0.0,
+      "ece_consistency": 0.6178260869565217,
+      "brier": 0.4763770186335404,
+      "accuracy_overall": 0.0,
+      "failures": 0
     },
     "deepseek": {
-      "n_pairs_with_3_runs": 30,
-      "n_high": 13,
-      "n_med": 2,
-      "n_low": 15,
-      "consistency_ece": 0.643,
-      "consistency_brier": 0.51771,
-      "accuracy_overall": 0.0
+      "n_pairs_with_3_runs": 161,
+      "n_high": 83,
+      "n_med": 24,
+      "n_low": 54,
+      "high_bucket_accuracy": 0.0,
+      "med_bucket_accuracy": 0.0,
+      "low_bucket_accuracy": 0.0,
+      "ece_consistency": 0.7260869565217392,
+      "brier": 0.6189701863354038,
+      "accuracy_overall": 0.0,
+      "failures": 0
     },
     "mistral": {
-      "n_pairs_with_3_runs": 30,
-      "n_high": 11,
-      "n_med": 2,
-      "n_low": 17,
-      "consistency_ece": 0.5983333333333333,
-      "consistency_brier": 0.45830333333333334,
-      "accuracy_overall": 0.0
+      "n_pairs_with_3_runs": 161,
+      "n_high": 75,
+      "n_med": 10,
+      "n_low": 76,
+      "high_bucket_accuracy": 0.0,
+      "med_bucket_accuracy": 0.0,
+      "low_bucket_accuracy": 0.0,
+      "ece_consistency": 0.6632298136645962,
+      "brier": 0.5451267080745342,
+      "accuracy_overall": 0.0,
+      "failures": 1
     }
   },
-  "ece_comparison": {
+  "ece_comparison_full": {
     "claude": {
-      "keyword_ece": 0.0665989159891599,
-      "consistency_ece": 0.33,
-      "direction_flipped": true
+      "verbalized_ece": 0.0665989159891599,
+      "consistency_ece_stratified": 0.33,
+      "consistency_ece_full": 0.7341614906832299
     },
     "chatgpt": {
-      "keyword_ece": 0.06260162601626021,
-      "consistency_ece": 0.6426666666666667,
-      "direction_flipped": true
+      "verbalized_ece": 0.06260162601626021,
+      "consistency_ece_stratified": 0.6426666666666667,
+      "consistency_ece_full": 0.7213664596273291
     },
     "gemini": {
-      "keyword_ece": 0.09728997289972899,
-      "consistency_ece": 0.5656666666666668,
-      "direction_flipped": true
+      "verbalized_ece": 0.09728997289972899,
+      "consistency_ece_stratified": 0.5656666666666668,
+      "consistency_ece_full": 0.6178260869565217
     },
     "deepseek": {
-      "keyword_ece": 0.17947154471544713,
-      "consistency_ece": 0.643,
-      "direction_flipped": false
+      "verbalized_ece": 0.17947154471544713,
+      "consistency_ece_stratified": 0.643,
+      "consistency_ece_full": 0.7260869565217392
     },
     "mistral": {
-      "keyword_ece": 0.08401084010840104,
-      "consistency_ece": 0.5983333333333333,
-      "direction_flipped": true
+      "verbalized_ece": 0.08401084010840104,
+      "consistency_ece_stratified": 0.5983333333333333,
+      "consistency_ece_full": 0.6632298136645962
     }
   },
-  "session_cost_usd": 1.1941,
-  "aborted_partial": false
+  "gemini_finding": {
+    "verbalized_signals": 0,
+    "verbalized_ece_reported": 0.09728997289972899,
+    "consistency_high_bucket_n": 58,
+    "consistency_high_bucket_accuracy": 0.0,
+    "consistency_ece_full": 0.6178260869565217,
+    "interpretation": "Verbalized extraction yielded 0 signal for gemini in Phase 1B (all 246 base runs unstated). The consistency proxy populates a high-bucket of size n_high and reports an ECE. This shows that non-verbalized methods recover calibration information for models whose verbalization style hides confidence."
+  },
+  "session_cost_usd": 11.6876,
+  "aborted_partial": false,
+  "failures_per_model": {
+    "chatgpt": 1,
+    "mistral": 1,
+    "claude": 0,
+    "gemini": 0,
+    "deepseek": 0
+  }
 }

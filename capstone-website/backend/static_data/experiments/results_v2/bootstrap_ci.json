@@ -1,68 +1,69 @@
 {
   "B": 10000,
   "seed": 42,
-  "method": "non-parametric bootstrap on per-run final_score (accuracy) and per-run paired delta (robustness); 95% percentile CI",
+  "weighting_scheme": "literature_v1",
+  "method": "non-parametric bootstrap on per-run aggregate_new (literature-weighted NMACR); 95% percentile CI",
   "accuracy": {
     "claude": {
-      "mean": 0.679092,
-      "ci_lower": 0.654786,
-      "ci_upper": 0.70238,
-      "n": 171
+      "mean": 0.712221,
+      "ci_lower": 0.68869,
+      "ci_upper": 0.736027,
+      "n": 246
     },
     "chatgpt": {
-      "mean": 0.613943,
-      "ci_lower": 0.586144,
-      "ci_upper": 0.641493,
-      "n": 171
+      "mean": 0.691285,
+      "ci_lower": 0.667681,
+      "ci_upper": 0.715227,
+      "n": 246
     },
     "gemini": {
-      "mean": 0.67357,
-      "ci_lower": 0.647315,
-      "ci_upper": 0.699668,
-      "n": 171
+      "mean": 0.776253,
+      "ci_lower": 0.752699,
+      "ci_upper": 0.799189,
+      "n": 246
     },
     "deepseek": {
-      "mean": 0.621219,
-      "ci_lower": 0.593506,
-      "ci_upper": 0.647917,
-      "n": 171
+      "mean": 0.662972,
+      "ci_lower": 0.639471,
+      "ci_upper": 0.686352,
+      "n": 246
     },
     "mistral": {
-      "mean": 0.632322,
-      "ci_lower": 0.606291,
-      "ci_upper": 0.658613,
-      "n": 171
+      "mean": 0.675376,
+      "ci_lower": 0.65188,
+      "ci_upper": 0.69869,
+      "n": 246
     }
   },
   "robustness": {
     "claude": {
-      "mean_delta": 0.019446,
-      "ci_lower": 0.009586,
-      "ci_upper": 0.029404,
+      "mean_delta": 0.040085,
+      "ci_lower": 0.026654,
+      "ci_upper": 0.053909,
       "n": 473
     },
     "chatgpt": {
-      "mean_delta": -0.000736,
-      "ci_lower": -0.010691,
-      "ci_upper": 0.009161,
+      "mean_delta": 0.011431,
+      "ci_lower": -0.001357,
+      "ci_upper": 0.024327,
       "n": 473
     },
     "gemini": {
-      "mean_delta": 0.01599,
-      "ci_lower": 0.001114,
-      "ci_upper": 0.030835,
+      "mean_delta": 0.056769,
+      "ci_lower": 0.041065,
+      "ci_upper": 0.072466,
       "n": 473
     },
     "deepseek": {
-      "mean_delta": 0.000595,
-      "ci_lower": -0.012165,
-      "ci_upper": 0.013468,
+      "mean_delta": 0.042306,
+      "ci_lower": 0.026767,
+      "ci_upper": 0.05816,
       "n": 473
     },
     "mistral": {
-      "mean_delta": 0.01353,
-      "ci_lower": 0.003529,
-      "ci_upper": 0.023684,
+      "mean_delta": 0.006951,
+      "ci_lower": -0.00564,
+      "ci_upper": 0.019255,
       "n": 473
     }
   },
@@ -71,12 +72,12 @@
       [
         "claude",
         "chatgpt",
-        "separable"
+        "not_separable"
       ],
       [
         "claude",
         "gemini",
-        "not_separable"
+        "separable"
       ],
       [
         "claude",
@@ -106,12 +107,12 @@
       [
         "gemini",
         "deepseek",
-        "not_separable"
+        "separable"
       ],
       [
         "gemini",
         "mistral",
-        "not_separable"
+        "separable"
       ],
       [
         "deepseek",
@@ -138,17 +139,17 @@
       [
         "claude",
         "mistral",
-        "not_separable"
+        "separable"
       ],
       [
         "chatgpt",
         "gemini",
-        "not_separable"
+        "separable"
       ],
       [
         "chatgpt",
         "deepseek",
-        "not_separable"
+        "separable"
       ],
       [
         "chatgpt",
@@ -163,16 +164,16 @@
       [
         "gemini",
         "mistral",
-        "not_separable"
+        "separable"
       ],
       [
         "deepseek",
         "mistral",
-        "not_separable"
+        "separable"
       ]
     ]
   },
-  "calibration_note": "ECE is a per-model point estimate using 4 fixed confidence buckets. A bootstrap CI requires binned resampling (resample within each bucket and re-aggregate). Deferred to paper scope. Point ECE values reported as-is from calibration.json.",
+  "calibration_note": "ECE point estimates per model; bootstrap CI requires binned resampling (deferred). See per_dim_calibration.json for per-NMACR-dimension ECE.",
   "calibration_ece_points": {
     "claude": 0.0665989159891599,
     "chatgpt": 0.06260162601626021,
