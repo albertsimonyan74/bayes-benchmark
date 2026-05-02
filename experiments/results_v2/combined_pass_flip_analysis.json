@@ -1,0 +1,150 @@
+{
+  "_methodology": "Combined base + perturbation pass-flip analysis on assumption_compliance dimension. Run-id deduplicated set union. Eligibility: tasks with non-empty required_assumption_checks.",
+  "_methodology_citation": "Yamauchi et al. 2025 (arxiv 2506.13639) \u2014 methodology baseline; Phase 1.5 audit-driven extension to perturbation population.",
+  "_supersedes_field": "keyword_vs_judge_agreement.json:pass_flip_assumption (base-only original retained for backward compat)",
+  "base": {
+    "n_total": 1230,
+    "n_eligible": 1095,
+    "n_pass_flip": 274,
+    "n_inverse_flip": 54,
+    "pct_pass_flip": 0.2502283105022831,
+    "pct_inverse_flip": 0.049315068493150684,
+    "per_model": {
+      "claude": {
+        "n_total": 246,
+        "n_eligible": 219,
+        "n_pass_flip": 67,
+        "pct": 0.3059360730593607
+      },
+      "chatgpt": {
+        "n_total": 246,
+        "n_eligible": 219,
+        "n_pass_flip": 46,
+        "pct": 0.2100456621004566
+      },
+      "gemini": {
+        "n_total": 246,
+        "n_eligible": 219,
+        "n_pass_flip": 54,
+        "pct": 0.2465753424657534
+      },
+      "deepseek": {
+        "n_total": 246,
+        "n_eligible": 219,
+        "n_pass_flip": 49,
+        "pct": 0.2237442922374429
+      },
+      "mistral": {
+        "n_total": 246,
+        "n_eligible": 219,
+        "n_pass_flip": 58,
+        "pct": 0.2648401826484018
+      }
+    }
+  },
+  "perturbation": {
+    "n_total": 2365,
+    "n_eligible": 2100,
+    "n_pass_flip": 434,
+    "n_inverse_flip": 89,
+    "pct_pass_flip": 0.20666666666666667,
+    "pct_inverse_flip": 0.04238095238095238,
+    "per_model": {
+      "claude": {
+        "n_total": 473,
+        "n_eligible": 420,
+        "n_pass_flip": 110,
+        "pct": 0.2619047619047619
+      },
+      "chatgpt": {
+        "n_total": 473,
+        "n_eligible": 420,
+        "n_pass_flip": 76,
+        "pct": 0.18095238095238095
+      },
+      "gemini": {
+        "n_total": 473,
+        "n_eligible": 420,
+        "n_pass_flip": 96,
+        "pct": 0.22857142857142856
+      },
+      "deepseek": {
+        "n_total": 473,
+        "n_eligible": 420,
+        "n_pass_flip": 73,
+        "pct": 0.1738095238095238
+      },
+      "mistral": {
+        "n_total": 473,
+        "n_eligible": 420,
+        "n_pass_flip": 79,
+        "pct": 0.1880952380952381
+      }
+    },
+    "per_perturbation_type": {
+      "rephrase": {
+        "n_total": 855,
+        "n_eligible": 750,
+        "n_pass_flip": 162,
+        "pct": 0.216
+      },
+      "numerical": {
+        "n_total": 655,
+        "n_eligible": 600,
+        "n_pass_flip": 136,
+        "pct": 0.22666666666666666
+      },
+      "semantic": {
+        "n_total": 855,
+        "n_eligible": 750,
+        "n_pass_flip": 136,
+        "pct": 0.18133333333333335
+      }
+    }
+  },
+  "combined": {
+    "n_total": 3595,
+    "n_eligible": 3195,
+    "n_pass_flip": 708,
+    "n_inverse_flip": 143,
+    "pct_pass_flip": 0.2215962441314554,
+    "pct_inverse_flip": 0.04475743348982786,
+    "n_runid_collisions": 0,
+    "per_model": {
+      "claude": {
+        "n_total": 719,
+        "n_eligible": 639,
+        "n_pass_flip": 177,
+        "pct": 0.27699530516431925
+      },
+      "chatgpt": {
+        "n_total": 719,
+        "n_eligible": 639,
+        "n_pass_flip": 122,
+        "pct": 0.19092331768388107
+      },
+      "gemini": {
+        "n_total": 719,
+        "n_eligible": 639,
+        "n_pass_flip": 150,
+        "pct": 0.2347417840375587
+      },
+      "deepseek": {
+        "n_total": 719,
+        "n_eligible": 639,
+        "n_pass_flip": 122,
+        "pct": 0.19092331768388107
+      },
+      "mistral": {
+        "n_total": 719,
+        "n_eligible": 639,
+        "n_pass_flip": 137,
+        "pct": 0.21439749608763695
+      }
+    }
+  },
+  "comparison": {
+    "base_vs_perturbation_diff_pp": -4.356164383561644,
+    "interpretation": "Pass-flip rate is 4.4pp lower on perturbations vs base, indicating the keyword/judge disagreement attenuates when surface form changes while underlying mathematics stays fixed."
+  }
+}

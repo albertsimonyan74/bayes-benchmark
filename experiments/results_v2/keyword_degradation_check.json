@@ -1,0 +1,37 @@
+{
+  "_methodology": "Direct test of whether keyword scoring degrades more than judge scoring under perturbation. Pre-registered for inclusion in Phase 1.5 combined pass-flip findings.",
+  "base": {
+    "keyword_pass_rate": 0.6867579908675799,
+    "judge_pass_rate": 0.4858447488584475,
+    "n_eligible": 1095
+  },
+  "perturbation": {
+    "keyword_pass_rate": 0.6680952380952381,
+    "judge_pass_rate": 0.5038095238095238,
+    "n_eligible": 2100
+  },
+  "drops": {
+    "keyword_drop_pp": 1.8662752772341804,
+    "judge_drop_pp": -1.7964774951076308,
+    "differential_pp": 3.662752772341811
+  },
+  "per_perturbation_type": {
+    "rephrase": {
+      "keyword_drop_pp": 0.2757990867579849,
+      "judge_drop_pp": -1.682191780821924,
+      "differential_pp": 1.957990867579909
+    },
+    "numerical": {
+      "keyword_drop_pp": 7.175799086757991,
+      "judge_drop_pp": 4.251141552511413,
+      "differential_pp": 2.9246575342465775
+    },
+    "semantic": {
+      "keyword_drop_pp": -0.790867579908678,
+      "judge_drop_pp": -6.748858447488587,
+      "differential_pp": 5.957990867579909
+    }
+  },
+  "verdict": "SUPPORTED",
+  "recommended_methodology_page_text": "Across the 3,195 eligible runs that share the assumption-compliance rubric, keyword scoring degrades faster than the LLM-judge under perturbation: keyword PASS rate drops 1.9pp (from 68.7% on base to 66.8% on perturbation), while judge PASS rate drops only -1.8pp (from 48.6% to 50.4%). The 3.7pp differential indicates that surface-form changes \u2014 rephrasing, numerical reseeding, semantic reframing \u2014 disproportionately break the keyword regex, whereas the judge rubric tracks the underlying mathematical content more robustly. This is direct empirical support for using LLM-as-a-judge scoring as the canonical assumption-compliance metric on perturbation-evaluated tasks."
+}
