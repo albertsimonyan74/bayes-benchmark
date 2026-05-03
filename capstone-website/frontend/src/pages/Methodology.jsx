@@ -401,6 +401,28 @@ export default function Methodology() {
               </ul>
             </div>
 
+            {/* Coverage block — per-dimension n + judge-only note */}
+            <div className="alpha-coverage-block">
+              <div className="alpha-coverage-header">Computed on 3 shared dimensions:</div>
+              <ul className="alpha-coverage-list">
+                <li>
+                  <span className="dim-name">Assumption compliance</span>
+                  <span className="dim-n">n = 1,095</span>
+                </li>
+                <li>
+                  <span className="dim-name">Reasoning quality</span>
+                  <span className="dim-n">n = 1,095</span>
+                </li>
+                <li>
+                  <span className="dim-name">Method structure</span>
+                  <span className="dim-n">n = 1,095</span>
+                </li>
+              </ul>
+              <p className="alpha-coverage-note">
+                Numerical and Confidence dimensions are judge-only — not included in α
+              </p>
+            </div>
+
             {/* Number line scale -1 to +1 */}
             <div className="alpha-scale">
               <div className="alpha-scale-track">
@@ -454,11 +476,6 @@ export default function Methodology() {
               confidence, meaning this is <strong>structural disagreement, not noise</strong>.
               The keyword scorer and external judge are measuring different constructs on this
               dimension.
-            </div>
-
-            {/* Footer */}
-            <div className="alpha-footer">
-              N = 1,095 base eligible runs (all three dimensions) · α also computed on the perturbation scope (n=2,100) and combined scope (n=3,195, matches the keyword-judge disagreement headline scope) — see krippendorff_agreement.json · N (numerical) and C (calibration) are judge-only and not included in α analysis
             </div>
           </div>
 

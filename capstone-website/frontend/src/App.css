@@ -937,8 +937,10 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
 }
 .alpha-marker {
   position: absolute;
-  top: -8px;
-  transform: translateX(-50%);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
 }
 .alpha-marker-dot {
   width: 14px;
@@ -946,6 +948,7 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
   border-radius: 50%;
   border: 2px solid #fff;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 .alpha-marker-r .alpha-marker-dot,
 .alpha-marker-m .alpha-marker-dot { background: #f87171; }
@@ -1020,15 +1023,44 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
 }
 .alpha-interpretation strong { color: #fff; font-weight: 700; }
 
-.alpha-footer {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 11px;
+.alpha-coverage-block {
+  margin: 18px 0 8px;
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
   font-family: var(--font-mono, monospace);
+}
+.alpha-coverage-header {
+  font-size: 11px;
+  color: rgba(232, 244, 248, 0.6);
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.alpha-coverage-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.alpha-coverage-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 5px 0;
+  font-size: 12px;
+}
+.alpha-coverage-list li:not(:last-child) {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.06);
+}
+.dim-name { color: rgba(232, 244, 248, 0.78); }
+.dim-n { color: #7FFFD4; font-weight: 700; }
+.alpha-coverage-note {
+  margin: 10px 0 0;
+  font-size: 11px;
   color: rgba(232, 244, 248, 0.5);
-  text-align: center;
-  line-height: 1.55;
+  font-style: italic;
 }
 
 @media (max-width: 700px) {
@@ -1041,6 +1073,8 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
     margin-top: 16px;
   }
   .alpha-tick { font-size: 10px; }
+  .alpha-coverage-block { padding: 12px 14px; }
+  .alpha-coverage-list li { font-size: 11px; }
 }
 
 /* ─── Methodology §3 keyword-judge 3-panel charts ───────────────── */
