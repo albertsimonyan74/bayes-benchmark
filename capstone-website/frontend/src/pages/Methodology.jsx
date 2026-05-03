@@ -379,6 +379,89 @@ export default function Methodology() {
             })}
           </div>
 
+          {/* Krippendorff α explainer infographic */}
+          <div className="alpha-explainer">
+            <div className="alpha-explainer-header">
+              <h4 className="alpha-explainer-title">ABOUT KRIPPENDORFF α</h4>
+              <p className="alpha-explainer-subtitle">
+                Chance-corrected agreement between keyword scorer and external judge
+              </p>
+            </div>
+
+            {/* Formula */}
+            <div className="alpha-formula-block">
+              <div className="alpha-formula">
+                <span className="alpha-formula-symbol">α</span>
+                <span className="alpha-formula-equals">=</span>
+                <span>1 − (D<sub>o</sub> / D<sub>e</sub>)</span>
+              </div>
+              <ul className="alpha-formula-annotations">
+                <li><strong>D<sub>o</sub></strong> — Observed disagreement: how often the two raters actually disagree</li>
+                <li><strong>D<sub>e</sub></strong> — Expected disagreement: how often two random raters would disagree by chance, given the same label frequencies</li>
+              </ul>
+            </div>
+
+            {/* Number line scale -1 to +1 */}
+            <div className="alpha-scale">
+              <div className="alpha-scale-track">
+                {/* Tick marks */}
+                {[
+                  { pct: 0,   v: '−1.0' },
+                  { pct: 25,  v: '−0.5' },
+                  { pct: 50,  v: '0' },
+                  { pct: 75,  v: '+0.5' },
+                  { pct: 100, v: '+1.0' },
+                ].map(t => (
+                  <div key={t.pct} className="alpha-tick" style={{ left: `${t.pct}%` }}>{t.v}</div>
+                ))}
+                {/* Markers */}
+                <div className="alpha-marker alpha-marker-r" style={{ left: '43.5%' }}>
+                  <div className="alpha-marker-dot"/>
+                  <div className="alpha-marker-label">R · α=−0.13<br/><span className="ci-note">CI excludes zero</span></div>
+                </div>
+                <div className="alpha-marker alpha-marker-m" style={{ left: '48%' }}>
+                  <div className="alpha-marker-dot"/>
+                  <div className="alpha-marker-label">M · α=−0.04<br/><span className="ci-note">CI contains zero</span></div>
+                </div>
+                <div className="alpha-marker alpha-marker-a" style={{ left: '77.5%' }}>
+                  <div className="alpha-marker-dot"/>
+                  <div className="alpha-marker-label">A · α=+0.55<br/><span className="ci-note">above chance</span></div>
+                </div>
+              </div>
+
+              {/* Region labels */}
+              <div className="alpha-scale-regions">
+                <div className="alpha-region alpha-region-negative">
+                  SYSTEMATIC DISAGREEMENT
+                  <span className="alpha-region-note">Raters pull in opposite directions, beyond chance</span>
+                </div>
+                <div className="alpha-region alpha-region-zero">
+                  CHANCE BASELINE
+                  <span className="alpha-region-note">Agreement equal to random</span>
+                </div>
+                <div className="alpha-region alpha-region-positive">
+                  AGREEMENT BEYOND CHANCE
+                  <span className="alpha-region-note">Closer to 1 = stronger</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Interpretive paragraph */}
+            <div className="alpha-interpretation">
+              When a chance-corrected metric goes <strong>below zero</strong>, the two methods
+              aren't just disagreeing randomly — they're systematically pulling in opposite
+              directions. Reasoning quality's CI [−0.228, −0.039] excludes zero with 95%
+              confidence, meaning this is <strong>structural disagreement, not noise</strong>.
+              The keyword scorer and external judge are measuring different constructs on this
+              dimension.
+            </div>
+
+            {/* Footer */}
+            <div className="alpha-footer">
+              N = 1,095 base eligible runs · α computed on 3 of 4 shared dimensions · N (numerical) and C (calibration) are judge-only and not included in α analysis
+            </div>
+          </div>
+
           <Card>
             <Callout color="#00B4D8" title="Keyword vs judge under perturbation">
               Across the 3,195 eligible runs sharing the assumption-compliance rubric, keyword

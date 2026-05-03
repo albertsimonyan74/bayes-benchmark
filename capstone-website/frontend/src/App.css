@@ -842,6 +842,207 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
   .judge-hero-block { max-width: none; width: 100%; }
 }
 
+/* ─── Methodology §3 Krippendorff α explainer infographic ─────── */
+.alpha-explainer {
+  margin: 24px 0;
+  padding: 24px 28px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+.alpha-explainer-header { text-align: center; margin-bottom: 18px; }
+.alpha-explainer-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: #7FFFD4;
+  margin: 0 0 6px 0;
+  font-weight: 800;
+}
+.alpha-explainer-subtitle {
+  font-size: 13px;
+  color: rgba(232, 244, 248, 0.65);
+  margin: 0;
+  font-style: italic;
+}
+.alpha-formula-block {
+  text-align: center;
+  margin: 16px 0 24px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.alpha-formula {
+  font-family: 'Times New Roman', serif;
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.alpha-formula-symbol {
+  font-style: italic;
+  color: #7FFFD4;
+  font-weight: 700;
+  font-size: 26px;
+}
+.alpha-formula-equals { margin: 0 12px; color: rgba(232, 244, 248, 0.6); }
+.alpha-formula-annotations {
+  list-style: none; padding: 0; margin: 0;
+  text-align: left; display: inline-block;
+  font-size: 12px;
+  color: rgba(232, 244, 248, 0.7);
+  line-height: 1.65;
+}
+.alpha-formula-annotations li { margin: 4px 0; }
+.alpha-formula-annotations strong {
+  color: #fff;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+}
+
+/* Number line scale */
+.alpha-scale {
+  margin: 28px 24px 0 24px;
+}
+.alpha-scale-track {
+  position: relative;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+    to right,
+    rgba(248, 113, 113, 0.45) 0%,
+    rgba(248, 113, 113, 0.22) 35%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(127, 255, 212, 0.22) 65%,
+    rgba(127, 255, 212, 0.45) 100%
+  );
+  margin-bottom: 90px;
+}
+.alpha-tick {
+  position: absolute;
+  top: 18px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: rgba(232, 244, 248, 0.55);
+}
+.alpha-tick::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 1px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.alpha-marker {
+  position: absolute;
+  top: -8px;
+  transform: translateX(-50%);
+}
+.alpha-marker-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+.alpha-marker-r .alpha-marker-dot,
+.alpha-marker-m .alpha-marker-dot { background: #f87171; }
+.alpha-marker-a .alpha-marker-dot { background: #5EEAD4; }
+.alpha-marker-label {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 4px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  line-height: 1.4;
+}
+.alpha-marker-m .alpha-marker-label {
+  top: auto;
+  bottom: 22px;
+}
+.ci-note {
+  display: block;
+  font-size: 9px;
+  color: rgba(232, 244, 248, 0.55);
+  font-style: italic;
+  font-family: var(--font-body);
+  margin-top: 2px;
+}
+
+.alpha-scale-regions {
+  display: grid;
+  grid-template-columns: 35% 30% 35%;
+  margin-top: -76px;
+  font-size: 10px;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.05em;
+  gap: 4px;
+}
+.alpha-region {
+  padding: 8px 10px;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: 700;
+}
+.alpha-region-negative { background: rgba(248, 113, 113, 0.08); color: #f87171; }
+.alpha-region-zero     { background: rgba(255, 255, 255, 0.04); color: rgba(232, 244, 248, 0.55); }
+.alpha-region-positive { background: rgba(127, 255, 212, 0.08); color: #5EEAD4; }
+.alpha-region-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(232, 244, 248, 0.5);
+  font-style: italic;
+}
+
+.alpha-interpretation {
+  margin: 20px 0 12px;
+  padding: 14px 18px;
+  background: rgba(248, 113, 113, 0.06);
+  border-left: 3px solid #f87171;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(232, 244, 248, 0.78);
+}
+.alpha-interpretation strong { color: #fff; font-weight: 700; }
+
+.alpha-footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 11px;
+  font-family: var(--font-mono, monospace);
+  color: rgba(232, 244, 248, 0.5);
+  text-align: center;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .alpha-explainer { padding: 16px; }
+  .alpha-formula { font-size: 18px; }
+  .alpha-scale { margin: 24px 4px 0 4px; }
+  .alpha-marker-label { font-size: 10px; padding: 3px 5px; }
+  .alpha-scale-regions {
+    grid-template-columns: 1fr;
+    margin-top: 16px;
+  }
+  .alpha-tick { font-size: 10px; }
+}
+
 /* ─── Methodology §3 keyword-judge 3-panel charts ───────────────── */
 .kj-charts-grid {
   display: grid;
