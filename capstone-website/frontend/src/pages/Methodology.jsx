@@ -67,12 +67,9 @@ const ICON = {
 }
 
 const JUDGE_FACTS = [
-  { icon: ICON.Cpu,           label: 'JUDGE',             color: '#FFB347', title: 'Llama 3.3 70B Instruct',   body: 'Sixth model, deliberately external to the five evaluated (Claude · GPT-4.1 · Gemini · DeepSeek · Mistral). No self-preference bias.', cite: 'via Together AI' },
-  { icon: ICON.Layers,        label: 'RUBRIC',            color: '#A78BFA', title: '4 dimensions per response', body: 'Numerical · Method · Assumption · Reasoning quality + Completeness. Each scored independently by judge.',                              cite: 'Yamauchi et al. (2025)' },
-  { icon: ICON.CheckCheck,    label: 'VERIFICATION',      color: '#00B4D8', title: 'Cross-provider spot-check',  body: 'Agreement validated against Groq’s Llama endpoint to rule out vendor-specific bias in judge outputs.',                          cite: 'Feuer et al. (2025) framing' },
-  { icon: ICON.Target,        label: 'AGREEMENT',         color: '#7FFFD4', title: 'α = 0.55',              body: 'Krippendorff α on assumption_compliance — moderate agreement between keyword scorer and judge.',                          cite: '95% CI [0.50, 0.60]' },
-  { icon: ICON.AlertTriangle, label: 'DIVERGENCE',        color: '#FF6B6B', title: 'α = −0.099 / −0.042', body: 'Krippendorff α on reasoning_quality and method_structure (base, n=1,095) — NEGATIVE: the two scorers actively disagree, not just weakly agree.', cite: 'CI [−0.152, −0.045] excludes 0' },
-  { icon: ICON.Shuffle,       label: 'UNDER PERTURBATION', color: '#F59E0B', title: '+3.7pp gap widens',         body: 'Keyword PASS drops 1.9pp under perturbation; judge PASS rises 1.8pp. The two methods move in opposite directions.',                cite: 'Largest divergence on semantic perturbations (5.96pp)' },
+  { icon: ICON.Cpu,           label: 'JUDGE',                color: '#FFB347', title: 'Llama 3.3 70B Instruct',           body: 'Sixth model, deliberately external to the five evaluated (Claude · GPT-4.1 · Gemini · DeepSeek · Mistral). No self-preference bias.', cite: 'via Together AI' },
+  { icon: ICON.Layers,        label: 'RUBRIC',               color: '#A78BFA', title: '4 dimensions per response',        body: 'Numerical · Method · Assumption · Reasoning quality + Completeness. Each scored independently by judge.',                              cite: 'Yamauchi et al. (2025)' },
+  { icon: ICON.AlertTriangle, label: 'DIVERGENCE & AGREEMENT', color: '#FF6B6B', title: 'α = +0.55 / −0.099 / −0.042', body: 'Krippendorff α across the 3 shared dimensions (base, n=1,095). Assumption shows moderate agreement (α=+0.55, CI [0.50, 0.60]) — keyword and judge largely concur on assumption articulation. Reasoning quality and method structure are NEGATIVE — the two scorers actively disagree, not just weakly agree.', cite: 'Reasoning CI [−0.152, −0.045] excludes 0 · Method CI contains 0' },
 ]
 
 const COMMITMENTS = [
@@ -418,6 +415,12 @@ export default function Methodology() {
                   <span className="dim-n">n = 1,095</span>
                 </li>
               </ul>
+              <p className="alpha-coverage-explanation">
+                1,095 = 1,230 base runs − 135 runs from 27 task families with empty
+                <code> required_assumption_checks</code> (CONCEPTUAL · MINIMAX · BAYES_RISK · MARKOV_04).
+                Tasks that don't require assumption articulation can't be compared across the two
+                scoring methods.
+              </p>
               <p className="alpha-coverage-note">
                 Numerical and Confidence dimensions are judge-only — not included in α
               </p>
