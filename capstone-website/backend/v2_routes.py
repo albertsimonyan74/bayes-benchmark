@@ -86,15 +86,21 @@ def _load_json(path: Path) -> Any:
     return data
 
 
-# ─── Krippendorff α interpretation (Park et al., 2025 thresholds) ─
-def _alpha_interp(alpha: float) -> str:
+# ─── Krippendorff α interpretation (threshold-free, CI-vs-zero) ───
+# Aligned 2026-05-03 with canonical krippendorff_agreement.json
+# `interpretation` block. No external threshold attribution; reads the
+# bootstrap CI bounds and returns a label based purely on whether the CI
+# excludes zero (from above or below) or contains it.
+def _alpha_interp(alpha: float, ci_lower: float = None, ci_upper: float = None) -> str:
     if alpha is None:
         return "undefined"
-    if alpha > 0.8:
-        return "strong"
-    if alpha >= 0.667:
-        return "acceptable"
-    return "questionable"
+    if ci_lower is not None and ci_upper is not None:
+        if ci_lower > 0:
+            return "positive_agreement"
+        if ci_upper < 0:
+            return "systematic_disagreement"
+        return "indistinguishable_from_chance"
+    return "positive_agreement" if alpha > 0 else "indistinguishable_from_chance"
 
 
 # ─── Response models ──────────────────────────────────────────────
@@ -283,7 +289,7 @@ def headline_numbers() -> HeadlineNumbers:
         pass_flip_total=flip_total,
         krippendorff_alpha_assumption=round(alpha, 4),
         krippendorff_alpha_ci=[round(alpha_ci[0], 4), round(alpha_ci[1], 4)],
-        krippendorff_interpretation=_alpha_interp(alpha),
+        krippendorff_interpretation=_alpha_interp(alpha, alpha_ci[0], alpha_ci[1]),
         dominant_failure_mode=dom_mode,
         dominant_failure_pct=round(dom_pct, 4),
         dominant_failure_n=int(dom_n),
@@ -388,14 +394,11 @@ def agreement() -> Dict[str, Any]:
             "bootstrap_B": kr.get("bootstrap_B"),
             "bootstrap_seed": kr.get("bootstrap_seed"),
             "level_of_measurement": kr.get("level_of_measurement"),
-            "thresholds": kr.get("thresholds", {}),
             "overall": kr.get("overall", {}),
             "per_model": kr.get("per_model", {}),
             "interpretation": kr.get("interpretation", {}),
         },
-        "methodology_citation": kj.get(
-            "_methodology_citation", kr.get("_methodology_citation")
-        ),
+        "methodology_note": kr.get("_methodology_note"),
     }
 
 
