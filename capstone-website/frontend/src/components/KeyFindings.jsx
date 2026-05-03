@@ -3,23 +3,23 @@ import { motion } from 'motion/react'
 
 const API = import.meta.env.VITE_API_URL || ''
 
-// Canonical numbers post Tier 1 (2026-05-03) — used as static fallback if API is unreachable.
+// Canonical numbers post Phase 1.8 v1 deprecation (2026-05-04) — used as static fallback if API is unreachable.
 const STATIC_FALLBACK = {
-  pass_flip_rate: 0.2216,
-  pass_flip_n: 708,
-  pass_flip_total: 3195,
-  krippendorff_alpha_assumption: 0.55,
-  krippendorff_alpha_rq: -0.099,
-  krippendorff_alpha_method: -0.042,
-  krippendorff_alpha_n: 1095,
+  pass_flip_rate: 0.2074,
+  pass_flip_n: 591,
+  pass_flip_total: 2850,
+  krippendorff_alpha_assumption: 0.573,
+  krippendorff_alpha_rq: -0.125,
+  krippendorff_alpha_method: -0.009,
+  krippendorff_alpha_n: 750,
   dominant_failure_pct: 0.469,
   dominant_failure_n: 67,
   dominant_failure_total: 143,
   rankings: {
     accuracy_top: 'gemini',
-    accuracy_top_score: 0.7326,
-    robustness_top: 'mistral',
-    calibration_top: 'chatgpt',
+    accuracy_top_score: 0.7314,
+    robustness_top: 'chatgpt',
+    calibration_top: 'claude',
   },
   ece_consistency_min: 0.62,
   ece_consistency_max: 0.73,
@@ -35,20 +35,20 @@ function buildCards(d, pf) {
   const flipN = pf?.combined?.n_pass_flip ?? d.pass_flip_n
   const flipTotal = pf?.combined?.n_eligible ?? d.pass_flip_total
 
-  const alphaA = (d.krippendorff_alpha_assumption ?? d.krippendorff_alpha)?.toFixed?.(2) ?? '0.55'
+  const alphaA = (d.krippendorff_alpha_assumption ?? d.krippendorff_alpha)?.toFixed?.(2) ?? '0.57'
 
   return [
     {
       big: '1 in 5',
       label: 'Simple scoring overlooks bad reasoning',
-      desc: `Across ${flipTotal.toLocaleString()} evaluable runs (1,095 base + 2,100 perturbations), the keyword scorer and LLM judge disagreed on ${flipPct}% (${flipN.toLocaleString()}) of cases — keyword said the response passed, judge said it failed. The disagreement holds under prompt rewording — a robustness finding for the methodology.`,
+      desc: `Across ${flipTotal.toLocaleString()} evaluable runs (750 base + 2,100 perturbations), the keyword scorer and LLM judge disagreed on ${flipPct}% (${flipN.toLocaleString()}) of cases — keyword said the response passed, judge said it failed. The disagreement holds under prompt rewording — a robustness finding for the methodology.`,
       why: 'Most LLM benchmarks score by keyword-matching alone. Analysis across multiple prompt variants shows this approach systematically misses bad reasoning at a measurable rate.',
     },
     {
-      big: 'α = -0.099 to 0.55',
+      big: 'α = -0.125 to 0.57',
       label: 'Two scoring methods give different answers',
-      desc: `Krippendorff agreement on assumption articulation is ${alphaA} (n=1,095). On reasoning_quality and method_structure, the agreement is NEGATIVE (-0.099 and -0.042 respectively) — the two methods disagree more than they would by chance. The 95% CI on reasoning [-0.152, -0.045] excludes zero. The disagreement is not noise — it's structural.`,
-      why: "Confirms the 1-in-5 finding above isn't a fluke. The two scoring methods genuinely measure different things on three of four dimensions. Negative agreement cannot be explained by random rater error.",
+      desc: `Krippendorff agreement on assumption articulation is ${alphaA} (n=750). On reasoning_quality, the agreement is NEGATIVE (α=−0.125, 95% CI [−0.197, −0.059] excludes zero) — the two methods disagree more than they would by chance. On method_structure, agreement is essentially chance-level (α=−0.009, CI [−0.072, +0.062] contains zero) — the methods cannot be claimed to align. The reasoning disagreement is structural, not noise.`,
+      why: "Confirms the 1-in-5 finding above isn't a fluke. The two scoring methods genuinely measure different things on reasoning_quality. On method_structure they're essentially chance-level — neither aligned nor systematically opposed.",
     },
     {
       big: 'Almost half',
@@ -59,13 +59,13 @@ function buildCards(d, pf) {
     {
       big: 'Gemini #1',
       label: "The 'best' model on accuracy under literature-weighted NMACR",
-      desc: 'Gemini ranks #1 on accuracy with mean 0.7326 [0.7117, 0.7532] under the literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10%). Claude #2 at 0.6945 [0.6722, 0.7169] — a 3.8pp lead. The dimensional weighting follows Du 2025, Boye-Moell 2025, and Yamauchi 2025.',
+      desc: 'Gemini ranks #1 on accuracy with mean 0.7314 [0.7060, 0.7565] under the literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10%). Claude #2 at 0.6976 [0.6694, 0.7249] — a 3.4pp lead. The dimensional weighting follows Du 2025, Boye-Moell 2025, and Yamauchi 2025.',
       why: 'Benchmark rankings depend on the choice of dimensional weighting. The literature-derived scheme reflects what published research identifies as evaluation priorities for LLMs on Bayesian reasoning.',
     },
     {
       big: '3 different rankings',
       label: 'Accuracy, robustness, calibration disagree',
-      desc: 'Ranking models on accuracy, robustness, and calibration produces three completely different leaderboards. Gemini wins accuracy (0.7326). Mistral wins robustness with NEGATIVE degradation delta (Δ=−0.004 — perturbations slightly improve its scores). ChatGPT wins calibration (verbalized ECE 0.063). Three of five models (Mistral, ChatGPT, Gemini) sit in the noise-equivalent band on robustness — only Claude and DeepSeek separate from zero.',
+      desc: 'Ranking models on accuracy, robustness, and calibration produces three completely different leaderboards. Gemini wins accuracy (0.7314). ChatGPT and Mistral are statistically tied at the top of robustness (Δ=+0.0003 and +0.0013 respectively — both noise-equivalent, CIs cross zero). Claude and ChatGPT essentially tie on calibration (verbalized ECE 0.033 / 0.034). No single model dominates across all three axes.',
       why: "Single-number leaderboards mislead. The same data tells three different stories about which model is 'best.'",
     },
     {

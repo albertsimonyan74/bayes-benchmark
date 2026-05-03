@@ -14,28 +14,28 @@ const MODEL_COLORS = {
   mistral:  '#A78BFA',
 }
 
-// Canonical numbers post Tier 1 (2026-05-03) from bootstrap_ci.json + robustness_v2.json + calibration.json
+// Canonical numbers post Phase 1.8 v1 deprecation (2026-05-04) from bootstrap_ci.json + robustness_v2.json + calibration.json
 const STATIC_RANKINGS = {
   accuracy: [
-    { model: 'gemini',   value: 0.7326 },
-    { model: 'claude',   value: 0.6945 },
-    { model: 'chatgpt',  value: 0.6735 },
-    { model: 'mistral',  value: 0.6582 },
-    { model: 'deepseek', value: 0.6501 },
+    { model: 'gemini',   value: 0.7314 },
+    { model: 'claude',   value: 0.6976 },
+    { model: 'chatgpt',  value: 0.6733 },
+    { model: 'deepseek', value: 0.6686 },
+    { model: 'mistral',  value: 0.6676 },
   ],
   robustness: [
-    { model: 'mistral',  value: -0.004 },
-    { model: 'chatgpt',  value: 0.002 },
-    { model: 'gemini',   value: 0.011 },
-    { model: 'claude',   value: 0.029 },
-    { model: 'deepseek', value: 0.035 },
+    { model: 'chatgpt',  value: 0.0003 },
+    { model: 'mistral',  value: 0.0013 },
+    { model: 'gemini',   value: 0.0129 },
+    { model: 'claude',   value: 0.0305 },
+    { model: 'deepseek', value: 0.0388 },
   ],
   calibration: [
-    { model: 'chatgpt',  value: 0.063 },
-    { model: 'claude',   value: 0.067 },
-    { model: 'mistral',  value: 0.084 },
-    { model: 'gemini',   value: 0.097 },
-    { model: 'deepseek', value: 0.180 },
+    { model: 'claude',   value: 0.033 },
+    { model: 'chatgpt',  value: 0.034 },
+    { model: 'gemini',   value: 0.077 },
+    { model: 'mistral',  value: 0.081 },
+    { model: 'deepseek', value: 0.198 },
   ],
 }
 

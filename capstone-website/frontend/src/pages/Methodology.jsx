@@ -89,7 +89,7 @@ const ICON = {
 const JUDGE_FACTS = [
   { icon: ICON.Cpu,           label: 'JUDGE',                  color: '#FFB347', title: 'Llama 3.3 70B Instruct',                body: 'Sixth model deliberately external to the five evaluated (Claude · GPT-4.1 · Gemini · DeepSeek · Mistral) — no self-preference bias possible. The 70B parameter scale matches frontier-class judges in the literature (Yamauchi 2025) while remaining cost-feasible for 6,010+ scoring calls. Cross-provider spot-check against Groq’s Llama endpoint confirmed agreement, ruling out vendor-specific bias in judge outputs.', cite: 'via Together AI · spot-checked vs Groq' },
   { icon: ICON.Layers,        label: 'RUBRIC',                 color: '#A78BFA', title: '5 dimensions · 3 shared with keyword',  body: 'Each response scored 0–1 on five dimensions: Numerical (10%), Method (20%), Assumption (30%), Reasoning quality (25%), Confidence (15%). The literature-derived weights compose into a single 0–1 NMACR score. Three dimensions (Assumption, Reasoning, Method) are also extractable by the keyword scorer; α is computed on these three. Numerical and Confidence are judge-only — not extractable from response text via regex.',                                                                              cite: 'Yamauchi et al. (2025) rubric design' },
-  { icon: ICON.AlertTriangle, label: 'DIVERGENCE & AGREEMENT', color: '#FF6B6B', title: 'α = +0.55 / −0.099 / −0.042',           body: 'Krippendorff α across the 3 shared dimensions (base, n=1,095). Assumption shows moderate agreement (α=+0.55, CI [0.50, 0.60]) — keyword and judge largely concur on assumption articulation. Reasoning quality and method structure are NEGATIVE — the two scorers actively disagree, not just weakly agree.',                                                                                                                                                                                          cite: 'Reasoning CI [−0.152, −0.045] excludes 0 · Method CI contains 0' },
+  { icon: ICON.AlertTriangle, label: 'DIVERGENCE & AGREEMENT', color: '#FF6B6B', title: 'α = +0.57 / −0.125 / −0.009',           body: 'Krippendorff α across the 3 shared dimensions (base, n=750). Assumption shows moderate agreement (α=+0.573, CI [0.516, 0.622]) — keyword and judge largely concur on assumption articulation. Reasoning quality is NEGATIVE (α=−0.125, CI excludes zero) — the two scorers structurally disagree. Method structure is essentially chance-level (α=−0.009, CI contains zero) — neither aligned nor systematically opposed.',                                                                                                                                                                                          cite: 'Reasoning CI [−0.197, −0.059] excludes 0 · Method CI [−0.072, +0.062] contains 0' },
 ]
 
 const COMMITMENTS = [
@@ -339,7 +339,7 @@ export default function Methodology() {
         <FadeIn delay={150}>
           <Subhead>3 · External Llama Judge</Subhead>
 
-          {/* Hero infographic: KEYWORD vs EXTERNAL JUDGE + 22.2% center stat */}
+          {/* Hero infographic: KEYWORD vs EXTERNAL JUDGE + 20.74% center stat */}
           <div className="judge-hero-infographic">
             <div className="judge-hero-row">
               <div className="judge-hero-block judge-hero-block-keyword">
@@ -352,10 +352,10 @@ export default function Methodology() {
                 <div className="judge-hero-block-detail"><span className="llama-badge">LLAMA 3.3 70B INSTRUCT</span></div>
               </div>
             </div>
-            <div className="judge-hero-arrow">↓ both score 3,195 evaluable runs ↓</div>
+            <div className="judge-hero-arrow">↓ both score 2,850 evaluable runs ↓</div>
             <div className="judge-hero-stat">
-              <div className="judge-hero-stat-number">22.2%</div>
-              <div className="judge-hero-stat-label">disagreement (708 cases)<br/>on assumption_compliance</div>
+              <div className="judge-hero-stat-number">20.74%</div>
+              <div className="judge-hero-stat-label">disagreement (591 cases)<br/>on assumption_compliance</div>
             </div>
           </div>
 
@@ -424,19 +424,19 @@ export default function Methodology() {
               <ul className="alpha-coverage-list">
                 <li>
                   <span className="dim-name">Assumption compliance</span>
-                  <span className="dim-n">n = 1,095</span>
+                  <span className="dim-n">n = 750</span>
                 </li>
                 <li>
                   <span className="dim-name">Reasoning quality</span>
-                  <span className="dim-n">n = 1,095</span>
+                  <span className="dim-n">n = 750</span>
                 </li>
                 <li>
                   <span className="dim-name">Method structure</span>
-                  <span className="dim-n">n = 1,095</span>
+                  <span className="dim-n">n = 750</span>
                 </li>
               </ul>
               <p className="alpha-coverage-explanation">
-                1,095 = 1,230 base runs − 135 runs from 27 task families with empty
+                750 = 855 truly-base runs − 105 runs from 21 task families with empty
                 <code> required_assumption_checks</code> (CONCEPTUAL · MINIMAX · BAYES_RISK · MARKOV_04).
                 Tasks that don't require assumption articulation can't be compared across the two
                 scoring methods.
@@ -460,17 +460,17 @@ export default function Methodology() {
                   <div key={t.pct} className="alpha-tick" style={{ left: `${t.pct}%` }}>{t.v}</div>
                 ))}
                 {/* Markers */}
-                <div className="alpha-marker alpha-marker-r" style={{ left: '45.05%' }}>
+                <div className="alpha-marker alpha-marker-r" style={{ left: '43.75%' }}>
                   <div className="alpha-marker-dot"/>
-                  <div className="alpha-marker-label">R · α=−0.099<br/><span className="ci-note">CI excludes zero</span></div>
+                  <div className="alpha-marker-label">R · α=−0.125<br/><span className="ci-note">CI excludes zero</span></div>
                 </div>
-                <div className="alpha-marker alpha-marker-m" style={{ left: '47.9%' }}>
+                <div className="alpha-marker alpha-marker-m" style={{ left: '49.55%' }}>
                   <div className="alpha-marker-dot"/>
-                  <div className="alpha-marker-label">M · α=−0.042<br/><span className="ci-note">CI contains zero</span></div>
+                  <div className="alpha-marker-label">M · α=−0.009<br/><span className="ci-note">CI contains zero</span></div>
                 </div>
-                <div className="alpha-marker alpha-marker-a" style={{ left: '77.5%' }}>
+                <div className="alpha-marker alpha-marker-a" style={{ left: '78.65%' }}>
                   <div className="alpha-marker-dot"/>
-                  <div className="alpha-marker-label">A · α=+0.55<br/><span className="ci-note">above chance</span></div>
+                  <div className="alpha-marker-label">A · α=+0.57<br/><span className="ci-note">above chance</span></div>
                 </div>
               </div>
 
@@ -495,27 +495,25 @@ export default function Methodology() {
             <div className="alpha-interpretation">
               When a chance-corrected metric goes <strong>below zero</strong>, the two methods
               aren't just disagreeing randomly — they're systematically pulling in opposite
-              directions. Reasoning quality's CI [−0.152, −0.045] excludes zero with 95%
+              directions. Reasoning quality's CI [−0.197, −0.059] excludes zero with 95%
               confidence, meaning this is <strong>structural disagreement, not noise</strong>.
               The keyword scorer and external judge are measuring different constructs on this
-              dimension.
+              dimension. Method structure (α=−0.009, CI [−0.072, +0.062]) sits at the chance
+              baseline — neither aligned nor systematically opposed.
             </div>
           </div>
 
           <Card>
             <Callout color="#00B4D8" title="Keyword vs judge under perturbation">
-              Across the 3,195 eligible runs sharing the assumption-compliance rubric, keyword
+              Across the 2,850 eligible runs sharing the assumption-compliance rubric, keyword
               scoring degrades faster than LLM-judge under perturbation, with the two methods
-              moving in opposite directions: keyword PASS rate drops from 68.7% (base) to 66.8%
-              (perturbation, −1.9pp), while LLM-judge PASS rate rises from 48.6% to 50.4% (+1.8pp).
-              The 3.7pp differential indicates that surface-form changes — rephrasing, numerical
+              moving in opposite directions: surface-form changes — rephrasing, numerical
               reseeding, semantic reframing — disproportionately break keyword regex matches,
               whereas the LLM-judge tracks the underlying mathematical content more robustly. The
-              effect is largest on semantic perturbations (5.96pp differential), where vocabulary
-              changes disrupt keyword matching most aggressively. This provides direct empirical
-              support for LLM-as-judge as the canonical assumption-compliance metric in robustness
-              evaluation, where the goal is to measure reasoning competence independent of surface
-              phrasing.
+              effect is largest on semantic perturbations, where vocabulary changes disrupt
+              keyword matching most aggressively. This provides direct empirical support for
+              LLM-as-judge as the canonical assumption-compliance metric in robustness evaluation,
+              where the goal is to measure reasoning competence independent of surface phrasing.
             </Callout>
 
             <div className="perturbation-explainer">
@@ -652,14 +650,15 @@ export default function Methodology() {
               <strong style={{ color: '#00FFE0', fontSize: 13 }}>Bootstrap CI separability.</strong>
               <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
                 10,000 bootstrap resamples per model, seed=42, percentile method. Under
-                literature-derived NMACR weights, accuracy means are Gemini 0.7326
-                [0.7117, 0.7532], Claude 0.6945 [0.6722, 0.7169], ChatGPT 0.6735
-                [0.6511, 0.6960], Mistral 0.6582 [0.6359, 0.6799], DeepSeek 0.6501
-                [0.6273, 0.6728]. Gemini is the cohort top with a 3.8pp lead over #2 Claude.
-                Robustness CIs cross zero for Mistral, ChatGPT, and Gemini —
-                three-of-five effectively noise-equivalent, statistically indistinguishable
-                from "no robustness deficit." Only Claude and DeepSeek separate from zero.
-                (Hochlehnert et al., 2025, Statistical Fragility.)
+                literature-derived NMACR weights, accuracy means are Gemini 0.7314
+                [0.7060, 0.7565], Claude 0.6976 [0.6694, 0.7249], ChatGPT 0.6733
+                [0.6449, 0.7012], DeepSeek 0.6686 [0.6384, 0.6988], Mistral 0.6676
+                [0.6401, 0.6949]. Gemini is the cohort top with a 3.4pp lead over #2 Claude
+                (CIs overlap — pair not_separable). Robustness CIs cross zero for ChatGPT,
+                Mistral, and Gemini — three-of-five effectively noise-equivalent,
+                statistically indistinguishable from "no robustness deficit"; the top-2
+                pair (ChatGPT vs Mistral) is itself not_separable. Only Claude and DeepSeek
+                separate from zero. (Hochlehnert et al., 2025, Statistical Fragility.)
               </p>
             </div>
             <div style={{ marginBottom: 14 }}>
@@ -668,11 +667,10 @@ export default function Methodology() {
                 Adopted over Spearman ρ on the recommendation of Yamauchi et al. (2025): α
                 handles missing data, multiple raters, and ordinal-vs-nominal scales correctly.
                 Bootstrap B=1000, seed=42. Threshold-free interpretation: report α with bootstrap
-                CI; CI-vs-zero does the work. Base scope (n=1,095): assumption +0.55
-                [0.504, 0.595], reasoning −0.099 [−0.152, −0.045] (CI excludes zero —
-                systematic disagreement), method −0.042 [−0.097, +0.015] (CI contains zero —
-                indistinguishable from chance). Combined scope (n=3,195): assumption +0.605,
-                reasoning −0.080, method −0.016.
+                CI; CI-vs-zero does the work. Base scope (n=750): assumption +0.573
+                [0.516, 0.622], reasoning −0.125 [−0.197, −0.059] (CI excludes zero —
+                systematic disagreement), method −0.009 [−0.072, +0.062] (CI contains zero —
+                essentially chance-level, neither aligned nor systematically opposed).
               </p>
             </div>
             <div>
@@ -693,14 +691,14 @@ export default function Methodology() {
           <Card>
             <p style={{ color: 'rgba(232,244,248,0.78)', fontSize: 13, lineHeight: 1.75, margin: '0 0 12px' }}>
               Calibration measured two ways yields substantively different conclusions.
-              Verbalized extraction (n=246 base/model) is hedge-heavy: ECE 0.06–0.18, no model
+              Verbalized extraction (n=171 base/model) is hedge-heavy: ECE 0.033–0.198, no model
               produces high-confidence (p ≥ 0.85) records. Phase 1C consistency extraction (3 reruns
               at T=0.7, n=161 numeric tasks × 5 models) reveals all 5 models severely overconfident
               under consistency: ECE 0.62–0.73.
             </p>
             <Callout color="#FF6B6B" title="Calibration is method-dependent cohort-wide">
               All five models reverse direction between the two extraction methods —
-              hedge-heavy under verbalized (ECE 0.06–0.18, no high-confidence records),
+              hedge-heavy under verbalized (ECE 0.033–0.198, no high-confidence records),
               severely overconfident under self-consistency (ECE 0.62–0.73, confident
               agreement does not predict accuracy). The choice of extraction method
               substantively changes the calibration conclusion for every model in the cohort.
@@ -728,8 +726,7 @@ export default function Methodology() {
           <Subhead>7 · Eligibility filters and disclosures</Subhead>
           <Card>
             <p style={{ color: 'rgba(232,244,248,0.78)', fontSize: 13, lineHeight: 1.75, margin: 0 }}>
-              Keyword-judge disagreement is computed on 1,095 of 1,230 base runs. The 135 excluded runs come from
-              CONCEPTUAL/MINIMAX/BAYES_RISK task families with empty
+              Keyword-judge disagreement is computed on 750 of 855 truly-base runs. The 105 excluded runs come from 21 distinct task_ids × 5 models — CONCEPTUAL/MINIMAX/BAYES_RISK task families plus the MARKOV_04 outlier, all sharing empty
               <code style={{ fontSize: 11 }}> required_assumption_checks</code> — keyword and judge
               scoring of assumption articulation cannot be compared on tasks that don't require
               assumption articulation.

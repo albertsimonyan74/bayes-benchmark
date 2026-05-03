@@ -74,15 +74,15 @@ function TooltipBox({ children }) {
 // ─── Panel 1: per-model keyword-judge disagreement ───────────────
 const STATIC_PASSFLIP = {
   combined: {
-    pct_pass_flip: 0.2216,
-    n_eligible: 3195,
-    n_pass_flip: 708,
+    pct_pass_flip: 0.2074,
+    n_eligible: 2850,
+    n_pass_flip: 591,
     per_model: {
-      claude:   { n_total: 719, n_eligible: 639, n_pass_flip: 177, pct: 0.27699530516431925 },
-      chatgpt:  { n_total: 719, n_eligible: 639, n_pass_flip: 122, pct: 0.19092331768388107 },
-      gemini:   { n_total: 719, n_eligible: 639, n_pass_flip: 150, pct: 0.2347417840375587 },
-      deepseek: { n_total: 719, n_eligible: 639, n_pass_flip: 122, pct: 0.19092331768388107 },
-      mistral:  { n_total: 719, n_eligible: 639, n_pass_flip: 137, pct: 0.21439749608763695 },
+      claude:   { n_total: 644, n_eligible: 570, n_pass_flip: 149, pct: 0.2614035087719298 },
+      chatgpt:  { n_total: 644, n_eligible: 570, n_pass_flip: 103, pct: 0.18070175438596492 },
+      gemini:   { n_total: 644, n_eligible: 570, n_pass_flip: 130, pct: 0.22807017543859648 },
+      deepseek: { n_total: 644, n_eligible: 570, n_pass_flip: 100, pct: 0.17543859649122806 },
+      mistral:  { n_total: 644, n_eligible: 570, n_pass_flip: 109, pct: 0.1912280701754386 },
     },
   },
 }
@@ -98,7 +98,7 @@ export function PerModelPassFlipPanel() {
 
   const combined = data?.combined ?? STATIC_PASSFLIP.combined
   const pm = combined.per_model
-  const avgPct = (combined.pct_pass_flip ?? 0.2216) * 100
+  const avgPct = (combined.pct_pass_flip ?? 0.2074) * 100
   const rows = MODELS
     .map(m => ({
       model: m,
@@ -111,7 +111,7 @@ export function PerModelPassFlipPanel() {
   return (
     <PanelShell
       title="Keyword-judge disagreement by model"
-      subtitle="Combined base + perturbation analysis (n=3,195 eligible runs)"
+      subtitle="Combined base + perturbation analysis (n=2,850 eligible runs)"
       accent="#00B4D8"
       caption={`Claude shows the highest keyword-judge disagreement (${rows[0].pct.toFixed(1)}%) while ChatGPT and DeepSeek tie for the lowest (${rows[rows.length - 1].pct.toFixed(1)}%). The 8.6pp spread suggests Claude's response style is more keyword-friendly without engaging with assumptions substantively. ChatGPT and DeepSeek's lower disagreement may indicate more literal keyword matching to actual reasoning content. Dashed line = combined cohort average (${avgPct.toFixed(2)}%).`}
     >
@@ -156,14 +156,14 @@ export function PerModelPassFlipPanel() {
 // ─── Panel 2: keyword-judge disagreement (3 interactive bar panels) ─
 const STATIC_KJ_CHARTS = {
   base: {
-    n_eligible: 1095,
-    pct_pass_flip: 0.2502283105022831,
+    n_eligible: 750,
+    pct_pass_flip: 0.20933333333333334,
     per_model: {
-      claude:   { n_pass_flip: 67, n_eligible: 219, pct: 0.3059360730593607 },
-      chatgpt:  { n_pass_flip: 46, n_eligible: 219, pct: 0.2100456621004566 },
-      gemini:   { n_pass_flip: 54, n_eligible: 219, pct: 0.2465753424657534 },
-      deepseek: { n_pass_flip: 49, n_eligible: 219, pct: 0.2237442922374429 },
-      mistral:  { n_pass_flip: 58, n_eligible: 219, pct: 0.2648401826484018 },
+      claude:   { n_pass_flip: 39, n_eligible: 150, pct: 0.26 },
+      chatgpt:  { n_pass_flip: 27, n_eligible: 150, pct: 0.18 },
+      gemini:   { n_pass_flip: 34, n_eligible: 150, pct: 0.22666666666666666 },
+      deepseek: { n_pass_flip: 27, n_eligible: 150, pct: 0.18 },
+      mistral:  { n_pass_flip: 30, n_eligible: 150, pct: 0.2 },
     },
   },
   perturbation: {
@@ -178,14 +178,14 @@ const STATIC_KJ_CHARTS = {
     },
   },
   combined: {
-    n_eligible: 3195,
-    pct_pass_flip: 0.2216,
+    n_eligible: 2850,
+    pct_pass_flip: 0.2074,
     per_model: {
-      claude:   { n_pass_flip: 177, n_eligible: 639, pct: 0.27699530516431925 },
-      chatgpt:  { n_pass_flip: 122, n_eligible: 639, pct: 0.19092331768388107 },
-      gemini:   { n_pass_flip: 150, n_eligible: 639, pct: 0.2347417840375587 },
-      deepseek: { n_pass_flip: 122, n_eligible: 639, pct: 0.19092331768388107 },
-      mistral:  { n_pass_flip: 137, n_eligible: 639, pct: 0.21439749608763695 },
+      claude:   { n_pass_flip: 149, n_eligible: 570, pct: 0.2614035087719298 },
+      chatgpt:  { n_pass_flip: 103, n_eligible: 570, pct: 0.18070175438596492 },
+      gemini:   { n_pass_flip: 130, n_eligible: 570, pct: 0.22807017543859648 },
+      deepseek: { n_pass_flip: 100, n_eligible: 570, pct: 0.17543859649122806 },
+      mistral:  { n_pass_flip: 109, n_eligible: 570, pct: 0.1912280701754386 },
     },
   },
 }
@@ -255,8 +255,8 @@ export function KeywordDegradationPanel() {
     <PanelShell
       title="Keyword vs Judge disagreement: per-model · per-cohort"
       accent="#00B4D8"
-      caption="Three panels show keyword-judge disagreement rate (keyword PASS but judge FAIL on assumption_compliance) per model, broken out by cohort. The dashed line marks the cohort overall rate. Disagreement is highest under base prompts (overall 25.0%), drops on perturbations (20.7%), and lands at 22.2% combined — keyword's regex-based scoring is more sensitive to surface-form changes than the LLM judge."
-      subCaption="Base: 1,095 runs · Perturbation: 2,100 runs · Combined: 3,195 runs. Per-perturbation-type differential: rephrase 1.96pp, numerical 2.92pp, semantic 5.96pp."
+      caption="Three panels show keyword-judge disagreement rate (keyword PASS but judge FAIL on assumption_compliance) per model, broken out by cohort. The dashed line marks the cohort overall rate. Disagreement is essentially flat across cohorts (base 20.9%, perturbation 20.7%, combined 20.74%) — keyword's regex-based scoring is more sensitive to surface-form changes than the LLM judge."
+      subCaption="Base: 750 runs · Perturbation: 2,100 runs · Combined: 2,850 runs."
     >
       <div className="kj-charts-grid">
         <KJBar panelKey="base" data={data}/>
@@ -363,11 +363,11 @@ export function PerModelFailuresPanel() {
 
 // ─── Panel 3: per-dim robustness deltas ──────────────────────────
 const STATIC_PER_DIM_DELTA = {
-  claude:   { N: 0.0026,  M: 0.019,   A: 0.0698,  C: 0.0046,  R: 0.0111 },
-  chatgpt:  { N: -0.0099, M: 0.0106,  A: 0.0,     C: -0.0003, R: 0.0032 },
-  gemini:   { N: 0.0058,  M: 0.0137,  A: 0.0243,  C: -0.0034, R: 0.0034 },
-  deepseek: { N: -0.0435, M: 0.0053,  A: 0.1258,  C: -0.0323, R: 0.0225 },
-  mistral:  { N: 0.0278,  M: -0.0127, A: -0.0116, C: 0.0151,  R: -0.0119 },
+  claude:   { N: 0.0101,  M: 0.0163,  A: 0.0754,  C: 0.0057,  R: 0.0110 },
+  chatgpt:  { N: -0.0168, M: 0.0088,  A: -0.0013, C: -0.0050, R: 0.0053 },
+  gemini:   { N: -0.0101, M: 0.0126,  A: 0.0402,  C: -0.0126, R: 0.0047 },
+  deepseek: { N: -0.0341, M: 0.0075,  A: 0.1281,  C: -0.0227, R: 0.0226 },
+  mistral:  { N: 0.0312,  M: -0.0176, A: 0.0025,  C: 0.0186,  R: -0.0075 },
 }
 
 function shapeDimByModel(perModelByDim) {
@@ -414,7 +414,7 @@ export function PerDimRobustnessPanel() {
       title="Robustness degradation by NMACR dimension"
       subtitle="Per-dimension change in score from base to perturbation, by model"
       accent="#7FFFD4"
-      caption="Bars above zero = score decreased under perturbation (worse). DeepSeek shows the largest assumption-compliance degradation (+12.6pp on A); Mistral is uniquely robust on A and R (negative deltas = scores rose under perturbation). The N dimension (numerical correctness) is roughly stable for all models — math is robust; reasoning and assumption articulation are the brittle dimensions. Source: experiments/results_v2/robustness_v2.json (per_dim_delta block)."
+      caption="Bars above zero = score decreased under perturbation (worse). DeepSeek shows the largest assumption-compliance degradation (+12.8pp on A); Mistral is the only model with a negative R delta (reasoning_quality slightly improves under perturbation, ΔR=−0.008). Numerical correctness (N) is stable to slightly improving for most models — math is robust; assumption articulation (A) is the most brittle dimension. Source: experiments/results_v2/robustness_v2.json (per_dim_delta block)."
     >
       <div style={{ width: '100%', height: 280 }}>
         <ResponsiveContainer>
@@ -531,10 +531,10 @@ export function PerDimCalibrationPanel() {
 
 // ─── Panel 5: accuracy vs calibration scatter ────────────────────
 const STATIC_ACC_CALIB = {
-  acc_calib_corr: { claude: 0.427, chatgpt: 0.3445, gemini: 0.3368, deepseek: 0.3107, mistral: 0.3782 },
+  acc_calib_corr: { claude: 0.4164, chatgpt: 0.3632, gemini: 0.3876, deepseek: 0.4204, mistral: 0.4245 },
   accuracy: {
-    claude: 0.694466, chatgpt: 0.673524, gemini: 0.732576,
-    deepseek: 0.650091, mistral: 0.658222,
+    claude: 0.697605, chatgpt: 0.67326, gemini: 0.73142,
+    deepseek: 0.668568, mistral: 0.667635,
   },
 }
 
@@ -576,7 +576,7 @@ export function AccCalibScatterPanel() {
       title="Accuracy vs calibration per model"
       subtitle="Pearson r between per-task aggregate (literature-weighted NMACR) and per-task confidence proxy (dim_C)"
       accent="#A78BFA"
-      caption="For each model, Pearson correlation between accuracy and calibration. Higher r = confidence tracks accuracy more closely. Post Tier 1 (2026-05-03): Claude r=0.43, Mistral r=0.38, ChatGPT r=0.34, Gemini r=0.34, DeepSeek r=0.31 — all five models in a tight band (0.31–0.43), all positive. No model is inversely calibrated. Reference line at r=0 (no correlation)."
+      caption="For each model, Pearson correlation between accuracy and calibration. Higher r = confidence tracks accuracy more closely. Post Phase 1.8 (2026-05-04): Mistral r=0.42, DeepSeek r=0.42, Claude r=0.42, Gemini r=0.39, ChatGPT r=0.36 — all five models in a tight band (0.36–0.42), all positive. No model is inversely calibrated. Reference line at r=0 (no correlation)."
       subCaption="Source: experiments/results_v2/calibration.json (accuracy_calibration_correlation block) + bootstrap_ci.json (accuracy means)."
     >
       <div style={{ width: '100%', height: 300 }}>

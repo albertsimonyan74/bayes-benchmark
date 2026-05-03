@@ -26,20 +26,20 @@ const CAVEATS = [
     available across the 5 vendor APIs.`,
   },
   {
-    title: 'Robustness top-3 not separable (Mistral / ChatGPT / Gemini)',
-    body: `Robustness CIs cross zero for Mistral (Δ = −0.004 [−0.016, 0.008] — perturbations
-    slightly improve scores), ChatGPT (Δ = 0.002 [−0.011, 0.015]), and Gemini (Δ = 0.011
-    [−0.004, 0.026]) — three of five models are statistically indistinguishable from "no
-    robustness deficit at all." Only Claude (Δ = 0.029) and DeepSeek (Δ = 0.035) separate
-    from zero. Under literature-derived NMACR weights, accuracy means rank
-    Gemini 0.7326 > Claude 0.6945 > ChatGPT 0.6735 > Mistral 0.6582 > DeepSeek 0.6501;
-    the 3.8pp gap between #1 and #2 is real but bootstrap CIs overlap in the middle of
-    the cohort. Cite Statistical Fragility (Hochlehnert et al., 2025): single-question
-    swaps shift Pass@1 ≥ 3 pp.`,
+    title: 'Robustness top-3 not separable (ChatGPT / Mistral / Gemini)',
+    body: `Robustness CIs cross zero for ChatGPT (Δ = +0.0003 [−0.013, +0.014]), Mistral
+    (Δ = +0.0013 [−0.012, +0.014]), and Gemini (Δ = +0.013 [−0.003, +0.029]) — three of
+    five models are statistically indistinguishable from "no robustness deficit at all,"
+    and the top-2 pair (ChatGPT vs Mistral) is itself not_separable. Only Claude
+    (Δ = +0.030) and DeepSeek (Δ = +0.039) separate from zero. Under literature-derived
+    NMACR weights, accuracy means rank Gemini 0.7314 > Claude 0.6976 > ChatGPT 0.6733 >
+    DeepSeek 0.6686 > Mistral 0.6676; the 3.4pp gap between #1 and #2 is real but bootstrap
+    CIs overlap throughout the cohort middle. Cite Statistical Fragility (Hochlehnert et
+    al., 2025): single-question swaps shift Pass@1 ≥ 3 pp.`,
   },
   {
     title: 'Single-judge limitation (model AND prompt template)',
-    body: `The combined 22.2% keyword-judge disagreement headline rests on a single external
+    body: `The combined 20.74% keyword-judge disagreement headline rests on a single external
     judge — Llama 3.3 70B Instruct via Together AI — with a single prompt template. Yamauchi et
     al. (2025) report that judge-prompt template choices have larger effects than judge-model
     choices; this design addresses model choice (5 distinct providers + 1 external judge family)
@@ -61,13 +61,13 @@ const CAVEATS = [
     misleading: 0.33 → 0.73 (+0.40 ECE delta).`,
   },
   {
-    title: '135-task keyword-judge disagreement exclusion (CONCEPTUAL / MINIMAX / BAYES_RISK + MARKOV_04)',
-    body: `Keyword-judge disagreement is computed on 1,095 of 1,230 base runs. The 135 excluded runs come from
-    27 distinct task_ids × 5 models — CONCEPTUAL (10 tasks), MINIMAX (5 base + 3 MINIMAX_01 perturbations),
-    BAYES_RISK (5 base + 3 BAYES_RISK_01 perturbations), and the MARKOV_04 outlier — all sharing empty
-    required_assumption_checks. Keyword and judge scoring of assumption articulation cannot be compared
-    on tasks that don't require assumption articulation. The same eligibility filter applies to the
-    2,100 of 2,365 perturbation runs in the combined denominator (3,195 / 3,595).`,
+    title: '105-run keyword-judge disagreement exclusion (CONCEPTUAL / MINIMAX / BAYES_RISK + MARKOV_04)',
+    body: `Keyword-judge disagreement is computed on 750 of 855 truly-base runs. The 105 excluded runs come from
+    21 distinct task_ids × 5 models — CONCEPTUAL / MINIMAX / BAYES_RISK families plus the MARKOV_04 outlier
+    — all sharing empty required_assumption_checks. Keyword and judge scoring of assumption articulation
+    cannot be compared on tasks that don't require assumption articulation. The same eligibility filter
+    applies to 2,100 of 2,365 perturbation runs in the combined denominator, yielding 2,850 / 3,220
+    combined eligibility (88.5%).`,
   },
   {
     title: '10-task CONCEPTUAL exclusion from self-consistency',
