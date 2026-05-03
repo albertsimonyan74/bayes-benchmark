@@ -41,7 +41,7 @@ python -m llm_runner.run_all_tasks --models claude --dry-run --limit 3
 python -m llm_runner.run_all_tasks --models claude --task-types DISC_MEDIAN MARKOV
 python -m llm_runner.run_all_tasks --models claude gemini --synthetic
 python -m llm_runner.run_all_tasks --models claude --synthetic --pert-types numerical
-python data/synthetic/build_perturbations.py            # regenerate perturbations.json
+python scripts/generate_perturbations_full.py          # regenerate perturbations_all.json (canonical, 473 perturbations)
 
 # Scoring & analysis
 python -m experiments.run_benchmark
@@ -163,7 +163,9 @@ Phase 2 solvers use `np.random.seed(42)` — true values are seeded MC estimates
 }
 ```
 
-**Perturbation types** (75 tasks = 25 base × 3): `rephrase` (same math, reworded) / `numerical` (changed numbers, recomputed) / `semantic` (same math, new framing).
+**Perturbations** (`data/synthetic/perturbations_all.json`, 473 records covering all 171 base tasks): `rephrase` (same math, reworded) / `numerical` (changed numbers, recomputed) / `semantic` (same math, new framing). Composition: 75 hand-authored seed records + 398 LLM-generated v2 records (v2 ids end with `_v2`). Regenerate with `python scripts/generate_perturbations_full.py`.
+
+**v1 perturbation deprecation (2026-05-04, Phase 1.8).** The legacy `data/synthetic/perturbations.json` (75 hand-authored records) is deprecated as a data source — its records are preserved verbatim inside `perturbations_all.json`. The file is RETAINED on disk because 5 consumer scripts (`scripts/krippendorff_agreement.py`, `keyword_vs_judge_agreement.py`, `combined_pass_flip_analysis.py`, `calibration_analysis.py`, `recompute_downstream.py`), `capstone-website/backend/main.py`, and the R pipeline use it as the canonical list of v1-pert task_ids to filter out of `runs.jsonl` (Strategy C). Future cleanup: refactor consumers to derive the v1 list from `perturbations_all.json` (suffix-match `task_id` not ending in `_v2`), then delete `perturbations.json`. Generator `data/synthetic/build_perturbations.py` is no longer the canonical generator — `scripts/generate_perturbations_full.py` is. See `audit/recompute_log.md` §"Phase 1.8".
 
 ---
 
