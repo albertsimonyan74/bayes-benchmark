@@ -21,17 +21,21 @@ date: 2026-04-26
 
 ## Current leaderboard (literature-weighted NMACR — sole canonical scheme)
 
+Updated 2026-05-03 post Tier 1 coverage fixes.
+
 | Rank | Model | Score | 95% CI |
 |------|-------|-------|--------|
-| 1 | Gemini 2.5 Flash | 0.776 | [0.753, 0.799] |
-| 2 | Claude Sonnet 4.5 | 0.712 | [0.689, 0.736] |
-| 3 | GPT-4.1 | 0.691 | [0.668, 0.713] |
-| 4 | Mistral Large | 0.675 | [0.652, 0.698] |
-| 5 | DeepSeek V3 | 0.663 | [0.641, 0.687] |
+| 1 | Gemini 2.5 Flash | 0.7326 | [0.7117, 0.7532] |
+| 2 | Claude Sonnet 4.5 | 0.6945 | [0.6722, 0.7169] |
+| 3 | GPT-4.1 | 0.6735 | [0.6511, 0.6960] |
+| 4 | Mistral Large | 0.6582 | [0.6359, 0.6799] |
+| 5 | DeepSeek V3 | 0.6501 | [0.6273, 0.6728] |
 
 Weighting scheme: A=0.30, R=0.25, M=0.20, C=0.15, N=0.10 (literature-derived per
 Du 2025, Boye-Moell 2025, Yamauchi 2025). Sole canonical scheme since
-Approach A (2026-05-03) consolidated runtime + post-hoc paths.
+Approach A (2026-05-03) consolidated runtime + post-hoc paths. Tier 1
+fixes (2026-05-03) corrected runner schema gap + stale recompute path
+that had inflated Gemini accuracy by ~4.4pp.
 
 Historical comparison (paper appendix only): under the equal-weight scheme
 used in Phase 1A pilot (2026-04-26 to 2026-05-03), Claude ranked #1

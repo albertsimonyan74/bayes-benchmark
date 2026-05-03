@@ -105,11 +105,15 @@ absent; the remaining four weights are renormalised to 1.0. Mirrors
 ### RQ1 (PRIMARY) — How does external-judge validation differ from keyword scoring?
 - **NMACR mapping:** RQ1 cross-validates **all 5** NMACR dimensions
   against the external Llama 3.3 70B judge.
-- **Headline:** 25.0% keyword-judge disagreement on `assumption_compliance`
-  (274 / 1095 runs). Krippendorff α = 0.55 (95% CI [0.504, 0.595]) —
-  questionable agreement under Park et al. (2025) thresholds.
-  Spearman ρ = 0.59. Both metrics agree: keyword and judge are not
-  interchangeable raters.
+- **Headline:** 22.16% combined keyword-judge disagreement on
+  `assumption_compliance` (708 / 3,195 runs across base + perturbation).
+  Krippendorff α (post Tier 1, base scope n=1,095): assumption 0.55,
+  reasoning_quality −0.099 [−0.152, −0.045], method_structure −0.042.
+  Combined-scope α (n=3,195, matches headline scope): assumption 0.605,
+  reasoning −0.080, method −0.016. Both metrics agree: keyword and
+  judge are not interchangeable raters; reasoning and method
+  specifically show systematic disagreement (CI excludes zero on
+  reasoning).
 - **Literature backbone:** Yamauchi et al. (2025) [arXiv:2506.13639]
   for the α-over-ρ recommendation; Liu et al. (2025) for the
   multi-dimensional rubric baseline.
@@ -138,10 +142,14 @@ absent; the remaining four weights are renormalised to 1.0. Mirrors
   - **Layer 2 (NEW Phase 1B):** per-dimension robustness Δ per model
     (5 models × 5 dims = 25 deltas), exposed in `robustness_v2.json` →
     `per_dim_delta`.
-- **Headline:** Three orthogonal rankings — accuracy ≠ robustness ≠
-  calibration. ChatGPT and DeepSeek noise-equivalent on aggregate
-  robustness (Δ ≈ 0); Mistral degrades most on numerical and method
-  dimensions.
+- **Headline (post Tier 1 2026-05-03):** Three orthogonal rankings —
+  accuracy ≠ robustness ≠ calibration. Accuracy: gemini 0.7326 > claude
+  0.6945 > chatgpt 0.6735 > mistral 0.6582 > deepseek 0.6501.
+  Robustness: mistral (Δ=−0.004, uniquely improves under perturbation) >
+  chatgpt (0.002) > gemini (0.011) > claude (0.029) > deepseek (0.035) —
+  three of five models (mistral, chatgpt, gemini) noise-equivalent
+  (CI crosses zero); only claude and deepseek separable from zero.
+  Calibration: chatgpt (ECE 0.063) best.
 - **Literature backbone:** ReasonBench (2025) variance-as-first-class;
   BrittleBench (2026) perturbation taxonomy; Statistical Fragility (2025,
   Hochlehnert et al., arXiv:2504.07086) for separability tests.
@@ -160,9 +168,10 @@ as supporting evidence.
 conclusions:
 
 - **Verbalized extraction** (keyword-based, n=1,230 base runs).
-  Hedge-heavy. Gemini produces 0 verbalized confidence signals; the
-  other 4 models produce some, but the high-confidence bucket is sparse
-  across the board. ECE: 0.063–0.180.
+  Hedge-heavy. The high-confidence bucket (claimed p ≥ 0.85) is empty
+  across all 5 models; verbalized extraction is sensitive to hedging
+  language so models with less hedging produce fewer high-confidence
+  signals. ECE: 0.063–0.180.
 - **Consistency extraction** (3-rerun agreement at T=0.7, n=2,415 across
   161 numeric-target tasks — Phase 1C). All 5 models severely
   overconfident. Confident agreement does NOT predict accuracy. ECE:
@@ -176,9 +185,18 @@ conclusions:
 | deepseek | 0.180          | 0.726                  |
 | mistral  | 0.084          | 0.663                  |
 
-Gemini, the verbalized-extraction outlier ("0 signals"), produces the
-BEST consistency ECE — extreme underconfidence under one method, mid-pack
-under another.
+All five models reverse direction between methods — verbalized hedging
+to consistency overconfidence. Calibration measurement is
+method-dependent across the cohort, not a per-model anomaly.
+
+[Tier 1 update 2026-05-03: pre-fix versions of this section described
+"Gemini calibration inversion: 0 verbalized signals → BEST consistency
+ECE." That subclaim was an artifact of the runner schema gap + stale
+recompute path (`audit/gemini_forensic_2026-05-03.md`). Post-fix Gemini
+has 127/246 verbalized signals; ECE 0.097 (in-band with the cohort);
+accuracy_calibration correlation r = 0.337. The cohort-wide
+method-dependence finding stands; the Gemini-specific inversion
+subclaim is FALSIFIED and removed.]
 
 **Why SUPPORTING and honest.** This RQ measures the C dimension across
 two methods and finds they disagree dramatically. Verbalized extraction
@@ -192,11 +210,11 @@ recommended next-step methodology.
 analysis (no numerical answers against which 3-rerun agreement can be
 measured). These remain a calibration-measurement gap.
 
-**Phase 1B supporting evidence.** Per-dimension ECE in
-`per_dim_calibration.json` (Layer 5); Pearson r between aggregate accuracy
-and dim_C positive on the four measurable models (claude 0.49,
-mistral 0.48, chatgpt 0.37, deepseek 0.35; gemini not measurable —
-all 246 verbalized responses unstated).
+**Phase 1B supporting evidence (post Tier 1 2026-05-03).** Per-dimension
+ECE in `per_dim_calibration.json` (Layer 5, including C=0.045 for
+gemini). Pearson r between aggregate accuracy and dim_C positive on
+all five models: claude 0.43, mistral 0.38, chatgpt 0.34, gemini 0.34,
+deepseek 0.31. Range tightens cohort-wide; Gemini measurable in-band.
 
 **Literature backbone.** FermiEval (2025) — overconfidence on
 estimation tasks (consistency extraction confirms in the Bayesian
@@ -270,9 +288,11 @@ checkable. See §2 for full per-dimension rationale.
 - **Empty high-confidence bucket.** Verbalized extraction gives zero
   records claiming p ≥ 0.85 across all five models. The reported ECE is
   a 3-bucket weighted MAE (0.3 / 0.5 / 0.6). Cite Multi-Answer Confidence
-  (2026) for the consistency-based upgrade path. Gemini specifically: 0
-  responses with any extracted confidence at all (all 246 unstated) —
-  documented in `per_dim_calibration.json` and `accuracy_calibration_correlation`.
+  (2026) for the consistency-based upgrade path. Verbalized extraction
+  is sensitive to hedging language — models with less hedging produce
+  fewer high-confidence signals (Gemini, for instance, defaults 119 of
+  246 base responses to "unstated" and tends toward moderate-bucket
+  placement when it does hedge).
 - **HALLUCINATION = 0 ambiguity.** Zero hallucinations across 143 audited
   failures may reflect either (a) a real property of closed-form Bayesian
   tasks (every task has a deterministic ground truth, models fail by
