@@ -57,9 +57,9 @@ function buildCards(d, pf) {
     },
     {
       big: 'Gemini #1',
-      label: "The 'best' model depends on what you measure",
-      desc: 'Under the canonical literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10% — emphasizing assumption articulation and reasoning quality per Du 2025, Boye-Moell 2025, Yamauchi 2025), Gemini ranks #1. Under an equal-weight scheme used in the pilot phase (treat all 5 dimensions the same), Claude ranked #1.',
-      why: 'Benchmark rankings depend on the weighting scheme. Researchers should justify their weights from the literature rather than default to equal weighting — the same data produces different leaderboards under different weightings.',
+      label: "The 'best' model on accuracy under literature-weighted NMACR",
+      desc: 'Gemini ranks #1 on accuracy with mean 0.776 [0.753, 0.799] under the literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10%). Claude #2 at 0.712 [0.689, 0.736] — CIs do not overlap, the top-2 are statistically separable. The dimensional weighting follows Du 2025, Boye-Moell 2025, and Yamauchi 2025.',
+      why: 'Benchmark rankings depend on the choice of dimensional weighting. The literature-derived scheme reflects what published research identifies as evaluation priorities for LLMs on Bayesian reasoning.',
     },
     {
       big: '3 different rankings',

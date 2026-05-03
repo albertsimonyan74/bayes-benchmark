@@ -157,7 +157,7 @@ export default function Methodology() {
           <Subhead>2 · N·M·A·C·R Rubric (literature-derived weights)</Subhead>
           <Card>
             <p style={{ color: 'rgba(232,244,248,0.78)', fontSize: 13, lineHeight: 1.85, margin: '0 0 14px' }}>
-              The N·M·A·C·R rubric uses literature-derived weights rather than equal weighting.
+              The N·M·A·C·R rubric uses literature-derived weights.
               Assumption articulation (A=30%) is weighted highest because three independent literature
               lines converge on assumption violations as the dominant failure mode in statistical
               reasoning evaluation: Du et al. (2025) identifies assumption violations as the primary
@@ -196,10 +196,10 @@ export default function Methodology() {
             </div>
             <p style={{ color: 'rgba(232,244,248,0.55)', fontSize: 11, lineHeight: 1.7, margin: '14px 0 0' }}>
               <strong>Aggregation locus:</strong> the literature-derived weights are applied at the
-              source — the runtime parser (<code style={{ fontSize: 10 }}>llm_runner/response_parser.py</code>)
-              and the post-hoc metric path (<code style={{ fontSize: 10 }}>evaluation/metrics.py</code>)
-              both use the same NMACR_WEIGHTS = (A=0.30, R=0.25, M=0.20, C=0.15, N=0.10) since
-              Approach A (2026-05-03). Per-run aggregates are stored in
+              source. Both the runtime parser (<code style={{ fontSize: 10 }}>llm_runner/response_parser.py</code>)
+              and the metrics path (<code style={{ fontSize: 10 }}>evaluation/metrics.py</code>)
+              use the same NMACR_WEIGHTS = (A=0.30, R=0.25, M=0.20, C=0.15, N=0.10).
+              Per-run aggregates are stored in
               <code style={{ fontSize: 10 }}> nmacr_scores_v2.jsonl</code>, the single source of truth
               for downstream analyses (bootstrap CI, robustness, calibration). CONCEPTUAL tasks
               (no N) renormalize remaining weights to 1.0; mirrors runtime

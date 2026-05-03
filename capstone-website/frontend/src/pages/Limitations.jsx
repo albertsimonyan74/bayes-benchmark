@@ -89,11 +89,8 @@ const CAVEATS = [
     not learned from this benchmark's data. Citations: Du 2025, Boye & Moell 2025, and Yamauchi
     2025 for A; Yamauchi 2025 and Au 2025 for R; Wei 2022, Chen 2022, and Bishop 2006 for M;
     Nagarkar 2026, FermiEval 2025, and Multi-Answer Confidence 2026 for C; Liu 2025 and Boye &
-    Moell 2025 for N. As of 2026-05-03, the literature-weighted scheme is applied at runtime in
-    both aggregation paths (evaluation/metrics.py and llm_runner/response_parser.py) — there is
-    no separate post-hoc reweighting step. The weighting choice is principled but reflects a
-    specific reading of the literature; alternative weighting schemes may yield different
-    rankings (the historical equal-weight ranking is preserved as a paper-appendix comparison).`,
+    Moell 2025 for N. The weighting represents a specific reading of the literature on LLM
+    evaluation priorities for Bayesian reasoning.`,
   },
   {
     title: 'PoT prompting explored but not in scored runs',
