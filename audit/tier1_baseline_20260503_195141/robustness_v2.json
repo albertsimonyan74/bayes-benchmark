@@ -442,136 +442,136 @@
   "per_model": {
     "claude": {
       "n": 473,
-      "base_mean": 0.6991,
+      "base_mean": 0.7107,
       "pert_mean": 0.6707,
-      "delta": 0.0285,
-      "robustness": 0.9593,
+      "delta": 0.0401,
+      "robustness": 0.9436,
       "per_perturbation_type": {
         "rephrase": {
           "n": 171,
-          "base_mean": 0.6976,
+          "base_mean": 0.7123,
           "pert_mean": 0.6581,
-          "delta": 0.0395
+          "delta": 0.0542
         },
         "numerical": {
           "n": 131,
-          "base_mean": 0.7031,
+          "base_mean": 0.7067,
           "pert_mean": 0.6702,
-          "delta": 0.0329
+          "delta": 0.0365
         },
         "semantic": {
           "n": 171,
-          "base_mean": 0.6976,
+          "base_mean": 0.7123,
           "pert_mean": 0.6836,
-          "delta": 0.014
+          "delta": 0.0287
         }
       }
     },
     "chatgpt": {
       "n": 473,
-      "base_mean": 0.6697,
+      "base_mean": 0.6792,
       "pert_mean": 0.6678,
-      "delta": 0.0019,
-      "robustness": 0.9972,
+      "delta": 0.0114,
+      "robustness": 0.9832,
       "per_perturbation_type": {
         "rephrase": {
           "n": 171,
-          "base_mean": 0.6733,
+          "base_mean": 0.686,
           "pert_mean": 0.6563,
-          "delta": 0.017
+          "delta": 0.0297
         },
         "numerical": {
           "n": 131,
-          "base_mean": 0.6604,
+          "base_mean": 0.6617,
           "pert_mean": 0.6692,
-          "delta": -0.0088
+          "delta": -0.0075
         },
         "semantic": {
           "n": 171,
-          "base_mean": 0.6733,
+          "base_mean": 0.686,
           "pert_mean": 0.6783,
-          "delta": -0.0051
+          "delta": 0.0076
         }
       }
     },
     "gemini": {
       "n": 473,
-      "base_mean": 0.7269,
+      "base_mean": 0.7727,
       "pert_mean": 0.7159,
-      "delta": 0.011,
-      "robustness": 0.9849,
+      "delta": 0.0568,
+      "robustness": 0.9265,
       "per_perturbation_type": {
         "rephrase": {
           "n": 171,
-          "base_mean": 0.7314,
+          "base_mean": 0.7781,
           "pert_mean": 0.713,
-          "delta": 0.0184
+          "delta": 0.0651
         },
         "numerical": {
           "n": 131,
-          "base_mean": 0.7149,
+          "base_mean": 0.7585,
           "pert_mean": 0.7122,
-          "delta": 0.0028
+          "delta": 0.0463
         },
         "semantic": {
           "n": 171,
-          "base_mean": 0.7314,
+          "base_mean": 0.7781,
           "pert_mean": 0.7217,
-          "delta": 0.0098
+          "delta": 0.0564
         }
       }
     },
     "deepseek": {
       "n": 473,
-      "base_mean": 0.6679,
+      "base_mean": 0.675,
       "pert_mean": 0.6327,
-      "delta": 0.0352,
-      "robustness": 0.9473,
+      "delta": 0.0423,
+      "robustness": 0.9373,
       "per_perturbation_type": {
         "rephrase": {
           "n": 171,
-          "base_mean": 0.6686,
+          "base_mean": 0.678,
           "pert_mean": 0.6336,
-          "delta": 0.0349
+          "delta": 0.0444
         },
         "numerical": {
           "n": 131,
-          "base_mean": 0.6663,
+          "base_mean": 0.6673,
           "pert_mean": 0.6169,
-          "delta": 0.0494
+          "delta": 0.0504
         },
         "semantic": {
           "n": 171,
-          "base_mean": 0.6686,
+          "base_mean": 0.678,
           "pert_mean": 0.6439,
-          "delta": 0.0246
+          "delta": 0.0341
         }
       }
     },
     "mistral": {
       "n": 473,
-      "base_mean": 0.6655,
+      "base_mean": 0.6764,
       "pert_mean": 0.6694,
-      "delta": -0.004,
-      "robustness": 1.0059,
+      "delta": 0.007,
+      "robustness": 0.9897,
       "per_perturbation_type": {
         "rephrase": {
           "n": 171,
-          "base_mean": 0.6676,
+          "base_mean": 0.6816,
           "pert_mean": 0.6594,
-          "delta": 0.0083
+          "delta": 0.0222
         },
         "numerical": {
           "n": 131,
-          "base_mean": 0.6599,
+          "base_mean": 0.6629,
           "pert_mean": 0.6722,
-          "delta": -0.0123
+          "delta": -0.0093
         },
         "semantic": {
           "n": 171,
-          "base_mean": 0.6676,
+          "base_mean": 0.6816,
           "pert_mean": 0.6774,
-          "delta": -0.0098
+          "delta": 0.0042
         }
       }
     }
@@ -579,32 +579,32 @@
   "ranking": [
     {
       "model": "mistral",
-      "delta": -0.004,
-      "robustness": 1.0059,
+      "delta": 0.007,
+      "robustness": 0.9897,
       "rank": 1
     },
     {
       "model": "chatgpt",
-      "delta": 0.0019,
-      "robustness": 0.9972,
+      "delta": 0.0114,
+      "robustness": 0.9832,
       "rank": 2
     },
     {
-      "model": "gemini",
-      "delta": 0.011,
-      "robustness": 0.9849,
+      "model": "claude",
+      "delta": 0.0401,
+      "robustness": 0.9436,
       "rank": 3
     },
     {
-      "model": "claude",
-      "delta": 0.0285,
-      "robustness": 0.9593,
+      "model": "deepseek",
+      "delta": 0.0423,
+      "robustness": 0.9373,
       "rank": 4
     },
     {
-      "model": "deepseek",
-      "delta": 0.0352,
-      "robustness": 0.9473,
+      "model": "gemini",
+      "delta": 0.0568,
+      "robustness": 0.9265,
       "rank": 5
     }
   ],
@@ -623,8 +623,8 @@
         "mean_delta": 0.0698
       },
       "C": {
-        "n": 473,
-        "mean_delta": 0.0046
+        "n": 398,
+        "mean_delta": 0.015
       },
       "R": {
         "n": 473,
@@ -645,8 +645,8 @@
         "mean_delta": 0.0
       },
       "C": {
-        "n": 473,
-        "mean_delta": -0.0003
+        "n": 398,
+        "mean_delta": 0.0017
       },
       "R": {
         "n": 473,
@@ -665,10 +665,6 @@
       "A": {
         "n": 473,
         "mean_delta": 0.0243
-      },
-      "C": {
-        "n": 473,
-        "mean_delta": -0.0034
       },
       "R": {
         "n": 473,
@@ -689,8 +685,8 @@
         "mean_delta": 0.1258
       },
       "C": {
-        "n": 473,
-        "mean_delta": -0.0323
+        "n": 398,
+        "mean_delta": -0.0393
       },
       "R": {
         "n": 473,
@@ -711,8 +707,8 @@
         "mean_delta": -0.0116
       },
       "C": {
-        "n": 473,
-        "mean_delta": 0.0151
+        "n": 398,
+        "mean_delta": 0.019
       },
       "R": {
         "n": 473,
@@ -723,7 +719,7 @@
   "per_task_type_heatmap": {
     "BINOM_FLAT": {
       "claude": -0.0048,
-      "gemini": -0.0496,
+      "gemini": -0.0449,
       "chatgpt": -0.0248,
       "deepseek": 0.016,
       "mistral": -0.032
@@ -732,2946 +728,2946 @@
       "deepseek": 0.1827,
       "chatgpt": 0.0511,
       "claude": 0.0208,
-      "gemini": 0.0749,
+      "gemini": 0.1065,
       "mistral": -0.1203
     },
     "DISC_MEDIAN": {
       "chatgpt": -0.0032,
       "deepseek": 0.0789,
-      "gemini": 0.0301,
+      "gemini": 0.0316,
       "claude": -0.0572,
       "mistral": -0.124
     },
     "UNIFORM_MLE": {
       "deepseek": 0.1516,
       "chatgpt": 0.0,
-      "gemini": 0.1801,
+      "gemini": 0.2305,
       "claude": 0.0548,
       "mistral": -0.1
     },
     "BOX_MULLER": {
       "deepseek": -0.0093,
       "chatgpt": -0.0772,
-      "gemini": 0.0312,
+      "gemini": 0.0383,
       "claude": -0.0846,
       "mistral": 0.0271
     },
     "HPD": {
       "deepseek": -0.0336,
       "chatgpt": 0.155,
-      "gemini": -0.0105,
+      "gemini": 0.0686,
       "claude": 0.1046,
       "mistral": 0.1006
     },
     "MLE_MAP": {
       "chatgpt": 0.0092,
       "deepseek": 0.0612,
-      "gemini": -0.0033,
+      "gemini": 0.0037,
       "claude": 0.079,
       "mistral": 0.0737
     },
     "CI_CREDIBLE": {
       "chatgpt": 0.0485,
       "deepseek": 0.1088,
-      "gemini": -0.012,
+      "gemini": 0.06,
       "claude": -0.1092,
       "mistral": -0.0503
     },
     "JEFFREYS": {
       "chatgpt": 0.163,
       "deepseek": -0.0354,
-      "gemini": -0.0336,
+      "gemini": 0.0173,
       "claude": 0.1678,
       "mistral": 0.0333
     },
     "BAYES_RISK": {
       "chatgpt": -0.1072,
       "deepseek": 0.0,
-      "gemini": -0.2,
+      "gemini": -0.1929,
       "claude": -0.0792,
       "mistral": -0.1104
     },
     "FISHER_INFO": {
       "chatgpt": 0.0,
       "deepseek": 0.0,
-      "gemini": 0.2321,
+      "gemini": 0.2656,
       "claude": 0.002,
       "mistral": 0.0048
     },
     "RC_BOUND": {
       "chatgpt": 0.1504,
       "deepseek": 0.2556,
-      "gemini": 0.1656,
+      "gemini": 0.2208,
       "claude": 0.1968,
       "mistral": 0.2552
     },
     "MARKOV": {
       "chatgpt": 0.0646,
       "deepseek": 0.006,
-      "gemini": 0.002,
+      "gemini": 0.0091,
       "claude": 0.003,
       "mistral": 0.0
     },
     "ORDER_STAT": {
       "chatgpt": -0.1104,
       "deepseek": -0.062,
-      "gemini": -0.2791,
+      "gemini": -0.2427,
       "claude": 0.0072,
       "mistral": -0.1224
     },
     "REGRESSION": {
       "chatgpt": -0.1825,
       "deepseek": -0.2536,
-      "gemini": -0.2802,
+      "gemini": -0.3252,
       "claude": -0.1907,
       "mistral": -0.1997
     },
     "GAMBLER": {
       "chatgpt": 0.0,
       "deepseek": 0.2032,
-      "gemini": -0.1016,
+      "gemini": -0.0945,
       "claude": -0.2016,
       "mistral": -0.1
     },
     "STATIONARY": {
       "chatgpt": 0.0,
       "deepseek": 0.006,
-      "gemini": -0.0188,
+      "gemini": -0.0173,
       "claude": -0.006,
       "mistral": -0.0508
     },
     "MINIMAX": {
       "chatgpt": 0.0176,
       "deepseek": -0.0407,
-      "gemini": -0.2355,
+      "gemini": -0.2333,
       "claude": 0.0,
       "mistral": 0.0208
     },
     "BIAS_VAR": {
       "chatgpt": -0.0896,
       "deepseek": -0.0896,
-      "gemini": 0.1448,
+      "gemini": 0.2108,
       "claude": 0.2612,
       "mistral": -0.0492
     },
     "LOG_ML": {
       "chatgpt": 0.0032,
       "deepseek": -0.1801,
-      "gemini": -0.025,
+      "gemini": 0.0169,
       "claude": 0.0032,
       "mistral": 0.033
     },
     "BAYES_FACTOR": {
       "chatgpt": 0.006,
       "deepseek": -0.1342,
-      "gemini": 0.003,
+      "gemini": 0.0979,
       "claude": 0.1118,
       "mistral": -0.3312
     },
     "OPT_SCALED": {
       "chatgpt": -0.1033,
       "deepseek": -0.0003,
-      "gemini": 0.1508,
+      "gemini": 0.2108,
       "claude": -0.1077,
       "mistral": -0.003
     },
     "MSE_COMPARE": {
       "chatgpt": 0.0613,
       "deepseek": 0.0383,
-      "gemini": 0.1467,
+      "gemini": 0.1537,
       "claude": 0.4592,
       "mistral": 0.0586
     },
     "MLE_EFFICIENCY": {
       "chatgpt": 0.2508,
       "deepseek": 0.1225,
-      "gemini": 0.1616,
+      "gemini": 0.212,
       "claude": -0.1827,
       "mistral": 0.0268
     },
     "GAMMA_POISSON_01_rephrase_v2": {
       "chatgpt": 0.3,
       "deepseek": 0.1287,
-      "gemini": -0.009,
+      "gemini": -0.0088,
       "claude": 0.3,
       "mistral": 0.0113
     },
     "GAMMA_POISSON_01_numerical_v2": {
       "chatgpt": -0.009,
       "deepseek": 0.1287,
-      "gemini": -0.009,
+      "gemini": -0.0088,
       "claude": 0.2977,
       "mistral": 0.0113
     },
     "GAMMA_POISSON_01_semantic_v2": {
       "chatgpt": -0.009,
       "deepseek": -0.1759,
-      "gemini": -0.0078,
+      "gemini": -0.0076,
       "claude": 0.009,
       "mistral": -0.009
     },
     "DISC_MEDIAN_03_rephrase_v2": {
       "chatgpt": -0.0312,
       "deepseek": 0.0264,
-      "gemini": -0.0048,
+      "gemini": -0.0033,
       "claude": 0.0,
       "mistral": 0.0361
     },
     "DISC_MEDIAN_03_numerical_v2": {
       "chatgpt": -0.0048,
       "deepseek": 0.0312,
-      "gemini": -0.0048,
+      "gemini": -0.0033,
       "claude": 0.0312,
       "mistral": 0.0312
     },
     "DISC_MEDIAN_03_semantic_v2": {
       "chatgpt": -0.0312,
       "deepseek": -0.1548,
-      "gemini": 0.0,
+      "gemini": 0.0015,
       "claude": -0.15,
       "mistral": 0.0
     },
     "DISC_MEDIAN_02_rephrase_v2": {
       "chatgpt": 0.0,
       "deepseek": 0.1813,
-      "gemini": 0.1213,
+      "gemini": 0.1228,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "DISC_MEDIAN_02_numerical_v2": {
       "chatgpt": 0.0,
       "deepseek": 0.1525,
-      "gemini": -0.0048,
+      "gemini": -0.0033,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "DISC_MEDIAN_02_semantic_v2": {
       "chatgpt": -0.0048,
       "deepseek": 0.1764,
-      "gemini": 0.0,
+      "gemini": 0.0015,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "NORMAL_GAMMA_01_rephrase_v2": {
       "chatgpt": 0.0312,
       "deepseek": 0.1397,
-      "gemini": 0.3,
+      "gemini": 0.36,
       "claude": 0.0113,
       "mistral": 0.0
     },
     "NORMAL_GAMMA_01_numerical_v2": {
       "chatgpt": 0.0312,
       "deepseek": 0.3402,
-      "gemini": 0.312,
+      "gemini": 0.372,
       "claude": 0.0425,
       "mistral": 0.0
     },
     "NORMAL_GAMMA_01_semantic_v2": {
       "chatgpt": 0.0312,
       "deepseek": 0.291,
-      "gemini": -0.01,
+      "gemini": 0.05,
       "claude": 0.0113,
       "mistral": -0.15
     },
     "DIRICHLET_01_rephrase_v2": {
       "chatgpt": -0.0132,
       "deepseek": -0.2163,
-      "gemini": -0.3,
+      "gemini": -0.2929,
       "claude": 0.0,
       "mistral": 0.3222
     },
     "DIRICHLET_01_semantic_v2": {
       "chatgpt": -0.0222,
       "deepseek": -0.009,
-      "gemini": 0.0012,
+      "gemini": 0.0083,
       "claude": -0.0312,
       "mistral": 0.3222
     },
     "DISC_MEDIAN_05_rephrase_v2": {
       "chatgpt": 0.0,
       "deepseek": 0.0264,
-      "gemini": -0.0096,
+      "gemini": -0.0081,
       "claude": 0.1812,
       "mistral": 0.0312
     },
     "DISC_MEDIAN_05_numerical_v2": {
       "chatgpt": 0.0,
       "deepseek": 0.0264,
-      "gemini": -0.0048,
+      "gemini": -0.0033,
       "claude": 0.186,
       "mistral": 0.0312
     },
     "DISC_MEDIAN_05_semantic_v2": {
       "chatgpt": -0.0312,
       "deepseek": 0.0312,
-      "gemini": 0.0,
+      "gemini": 0.0015,
       "claude": 0.186,
       "mistral": 0.0361
     },
     "UNIFORM_MLE_02_rephrase_v2": {
       "chatgpt": -0.15,
       "deepseek": 0.1939,
-      "gemini": 0.0,
+      "gemini": 0.1129,
       "claude": -0.0048,
       "mistral": -0.0048
     },
     "UNIFORM_MLE_02_numerical_v2": {
       "deepseek": 0.0048,
       "chatgpt": -0.15,
-      "gemini": -0.1801,
+      "gemini": -0.0672,
       "claude": -0.0096,
       "mistral": 0.15
     },
     "UNIFORM_MLE_02_semantic_v2": {
       "deepseek": 0.0096,
       "chatgpt": -0.1452,
-      "gemini": -0.1801,
+      "gemini": -0.0672,
       "claude": -0.0048,
       "mistral": 0.1573
     },
     "DISC_MEDIAN_04_rephrase_v2": {
       "deepseek": 0.0217,
       "chatgpt": 0.0,
-      "gemini": 0.0048,
+      "gemini": 0.0015,
       "claude": 0.0,
       "mistral": 0.15
     },
     "DISC_MEDIAN_04_numerical_v2": {
       "deepseek": 0.0264,
       "chatgpt": 0.0,
-      "gemini": 0.0048,
+      "gemini": 0.0015,
       "claude": 0.0,
       "mistral": 0.186
     },
     "DISC_MEDIAN_04_semantic_v2": {
       "deepseek": -0.15,
       "chatgpt": 0.0,
-      "gemini": 0.1573,
+      "gemini": 0.154,
       "claude": 0.0,
       "mistral": -0.0312
     },
     "UNIFORM_MLE_03_rephrase_v2": {
       "deepseek": 0.1452,
       "chatgpt": -0.0048,
-      "gemini": 0.0,
+      "gemini": 0.1129,
       "claude": 0.15,
       "mistral": 0.1663
     },
     "UNIFORM_MLE_03_numerical_v2": {
       "deepseek": -0.0048,
       "chatgpt": -0.0048,
-      "gemini": -0.1801,
+      "gemini": -0.0672,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "UNIFORM_MLE_03_semantic_v2": {
       "deepseek": -0.0048,
       "chatgpt": -0.0096,
-      "gemini": 0.0,
+      "gemini": 0.1129,
       "claude": 0.0,
       "mistral": 0.15
     },
     "UNIFORM_MLE_04_rephrase_v2": {
       "deepseek": 0.15,
       "chatgpt": -0.1452,
-      "gemini": -0.009,
+      "gemini": 0.1129,
       "claude": 0.15,
       "mistral": -0.0048
     },
     "UNIFORM_MLE_04_numerical_v2": {
       "deepseek": 0.1452,
       "chatgpt": -0.1404,
-      "gemini": -0.1891,
+      "gemini": -0.0672,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "UNIFORM_MLE_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.15,
-      "gemini": -0.009,
+      "gemini": 0.1129,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "UNIFORM_MLE_05_rephrase_v2": {
       "deepseek": -0.0048,
       "chatgpt": 0.0048,
-      "gemini": 0.1801,
+      "gemini": 0.2305,
       "claude": 0.0048,
       "mistral": -0.15
     },
     "UNIFORM_MLE_05_numerical_v2": {
       "deepseek": 0.0048,
       "chatgpt": 0.0096,
-      "gemini": 0.1801,
+      "gemini": 0.2305,
       "claude": 0.0,
       "mistral": -0.1548
     },
     "UNIFORM_MLE_05_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0096,
-      "gemini": 0.0048,
+      "gemini": 0.0552,
       "claude": 0.0,
       "mistral": -0.15
     },
     "BINOM_FLAT_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0264,
-      "gemini": 0.1615,
+      "gemini": 0.1686,
       "claude": 0.0012,
       "mistral": -0.0264
     },
     "BINOM_FLAT_05_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.0264,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.0048,
       "mistral": -0.0312
     },
     "BINOM_FLAT_05_semantic_v2": {
       "deepseek": 0.1265,
       "chatgpt": -0.0264,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.0048,
       "mistral": -0.0312
     },
     "BINOM_FLAT_04_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0048,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": -0.0048,
       "mistral": -0.0048
     },
     "BINOM_FLAT_04_numerical_v2": {
       "deepseek": 0.0361,
       "chatgpt": 0.0048,
-      "gemini": 0.1573,
+      "gemini": 0.1596,
       "claude": -0.0048,
       "mistral": 0.0312
     },
     "BINOM_FLAT_04_semantic_v2": {
       "deepseek": 0.0361,
       "chatgpt": 0.0408,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BINOM_FLAT_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0361,
-      "gemini": 0.1663,
+      "gemini": 0.1686,
       "claude": 0.012,
       "mistral": 0.0141
     },
     "BINOM_FLAT_03_numerical_v2": {
       "deepseek": 0.0361,
       "chatgpt": -0.0312,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": -0.0048,
       "mistral": 0.0048
     },
     "BINOM_FLAT_03_semantic_v2": {
       "deepseek": 0.0361,
       "chatgpt": -0.0048,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": 0.0048,
       "mistral": 0.0048
     },
     "MINIMAX_02_rephrase_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.0625,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": -0.3,
       "mistral": -0.0048
     },
     "MINIMAX_02_numerical_v2": {
       "deepseek": 0.3577,
       "chatgpt": 0.3625,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": -0.3,
       "mistral": 0.0625
     },
     "MINIMAX_02_semantic_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.0048,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": -0.3048,
       "mistral": 0.0
     },
     "MINIMAX_03_rephrase_v2": {
       "deepseek": -0.2375,
       "chatgpt": 0.0673,
-      "gemini": 0.0625,
+      "gemini": 0.1177,
       "claude": 0.3625,
       "mistral": 0.3625
     },
     "MINIMAX_03_numerical_v2": {
       "deepseek": 0.0625,
       "chatgpt": 0.0625,
-      "gemini": 0.3625,
+      "gemini": 0.4177,
       "claude": 0.0,
       "mistral": 0.3577
     },
     "MINIMAX_03_semantic_v2": {
       "deepseek": 0.0577,
       "chatgpt": 0.3673,
-      "gemini": 0.336,
+      "gemini": 0.3912,
       "claude": -0.0048,
       "mistral": 0.0
     },
     "MINIMAX_04_rephrase_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.0625,
-      "gemini": -0.3625,
+      "gemini": -0.3713,
       "claude": 0.3048,
       "mistral": 0.3312
     },
     "MINIMAX_04_numerical_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.0,
-      "gemini": -0.0312,
+      "gemini": -0.04,
       "claude": 0.0048,
       "mistral": 0.0312
     },
     "MINIMAX_04_semantic_v2": {
       "deepseek": 0.3625,
       "chatgpt": -0.0048,
-      "gemini": -0.3625,
+      "gemini": -0.3713,
       "claude": 0.3048,
       "mistral": -0.0312
     },
     "BAYES_RISK_02_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": -0.1615,
+      "gemini": -0.1106,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "BAYES_RISK_02_numerical_v2": {
       "deepseek": -0.0048,
       "chatgpt": 0.0,
-      "gemini": -0.1615,
+      "gemini": -0.1106,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "BAYES_RISK_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.1615,
+      "gemini": -0.1106,
       "claude": -0.0312,
       "mistral": 0.0
     },
     "BAYES_RISK_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": -0.1475,
+      "gemini": -0.1404,
       "claude": 0.0312,
       "mistral": 0.0
     },
     "BAYES_RISK_03_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0312,
       "mistral": 0.0
     },
     "BAYES_RISK_03_semantic_v2": {
       "deepseek": -0.0048,
       "chatgpt": 0.0048,
-      "gemini": -0.3,
+      "gemini": -0.2929,
       "claude": 0.0,
       "mistral": 0.0
     },
     "MINIMAX_05_rephrase_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.3673,
-      "gemini": 0.0625,
+      "gemini": 0.1177,
       "claude": -0.3048,
       "mistral": 0.0577
     },
     "MINIMAX_05_numerical_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.3,
-      "gemini": 0.0673,
+      "gemini": 0.1225,
       "claude": 0.0,
       "mistral": 0.0625
     },
     "MINIMAX_05_semantic_v2": {
       "deepseek": 0.3625,
       "chatgpt": 0.3673,
-      "gemini": 0.3625,
+      "gemini": 0.4177,
       "claude": -0.3,
       "mistral": -0.0048
     },
     "BAYES_RISK_04_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.3048,
+      "gemini": 0.36,
       "claude": 0.0,
       "mistral": -0.0312
     },
     "BAYES_RISK_04_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.336,
+      "gemini": 0.3912,
       "claude": 0.0312,
       "mistral": 0.0
     },
     "BAYES_RISK_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.3048,
+      "gemini": 0.36,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_RISK_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.3,
+      "gemini": -0.2929,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_RISK_05_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_RISK_05_semantic_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.0312,
       "mistral": 0.0
     },
     "BIAS_VAR_04_rephrase_v2": {
       "deepseek": 0.3,
       "chatgpt": 0.0,
-      "gemini": 0.3048,
+      "gemini": 0.36,
       "claude": 0.2952,
       "mistral": 0.0
     },
     "BIAS_VAR_04_numerical_v2": {
       "deepseek": 0.3,
       "chatgpt": 0.0312,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BIAS_VAR_04_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.3,
-      "gemini": 0.4663,
+      "gemini": 0.5215,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BIAS_VAR_03_rephrase_v2": {
       "deepseek": 0.3,
       "chatgpt": 0.0,
-      "gemini": 0.1289,
+      "gemini": 0.2328,
       "claude": 0.3048,
       "mistral": -0.0115
     },
     "BIAS_VAR_03_numerical_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.3,
-      "gemini": 0.1337,
+      "gemini": 0.2376,
       "claude": 0.3048,
       "mistral": 0.0
     },
     "BIAS_VAR_03_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.3,
-      "gemini": 0.1385,
+      "gemini": 0.2424,
       "claude": 0.4663,
       "mistral": 0.0
     },
     "BIAS_VAR_02_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": 0.3,
+      "gemini": 0.3552,
       "claude": 0.3,
       "mistral": 0.0
     },
     "BIAS_VAR_02_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.2952,
-      "gemini": 0.0048,
+      "gemini": 0.06,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BIAS_VAR_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": 0.3048,
+      "gemini": 0.36,
       "claude": 0.3,
       "mistral": 0.0
     },
     "BIAS_VAR_05_rephrase_v2": {
       "deepseek": -0.0048,
       "chatgpt": -0.0108,
-      "gemini": 0.1525,
+      "gemini": 0.1596,
       "claude": 0.3048,
       "mistral": 0.0
     },
     "BIAS_VAR_05_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.306,
-      "gemini": -0.1475,
+      "gemini": -0.1404,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "BIAS_VAR_05_semantic_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.006,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0
     },
     "FISHER_INFO_02_rephrase_v2": {
       "deepseek": -0.0361,
       "chatgpt": 0.0,
-      "gemini": -0.1593,
+      "gemini": -0.0841,
       "claude": 0.012,
       "mistral": 0.0048
     },
     "FISHER_INFO_02_numerical_v2": {
       "deepseek": -0.15,
       "chatgpt": 0.0,
-      "gemini": 0.1745,
+      "gemini": 0.2496,
       "claude": 0.0264,
       "mistral": 0.0048
     },
     "FISHER_INFO_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0048,
-      "gemini": -0.0092,
+      "gemini": 0.0659,
       "claude": 0.012,
       "mistral": 0.0048
     },
     "FISHER_INFO_04_rephrase_v2": {
       "deepseek": 0.1813,
       "chatgpt": 0.0,
-      "gemini": 0.3112,
+      "gemini": 0.4039,
       "claude": 0.1548,
       "mistral": 0.0
     },
     "FISHER_INFO_04_numerical_v2": {
       "deepseek": 0.1813,
       "chatgpt": 0.0,
-      "gemini": 0.181,
+      "gemini": 0.2736,
       "claude": 0.1812,
       "mistral": 0.0264
     },
     "FISHER_INFO_04_semantic_v2": {
       "deepseek": 0.1764,
       "chatgpt": 0.0,
-      "gemini": 0.0112,
+      "gemini": 0.1039,
       "claude": 0.156,
       "mistral": -0.3
     },
     "RC_BOUND_02_rephrase_v2": {
       "deepseek": 0.1452,
       "chatgpt": 0.0,
-      "gemini": 0.1495,
+      "gemini": 0.2215,
       "claude": -0.0048,
       "mistral": 0.0012
     },
     "RC_BOUND_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.012,
+      "gemini": 0.06,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "RC_BOUND_02_semantic_v2": {
       "deepseek": 0.15,
       "chatgpt": 0.0,
-      "gemini": 0.1585,
+      "gemini": 0.2305,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "FISHER_INFO_05_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.0096,
-      "gemini": 0.0264,
+      "gemini": 0.0335,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "FISHER_INFO_05_numerical_v2": {
       "deepseek": -0.15,
       "chatgpt": 0.0,
-      "gemini": 0.0025,
+      "gemini": 0.0096,
       "claude": 0.0301,
       "mistral": 0.0
     },
     "FISHER_INFO_05_semantic_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": 0.1838,
+      "gemini": 0.1908,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "RC_BOUND_04_rephrase_v2": {
       "deepseek": -0.006,
       "chatgpt": 0.0048,
-      "gemini": -0.1663,
+      "gemini": -0.0624,
       "claude": -0.006,
       "mistral": 0.0048
     },
     "RC_BOUND_04_numerical_v2": {
       "deepseek": 0.138,
       "chatgpt": 0.0048,
-      "gemini": 0.0,
+      "gemini": 0.1039,
       "claude": -0.006,
       "mistral": 0.0048
     },
     "RC_BOUND_04_semantic_v2": {
       "deepseek": -0.0108,
       "chatgpt": 0.0,
-      "gemini": -0.1663,
+      "gemini": -0.0624,
       "claude": -0.006,
       "mistral": 0.1663
     },
     "RC_BOUND_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.1039,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "RC_BOUND_03_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0048,
-      "gemini": -0.1651,
+      "gemini": -0.0612,
       "claude": 0.0,
       "mistral": 0.1663
     },
     "RC_BOUND_03_semantic_v2": {
       "deepseek": 0.006,
       "chatgpt": 0.0,
-      "gemini": -0.1615,
+      "gemini": -0.0576,
       "claude": 0.0132,
       "mistral": 0.0048
     },
     "FISHER_INFO_03_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.154,
       "claude": 0.0,
       "mistral": 0.0361
     },
     "FISHER_INFO_03_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": -0.19,
+      "gemini": -0.1885,
       "claude": 0.0,
       "mistral": 0.0312
     },
     "FISHER_INFO_03_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.0312,
+      "gemini": -0.0297,
       "claude": -0.0361,
       "mistral": 0.0
     },
     "RC_BOUND_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": 0.1573,
+      "gemini": 0.2125,
       "claude": 0.0,
       "mistral": 0.15
     },
     "RC_BOUND_05_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "RC_BOUND_05_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": 0.1663,
+      "gemini": 0.2215,
       "claude": 0.0048,
       "mistral": -0.0048
     },
     "OPT_SCALED_05_rephrase_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": 0.15,
       "mistral": -0.009
     },
     "OPT_SCALED_05_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.009,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": 0.0,
       "mistral": 0.0
     },
     "OPT_SCALED_05_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.009,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": 0.009,
       "mistral": 0.009
     },
     "OPT_SCALED_03_rephrase_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": -0.009,
       "mistral": 0.0
     },
     "OPT_SCALED_03_numerical_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": -0.0048,
+      "gemini": 0.0552,
       "claude": -0.018,
       "mistral": 0.0
     },
     "OPT_SCALED_03_semantic_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.06,
       "claude": -0.009,
       "mistral": 0.0
     },
     "OPT_SCALED_04_rephrase_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0,
-      "gemini": -0.1525,
+      "gemini": -0.0576,
       "claude": 0.009,
       "mistral": 0.0
     },
     "OPT_SCALED_04_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.009,
-      "gemini": -0.1525,
+      "gemini": -0.0576,
       "claude": 0.018,
       "mistral": 0.0
     },
     "OPT_SCALED_04_semantic_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0,
-      "gemini": -0.1573,
+      "gemini": -0.0624,
       "claude": 0.159,
       "mistral": 0.0
     },
     "OPT_SCALED_02_rephrase_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": -0.009,
       "mistral": 0.0
     },
     "OPT_SCALED_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.06,
       "claude": -0.009,
       "mistral": 0.009
     },
     "OPT_SCALED_02_semantic_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": -0.018,
       "mistral": 0.0
     },
     "MSE_COMPARE_02_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.2313,
-      "gemini": 0.2361,
+      "gemini": 0.2383,
       "claude": 0.3,
       "mistral": 0.0
     },
     "MSE_COMPARE_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.2361,
+      "gemini": 0.2383,
       "claude": 0.3,
       "mistral": 0.0
     },
     "MSE_COMPARE_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.3,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.325
     },
     "MSE_COMPARE_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.1573,
+      "gemini": 0.1596,
       "claude": 0.3048,
       "mistral": 0.0048
     },
     "MSE_COMPARE_03_numerical_v2": {
       "deepseek": 0.2313,
       "chatgpt": 0.0,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": 0.3048,
       "mistral": 0.0048
     },
     "MSE_COMPARE_03_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.3,
-      "gemini": 0.0048,
+      "gemini": 0.0071,
       "claude": 0.3048,
       "mistral": 0.0
     },
     "MSE_COMPARE_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.2361,
+      "gemini": -0.2698,
       "claude": 0.0,
       "mistral": 0.1663
     },
     "MSE_COMPARE_05_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.3048,
-      "gemini": -0.0048,
+      "gemini": -0.0385,
       "claude": -0.3,
       "mistral": 0.0
     },
     "MSE_COMPARE_05_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.2313,
+      "gemini": -0.265,
       "claude": 0.0,
       "mistral": 0.2361
     },
     "MSE_COMPARE_04_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0312,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "MSE_COMPARE_04_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.2313,
+      "gemini": 0.2383,
       "claude": 0.0,
       "mistral": 0.0
     },
     "MSE_COMPARE_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0048
     },
     "MARKOV_03_rephrase_v2": {
       "deepseek": 0.0048,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.3,
       "mistral": 0.0
     },
     "MARKOV_03_numerical_v2": {
       "deepseek": -0.3,
       "chatgpt": 0.0,
-      "gemini": -0.3048,
+      "gemini": -0.2977,
       "claude": 0.3,
       "mistral": -0.3048
     },
     "MARKOV_03_semantic_v2": {
       "deepseek": -0.3,
       "chatgpt": -0.3,
-      "gemini": -0.1475,
+      "gemini": -0.1404,
       "claude": 0.0,
       "mistral": -0.3048
     },
     "MARKOV_02_rephrase_v2": {
       "deepseek": 0.1615,
       "chatgpt": 0.0,
-      "gemini": -0.3048,
+      "gemini": -0.2977,
       "claude": -0.3,
       "mistral": 0.0
     },
     "MARKOV_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.3,
+      "gemini": -0.2929,
       "claude": -0.3,
       "mistral": 0.0
     },
     "MARKOV_02_semantic_v2": {
       "deepseek": -0.1385,
       "chatgpt": -0.1475,
-      "gemini": -0.1587,
+      "gemini": -0.1517,
       "claude": -0.1385,
       "mistral": -0.1475
     },
     "MARKOV_04_rephrase_v2": {
       "deepseek": 0.0222,
       "chatgpt": 0.009,
-      "gemini": 0.3,
+      "gemini": 0.3949,
       "claude": 0.0,
       "mistral": -0.009
     },
     "MARKOV_04_numerical_v2": {
       "deepseek": 0.0132,
       "chatgpt": 0.0312,
-      "gemini": 0.3312,
+      "gemini": 0.4261,
       "claude": 0.1886,
       "mistral": 0.0222
     },
     "MARKOV_04_semantic_v2": {
       "deepseek": -0.4392,
       "chatgpt": 0.0,
-      "gemini": 0.309,
+      "gemini": 0.4039,
       "claude": 0.1573,
       "mistral": 0.009
     },
     "MARKOV_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0048,
-      "gemini": 0.006,
+      "gemini": 0.0131,
       "claude": -0.0264,
       "mistral": 0.0048
     },
     "MARKOV_05_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0048,
       "mistral": 0.0108
     },
     "MARKOV_05_semantic_v2": {
       "deepseek": -0.0048,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.0264,
       "mistral": 0.0
     },
     "ORDER_STAT_03_rephrase_v2": {
       "deepseek": 0.3312,
       "chatgpt": 0.3312,
-      "gemini": -0.3,
+      "gemini": -0.2581,
       "claude": 0.3312,
       "mistral": 0.0
     },
     "ORDER_STAT_03_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.4525,
+      "gemini": -0.4106,
       "claude": 0.0,
       "mistral": 0.0
     },
     "ORDER_STAT_03_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": 0.3312,
-      "gemini": -0.3,
+      "gemini": -0.2581,
       "claude": 0.3,
       "mistral": 0.0
     },
     "ORDER_STAT_02_rephrase_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.3312,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.0,
       "mistral": -0.15
     },
     "ORDER_STAT_02_numerical_v2": {
       "deepseek": 0.3264,
       "chatgpt": 0.0,
-      "gemini": 0.009,
+      "gemini": 0.1039,
       "claude": 0.0,
       "mistral": 0.0312
     },
     "ORDER_STAT_02_semantic_v2": {
       "deepseek": 0.4837,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.0,
       "mistral": -0.3048
     },
     "ORDER_STAT_04_rephrase_v2": {
       "deepseek": 0.3312,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0364,
       "claude": 0.0,
       "mistral": -0.1813
     },
     "ORDER_STAT_04_numerical_v2": {
       "deepseek": 0.3312,
       "chatgpt": 0.0,
-      "gemini": -0.4837,
+      "gemini": -0.4474,
       "claude": 0.0,
       "mistral": -0.0408
     },
     "ORDER_STAT_04_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.3048,
-      "gemini": -0.3312,
+      "gemini": -0.2949,
       "claude": 0.0,
       "mistral": 0.0
     },
     "REGRESSION_02_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.009,
-      "gemini": -0.3065,
+      "gemini": -0.3313,
       "claude": -0.0022,
       "mistral": 0.0
     },
     "REGRESSION_02_numerical_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0022,
-      "gemini": 0.0225,
+      "gemini": -0.0023,
       "claude": 0.0,
       "mistral": -0.2027
     },
     "REGRESSION_02_semantic_v2": {
       "deepseek": -0.0112,
       "chatgpt": -0.009,
-      "gemini": -0.48,
+      "gemini": -0.5048,
       "claude": -0.0112,
       "mistral": 0.0
     },
     "ORDER_STAT_05_rephrase_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.15,
-      "gemini": 0.0,
+      "gemini": 0.06,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "ORDER_STAT_05_numerical_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.1548,
-      "gemini": 0.1812,
+      "gemini": 0.2412,
       "claude": 0.0,
       "mistral": -0.0048
     },
     "ORDER_STAT_05_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": -0.15,
-      "gemini": 0.1525,
+      "gemini": 0.2125,
       "claude": 0.006,
       "mistral": 0.0
     },
     "REGRESSION_03_rephrase_v2": {
       "deepseek": -0.0023,
       "chatgpt": 0.0,
-      "gemini": -0.0827,
+      "gemini": -0.0034,
       "claude": 0.0,
       "mistral": 0.0
     },
     "REGRESSION_03_numerical_v2": {
       "deepseek": 0.0292,
       "chatgpt": -0.0112,
-      "gemini": 0.449,
+      "gemini": 0.5283,
       "claude": 0.0,
       "mistral": 0.0
     },
     "REGRESSION_03_semantic_v2": {
       "deepseek": -0.0023,
       "chatgpt": -0.0112,
-      "gemini": 0.4648,
+      "gemini": 0.5441,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BOX_MULLER_02_rephrase_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0,
-      "gemini": 0.2887,
+      "gemini": 0.3836,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BOX_MULLER_02_numerical_v2": {
       "deepseek": -0.1573,
       "chatgpt": -0.1525,
-      "gemini": -0.1573,
+      "gemini": -0.0624,
       "claude": -0.1525,
       "mistral": -0.1525
     },
     "BOX_MULLER_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.3312,
+      "gemini": 0.4261,
       "claude": 0.0,
       "mistral": 0.0
     },
     "REGRESSION_04_rephrase_v2": {
       "deepseek": 0.0112,
       "chatgpt": 0.0,
-      "gemini": -0.0428,
+      "gemini": -0.0473,
       "claude": 0.1937,
       "mistral": 0.0
     },
     "REGRESSION_04_numerical_v2": {
       "deepseek": 0.0067,
       "chatgpt": -0.0023,
-      "gemini": -0.009,
+      "gemini": -0.0135,
       "claude": 0.1937,
       "mistral": 0.0
     },
     "REGRESSION_04_semantic_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0112,
-      "gemini": -0.027,
+      "gemini": -0.0315,
       "claude": 0.1937,
       "mistral": 0.0
     },
     "BOX_MULLER_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.1525,
+      "gemini": -0.1161,
       "claude": 0.0312,
       "mistral": -0.0312
     },
     "BOX_MULLER_03_numerical_v2": {
       "deepseek": -0.0144,
       "chatgpt": 0.0,
-      "gemini": -0.1838,
+      "gemini": -0.1474,
       "claude": -0.005,
       "mistral": 0.1525
     },
     "BOX_MULLER_03_semantic_v2": {
       "deepseek": 0.1525,
       "chatgpt": 0.0,
-      "gemini": -0.1838,
+      "gemini": -0.1474,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BOX_MULLER_04_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.3312,
+      "gemini": 0.4261,
       "claude": -0.311,
       "mistral": 0.0
     },
     "BOX_MULLER_04_numerical_v2": {
       "deepseek": -0.1615,
       "chatgpt": -0.1525,
-      "gemini": 0.1787,
+      "gemini": 0.2736,
       "claude": -0.02,
       "mistral": -0.1625
     },
     "BOX_MULLER_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.3402,
+      "gemini": 0.4351,
       "claude": 0.009,
       "mistral": 0.0
     },
     "REGRESSION_05_rephrase_v2": {
       "deepseek": 0.0067,
       "chatgpt": 0.0112,
-      "gemini": 0.0,
+      "gemini": -0.0023,
       "claude": 0.0,
       "mistral": 0.0
     },
     "REGRESSION_05_semantic_v2": {
       "deepseek": 0.0202,
       "chatgpt": 0.0112,
-      "gemini": -0.0448,
+      "gemini": -0.047,
       "claude": 0.0,
       "mistral": 0.0
     },
     "HPD_03_rephrase_v2": {
       "deepseek": -0.351,
       "chatgpt": -0.1801,
-      "gemini": 0.0012,
+      "gemini": 0.0564,
       "claude": 0.018,
       "mistral": 0.2027
     },
     "HPD_03_numerical_v2": {
       "deepseek": 0.1477,
       "chatgpt": -0.1738,
-      "gemini": 0.1325,
+      "gemini": 0.1877,
       "claude": -0.0112,
       "mistral": -0.1655
     },
     "HPD_03_semantic_v2": {
       "deepseek": -0.345,
       "chatgpt": -0.1753,
-      "gemini": 0.0072,
+      "gemini": 0.0624,
       "claude": 0.0,
       "mistral": -0.1663
     },
     "HPD_02_rephrase_v2": {
       "deepseek": -0.1558,
       "chatgpt": 0.149,
-      "gemini": 0.0023,
+      "gemini": 0.0926,
       "claude": 0.1445,
       "mistral": 0.1625
     },
     "HPD_02_numerical_v2": {
       "deepseek": 0.018,
       "chatgpt": 0.1512,
-      "gemini": -0.0405,
+      "gemini": 0.0499,
       "claude": 0.1445,
       "mistral": 0.1602
     },
     "HPD_02_semantic_v2": {
       "deepseek": -0.0315,
       "chatgpt": -0.0078,
-      "gemini": 0.0023,
+      "gemini": 0.0926,
       "claude": 0.1423,
       "mistral": 0.1512
     },
     "BOX_MULLER_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.1525,
+      "gemini": 0.154,
       "claude": 0.0,
       "mistral": -0.0312
     },
     "BOX_MULLER_05_numerical_v2": {
       "deepseek": 0.1525,
       "chatgpt": 0.0,
-      "gemini": -0.26,
+      "gemini": -0.2585,
       "claude": -0.0363,
       "mistral": -0.005
     },
     "BOX_MULLER_05_semantic_v2": {
       "deepseek": -0.0048,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0015,
       "claude": 0.0,
       "mistral": 0.0
     },
     "HPD_05_rephrase_v2": {
       "deepseek": -0.0045,
       "chatgpt": -0.009,
-      "gemini": -0.0315,
+      "gemini": 0.0499,
       "claude": 0.134,
       "mistral": 0.006
     },
     "HPD_05_numerical_v2": {
       "deepseek": -0.1613,
       "chatgpt": -0.009,
-      "gemini": -0.009,
+      "gemini": 0.0724,
       "claude": 0.01,
       "mistral": -0.006
     },
     "HPD_05_semantic_v2": {
       "deepseek": -0.0022,
       "chatgpt": 0.0,
-      "gemini": -0.1445,
+      "gemini": -0.0631,
       "claude": 0.006,
       "mistral": 0.0007
     },
     "HPD_04_rephrase_v2": {
       "deepseek": -0.018,
       "chatgpt": -0.152,
-      "gemini": -0.0248,
+      "gemini": 0.0589,
       "claude": 0.0,
       "mistral": 0.1452
     },
     "HPD_04_numerical_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0045,
-      "gemini": -0.0113,
+      "gemini": 0.0724,
       "claude": -0.0112,
       "mistral": 0.1655
     },
     "HPD_04_semantic_v2": {
       "deepseek": -0.0225,
       "chatgpt": -0.158,
-      "gemini": -0.0023,
+      "gemini": 0.0814,
       "claude": 0.0,
       "mistral": 0.1565
     },
     "BAYES_FACTOR_02_rephrase_v2": {
       "deepseek": 0.1723,
       "chatgpt": -0.009,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.141,
       "mistral": -0.3402
     },
     "BAYES_FACTOR_02_numerical_v2": {
       "deepseek": 0.291,
       "chatgpt": -0.009,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.141,
       "mistral": -0.1812
     },
     "BAYES_FACTOR_02_semantic_v2": {
       "deepseek": 0.15,
       "chatgpt": -0.0965,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.0535,
       "mistral": -0.1812
     },
     "BAYES_FACTOR_04_rephrase_v2": {
       "deepseek": 0.3222,
       "chatgpt": -0.15,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.15,
       "mistral": 0.0
     },
     "BAYES_FACTOR_04_numerical_v2": {
       "deepseek": 0.309,
       "chatgpt": 0.1028,
-      "gemini": 0.009,
+      "gemini": 0.1039,
       "claude": 0.15,
       "mistral": 0.0
     },
     "BAYES_FACTOR_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.141,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.0,
       "mistral": -0.159
     },
     "BAYES_FACTOR_03_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.159,
-      "gemini": -0.009,
+      "gemini": 0.0949,
       "claude": 0.1812,
       "mistral": 0.0
     },
     "BAYES_FACTOR_03_numerical_v2": {
       "deepseek": 0.018,
       "chatgpt": 0.1813,
-      "gemini": -0.009,
+      "gemini": 0.0949,
       "claude": 0.0222,
       "mistral": 0.0
     },
     "BAYES_FACTOR_03_semantic_v2": {
       "deepseek": -0.1723,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.1039,
       "claude": 0.0,
       "mistral": -0.15
     },
     "BAYES_FACTOR_05_rephrase_v2": {
       "deepseek": -0.1902,
       "chatgpt": -0.15,
-      "gemini": 0.141,
+      "gemini": 0.2449,
       "claude": 0.0,
       "mistral": 0.1813
     },
     "BAYES_FACTOR_05_numerical_v2": {
       "deepseek": -0.0402,
       "chatgpt": 0.1812,
-      "gemini": 0.0,
+      "gemini": 0.1039,
       "claude": 0.0,
       "mistral": 0.15
     },
     "BAYES_FACTOR_05_semantic_v2": {
       "deepseek": -0.1902,
       "chatgpt": -0.15,
-      "gemini": -0.009,
+      "gemini": 0.0949,
       "claude": -0.1813,
       "mistral": 0.009
     },
     "JEFFREYS_03_rephrase_v2": {
       "deepseek": 0.236,
       "chatgpt": 0.0,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.236,
       "mistral": 0.2361
     },
     "JEFFREYS_03_numerical_v2": {
       "deepseek": 0.2673,
       "chatgpt": 0.0985,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.236,
       "mistral": 0.0048
     },
     "JEFFREYS_03_semantic_v2": {
       "deepseek": 0.2933,
       "chatgpt": -0.2313,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.0048,
       "mistral": 0.0048
     },
     "JEFFREYS_02_rephrase_v2": {
       "deepseek": 0.2313,
       "chatgpt": 0.2265,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": -0.094,
       "mistral": -0.0048
     },
     "JEFFREYS_02_numerical_v2": {
       "deepseek": 0.2361,
       "chatgpt": 0.0,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": -0.1048,
       "mistral": -0.1952
     },
     "JEFFREYS_02_semantic_v2": {
       "deepseek": 0.1313,
       "chatgpt": 0.1265,
-      "gemini": 0.0,
+      "gemini": 0.0419,
       "claude": -0.236,
       "mistral": 0.0938
     },
     "JEFFREYS_04_rephrase_v2": {
       "deepseek": -0.0577,
       "chatgpt": 0.0312,
-      "gemini": 0.1312,
+      "gemini": 0.1383,
       "claude": 0.2361,
       "mistral": 0.2361
     },
     "JEFFREYS_04_numerical_v2": {
       "deepseek": -0.189,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.0048,
       "mistral": 0.0048
     },
     "JEFFREYS_04_semantic_v2": {
       "deepseek": 0.0048,
       "chatgpt": -0.2048,
-      "gemini": 0.0012,
+      "gemini": 0.0083,
       "claude": -0.0048,
       "mistral": 0.2361
     },
     "JEFFREYS_05_rephrase_v2": {
       "deepseek": 0.1312,
       "chatgpt": 0.2361,
-      "gemini": 0.1312,
+      "gemini": 0.1383,
       "claude": 0.3298,
       "mistral": 0.0
     },
     "JEFFREYS_05_numerical_v2": {
       "deepseek": 0.325,
       "chatgpt": 0.0048,
-      "gemini": -0.0048,
+      "gemini": 0.0023,
       "claude": 0.325,
       "mistral": -0.2361
     },
     "JEFFREYS_05_semantic_v2": {
       "deepseek": 0.2265,
       "chatgpt": 0.1313,
-      "gemini": 0.1525,
+      "gemini": 0.1596,
       "claude": 0.0,
       "mistral": 0.0
     },
     "PPC_01_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.2348,
-      "gemini": 0.1542,
+      "gemini": 0.1514,
       "claude": 0.0,
       "mistral": 0.0007
     },
     "PPC_01_numerical_v2": {
       "deepseek": -0.0023,
       "chatgpt": -0.009,
-      "gemini": 0.0007,
+      "gemini": -0.0021,
       "claude": 0.0,
       "mistral": 0.1542
     },
     "PPC_01_semantic_v2": {
       "deepseek": 0.2527,
       "chatgpt": 0.009,
-      "gemini": 0.134,
+      "gemini": 0.1312,
       "claude": 0.15,
       "mistral": -0.006
     },
     "PPC_03_rephrase_v2": {
       "deepseek": -0.486,
       "chatgpt": 0.018,
-      "gemini": 0.0135,
+      "gemini": 0.0092,
       "claude": 0.0,
       "mistral": -0.4262
     },
     "PPC_03_numerical_v2": {
       "deepseek": -0.1333,
       "chatgpt": 0.1625,
-      "gemini": 0.1468,
+      "gemini": 0.1424,
       "claude": 0.1613,
       "mistral": -0.5978
     },
     "PPC_03_semantic_v2": {
       "deepseek": -0.3235,
       "chatgpt": 0.018,
-      "gemini": 0.0112,
+      "gemini": 0.0069,
       "claude": 0.32,
       "mistral": -0.4172
     },
     "PPC_02_rephrase_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0112,
-      "gemini": 0.006,
+      "gemini": 0.0044,
       "claude": -0.15,
       "mistral": 0.009
     },
     "PPC_02_numerical_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0202,
-      "gemini": 0.1215,
+      "gemini": 0.1199,
       "claude": -0.15,
       "mistral": 0.1715
     },
     "PPC_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0292,
-      "gemini": 0.0,
+      "gemini": -0.0016,
       "claude": -0.141,
       "mistral": 0.1625
     },
     "PPC_04_rephrase_v2": {
       "deepseek": 0.1577,
       "chatgpt": -0.0022,
-      "gemini": 0.1733,
+      "gemini": 0.1717,
       "claude": 0.0875,
       "mistral": 0.0
     },
     "PPC_04_numerical_v2": {
       "deepseek": -0.009,
       "chatgpt": 0.0,
-      "gemini": -0.006,
+      "gemini": -0.0076,
       "claude": -0.0737,
       "mistral": -0.1715
     },
     "PPC_04_semantic_v2": {
       "deepseek": -0.1512,
       "chatgpt": 0.0,
-      "gemini": 0.0048,
+      "gemini": 0.0032,
       "claude": -0.0625,
       "mistral": -0.0112
     },
     "PPC_05_rephrase_v2": {
       "deepseek": 0.1365,
       "chatgpt": -0.1445,
-      "gemini": -0.1558,
+      "gemini": -0.0609,
       "claude": 0.0,
       "mistral": 0.012
     },
     "PPC_05_numerical_v2": {
       "deepseek": 0.2527,
       "chatgpt": -0.0067,
-      "gemini": -0.1613,
+      "gemini": -0.0664,
       "claude": 0.0022,
       "mistral": 0.1655
     },
     "PPC_05_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0045,
-      "gemini": -0.0135,
+      "gemini": 0.0814,
       "claude": -0.009,
       "mistral": 0.0036
     },
     "BAYES_REG_02_rephrase_v2": {
       "deepseek": 0.1312,
       "chatgpt": 0.009,
-      "gemini": -0.0112,
+      "gemini": 0.0836,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_REG_02_numerical_v2": {
       "deepseek": 0.1312,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0949,
       "claude": 0.1937,
       "mistral": 0.0
     },
     "BAYES_REG_02_semantic_v2": {
       "deepseek": 0.0312,
       "chatgpt": -0.1312,
-      "gemini": 0.3,
+      "gemini": 0.3949,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_REG_01_rephrase_v2": {
       "deepseek": 0.525,
       "chatgpt": -0.0222,
-      "gemini": -0.0425,
+      "gemini": -0.0061,
       "claude": -0.1937,
       "mistral": 0.0
     },
     "BAYES_REG_01_numerical_v2": {
       "deepseek": 0.525,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0364,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_REG_01_semantic_v2": {
       "deepseek": 0.3402,
       "chatgpt": -0.1312,
-      "gemini": -0.3312,
+      "gemini": -0.2949,
       "claude": -0.1937,
       "mistral": 0.0625
     },
     "BAYES_REG_03_rephrase_v2": {
       "deepseek": -0.0625,
       "chatgpt": 0.0,
-      "gemini": -0.1512,
+      "gemini": -0.1261,
       "claude": 0.0,
       "mistral": 0.0
     },
     "BAYES_REG_03_numerical_v2": {
       "deepseek": -0.0625,
       "chatgpt": -0.15,
-      "gemini": 0.205,
+      "gemini": 0.2301,
       "claude": -0.1847,
       "mistral": 0.0
     },
     "BAYES_REG_03_semantic_v2": {
       "deepseek": -0.0625,
       "chatgpt": 0.0,
-      "gemini": 0.0113,
+      "gemini": 0.0364,
       "claude": -0.1937,
       "mistral": 0.0
     },
     "BAYES_REG_04_rephrase_v2": {
       "deepseek": 0.525,
       "chatgpt": 0.0,
-      "gemini": 0.0202,
+      "gemini": 0.1039,
       "claude": -0.0625,
       "mistral": 0.0
     },
     "BAYES_REG_04_numerical_v2": {
       "deepseek": 0.525,
       "chatgpt": 0.0,
-      "gemini": 0.3312,
+      "gemini": 0.4149,
       "claude": 0.0312,
       "mistral": 0.009
     },
     "BAYES_REG_04_semantic_v2": {
       "deepseek": 0.3312,
       "chatgpt": 0.0,
-      "gemini": 0.3425,
+      "gemini": 0.4261,
       "claude": -0.1625,
       "mistral": 0.0
     },
     "MLE_MAP_04_rephrase_v2": {
       "deepseek": -0.2313,
       "chatgpt": 0.1361,
-      "gemini": 0.1502,
+      "gemini": 0.1573,
       "claude": 0.3848,
       "mistral": 0.3775
     },
     "MLE_MAP_04_numerical_v2": {
       "deepseek": -0.2,
       "chatgpt": 0.0096,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.036,
       "mistral": 0.0
     },
     "MLE_MAP_04_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.2408,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "MLE_MAP_02_rephrase_v2": {
       "deepseek": 0.1615,
       "chatgpt": 0.0,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.0,
       "mistral": -0.2313
     },
     "MLE_MAP_02_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0312,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.0,
       "mistral": -0.2313
     },
     "MLE_MAP_02_semantic_v2": {
       "deepseek": 0.2265,
       "chatgpt": 0.2625,
-      "gemini": 0.0,
+      "gemini": 0.0419,
       "claude": 0.2048,
       "mistral": -0.2361
     },
     "BAYES_REG_05_rephrase_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.3125,
-      "gemini": 0.291,
+      "gemini": 0.3949,
       "claude": 0.0,
       "mistral": -0.009
     },
     "BAYES_REG_05_numerical_v2": {
       "deepseek": -0.1187,
       "chatgpt": 0.3437,
-      "gemini": 0.291,
+      "gemini": 0.3949,
       "claude": 0.1937,
       "mistral": 0.1535
     },
     "BAYES_REG_05_semantic_v2": {
       "deepseek": 0.0403,
       "chatgpt": 0.3437,
-      "gemini": 0.1697,
+      "gemini": 0.2736,
       "claude": 0.1937,
       "mistral": -0.009
     },
     "MLE_MAP_05_rephrase_v2": {
       "deepseek": 0.0023,
       "chatgpt": -0.2402,
-      "gemini": -0.1656,
+      "gemini": -0.1192,
       "claude": 0.1651,
       "mistral": 0.1755
     },
     "MLE_MAP_05_numerical_v2": {
       "deepseek": 0.063,
       "chatgpt": -0.3928,
-      "gemini": -0.157,
+      "gemini": -0.1106,
       "claude": -0.0012,
       "mistral": 0.005
     },
     "MLE_MAP_05_semantic_v2": {
       "deepseek": -0.1721,
       "chatgpt": -0.209,
-      "gemini": -0.463,
+      "gemini": -0.4166,
       "claude": 0.0,
       "mistral": -0.0096
     },
     "MLE_MAP_03_rephrase_v2": {
       "deepseek": -0.2,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0,
       "mistral": 0.0
     },
     "MLE_MAP_03_numerical_v2": {
       "deepseek": -0.2,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "MLE_MAP_03_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0312,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": 0.2313,
       "mistral": 0.0
     },
     "CI_CREDIBLE_04_rephrase_v2": {
       "deepseek": 0.006,
       "chatgpt": 0.0,
-      "gemini": -0.15,
+      "gemini": -0.1093,
       "claude": 0.1573,
       "mistral": 0.2853
     },
     "CI_CREDIBLE_04_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0048,
-      "gemini": -0.156,
+      "gemini": -0.1153,
       "claude": 0.1548,
       "mistral": -0.006
     },
     "CI_CREDIBLE_04_semantic_v2": {
       "deepseek": 0.15,
       "chatgpt": -0.0048,
-      "gemini": -0.1452,
+      "gemini": -0.1045,
       "claude": 0.1512,
       "mistral": 0.3055
     },
     "CI_CREDIBLE_02_rephrase_v2": {
       "deepseek": 0.1548,
       "chatgpt": -0.0048,
-      "gemini": 0.0048,
+      "gemini": 0.072,
       "claude": 0.0,
       "mistral": -0.0055
     },
     "CI_CREDIBLE_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.0048,
-      "gemini": 0.0108,
+      "gemini": 0.078,
       "claude": 0.006,
       "mistral": 0.0
     },
     "CI_CREDIBLE_02_semantic_v2": {
       "deepseek": 0.0048,
       "chatgpt": -0.0048,
-      "gemini": 0.012,
+      "gemini": 0.0792,
       "claude": -0.15,
       "mistral": -0.1555
     },
     "LOG_ML_02_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.009,
+      "gemini": 0.0419,
       "claude": -0.1615,
       "mistral": -0.0403
     },
     "LOG_ML_02_numerical_v2": {
       "deepseek": -0.0023,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0509,
       "claude": -0.009,
       "mistral": -0.009
     },
     "LOG_ML_02_semantic_v2": {
       "deepseek": -0.1711,
       "chatgpt": 0.0,
-      "gemini": 0.0222,
+      "gemini": 0.0732,
       "claude": -0.1615,
       "mistral": -0.018
     },
     "CI_CREDIBLE_03_rephrase_v2": {
       "deepseek": 0.01,
       "chatgpt": 0.0048,
-      "gemini": 0.1392,
+      "gemini": 0.2172,
       "claude": 0.0048,
       "mistral": 0.2912
     },
     "CI_CREDIBLE_03_numerical_v2": {
       "deepseek": 0.004,
       "chatgpt": 0.0048,
-      "gemini": 0.0,
+      "gemini": 0.078,
       "claude": 0.1488,
       "mistral": 0.006
     },
     "CI_CREDIBLE_03_semantic_v2": {
       "deepseek": -0.1353,
       "chatgpt": 0.0048,
-      "gemini": -0.0048,
+      "gemini": 0.0732,
       "claude": -0.0012,
       "mistral": 0.012
     },
     "LOG_ML_03_rephrase_v2": {
       "deepseek": 0.009,
       "chatgpt": -0.009,
-      "gemini": -0.009,
+      "gemini": 0.0364,
       "claude": -0.009,
       "mistral": -0.018
     },
     "LOG_ML_03_numerical_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0454,
       "claude": -0.018,
       "mistral": -0.018
     },
     "LOG_ML_03_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": -0.009,
-      "gemini": -0.009,
+      "gemini": 0.0364,
       "claude": 0.0,
       "mistral": -0.018
     },
     "LOG_ML_05_rephrase_v2": {
       "deepseek": -0.1615,
       "chatgpt": 0.0,
-      "gemini": -0.0245,
+      "gemini": 0.0119,
       "claude": 0.0,
       "mistral": 0.1525
     },
     "LOG_ML_05_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.1525,
-      "gemini": -0.0113,
+      "gemini": 0.0251,
       "claude": 0.1525,
       "mistral": 0.1525
     },
     "LOG_ML_05_semantic_v2": {
       "deepseek": -0.1615,
       "chatgpt": 0.1525,
-      "gemini": -0.0312,
+      "gemini": 0.0051,
       "claude": 0.0,
       "mistral": 0.1525
     },
     "LOG_ML_04_rephrase_v2": {
       "deepseek": -0.1663,
       "chatgpt": -0.1525,
-      "gemini": 0.0,
+      "gemini": 0.0364,
       "claude": 0.0,
       "mistral": 0.0
     },
     "LOG_ML_04_numerical_v2": {
       "deepseek": 0.018,
       "chatgpt": 0.0,
-      "gemini": -0.0312,
+      "gemini": 0.0051,
       "claude": 0.1525,
       "mistral": 0.1525
     },
     "LOG_ML_04_semantic_v2": {
       "deepseek": -0.1711,
       "chatgpt": -0.1525,
-      "gemini": 0.0,
+      "gemini": 0.0364,
       "claude": 0.0,
       "mistral": 0.0
     },
     "CI_CREDIBLE_05_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0048,
-      "gemini": -0.0072,
+      "gemini": 0.06,
       "claude": 0.15,
       "mistral": 0.0087
     },
     "CI_CREDIBLE_05_numerical_v2": {
       "deepseek": 0.1548,
       "chatgpt": 0.0048,
-      "gemini": -0.006,
+      "gemini": 0.0612,
       "claude": 0.15,
       "mistral": 0.0087
     },
     "CI_CREDIBLE_05_semantic_v2": {
       "deepseek": 0.0048,
       "chatgpt": 0.0108,
-      "gemini": -0.0012,
+      "gemini": 0.066,
       "claude": -0.0096,
       "mistral": 0.0202
     },
     "GAMBLER_02_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": 0.4465,
+      "gemini": 0.5125,
       "claude": 0.0,
       "mistral": 0.0
     },
     "GAMBLER_02_numerical_v2": {
       "deepseek": -0.0048,
       "chatgpt": -0.3,
-      "gemini": 0.4465,
+      "gemini": 0.5125,
       "claude": 0.0,
       "mistral": 0.0
     },
     "GAMBLER_02_semantic_v2": {
       "deepseek": 0.1312,
       "chatgpt": 0.0,
-      "gemini": 0.294,
+      "gemini": 0.36,
       "claude": -0.3,
       "mistral": 0.0
     },
     "GAMBLER_03_rephrase_v2": {
       "deepseek": 0.1151,
       "chatgpt": -0.0048,
-      "gemini": -0.291,
+      "gemini": -0.2491,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "GAMBLER_03_numerical_v2": {
       "deepseek": 0.1295,
       "chatgpt": -0.15,
-      "gemini": -0.3025,
+      "gemini": -0.2606,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "GAMBLER_03_semantic_v2": {
       "deepseek": 0.3492,
       "chatgpt": -0.3,
-      "gemini": -0.1525,
+      "gemini": -0.1106,
       "claude": 0.0,
       "mistral": 0.0312
     },
     "STATIONARY_02_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.0312,
+      "gemini": -0.0297,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "STATIONARY_02_numerical_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.0048,
+      "gemini": -0.0033,
       "claude": 0.0048,
       "mistral": 0.0
     },
     "STATIONARY_02_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0,
-      "gemini": -0.0312,
+      "gemini": -0.0297,
       "claude": 0.0,
       "mistral": 0.0
     },
     "RANGE_DIST_01_rephrase_v2": {
       "deepseek": 0.1596,
       "chatgpt": 0.1812,
-      "gemini": 0.1452,
+      "gemini": 0.1787,
       "claude": 0.2952,
       "mistral": 0.036
     },
     "RANGE_DIST_01_numerical_v2": {
       "deepseek": 0.336,
       "chatgpt": -0.15,
-      "gemini": 0.1404,
+      "gemini": 0.1739,
       "claude": -0.0048,
       "mistral": -0.1548
     },
     "RANGE_DIST_01_semantic_v2": {
       "deepseek": 0.3408,
       "chatgpt": -0.1548,
-      "gemini": 0.3115,
+      "gemini": 0.345,
       "claude": 0.3,
       "mistral": -0.1379
     },
     "STATIONARY_03_rephrase_v2": {
       "deepseek": -0.0625,
       "chatgpt": 0.0625,
-      "gemini": 0.1381,
+      "gemini": 0.1408,
       "claude": 0.1847,
       "mistral": -0.1937
     },
     "STATIONARY_03_numerical_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": -0.0264,
+      "gemini": -0.0237,
       "claude": 0.0,
       "mistral": 0.0
     },
     "STATIONARY_03_semantic_v2": {
       "deepseek": 0.0312,
       "chatgpt": 0.0,
-      "gemini": -0.0324,
+      "gemini": -0.0297,
       "claude": 0.0625,
       "mistral": -0.1937
     },
     "RANGE_DIST_02_rephrase_v2": {
       "deepseek": -0.1548,
       "chatgpt": 0.2952,
-      "gemini": 0.0,
+      "gemini": -0.0025,
       "claude": -0.0048,
       "mistral": 0.0
     },
     "RANGE_DIST_02_numerical_v2": {
       "deepseek": 0.275,
       "chatgpt": 0.2904,
-      "gemini": -0.2952,
+      "gemini": -0.2977,
       "claude": 0.0,
       "mistral": -0.0312
     },
     "RANGE_DIST_02_semantic_v2": {
       "deepseek": 0.1812,
       "chatgpt": 0.15,
-      "gemini": -0.3,
+      "gemini": -0.3025,
       "claude": -0.0096,
       "mistral": -0.0312
     },
     "RANGE_DIST_03_rephrase_v2": {
       "deepseek": 0.4885,
       "chatgpt": -0.3312,
-      "gemini": -0.1573,
+      "gemini": -0.0624,
       "claude": -0.3096,
       "mistral": 0.0048
     },
     "RANGE_DIST_03_numerical_v2": {
       "deepseek": 0.15,
       "chatgpt": -0.0312,
-      "gemini": 0.1739,
+      "gemini": 0.2688,
       "claude": -0.0048,
       "mistral": -0.15
     },
     "RANGE_DIST_03_semantic_v2": {
       "deepseek": 0.336,
       "chatgpt": -0.3312,
-      "gemini": -0.1621,
+      "gemini": -0.0672,
       "claude": 0.0,
       "mistral": 0.0
     },
     "CONCEPTUAL_01_rephrase_v2": {
       "deepseek": -0.0113,
       "chatgpt": 0.2797,
-      "gemini": 0.0,
+      "gemini": 0.0836,
       "claude": 0.0,
       "mistral": 0.2977
     },
     "CONCEPTUAL_01_semantic_v2": {
       "deepseek": 0.009,
       "chatgpt": -0.0202,
-      "gemini": 0.0112,
+      "gemini": 0.0949,
       "claude": 0.0,
       "mistral": -0.0023
     },
     "CONCEPTUAL_02_rephrase_v2": {
       "deepseek": 0.2775,
       "chatgpt": 0.2865,
-      "gemini": -0.0225,
+      "gemini": 0.0059,
       "claude": 0.2775,
       "mistral": -0.191
     },
     "CONCEPTUAL_02_semantic_v2": {
       "deepseek": 0.3,
       "chatgpt": -0.0248,
-      "gemini": -0.027,
+      "gemini": 0.0014,
       "claude": 0.2775,
       "mistral": -0.2
     },
     "CONCEPTUAL_03_rephrase_v2": {
       "deepseek": 0.0425,
       "chatgpt": 0.3,
-      "gemini": 0.3113,
+      "gemini": 0.3836,
       "claude": -0.0113,
       "mistral": -0.009
     },
     "CONCEPTUAL_03_semantic_v2": {
       "deepseek": -0.0112,
       "chatgpt": 0.318,
-      "gemini": 0.3068,
+      "gemini": 0.3791,
       "claude": -0.0225,
       "mistral": -0.009
     },
     "MLE_EFFICIENCY_02_rephrase_v2": {
       "deepseek": 0.1548,
       "chatgpt": 0.1596,
-      "gemini": 0.1452,
+      "gemini": 0.2004,
       "claude": 0.1548,
       "mistral": 0.1452
     },
     "MLE_EFFICIENCY_02_semantic_v2": {
       "deepseek": 0.1548,
       "chatgpt": 0.0096,
-      "gemini": 0.15,
+      "gemini": 0.2052,
       "claude": 0.0,
       "mistral": 0.1525
     },
     "CONCEPTUAL_05_rephrase_v2": {
       "deepseek": 0.3,
       "chatgpt": 0.0112,
-      "gemini": 0.0202,
+      "gemini": 0.0814,
       "claude": 0.0225,
       "mistral": 0.0
     },
     "CONCEPTUAL_05_semantic_v2": {
       "deepseek": 0.318,
       "chatgpt": -0.3,
-      "gemini": 0.0112,
+      "gemini": 0.0724,
       "claude": 0.009,
       "mistral": 0.2775
     },
     "CONCEPTUAL_04_rephrase_v2": {
       "deepseek": -0.3023,
       "chatgpt": 0.0203,
-      "gemini": -0.0338,
+      "gemini": 0.0791,
       "claude": -0.3022,
       "mistral": 0.3113
     },
     "CONCEPTUAL_04_semantic_v2": {
       "deepseek": 0.1887,
       "chatgpt": 0.0225,
-      "gemini": 0.5197,
+      "gemini": 0.6326,
       "claude": -0.3225,
       "mistral": 0.0113
     },
     "MLE_EFFICIENCY_03_rephrase_v2": {
       "deepseek": 0.144,
       "chatgpt": 0.1452,
-      "gemini": -0.009,
+      "gemini": 0.0724,
       "claude": 0.1512,
       "mistral": -0.3163
     },
     "MLE_EFFICIENCY_03_numerical_v2": {
       "deepseek": 0.1488,
       "chatgpt": 0.0048,
-      "gemini": 0.0014,
+      "gemini": 0.0828,
       "claude": -0.0048,
       "mistral": -0.3163
     },
     "MLE_EFFICIENCY_03_semantic_v2": {
       "deepseek": 0.2605,
       "chatgpt": 0.0048,
-      "gemini": -0.0112,
+      "gemini": 0.0701,
       "claude": 0.0012,
       "mistral": -0.3163
     },
     "CONCEPTUAL_06_rephrase_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.309,
-      "gemini": -0.0112,
+      "gemini": 0.0284,
       "claude": 0.0,
       "mistral": -0.0225
     },
     "CONCEPTUAL_06_semantic_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.2842,
-      "gemini": -0.0225,
+      "gemini": 0.0172,
       "claude": -0.0113,
       "mistral": -0.0113
     },
     "CONCEPTUAL_09_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.3402,
-      "gemini": 0.0112,
+      "gemini": 0.0284,
       "claude": 0.3113,
       "mistral": -0.009
     },
     "CONCEPTUAL_09_semantic_v2": {
       "deepseek": 0.0625,
       "chatgpt": 0.3625,
-      "gemini": -0.309,
+      "gemini": -0.2918,
       "claude": 0.3425,
       "mistral": 0.182
     },
     "CONCEPTUAL_07_rephrase_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.009,
-      "gemini": 0.0,
+      "gemini": 0.0059,
       "claude": 0.0,
       "mistral": 0.018
     },
     "CONCEPTUAL_07_semantic_v2": {
       "deepseek": 0.0,
       "chatgpt": 0.0293,
-      "gemini": 0.018,
+      "gemini": 0.0239,
       "claude": 0.0,
       "mistral": 0.018
     },
     "CONCEPTUAL_08_rephrase_v2": {
       "deepseek": 0.0023,
       "chatgpt": 0.009,
-      "gemini": -0.0135,
+      "gemini": 0.0679,
       "claude": -0.0113,
       "mistral": 0.0
     },
     "CONCEPTUAL_08_semantic_v2": {
       "deepseek": -0.018,
       "chatgpt": -0.0225,
-      "gemini": -0.0202,
+      "gemini": 0.0611,
       "claude": -0.0113,
       "mistral": 0.2887
     },
     "GIBBS_01_rephrase_v2": {
-      "deepseek": -0.1707,
-      "chatgpt": -0.1083,
-      "gemini": -0.1592,
-      "claude": 0.1083,
-      "mistral": 0.0
+      "deepseek": -0.0691,
+      "chatgpt": -0.0135,
+      "gemini": -0.0643,
+      "claude": 0.1341,
+      "mistral": 0.0141
     },
     "GIBBS_01_semantic_v2": {
-      "deepseek": 0.0113,
-      "chatgpt": 0.009,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": 0.1592
+      "deepseek": 0.1129,
+      "chatgpt": 0.1039,
+      "gemini": 0.0949,
+      "claude": 0.0257,
+      "mistral": 0.1733
     },
     "GIBBS_03_rephrase_v2": {
-      "deepseek": -0.1592,
-      "chatgpt": 0.0,
-      "gemini": -0.0508,
-      "claude": 0.0,
-      "mistral": -0.1592
+      "deepseek": -0.0643,
+      "chatgpt": 0.0949,
+      "gemini": -0.0251,
+      "claude": 0.0949,
+      "mistral": -0.0643
     },
     "GIBBS_03_semantic_v2": {
-      "deepseek": -0.1736,
-      "chatgpt": 0.0,
-      "gemini": -0.0508,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": -0.0787,
+      "chatgpt": 0.0949,
+      "gemini": -0.0251,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "GIBBS_02_rephrase_v2": {
-      "deepseek": 0.0112,
-      "chatgpt": 0.0112,
-      "gemini": -0.009,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.1039,
+      "chatgpt": 0.0949,
+      "gemini": 0.0949,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "GIBBS_02_semantic_v2": {
-      "deepseek": 0.0202,
-      "chatgpt": 0.0112,
-      "gemini": -0.009,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.1129,
+      "chatgpt": 0.0949,
+      "gemini": 0.0949,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "CONCEPTUAL_10_rephrase_v2": {
       "deepseek": 0.3315,
       "chatgpt": -0.0022,
-      "gemini": -0.009,
+      "gemini": 0.0307,
       "claude": 0.3113,
       "mistral": 0.0
     },
     "CONCEPTUAL_10_semantic_v2": {
       "deepseek": 0.3538,
       "chatgpt": 0.309,
-      "gemini": -0.0112,
+      "gemini": 0.0284,
       "claude": 0.3113,
       "mistral": 0.0
     },
     "GIBBS_05_rephrase_v2": {
-      "deepseek": -0.0112,
-      "chatgpt": 0.0,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.0836,
+      "chatgpt": 0.0949,
+      "gemini": 0.0949,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "GIBBS_05_semantic_v2": {
-      "deepseek": 0.009,
-      "chatgpt": -0.0112,
-      "gemini": 0.0,
-      "claude": -0.0112,
-      "mistral": 0.0
+      "deepseek": 0.1039,
+      "chatgpt": 0.0836,
+      "gemini": 0.0949,
+      "claude": 0.0836,
+      "mistral": 0.0949
     },
     "MH_01_rephrase_v2": {
-      "deepseek": -0.0746,
-      "chatgpt": 0.0,
-      "gemini": 0.1196,
-      "claude": -0.0112,
-      "mistral": 0.0
+      "deepseek": -0.0135,
+      "chatgpt": 0.0949,
+      "gemini": 0.1341,
+      "claude": 0.0836,
+      "mistral": 0.1039
     },
     "MH_01_semantic_v2": {
-      "deepseek": 0.0495,
-      "chatgpt": 0.0,
-      "gemini": 0.1286,
-      "claude": -0.0112,
-      "mistral": 0.0
+      "deepseek": 0.1106,
+      "chatgpt": 0.0949,
+      "gemini": 0.1431,
+      "claude": 0.0836,
+      "mistral": 0.1039
     },
     "GIBBS_04_rephrase_v2": {
-      "deepseek": 0.1592,
-      "chatgpt": 0.0,
-      "gemini": 0.1592,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.1733,
+      "chatgpt": 0.0949,
+      "gemini": 0.1733,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "GIBBS_04_semantic_v2": {
-      "deepseek": -0.0048,
-      "chatgpt": 0.0,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.0093,
+      "chatgpt": 0.0949,
+      "gemini": 0.0141,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "MH_03_rephrase_v2": {
-      "deepseek": 0.0315,
-      "chatgpt": 0.0,
-      "gemini": 0.0168,
-      "claude": -0.0112,
-      "mistral": 0.009
+      "deepseek": 0.0926,
+      "chatgpt": 0.0949,
+      "gemini": 0.0261,
+      "claude": 0.0836,
+      "mistral": 0.1039
     },
     "MH_03_semantic_v2": {
-      "deepseek": 0.0563,
-      "chatgpt": -0.0112,
-      "gemini": 0.173,
-      "claude": 0.0,
-      "mistral": 0.009
+      "deepseek": 0.1174,
+      "chatgpt": 0.0836,
+      "gemini": 0.1823,
+      "claude": 0.0949,
+      "mistral": 0.1039
     },
     "MH_02_rephrase_v2": {
-      "deepseek": 0.1083,
-      "chatgpt": -0.1308,
-      "gemini": 0.1083,
-      "claude": -0.0112,
-      "mistral": 0.0
+      "deepseek": 0.1318,
+      "chatgpt": -0.036,
+      "gemini": 0.1341,
+      "claude": 0.0836,
+      "mistral": 0.0949
     },
     "MH_02_semantic_v2": {
-      "deepseek": 0.1083,
-      "chatgpt": 0.009,
-      "gemini": 0.1061,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": 0.1318,
+      "chatgpt": 0.1039,
+      "gemini": 0.1318,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "HMC_01_rephrase_v2": {
-      "deepseek": -0.0112,
-      "chatgpt": -0.4937,
-      "gemini": 0.164,
-      "claude": -0.1615,
-      "mistral": 0.009
+      "deepseek": 0.0836,
+      "chatgpt": -0.486,
+      "gemini": 0.1733,
+      "claude": -0.0576,
+      "mistral": 0.1129
     },
     "HMC_01_semantic_v2": {
-      "deepseek": 0.1657,
-      "chatgpt": -0.1517,
-      "gemini": 0.0108,
-      "claude": 0.4937,
-      "mistral": -0.1615
+      "deepseek": 0.2606,
+      "chatgpt": -0.144,
+      "gemini": 0.0201,
+      "claude": 0.5976,
+      "mistral": -0.0576
     },
     "MH_05_rephrase_v2": {
-      "deepseek": -0.1635,
-      "chatgpt": 0.0,
-      "gemini": 0.0881,
-      "claude": -0.1532,
-      "mistral": 0.0
+      "deepseek": -0.0619,
+      "chatgpt": 0.0949,
+      "gemini": 0.1228,
+      "claude": -0.0583,
+      "mistral": 0.0949
     },
     "MH_05_semantic_v2": {
-      "deepseek": -0.018,
-      "chatgpt": 0.0,
-      "gemini": -0.0598,
-      "claude": 0.0,
-      "mistral": 0.009
+      "deepseek": 0.0836,
+      "chatgpt": 0.0949,
+      "gemini": -0.0251,
+      "claude": 0.0949,
+      "mistral": 0.1039
     },
     "MH_04_rephrase_v2": {
-      "deepseek": 0.0072,
-      "chatgpt": 0.0,
-      "gemini": -0.0012,
-      "claude": 0.0112,
-      "mistral": -0.009
+      "deepseek": 0.0213,
+      "chatgpt": 0.0949,
+      "gemini": 0.0141,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "MH_04_semantic_v2": {
-      "deepseek": 0.1569,
-      "chatgpt": 0.0,
-      "gemini": 0.158,
-      "claude": -0.1419,
-      "mistral": 0.0
+      "deepseek": 0.171,
+      "chatgpt": 0.0949,
+      "gemini": 0.1733,
+      "claude": -0.0583,
+      "mistral": 0.1039
     },
     "HMC_02_rephrase_v2": {
-      "deepseek": -0.141,
-      "chatgpt": 0.355,
-      "gemini": -0.164,
-      "claude": 0.0,
-      "mistral": -0.5028
+      "deepseek": -0.0726,
+      "chatgpt": 0.4386,
+      "gemini": -0.0691,
+      "claude": 0.0077,
+      "mistral": -0.477
     },
     "HMC_02_semantic_v2": {
-      "deepseek": -0.1433,
-      "chatgpt": 0.3593,
-      "gemini": -0.164,
-      "claude": -0.3125,
-      "mistral": -0.0868
+      "deepseek": -0.0749,
+      "chatgpt": 0.4429,
+      "gemini": -0.0691,
+      "claude": -0.3048,
+      "mistral": -0.061
     },
     "HMC_03_rephrase_v2": {
-      "deepseek": -0.5297,
-      "chatgpt": 0.0,
-      "gemini": 0.0,
-      "claude": -0.3437,
-      "mistral": 0.009
+      "deepseek": -0.522,
+      "chatgpt": 0.0432,
+      "gemini": 0.0949,
+      "claude": -0.336,
+      "mistral": 0.1129
     },
     "HMC_03_semantic_v2": {
-      "deepseek": -0.4847,
-      "chatgpt": 0.141,
-      "gemini": 0.009,
-      "claude": 0.009,
-      "mistral": 0.0
+      "deepseek": -0.477,
+      "chatgpt": 0.1842,
+      "gemini": 0.1039,
+      "claude": 0.0167,
+      "mistral": 0.1039
     },
     "HMC_04_rephrase_v2": {
-      "deepseek": -0.1635,
-      "chatgpt": -0.1844,
-      "gemini": 0.164,
-      "claude": 0.0,
-      "mistral": -0.3437
+      "deepseek": -0.1468,
+      "chatgpt": -0.1502,
+      "gemini": 0.1733,
+      "claude": 0.0077,
+      "mistral": -0.3006
     },
     "HMC_04_semantic_v2": {
-      "deepseek": -0.496,
-      "chatgpt": 0.1652,
-      "gemini": 0.1617,
-      "claude": 0.0,
-      "mistral": -0.3347
+      "deepseek": -0.4793,
+      "chatgpt": 0.1994,
+      "gemini": 0.171,
+      "claude": 0.0077,
+      "mistral": -0.2916
     },
     "HMC_05_rephrase_v2": {
-      "deepseek": 0.0202,
-      "chatgpt": 0.259,
-      "gemini": -0.1263,
-      "claude": 0.0,
-      "mistral": 0.5028
+      "deepseek": 0.0432,
+      "chatgpt": 0.2932,
+      "gemini": -0.0247,
+      "claude": 0.0949,
+      "mistral": 0.6066
     },
     "HMC_05_semantic_v2": {
-      "deepseek": -0.1735,
-      "chatgpt": 0.159,
-      "gemini": -0.009,
-      "claude": 0.3438,
-      "mistral": 0.159
+      "deepseek": -0.1506,
+      "chatgpt": 0.1932,
+      "gemini": 0.0926,
+      "claude": 0.4386,
+      "mistral": 0.2629
     },
     "RJMCMC_02_rephrase_v2": {
-      "deepseek": 0.141,
-      "chatgpt": -0.375,
-      "gemini": 0.0,
-      "claude": 0.15,
-      "mistral": 0.0112
+      "deepseek": 0.1787,
+      "chatgpt": -0.3463,
+      "gemini": 0.0836,
+      "claude": 0.2449,
+      "mistral": 0.0949
     },
     "RJMCMC_02_numerical_v2": {
-      "deepseek": -0.0312,
-      "chatgpt": -0.3862,
-      "gemini": 0.0112,
-      "claude": 0.009,
-      "mistral": 0.0202
+      "deepseek": 0.0064,
+      "chatgpt": -0.3576,
+      "gemini": 0.0949,
+      "claude": 0.1039,
+      "mistral": 0.1039
     },
     "RJMCMC_02_semantic_v2": {
-      "deepseek": -0.009,
-      "chatgpt": -0.2812,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": 0.0112
+      "deepseek": 0.0287,
+      "chatgpt": -0.2526,
+      "gemini": 0.0836,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "RJMCMC_01_rephrase_v2": {
-      "deepseek": 0.141,
-      "chatgpt": -0.375,
-      "gemini": -0.0202,
-      "claude": 0.0,
-      "mistral": -0.0938
+      "deepseek": 0.1787,
+      "chatgpt": -0.3463,
+      "gemini": 0.0836,
+      "claude": 0.0949,
+      "mistral": -0.0154
     },
     "RJMCMC_01_numerical_v2": {
-      "deepseek": -0.0402,
-      "chatgpt": -0.0312,
-      "gemini": -0.0315,
-      "claude": 0.0,
-      "mistral": -0.0938
+      "deepseek": -0.0026,
+      "chatgpt": -0.0026,
+      "gemini": 0.0724,
+      "claude": 0.0949,
+      "mistral": -0.0154
     },
     "RJMCMC_01_semantic_v2": {
-      "deepseek": 0.0,
-      "chatgpt": -0.375,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": -0.0938
+      "deepseek": 0.0377,
+      "chatgpt": -0.3463,
+      "gemini": 0.1039,
+      "claude": 0.0949,
+      "mistral": -0.0154
     },
     "RJMCMC_03_rephrase_v2": {
-      "deepseek": -0.516,
-      "chatgpt": 0.0,
-      "gemini": 0.0112,
-      "claude": 0.009,
-      "mistral": -0.3527
+      "deepseek": -0.5138,
+      "chatgpt": 0.0176,
+      "gemini": 0.0949,
+      "claude": 0.1039,
+      "mistral": -0.3096
     },
     "RJMCMC_03_numerical_v2": {
-      "deepseek": -0.1812,
-      "chatgpt": -0.0938,
-      "gemini": 0.0202,
-      "claude": 0.0,
-      "mistral": -0.3527
+      "deepseek": -0.179,
+      "chatgpt": -0.0761,
+      "gemini": 0.1039,
+      "claude": 0.0949,
+      "mistral": -0.3096
     },
     "RJMCMC_03_semantic_v2": {
-      "deepseek": 0.0713,
-      "chatgpt": -0.4375,
-      "gemini": 0.0112,
-      "claude": 0.009,
-      "mistral": -0.3527
+      "deepseek": 0.0735,
+      "chatgpt": -0.4199,
+      "gemini": 0.0949,
+      "claude": 0.1039,
+      "mistral": -0.3096
     },
     "RJMCMC_04_rephrase_v2": {
-      "deepseek": 0.0312,
-      "chatgpt": -0.0938,
-      "gemini": 0.0,
-      "claude": 0.009,
-      "mistral": 0.009
+      "deepseek": 0.0654,
+      "chatgpt": -0.0154,
+      "gemini": 0.0949,
+      "claude": 0.1039,
+      "mistral": 0.1039
     },
     "RJMCMC_04_numerical_v2": {
-      "deepseek": -0.3438,
-      "chatgpt": 0.25,
-      "gemini": 0.009,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": -0.3096,
+      "chatgpt": 0.3283,
+      "gemini": 0.1039,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "RJMCMC_04_semantic_v2": {
-      "deepseek": -0.0023,
-      "chatgpt": -0.0847,
-      "gemini": 0.0,
-      "claude": 0.3527,
-      "mistral": 0.15
+      "deepseek": 0.0319,
+      "chatgpt": -0.0064,
+      "gemini": 0.0949,
+      "claude": 0.4476,
+      "mistral": 0.2449
     },
     "RJMCMC_05_rephrase_v2": {
-      "deepseek": -0.0625,
-      "chatgpt": 0.0425,
-      "gemini": -0.009,
-      "claude": 0.159,
-      "mistral": 0.2438
+      "deepseek": -0.0449,
+      "chatgpt": 0.0654,
+      "gemini": 0.0949,
+      "claude": 0.2539,
+      "mistral": 0.3386
     },
     "RJMCMC_05_numerical_v2": {
-      "deepseek": -0.0738,
-      "chatgpt": 0.0425,
-      "gemini": 0.0,
-      "claude": 0.0,
-      "mistral": 0.0
+      "deepseek": -0.0561,
+      "chatgpt": 0.0654,
+      "gemini": 0.1039,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "RJMCMC_05_semantic_v2": {
-      "deepseek": -0.0625,
-      "chatgpt": 0.0425,
-      "gemini": -0.009,
-      "claude": 0.2438,
-      "mistral": 0.2528
+      "deepseek": -0.0449,
+      "chatgpt": 0.0654,
+      "gemini": 0.0949,
+      "claude": 0.3386,
+      "mistral": 0.3476
     },
     "VB_03_rephrase_v2": {
-      "deepseek": 0.346,
-      "chatgpt": -0.0022,
-      "gemini": 0.009,
-      "claude": 0.3437,
-      "mistral": 0.0202
+      "deepseek": 0.4386,
+      "chatgpt": 0.0926,
+      "gemini": 0.1039,
+      "claude": 0.4121,
+      "mistral": 0.1039
     },
     "VB_03_semantic_v2": {
-      "deepseek": 0.3325,
-      "chatgpt": 0.3438,
-      "gemini": 0.0067,
-      "claude": -0.15,
-      "mistral": 0.0112
+      "deepseek": 0.4251,
+      "chatgpt": 0.4386,
+      "gemini": 0.1016,
+      "claude": -0.0816,
+      "mistral": 0.0949
     },
     "VB_02_rephrase_v2": {
-      "deepseek": -0.169,
-      "chatgpt": 0.0,
-      "gemini": 0.3415,
-      "claude": -0.3347,
-      "mistral": 0.141
+      "deepseek": -0.1596,
+      "chatgpt": 0.0949,
+      "gemini": 0.4454,
+      "claude": -0.327,
+      "mistral": 0.2449
     },
     "VB_02_semantic_v2": {
-      "deepseek": -0.0685,
-      "chatgpt": 0.0,
-      "gemini": -0.009,
-      "claude": -0.505,
-      "mistral": -0.0202
+      "deepseek": -0.0591,
+      "chatgpt": 0.0949,
+      "gemini": 0.0949,
+      "claude": -0.4973,
+      "mistral": 0.0836
     },
     "VB_01_rephrase_v2": {
-      "deepseek": -0.0023,
-      "chatgpt": -0.168,
-      "gemini": -0.159,
-      "claude": 0.159,
-      "mistral": 0.15
+      "deepseek": 0.0032,
+      "chatgpt": -0.0816,
+      "gemini": -0.0839,
+      "claude": 0.2539,
+      "mistral": 0.2449
     },
     "VB_01_semantic_v2": {
-      "deepseek": -0.4937,
-      "chatgpt": -0.168,
-      "gemini": -0.1703,
-      "claude": 0.0,
-      "mistral": 0.009
+      "deepseek": -0.4883,
+      "chatgpt": -0.0816,
+      "gemini": -0.0951,
+      "claude": 0.0949,
+      "mistral": 0.1039
     },
     "ABC_01_rephrase_v2": {
-      "deepseek": -0.0192,
-      "chatgpt": -0.1531,
-      "gemini": -0.1625,
-      "claude": -0.1108,
-      "mistral": -0.006
+      "deepseek": -0.0064,
+      "chatgpt": -0.0604,
+      "gemini": -0.0676,
+      "claude": -0.0496,
+      "mistral": -0.0088
     },
     "ABC_01_semantic_v2": {
-      "deepseek": 0.1027,
-      "chatgpt": -0.0203,
-      "gemini": -0.0225,
-      "claude": 0.0225,
-      "mistral": 0.1565
+      "deepseek": 0.1154,
+      "chatgpt": 0.0724,
+      "gemini": 0.0724,
+      "claude": 0.0836,
+      "mistral": 0.1537
     },
     "VB_05_rephrase_v2": {
-      "deepseek": -0.0225,
-      "chatgpt": 0.0,
-      "gemini": 0.018,
-      "claude": 0.1813,
-      "mistral": 0.3222
+      "deepseek": 0.0297,
+      "chatgpt": 0.0949,
+      "gemini": 0.1129,
+      "claude": 0.2761,
+      "mistral": 0.4261
     },
     "VB_05_semantic_v2": {
-      "deepseek": -0.3753,
-      "chatgpt": 0.3527,
-      "gemini": 0.009,
-      "claude": 0.0,
-      "mistral": -0.009
+      "deepseek": -0.3231,
+      "chatgpt": 0.4476,
+      "gemini": 0.1039,
+      "claude": 0.0949,
+      "mistral": 0.0949
     },
     "VB_04_rephrase_v2": {
-      "deepseek": 0.0,
-      "chatgpt": 0.018,
-      "gemini": -0.0067,
-      "claude": 0.15,
-      "mistral": 0.0
+      "deepseek": 0.0949,
+      "chatgpt": 0.1129,
+      "gemini": 0.0949,
+      "claude": 0.2449,
+      "mistral": 0.0949
     },
     "VB_04_semantic_v2": {
-      "deepseek": 0.0,
-      "chatgpt": 0.0,
-      "gemini": -0.009,
-      "claude": 0.15,
-      "mistral": 0.0
+      "deepseek": 0.0949,
+      "chatgpt": 0.0949,
+      "gemini": 0.0926,
+      "claude": 0.2449,
+      "mistral": 0.0949
     },
     "ABC_02_rephrase_v2": {
-      "deepseek": 0.027,
-      "chatgpt": 0.012,
-      "gemini": 0.0,
-      "claude": -0.1198,
-      "mistral": 0.15
+      "deepseek": 0.0971,
+      "chatgpt": 0.0032,
+      "gemini": -0.0028,
+      "claude": -0.0906,
+      "mistral": 0.1357
     },
     "ABC_02_semantic_v2": {
-      "deepseek": 0.0068,
-      "chatgpt": 0.0292,
-      "gemini": 0.0124,
-      "claude": 0.0338,
-      "mistral": -0.0312
+      "deepseek": 0.0769,
+      "chatgpt": 0.0204,
+      "gemini": 0.0096,
+      "claude": 0.0629,
+      "mistral": -0.0456
     },
     "ABC_04_rephrase_v2": {
-      "deepseek": -0.006,
-      "chatgpt": 0.1418,
-      "gemini": -0.1535,
-      "claude": -0.1328,
-      "mistral": 0.0
+      "deepseek": 0.0044,
+      "chatgpt": 0.1402,
+      "gemini": -0.0586,
+      "claude": -0.0604,
+      "mistral": -0.0088
     },
     "ABC_04_semantic_v2": {
-      "deepseek": 0.1185,
-      "chatgpt": 0.1418,
-      "gemini": -0.0135,
-      "claude": 0.0,
-      "mistral": 0.1512
+      "deepseek": 0.1289,
+      "chatgpt": 0.1402,
+      "gemini": 0.0814,
+      "claude": 0.0724,
+      "mistral": 0.1424
     },
     "ABC_05_rephrase_v2": {
-      "deepseek": 0.1145,
-      "chatgpt": 0.0012,
-      "gemini": 0.006,
-      "claude": 0.0312,
-      "mistral": -0.006
+      "deepseek": 0.1177,
+      "chatgpt": -0.0076,
+      "gemini": -0.0028,
+      "claude": 0.1148,
+      "mistral": -0.0088
     },
     "ABC_05_semantic_v2": {
-      "deepseek": -0.0036,
-      "chatgpt": 0.1512,
-      "gemini": 0.0012,
-      "claude": -0.1441,
-      "mistral": -0.006
+      "deepseek": -0.0004,
+      "chatgpt": 0.1424,
+      "gemini": -0.0076,
+      "claude": -0.0604,
+      "mistral": -0.0088
     },
     "ABC_03_rephrase_v2": {
-      "deepseek": -0.1485,
-      "chatgpt": -0.0113,
-      "gemini": -0.1512,
-      "claude": -0.1553,
-      "mistral": -0.3377
+      "deepseek": -0.0604,
+      "chatgpt": 0.0724,
+      "gemini": -0.0676,
+      "claude": -0.0604,
+      "mistral": -0.2749
     },
     "ABC_03_semantic_v2": {
-      "deepseek": 0.0248,
-      "chatgpt": 0.0,
-      "gemini": -0.0225,
-      "claude": 0.1813,
-      "mistral": -0.1535
+      "deepseek": 0.1129,
+      "chatgpt": 0.0836,
+      "gemini": 0.0611,
+      "claude": 0.2761,
+      "mistral": -0.0906
     },
     "HIERARCHICAL_02_rephrase_v2": {
-      "deepseek": -0.3438,
-      "chatgpt": 0.3438,
-      "gemini": -0.0405,
-      "claude": 0.355,
-      "mistral": -0.1535
+      "deepseek": -0.3096,
+      "chatgpt": 0.4386,
+      "gemini": 0.0611,
+      "claude": 0.4121,
+      "mistral": -0.1193
     },
     "HIERARCHICAL_02_semantic_v2": {
-      "deepseek": 0.0067,
-      "chatgpt": 0.0,
-      "gemini": -0.0202,
-      "claude": 0.3438,
-      "mistral": -0.0023
+      "deepseek": 0.0409,
+      "chatgpt": 0.0949,
+      "gemini": 0.0814,
+      "claude": 0.4009,
+      "mistral": 0.0319
     },
     "HIERARCHICAL_01_rephrase_v2": {
-      "deepseek": -0.0971,
-      "chatgpt": -0.0225,
-      "gemini": 0.0,
-      "claude": -0.1725,
-      "mistral": 0.17
+      "deepseek": -0.0045,
+      "chatgpt": 0.0459,
+      "gemini": 0.0261,
+      "claude": -0.1041,
+      "mistral": 0.2649
     },
     "HIERARCHICAL_01_semantic_v2": {
-      "deepseek": -0.009,
-      "chatgpt": 0.0312,
-      "gemini": 0.1337,
-      "claude": 0.0,
-      "mistral": 0.018
+      "deepseek": 0.0836,
+      "chatgpt": 0.0996,
+      "gemini": 0.1598,
+      "claude": 0.0684,
+      "mistral": 0.1129
     },
     "HIERARCHICAL_03_rephrase_v2": {
-      "deepseek": -0.3437,
-      "chatgpt": 0.0113,
-      "gemini": 0.0428,
-      "claude": 0.15,
-      "mistral": 0.018
+      "deepseek": -0.3208,
+      "chatgpt": 0.0342,
+      "gemini": 0.1039,
+      "claude": 0.1842,
+      "mistral": 0.0522
     },
     "HIERARCHICAL_03_semantic_v2": {
-      "deepseek": 0.02,
-      "chatgpt": 0.0113,
-      "gemini": 0.3213,
-      "claude": 0.15,
-      "mistral": -0.1535
+      "deepseek": 0.0429,
+      "chatgpt": 0.0342,
+      "gemini": 0.3824,
+      "claude": 0.1842,
+      "mistral": -0.1193
     },
     "HIERARCHICAL_04_rephrase_v2": {
-      "deepseek": 0.0112,
-      "chatgpt": -0.0135,
-      "gemini": 0.3615,
-      "claude": -0.1937,
-      "mistral": -0.1625
+      "deepseek": 0.0117,
+      "chatgpt": 0.0094,
+      "gemini": 0.4226,
+      "claude": -0.1596,
+      "mistral": -0.1283
     },
     "HIERARCHICAL_04_semantic_v2": {
-      "deepseek": -0.1287,
-      "chatgpt": 0.0,
-      "gemini": 0.0,
-      "claude": -0.3438,
-      "mistral": -0.1937
+      "deepseek": -0.1283,
+      "chatgpt": 0.0229,
+      "gemini": 0.0611,
+      "claude": -0.3096,
+      "mistral": -0.1596
     },
     "HIERARCHICAL_05_rephrase_v2": {
-      "deepseek": -0.0135,
-      "chatgpt": -0.0112,
-      "gemini": -0.3325,
-      "claude": -0.02,
-      "mistral": -0.2945
+      "deepseek": 0.0094,
+      "chatgpt": 0.0117,
+      "gemini": -0.3208,
+      "claude": 0.0316,
+      "mistral": -0.2868
     },
     "HIERARCHICAL_05_semantic_v2": {
-      "deepseek": -0.0135,
-      "chatgpt": 0.0202,
-      "gemini": -0.0338,
-      "claude": -0.02,
-      "mistral": 0.0312
+      "deepseek": 0.0094,
+      "chatgpt": 0.0432,
+      "gemini": -0.0221,
+      "claude": 0.0316,
+      "mistral": 0.039
     },
     "REGRESSION_05_numerical_v2": {
       "deepseek": 0.009,
       "chatgpt": 0.0112,
-      "gemini": -0.0315,
+      "gemini": -0.0338,
       "claude": 0.0,
       "mistral": 0.0
     },
     "DIRICHLET_01_numerical_v2": {
       "deepseek": -0.5164,
       "chatgpt": 0.0,
-      "gemini": 0.0,
+      "gemini": 0.0071,
       "claude": -0.009,
       "mistral": -0.009
     },
     "MLE_EFFICIENCY_02_numerical_v2": {
       "deepseek": 0.3163,
       "chatgpt": 0.1548,
-      "gemini": 0.0,
+      "gemini": 0.0552,
       "claude": 0.1548,
       "mistral": 0.1615
     }

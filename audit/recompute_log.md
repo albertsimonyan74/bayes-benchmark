@@ -395,3 +395,123 @@ The `aggregate_old` field in `nmacr_scores_v2.jsonl` (computed under
 old equal weights) is preserved in records as a historical reference.
 Future regenerations could drop it; preserved here so the Phase 1B
 "old vs new" tables in this document remain reproducible.
+
+---
+
+## Phase 1.7 — Tier 1 Coverage Fixes (2026-05-03)
+
+### Context
+Diagnostic investigation surfaced two compounding bugs affecting reasoning
+and confidence score coverage on `experiments/results_v1/runs.jsonl`:
+
+1. **Runner schema gap (chronic).** `_make_run_record()` in
+   `llm_runner/run_all_tasks.py` omits `reasoning_score` and
+   `confidence_score` keys when logging. Any record produced by the runner
+   lacks those two fields by construction; downstream `.get()` returns
+   `None`.
+2. **Stale recompute path (latent).** `scripts/recompute_scores.py:23`
+   pointed at `data/benchmark_v1/tasks.json` (Phase 1, 136 tasks). Phase 2
+   task_ids and v1 perturbation task_ids fell through the `task is None`
+   branch, which set reasoning + confidence to `None` even when they could
+   be scored from intact `raw_response`.
+
+Gemini specifically appeared uniquely affected because it was the only
+model fully re-issued (RPD quota recovery, Apr 26) after the most recent
+`recompute_scores.py` execution. Asymmetry was timing artifact, not
+gemini-specific filter. Full forensic in
+[`audit/gemini_forensic_2026-05-03.md`](gemini_forensic_2026-05-03.md).
+
+### Fixes
+- **Fix A.** `scripts/recompute_scores.py:23` path corrected to
+  `data/benchmark_v1/tasks_all.json` (171 tasks).
+- **Fix B.** Pragmatic regeneration via single execution of the corrected
+  recompute script. No API calls — `raw_response` text was sufficient for
+  `full_score()` to recover both fields.
+- **Fix C.** `scripts/krippendorff_agreement.py` extended to load combined
+  population: writes `base` / `perturbation` / `combined` scope blocks
+  alongside the original `overall` / `per_model` (preserved for
+  backward-compat).
+- **Fix D.** `capstone-website/frontend/src/pages/Limitations.jsx` L6
+  wording updated to acknowledge the MARKOV_04 outlier in the 27-task
+  exclusion list.
+
+### Coverage post-fix
+- `runs.jsonl`: 246/246 `reasoning_score` and `confidence_score` populated
+  for all 5 models (1,230/1,230 records).
+- α `reasoning_quality`: n=460 (Phase 1 only, gemini-excluded) → n=1,095
+  (full base coverage, all 5 models).
+- α now reported on three scopes — base (n=1,095), perturbation
+  (n=2,100), combined (n=3,195) — matching the disagreement headline scope.
+
+### Number changes (>0.5pp) — see `audit/tier1_diff_report.md` for full table
+
+**Per-model accuracy (literature-weighted, B=10,000):**
+
+| model | baseline mean | new mean | Δpp |
+|---|---|---|---|
+| claude | 0.7122 | 0.6945 | −1.78 |
+| chatgpt | 0.6913 | 0.6735 | −1.78 |
+| gemini | 0.7763 | 0.7326 | **−4.37** |
+| deepseek | 0.6630 | 0.6501 | −1.29 |
+| mistral | 0.6754 | 0.6582 | −1.72 |
+
+Ranking unchanged (gemini > claude > chatgpt > mistral > deepseek). Top-1
+lead narrows from 6.4pp → 3.8pp.
+
+**Robustness deltas (lower=better):**
+
+| model | baseline Δ | new Δ | new rank |
+|---|---|---|---|
+| mistral | +0.0070 | **−0.0040** | 1 (negative — perturbations slightly improve) |
+| chatgpt | +0.0114 | +0.0019 | 2 |
+| gemini | +0.0568 | +0.0110 | 3 (was 5, dramatic tightening) |
+| claude | +0.0401 | +0.0285 | 4 |
+| deepseek | +0.0423 | +0.0352 | 5 |
+
+Three models now noise-equivalent (CI crosses zero): mistral, chatgpt,
+gemini. Only claude and deepseek separate from zero.
+
+**Krippendorff α reasoning_quality (base):** −0.133 [−0.228, −0.039]
+n=460 → **−0.099 [−0.152, −0.045] n=1,095**. Still negative, CI still
+excludes zero, severity reduced, sample doubled.
+
+**Calibration:** Gemini now has 127 / 246 verbalized signals (was 0/246
+under bug); accuracy_calibration_correlation r=0.337 (was n/a). Per-dim
+ECE C=0.045 for Gemini (was missing).
+
+### Findings impact
+- **"Gemini calibration inversion" (Card 6 / RQ5 subclaim) FALSIFIED.**
+  Gemini is no longer "0 verbalized signals". Reframed cohort-wide:
+  "All five models severely overconfident under self-consistency
+  extraction, despite appearing well-calibrated by verbalized
+  measurement. Calibration is method-dependent."
+- **L2 "Gemini zero-signal" disclosure FALSIFIED.** Reframed: "Verbalized
+  confidence extraction is sensitive to hedging language; models with
+  less hedging produce fewer high-confidence signals."
+- **Combined keyword-judge disagreement (22.16%) UNCHANGED** — depends on
+  assumption_score (keyword) and judge_assumption, neither touched by
+  Fix A/B.
+- **Negative-α reasoning_quality finding STRENGTHENED** — tighter CI
+  with doubled sample.
+- **Mistral robustness finding STRENGTHENED** — now uniquely improves
+  under perturbation.
+- **L6 wording updated** to acknowledge MARKOV_04 (Fix D).
+- **Outdated note in §"Errored or missing" above** — "gemini has 0
+  verbalized confidence signals across 246 base runs" was true under the
+  pre-Tier-1 state; superseded by this section. Same for the per-dim
+  table caveat ("Gemini has no C row") and the accuracy-calibration
+  correlation table ("gemini n/a").
+
+### Files affected
+- `scripts/recompute_scores.py` (Fix A)
+- `scripts/krippendorff_agreement.py` (Fix C)
+- `experiments/results_v1/runs.jsonl` (regenerated)
+- `experiments/results_v2/{krippendorff_agreement,bootstrap_ci,robustness_v2,
+  calibration,per_dim_calibration,nmacr_scores_v2,keyword_vs_judge_agreement}.{json,jsonl}`
+- `capstone-website/backend/static_data/experiments/results_v2/` (mirror synced)
+- `capstone-website/frontend/src/pages/Limitations.jsx` (Fix D)
+- `audit/gemini_forensic_2026-05-03.md` (NEW)
+- `audit/tier1_baseline_20260503_195141/` (NEW snapshot)
+- `audit/tier1_diff_report.md` (NEW)
+
+Pre-fix `runs.jsonl` retained at `experiments/results_v1/runs.jsonl.pre_tier1_<timestamp>`.

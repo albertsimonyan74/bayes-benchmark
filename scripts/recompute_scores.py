@@ -20,13 +20,20 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from llm_runner.response_parser import full_score
 
 RUNS_PATH  = Path("experiments/results_v1/runs.jsonl")
-TASKS_PATH = Path("data/benchmark_v1/tasks.json")
+TASKS_PATH = Path("data/benchmark_v1/tasks_all.json")
+PERTS_PATH = Path("data/synthetic/perturbations.json")
 
 
 def main() -> None:
-    # Load tasks index keyed by task_id
+    # Load tasks index keyed by task_id (171 canonical + v1 perturbations
+    # referenced in runs.jsonl). Phase 2 (tasks_advanced) and v1 perturbation
+    # task_ids must resolve here or full_score() is skipped, leaving
+    # reasoning_score / confidence_score as None.
     tasks_list = json.loads(TASKS_PATH.read_text())
     tasks: dict = {t["task_id"]: t for t in tasks_list}
+    if PERTS_PATH.exists():
+        for p in json.loads(PERTS_PATH.read_text()):
+            tasks.setdefault(p["task_id"], p)
 
     # Load all runs
     raw_lines = [l for l in RUNS_PATH.read_text().splitlines() if l.strip()]

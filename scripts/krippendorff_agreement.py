@@ -37,8 +37,11 @@ from baseline.utils_task_id import task_type_from_id as derive_task_type
 ROOT = Path(__file__).resolve().parents[1]
 RUNS_PATH = ROOT / "experiments/results_v1/runs.jsonl"
 JUDGE_PATH = ROOT / "experiments/results_v2/llm_judge_scores_full.jsonl"
+PERT_RUNS_PATH = ROOT / "experiments/results_v2/perturbation_runs.jsonl"
+PERT_JUDGE_PATH = ROOT / "experiments/results_v2/perturbation_judge_scores.jsonl"
 TASKS_PATH = ROOT / "data/benchmark_v1/tasks_all.json"
 PERT_PATH = ROOT / "data/synthetic/perturbations.json"
+PERT_ALL_PATH = ROOT / "data/synthetic/perturbations_all.json"
 OUT_JSON = ROOT / "experiments/results_v2/krippendorff_agreement.json"
 EXISTING_AGREEMENT = ROOT / "experiments/results_v2/keyword_vs_judge_agreement.json"
 FIG_OUT = ROOT / "report_materials/figures/agreement_metrics_comparison.png"
@@ -88,6 +91,8 @@ def load_task_specs() -> dict[str, dict]:
     out = {t["task_id"]: t for t in json.loads(TASKS_PATH.read_text())}
     if PERT_PATH.exists():
         out.update({t["task_id"]: t for t in json.loads(PERT_PATH.read_text())})
+    if PERT_ALL_PATH.exists():
+        out.update({t["task_id"]: t for t in json.loads(PERT_ALL_PATH.read_text())})
     return out
 
 
@@ -258,26 +263,67 @@ def make_comparison_figure(overall: dict, existing_spearman: dict, path: Path) -
 
 
 def main() -> int:
-    runs = load_jsonl(RUNS_PATH)
-    judge = load_jsonl(JUDGE_PATH)
+    runs_base = load_jsonl(RUNS_PATH)
+    judge_base = load_jsonl(JUDGE_PATH)
     tasks = load_task_specs()
-    print(f"runs.jsonl: {len(runs)} | judge: {len(judge)} | task specs: {len(tasks)}")
-    joined_all = join_records(runs, judge, tasks)
-    joined = [r for r in joined_all if r["n_required_assumption_checks"] > 0]
-    print(f"joined (judge OK + run match): {len(joined_all)}")
-    print(f"after excluding 0-required-assumption tasks: {len(joined)}")
+    print(f"runs.jsonl: {len(runs_base)} | judge: {len(judge_base)} | task specs: {len(tasks)}")
 
-    overall = per_dim_alpha(joined)
-    by_model = per_model_alpha(joined)
-    interp = {d: interpret(overall[d]["alpha"]) for d in overall}
+    runs_pert = load_jsonl(PERT_RUNS_PATH) if PERT_RUNS_PATH.exists() else []
+    judge_pert = load_jsonl(PERT_JUDGE_PATH) if PERT_JUDGE_PATH.exists() else []
+    print(f"perturbation_runs.jsonl: {len(runs_pert)} | perturbation_judge: {len(judge_pert)}")
+
+    base_all = join_records(runs_base, judge_base, tasks)
+    base_joined = [r for r in base_all if r["n_required_assumption_checks"] > 0]
+    print(f"base joined: {len(base_all)} → eligible (req_assump>0): {len(base_joined)}")
+
+    pert_all = join_records(runs_pert, judge_pert, tasks)
+    pert_joined = [r for r in pert_all if r["n_required_assumption_checks"] > 0]
+    print(f"perturbation joined: {len(pert_all)} → eligible: {len(pert_joined)}")
+
+    # Combined: run_id-deduplicated set union (matches combined_pass_flip_analysis.py)
+    seen_ids: set[str] = set()
+    combined_joined: list[dict] = []
+    for r in base_joined + pert_joined:
+        rid = r["run_id"]
+        if rid in seen_ids:
+            continue
+        seen_ids.add(rid)
+        combined_joined.append(r)
+    print(f"combined eligible (run_id-deduplicated): {len(combined_joined)}")
+
+    def _build_scope(joined_eligible: list[dict]) -> dict:
+        ov = per_dim_alpha(joined_eligible)
+        pm = per_model_alpha(joined_eligible)
+        ip = {d: interpret(ov[d]["alpha"]) for d in ov}
+        return {"overall": ov, "per_model": pm, "interpretation": ip,
+                "n_eligible": len(joined_eligible)}
+
+    base_scope = _build_scope(base_joined)
+    pert_scope = _build_scope(pert_joined)
+    comb_scope = _build_scope(combined_joined)
+
+    # Backward-compatible top-level (base scope) — keep field names so existing
+    # consumers (website backend, audit docs) continue to read base figures.
+    overall = base_scope["overall"]
+    by_model = base_scope["per_model"]
+    interp = base_scope["interpretation"]
 
     existing = json.loads(EXISTING_AGREEMENT.read_text()) if EXISTING_AGREEMENT.exists() else {}
     existing_dim_overall = existing.get("overall_per_dimension", {})
 
     output = {
         "_methodology_citation": CITATION,
-        "n_joined": len(joined),
-        "n_excluded_empty_assumption": len(joined_all) - len(joined),
+        "_scope_note": (
+            "α reported on three populations: base (runs.jsonl + judge), "
+            "perturbation (perturbation_runs.jsonl + perturbation_judge), and "
+            "combined (run_id-deduplicated set union, matching the "
+            "keyword-judge disagreement headline scope in "
+            "combined_pass_flip_analysis.json). Top-level fields (overall, "
+            "per_model, interpretation, n_joined) preserve base-only values "
+            "for backward compatibility with existing consumers."
+        ),
+        "n_joined": len(base_joined),
+        "n_excluded_empty_assumption": len(base_all) - len(base_joined),
         "bootstrap_B": BOOTSTRAP_B,
         "bootstrap_seed": BOOTSTRAP_SEED,
         "level_of_measurement": "ordinal (11-bin discretisation of [0,1])",
@@ -289,6 +335,9 @@ def main() -> int:
         "overall": overall,
         "per_model": by_model,
         "interpretation": interp,
+        "base": base_scope,
+        "perturbation": pert_scope,
+        "combined": comb_scope,
     }
 
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
@@ -307,12 +356,12 @@ def main() -> int:
     make_comparison_figure(overall, existing_dim_overall, FIG_OUT)
     print(f"Saved: {FIG_OUT}")
 
-    print("\n=== OVERALL Krippendorff α (ordinal) ===")
-    for d, m in overall.items():
-        rho = existing_dim_overall.get(d, {}).get("spearman_rho")
-        rho_str = f"ρ={rho:+.3f}" if rho is not None else "ρ=n/a"
-        print(f"  {d:25s} α={m['alpha']:+.3f}  CI95=[{m['ci_lower']:+.3f}, {m['ci_upper']:+.3f}]  "
-              f"n={m['n']}  | {rho_str}  | {interp[d]}")
+    for scope_name, scope_obj in [("BASE", base_scope), ("PERTURBATION", pert_scope),
+                                  ("COMBINED", comb_scope)]:
+        print(f"\n=== {scope_name} Krippendorff α (ordinal)  n_eligible={scope_obj['n_eligible']} ===")
+        for d, m in scope_obj["overall"].items():
+            print(f"  {d:25s} α={m['alpha']:+.3f}  CI95=[{m['ci_lower']:+.3f}, {m['ci_upper']:+.3f}]  "
+                  f"n={m['n']}  | {scope_obj['interpretation'][d]}")
 
     print("\n=== Headline narrative impact ===")
     a_assump = overall["assumption_compliance"]["alpha"]

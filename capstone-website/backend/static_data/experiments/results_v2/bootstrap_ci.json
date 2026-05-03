@@ -5,65 +5,65 @@
   "method": "non-parametric bootstrap on per-run aggregate_new (literature-weighted NMACR); 95% percentile CI",
   "accuracy": {
     "claude": {
-      "mean": 0.712221,
-      "ci_lower": 0.68869,
-      "ci_upper": 0.736027,
+      "mean": 0.694466,
+      "ci_lower": 0.672195,
+      "ci_upper": 0.716937,
       "n": 246
     },
     "chatgpt": {
-      "mean": 0.691285,
-      "ci_lower": 0.667681,
-      "ci_upper": 0.715227,
+      "mean": 0.673524,
+      "ci_lower": 0.65114,
+      "ci_upper": 0.695963,
       "n": 246
     },
     "gemini": {
-      "mean": 0.776253,
-      "ci_lower": 0.752699,
-      "ci_upper": 0.799189,
+      "mean": 0.732576,
+      "ci_lower": 0.711736,
+      "ci_upper": 0.753172,
       "n": 246
     },
     "deepseek": {
-      "mean": 0.662972,
-      "ci_lower": 0.639471,
-      "ci_upper": 0.686352,
+      "mean": 0.650091,
+      "ci_lower": 0.627322,
+      "ci_upper": 0.672763,
       "n": 246
     },
     "mistral": {
-      "mean": 0.675376,
-      "ci_lower": 0.65188,
-      "ci_upper": 0.69869,
+      "mean": 0.658222,
+      "ci_lower": 0.635899,
+      "ci_upper": 0.679949,
       "n": 246
     }
   },
   "robustness": {
     "claude": {
-      "mean_delta": 0.040085,
-      "ci_lower": 0.026654,
-      "ci_upper": 0.053909,
+      "mean_delta": 0.028463,
+      "ci_lower": 0.015228,
+      "ci_upper": 0.041933,
       "n": 473
     },
     "chatgpt": {
-      "mean_delta": 0.011431,
-      "ci_lower": -0.001357,
-      "ci_upper": 0.024327,
+      "mean_delta": 0.001878,
+      "ci_lower": -0.010682,
+      "ci_upper": 0.014621,
       "n": 473
     },
     "gemini": {
-      "mean_delta": 0.056769,
-      "ci_lower": 0.041065,
-      "ci_upper": 0.072466,
+      "mean_delta": 0.010967,
+      "ci_lower": -0.003561,
+      "ci_upper": 0.025703,
       "n": 473
     },
     "deepseek": {
-      "mean_delta": 0.042306,
-      "ci_lower": 0.026767,
-      "ci_upper": 0.05816,
+      "mean_delta": 0.035217,
+      "ci_lower": 0.019631,
+      "ci_upper": 0.05107,
       "n": 473
     },
     "mistral": {
-      "mean_delta": 0.006951,
-      "ci_lower": -0.00564,
-      "ci_upper": 0.019255,
+      "mean_delta": -0.003953,
+      "ci_lower": -0.016078,
+      "ci_upper": 0.008033,
       "n": 473
     }
   },
@@ -77,12 +77,12 @@
       [
         "claude",
         "gemini",
-        "separable"
+        "not_separable"
       ],
       [
         "claude",
         "deepseek",
-        "separable"
+        "not_separable"
       ],
       [
         "claude",
@@ -144,7 +144,7 @@
       [
         "chatgpt",
         "gemini",
-        "separable"
+        "not_separable"
       ],
       [
         "chatgpt",
@@ -164,7 +164,7 @@
       [
         "gemini",
         "mistral",
-        "separable"
+        "not_separable"
       ],
       [
         "deepseek",

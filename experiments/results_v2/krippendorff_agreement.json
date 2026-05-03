@@ -1,10 +1,16 @@
 {
-  "_methodology_note": "Krippendorff alpha reported with bootstrap 95% CI. Interpretation: CI excluding zero from above = systematic positive agreement; CI excluding zero from below = systematic disagreement (worse than chance); CI containing zero = indistinguishable from chance. Original methodology: Krippendorff (2004, 2013). Single-judge limitations framed by Feuer et al. (2025) 'When Judgment Becomes Noise' [arxiv 2509.20293].",
+  "_methodology_citation": "Methodology follows Park et al. (2025) [arxiv 2506.13639]; reliability concerns raised by 'When Judgment Becomes Noise' (arxiv 2509.20293).",
+  "_scope_note": "\u03b1 reported on three populations: base (runs.jsonl + judge), perturbation (perturbation_runs.jsonl + perturbation_judge), and combined (run_id-deduplicated set union, matching the keyword-judge disagreement headline scope in combined_pass_flip_analysis.json). Top-level fields (overall, per_model, interpretation, n_joined) preserve base-only values for backward compatibility with existing consumers.",
   "n_joined": 1095,
   "n_excluded_empty_assumption": 135,
   "bootstrap_B": 1000,
   "bootstrap_seed": 42,
   "level_of_measurement": "ordinal (11-bin discretisation of [0,1])",
+  "thresholds": {
+    "questionable": "\u03b1 < 0.667",
+    "acceptable": "0.667 \u2264 \u03b1 \u2264 0.8",
+    "strong": "\u03b1 > 0.8"
+  },
   "overall": {
     "method_structure": {
       "alpha": -0.042038537012678345,
@@ -19,10 +25,10 @@
       "n": 1095
     },
     "reasoning_quality": {
-      "alpha": -0.13298413391400188,
-      "ci_lower": -0.2278798392880979,
-      "ci_upper": -0.039230774706326674,
-      "n": 460
+      "alpha": -0.09891337780669662,
+      "ci_lower": -0.15230398791692756,
+      "ci_upper": -0.04466920269036094,
+      "n": 1095
     }
   },
   "per_model": {
@@ -40,10 +46,10 @@
         "n": 219
       },
       "reasoning_quality": {
-        "alpha": -0.19296688653074923,
-        "ci_lower": -0.3705938782905371,
-        "ci_upper": -0.022250195442225548,
-        "n": 115
+        "alpha": -0.15368792730172154,
+        "ci_lower": -0.2764986270641168,
+        "ci_upper": -0.030206895332886997,
+        "n": 219
       }
     },
     "claude": {
@@ -60,10 +66,10 @@
         "n": 219
       },
       "reasoning_quality": {
-        "alpha": -0.12682914157754444,
-        "ci_lower": -0.31252850251627107,
-        "ci_upper": 0.044082796233679625,
-        "n": 115
+        "alpha": -0.12939210695018089,
+        "ci_lower": -0.2584581184759069,
+        "ci_upper": -0.0005089075413458498,
+        "n": 219
       }
     },
     "deepseek": {
@@ -80,10 +86,10 @@
         "n": 219
       },
       "reasoning_quality": {
-        "alpha": -0.2001986028600693,
-        "ci_lower": -0.36940460958410537,
-        "ci_upper": -0.03339684466071218,
-        "n": 115
+        "alpha": -0.08893698417709728,
+        "ci_lower": -0.21300780141686246,
+        "ci_upper": 0.03311504248183636,
+        "n": 219
       }
     },
     "gemini": {
@@ -100,10 +106,10 @@
         "n": 219
       },
       "reasoning_quality": {
-        "alpha": NaN,
-        "ci_lower": NaN,
-        "ci_upper": NaN,
-        "n": 0
+        "alpha": -0.15468173896009252,
+        "ci_lower": -0.2739177144560381,
+        "ci_upper": -0.03581434105665987,
+        "n": 219
       }
     },
     "mistral": {
@@ -120,16 +126,406 @@
         "n": 219
       },
       "reasoning_quality": {
-        "alpha": -0.05566656218427202,
-        "ci_lower": -0.23093227503354216,
-        "ci_upper": 0.11183558121289047,
-        "n": 115
+        "alpha": -0.11525279956128864,
+        "ci_lower": -0.23931155601742385,
+        "ci_upper": 0.012348918262764245,
+        "n": 219
       }
     }
   },
   "interpretation": {
-    "method_structure": "indistinguishable_from_chance (CI contains zero)",
-    "assumption_compliance": "positive_agreement (CI excludes zero from above)",
-    "reasoning_quality": "systematic_disagreement (CI excludes zero from below \u2014 worse than chance)"
+    "method_structure": "questionable",
+    "assumption_compliance": "questionable",
+    "reasoning_quality": "questionable"
+  },
+  "base": {
+    "overall": {
+      "method_structure": {
+        "alpha": -0.042038537012678345,
+        "ci_lower": -0.09720178234128923,
+        "ci_upper": 0.01495555735726096,
+        "n": 1095
+      },
+      "assumption_compliance": {
+        "alpha": 0.5502247401317146,
+        "ci_lower": 0.5040888254588395,
+        "ci_upper": 0.5950602592865847,
+        "n": 1095
+      },
+      "reasoning_quality": {
+        "alpha": -0.09891337780669662,
+        "ci_lower": -0.15230398791692756,
+        "ci_upper": -0.04466920269036094,
+        "n": 1095
+      }
+    },
+    "per_model": {
+      "chatgpt": {
+        "method_structure": {
+          "alpha": -0.06023081086229731,
+          "ci_lower": -0.1734640053236937,
+          "ci_upper": 0.06289309939011846,
+          "n": 219
+        },
+        "assumption_compliance": {
+          "alpha": 0.5765336507897275,
+          "ci_lower": 0.4642288204925422,
+          "ci_upper": 0.6676262630946102,
+          "n": 219
+        },
+        "reasoning_quality": {
+          "alpha": -0.15368792730172154,
+          "ci_lower": -0.2764986270641168,
+          "ci_upper": -0.030206895332886997,
+          "n": 219
+        }
+      },
+      "claude": {
+        "method_structure": {
+          "alpha": -0.03454391104827592,
+          "ci_lower": -0.12308385287844287,
+          "ci_upper": 0.08611773188437208,
+          "n": 219
+        },
+        "assumption_compliance": {
+          "alpha": 0.5008237936387732,
+          "ci_lower": 0.38369498515737466,
+          "ci_upper": 0.5975698493198213,
+          "n": 219
+        },
+        "reasoning_quality": {
+          "alpha": -0.12939210695018089,
+          "ci_lower": -0.2584581184759069,
+          "ci_upper": -0.0005089075413458498,
+          "n": 219
+        }
+      },
+      "deepseek": {
+        "method_structure": {
+          "alpha": -0.10446159456478044,
+          "ci_lower": -0.21949448542704778,
+          "ci_upper": 0.020139725737861137,
+          "n": 219
+        },
+        "assumption_compliance": {
+          "alpha": 0.5371143852578493,
+          "ci_lower": 0.416271419574732,
+          "ci_upper": 0.6343457254195459,
+          "n": 219
+        },
+        "reasoning_quality": {
+          "alpha": -0.08893698417709728,
+          "ci_lower": -0.21300780141686246,
+          "ci_upper": 0.03311504248183636,
+          "n": 219
+        }
+      },
+      "gemini": {
+        "method_structure": {
+          "alpha": -0.10271835208011071,
+          "ci_lower": -0.16433112172934627,
+          "ci_upper": -0.0032588860755973755,
+          "n": 219
+        },
+        "assumption_compliance": {
+          "alpha": 0.5387103041862089,
+          "ci_lower": 0.4322318491877503,
+          "ci_upper": 0.6316191622360228,
+          "n": 219
+        },
+        "reasoning_quality": {
+          "alpha": -0.15468173896009252,
+          "ci_lower": -0.2739177144560381,
+          "ci_upper": -0.03581434105665987,
+          "n": 219
+        }
+      },
+      "mistral": {
+        "method_structure": {
+          "alpha": 0.011256363723627927,
+          "ci_lower": -0.11407116627256433,
+          "ci_upper": 0.14567890408864917,
+          "n": 219
+        },
+        "assumption_compliance": {
+          "alpha": 0.5941708159667488,
+          "ci_lower": 0.49059375144475226,
+          "ci_upper": 0.6829435656676063,
+          "n": 219
+        },
+        "reasoning_quality": {
+          "alpha": -0.11525279956128864,
+          "ci_lower": -0.23931155601742385,
+          "ci_upper": 0.012348918262764245,
+          "n": 219
+        }
+      }
+    },
+    "interpretation": {
+      "method_structure": "questionable",
+      "assumption_compliance": "questionable",
+      "reasoning_quality": "questionable"
+    },
+    "n_eligible": 1095
+  },
+  "perturbation": {
+    "overall": {
+      "method_structure": {
+        "alpha": -0.003319137777089143,
+        "ci_lower": -0.04347356463700354,
+        "ci_upper": 0.03931024475099454,
+        "n": 2100
+      },
+      "assumption_compliance": {
+        "alpha": 0.6337768969984362,
+        "ci_lower": 0.6050355839257644,
+        "ci_upper": 0.6636849997032813,
+        "n": 2100
+      },
+      "reasoning_quality": {
+        "alpha": -0.06998672267191064,
+        "ci_lower": -0.11021798877616637,
+        "ci_upper": -0.03248038689713214,
+        "n": 2100
+      }
+    },
+    "per_model": {
+      "chatgpt": {
+        "method_structure": {
+          "alpha": -0.024392105849829093,
+          "ci_lower": -0.11189239349453116,
+          "ci_upper": 0.06770370539707035,
+          "n": 420
+        },
+        "assumption_compliance": {
+          "alpha": 0.6103632056736954,
+          "ci_lower": 0.5359054052350977,
+          "ci_upper": 0.6769333308679283,
+          "n": 420
+        },
+        "reasoning_quality": {
+          "alpha": -0.1840182536941175,
+          "ci_lower": -0.2723347132491162,
+          "ci_upper": -0.09484314847383138,
+          "n": 420
+        }
+      },
+      "claude": {
+        "method_structure": {
+          "alpha": -0.035414205942595034,
+          "ci_lower": -0.10968558552520023,
+          "ci_upper": 0.05330310774712114,
+          "n": 420
+        },
+        "assumption_compliance": {
+          "alpha": 0.5389644818181831,
+          "ci_lower": 0.4641349951560594,
+          "ci_upper": 0.6086751999173845,
+          "n": 420
+        },
+        "reasoning_quality": {
+          "alpha": -0.10092094436373023,
+          "ci_lower": -0.19725655859611518,
+          "ci_upper": -0.01173933883346277,
+          "n": 420
+        }
+      },
+      "deepseek": {
+        "method_structure": {
+          "alpha": -0.06854485926578135,
+          "ci_lower": -0.14998335250889888,
+          "ci_upper": 0.014105906824666515,
+          "n": 420
+        },
+        "assumption_compliance": {
+          "alpha": 0.6775773436950066,
+          "ci_lower": 0.616860679113196,
+          "ci_upper": 0.7372069789154672,
+          "n": 420
+        },
+        "reasoning_quality": {
+          "alpha": 0.04384807026800008,
+          "ci_lower": -0.05036416405303478,
+          "ci_upper": 0.1368132670234613,
+          "n": 420
+        }
+      },
+      "gemini": {
+        "method_structure": {
+          "alpha": -0.004986082722333363,
+          "ci_lower": -0.09771345900163753,
+          "ci_upper": 0.10316473158337067,
+          "n": 420
+        },
+        "assumption_compliance": {
+          "alpha": 0.6236479555720764,
+          "ci_lower": 0.5555793969218203,
+          "ci_upper": 0.6904663872458343,
+          "n": 420
+        },
+        "reasoning_quality": {
+          "alpha": -0.16077005785209986,
+          "ci_lower": -0.2495792189664245,
+          "ci_upper": -0.06588115762817905,
+          "n": 420
+        }
+      },
+      "mistral": {
+        "method_structure": {
+          "alpha": 0.040869501109114026,
+          "ci_lower": -0.053571313133741874,
+          "ci_upper": 0.14897562790521054,
+          "n": 420
+        },
+        "assumption_compliance": {
+          "alpha": 0.7111819570245914,
+          "ci_lower": 0.6516443568706891,
+          "ci_upper": 0.763273965182732,
+          "n": 420
+        },
+        "reasoning_quality": {
+          "alpha": -0.11891105344759034,
+          "ci_lower": -0.2060467594839167,
+          "ci_upper": -0.029764808710018104,
+          "n": 420
+        }
+      }
+    },
+    "interpretation": {
+      "method_structure": "questionable",
+      "assumption_compliance": "questionable",
+      "reasoning_quality": "questionable"
+    },
+    "n_eligible": 2100
+  },
+  "combined": {
+    "overall": {
+      "method_structure": {
+        "alpha": -0.01642389298153324,
+        "ci_lower": -0.04771246757741636,
+        "ci_upper": 0.015995742081517522,
+        "n": 3195
+      },
+      "assumption_compliance": {
+        "alpha": 0.605143179771106,
+        "ci_lower": 0.5799653778982201,
+        "ci_upper": 0.6315125143549817,
+        "n": 3195
+      },
+      "reasoning_quality": {
+        "alpha": -0.08020633092486817,
+        "ci_lower": -0.1138252166811142,
+        "ci_upper": -0.04601597096349936,
+        "n": 3195
+      }
+    },
+    "per_model": {
+      "chatgpt": {
+        "method_structure": {
+          "alpha": -0.03721078465515748,
+          "ci_lower": -0.10591376072230385,
+          "ci_upper": 0.03759468607855083,
+          "n": 639
+        },
+        "assumption_compliance": {
+          "alpha": 0.5993530279794748,
+          "ci_lower": 0.5371481535862062,
+          "ci_upper": 0.6469480821088729,
+          "n": 639
+        },
+        "reasoning_quality": {
+          "alpha": -0.17407401693097135,
+          "ci_lower": -0.23984333850822082,
+          "ci_upper": -0.10178527574095401,
+          "n": 639
+        }
+      },
+      "claude": {
+        "method_structure": {
+          "alpha": -0.034771473774818595,
+          "ci_lower": -0.09653336526639988,
+          "ci_upper": 0.03483063520691528,
+          "n": 639
+        },
+        "assumption_compliance": {
+          "alpha": 0.5249517800752013,
+          "ci_lower": 0.4664441730691245,
+          "ci_upper": 0.5829677061345039,
+          "n": 639
+        },
+        "reasoning_quality": {
+          "alpha": -0.11153855012450009,
+          "ci_lower": -0.18249548775481414,
+          "ci_upper": -0.03679880019749874,
+          "n": 639
+        }
+      },
+      "deepseek": {
+        "method_structure": {
+          "alpha": -0.08026290306769424,
+          "ci_lower": -0.1496174612774367,
+          "ci_upper": -0.009563821784993596,
+          "n": 639
+        },
+        "assumption_compliance": {
+          "alpha": 0.6293204909669096,
+          "ci_lower": 0.574631838930359,
+          "ci_upper": 0.6775169205729326,
+          "n": 639
+        },
+        "reasoning_quality": {
+          "alpha": -0.0014253802577477437,
+          "ci_lower": -0.07181059653967074,
+          "ci_upper": 0.0728109591017344,
+          "n": 639
+        }
+      },
+      "gemini": {
+        "method_structure": {
+          "alpha": -0.03819707164211117,
+          "ci_lower": -0.10688565704728693,
+          "ci_upper": 0.03725193239192764,
+          "n": 639
+        },
+        "assumption_compliance": {
+          "alpha": 0.5939297780121727,
+          "ci_lower": 0.5383264253802486,
+          "ci_upper": 0.6524191319927332,
+          "n": 639
+        },
+        "reasoning_quality": {
+          "alpha": -0.15951857658408897,
+          "ci_lower": -0.23097784966295626,
+          "ci_upper": -0.08979234734776693,
+          "n": 639
+        }
+      },
+      "mistral": {
+        "method_structure": {
+          "alpha": 0.02982298454899912,
+          "ci_lower": -0.046721786232537685,
+          "ci_upper": 0.10844261978764877,
+          "n": 639
+        },
+        "assumption_compliance": {
+          "alpha": 0.6720104374520455,
+          "ci_lower": 0.6201775912762358,
+          "ci_upper": 0.7141952946821162,
+          "n": 639
+        },
+        "reasoning_quality": {
+          "alpha": -0.11831365633910651,
+          "ci_lower": -0.19285034096669265,
+          "ci_upper": -0.04310815023225574,
+          "n": 639
+        }
+      }
+    },
+    "interpretation": {
+      "method_structure": "questionable",
+      "assumption_compliance": "questionable",
+      "reasoning_quality": "questionable"
+    },
+    "n_eligible": 3195
   }
 }

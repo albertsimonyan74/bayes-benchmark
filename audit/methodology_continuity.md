@@ -51,3 +51,26 @@ The post-hoc script is archived at
 `llm-stats-vault/90-archive/superseded_scripts/recompute_nmacr.py`. See
 [`audit/recompute_log.md`](recompute_log.md) §"Phase 1.6 — Approach A"
 for the migration audit trail.
+
+### History — Phase 1.7 Tier 1 coverage fixes (2026-05-03)
+A diagnostic pass on the same date surfaced two compounding bugs in the
+score-coverage layer: (1) `_make_run_record()` in
+`llm_runner/run_all_tasks.py` chronically omitted `reasoning_score` and
+`confidence_score` from logged records; (2)
+`scripts/recompute_scores.py:23` pointed at the Phase-1-only
+`tasks.json` instead of `tasks_all.json`, so post-hoc backfill only
+covered 136/171 task_ids. Combined effect: Gemini (the only model fully
+re-issued after the most recent recompute, RPD quota recovery on
+2026-04-26) appeared to have 0/246 reasoning + confidence signals; the
+other 4 models retained partial coverage from earlier runs.
+
+Tier 1 fixes (Fix A/B/C/D) corrected the path, regenerated all 1,230
+records from intact `raw_response` text (no API calls), extended
+Krippendorff α reporting to base/perturbation/combined scopes, and
+acknowledged MARKOV_04 in the Limitations exclusion list. Numbers shifted
+1–4pp on accuracy and robustness; the "Gemini calibration inversion" and
+"Gemini 0 verbalized signals" claims were FALSIFIED and reframed
+cohort-wide. The 22.16% combined keyword-judge disagreement headline was
+UNCHANGED (independent of fix scope). Full audit trail in
+[`audit/recompute_log.md`](recompute_log.md) §"Phase 1.7" and
+[`audit/gemini_forensic_2026-05-03.md`](gemini_forensic_2026-05-03.md).

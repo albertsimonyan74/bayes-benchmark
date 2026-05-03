@@ -20,21 +20,32 @@ fits" and may systematically prefer the more concrete L1 buckets). A
 multi-judge ensemble is required to disambiguate the two explanations;
 that is paper-scope future work.
 
-### b) Empty high-confidence bucket in calibration
+### b) Verbalized confidence is hedging-language-sensitive (empty high-confidence bucket)
 
 All five models produced 0 responses classified as high-confidence
 (claimed p ≥ 0.85) by our keyword-based extractor, leaving the 0.9 ECE
-bucket empty for every model. Reported ECE values are therefore weighted
-MAEs over three populated buckets (0.3 / 0.5 / 0.6) rather than a full
-four-bucket calibration curve — they capture how well models calibrate
-across the low-to-moderate confidence range only. Multi-Answer Confidence
+bucket empty for every model. Reported ECE values (0.06–0.18) are
+weighted MAEs over three populated buckets (0.3 / 0.5 / 0.6) rather
+than a full four-bucket calibration curve — they capture how well models
+calibrate across the low-to-moderate confidence range only. Verbalized
+extraction is also sensitive to hedging language: models with less
+hedging produce fewer high-confidence signals (Gemini, for instance,
+defaults 119 of 246 base responses to "unstated" and tends toward
+moderate-bucket placement when it does hedge). Multi-Answer Confidence
 (2026) names the consistency-based proxy as the upgrade path; we run a
 stratified version under Phase 1C (top-failure tasks only) and disclose
 the random-sample re-run as a separate caveat (e). True probabilistic
 calibration would require token-level logprobs over the answer span,
 which is not uniformly available across the five vendor APIs we benchmark.
-Gemini specifically returned 0 verbalized confidence signals across 246
-base runs; it is excluded from the accuracy-calibration correlation block.
+
+[Tier 1 update 2026-05-03: prior version of this disclosure stated
+"Gemini specifically returned 0 verbalized confidence signals across
+246 base runs and is excluded from the accuracy-calibration correlation
+block." That claim was an artifact of the runner schema gap + stale
+recompute path documented in `audit/gemini_forensic_2026-05-03.md`, not
+a property of Gemini's responses. Post-fix coverage: Gemini has 127/246
+extractable signals and accuracy_calibration_correlation r = 0.337,
+in-band with the other four models (0.31–0.43).]
 
 ### c) Robustness ranking — top-2 not statistically separable
 
@@ -92,3 +103,10 @@ correlation is r=0.184 (weak); within-gemini length–RQ correlation is
 r=0.012 (effectively zero), indicating length does not drive gemini's own
 variance. Length-controlled per-task analysis and multi-judge ensemble are
 deferred to future work.
+
+[Tier 1 update 2026-05-03: this disclosure was authored against pre-fix
+coverage. Post-fix Gemini accuracy under literature-weighted NMACR is
+0.7326 [0.7117, 0.7532] (was 0.7763); the lead over Claude (#2 0.6945
+[0.6722, 0.7169]) narrows to 3.8pp but remains separable. Length-vs-RQ
+correlations themselves were not recomputed since Tier 1 fixes did not
+touch raw_response text.]

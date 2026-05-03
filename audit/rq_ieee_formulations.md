@@ -97,10 +97,15 @@ target (Longjohn et al. 2025; Hochlehnert et al. 2025).
 - Per-perturbation-type keyword-judge disagreement: rephrase 21.6% (162 / 750), numerical
   22.7% (136 / 600), semantic 18.1% (136 / 750). Disagreement is a
   stable rubric property, not a base-prompt artifact.
-- Krippendorff α (ordinal, B = 1,000):
+- Krippendorff α (ordinal, B = 1,000) — **base scope (n = 1,095) post Tier 1**:
   - `assumption_compliance`: α = **0.55** [0.504, 0.595], n = 1,095.
   - `method_structure`:      α = **−0.04** [−0.097, +0.015], n = 1,095.
-  - `reasoning_quality`:     α = **−0.13** [−0.228, −0.039], n = 460.
+  - `reasoning_quality`:     α = **−0.099** [−0.152, −0.045], n = 1,095.
+- Combined-scope α (n = 3,195, matches keyword-judge disagreement
+  headline scope) — Tier 1 addition:
+  - `assumption_compliance`: α = **0.605** [0.580, 0.632], n = 3,195.
+  - `method_structure`:      α = **−0.016** [−0.048, +0.016], n = 3,195.
+  - `reasoning_quality`:     α = **−0.080** [−0.114, −0.046], n = 3,195.
 - The CI for `reasoning_quality` excludes zero — agreement is
   systematically worse than chance. The CI for `method_structure`
   contains zero — agreement is statistically indistinguishable from
@@ -386,28 +391,33 @@ applies to base set). Robustness uses 5 × 473 perturbation pairs.
 Calibration uses 1,230 base runs.
 
 **Findings (canonical, `bootstrap_ci.json`, weighting_scheme =
-`literature_v1`).**
-- Accuracy: gemini 0.776 [0.753, 0.799] > claude 0.712 [0.689, 0.736] >
-  chatgpt 0.691 [0.668, 0.715] > mistral 0.675 [0.652, 0.699] >
-  deepseek 0.663 [0.639, 0.686]. Top model: **gemini**.
-- Robustness Δ: mistral 0.0070 [−0.006, 0.019] < chatgpt 0.0114
-  [−0.001, 0.024] < claude 0.0401 [0.027, 0.054] < deepseek 0.0423
-  [0.027, 0.058] < gemini 0.0568 [0.041, 0.072]. Top model:
-  **mistral**.
+`literature_v1`, post Tier 1 2026-05-03).**
+- Accuracy: gemini 0.7326 [0.7117, 0.7532] > claude 0.6945
+  [0.6722, 0.7169] > chatgpt 0.6735 [0.6511, 0.6960] > mistral 0.6582
+  [0.6359, 0.6799] > deepseek 0.6501 [0.6273, 0.6728]. Top model:
+  **gemini**. Top-1 lead over Claude narrows to 3.8pp under corrected
+  scoring.
+- Robustness Δ: mistral **−0.0040** [−0.016, 0.008] < chatgpt 0.0019
+  [−0.011, 0.015] < gemini 0.0110 [−0.004, 0.026] < claude 0.0285
+  [0.015, 0.042] < deepseek 0.0352 [0.020, 0.051]. Top model:
+  **mistral** (uniquely improves under perturbation — negative delta).
 - Calibration ECE (verbalized): chatgpt 0.063 < claude 0.067 <
   mistral 0.084 < gemini 0.097 < deepseek 0.180. Top model:
   **chatgpt**.
 - Three different top models — H₀ rejected.
 - Separability matrix (accuracy): claude–chatgpt **not_separable**;
+  claude–gemini **not_separable**; claude–deepseek **not_separable**;
   claude–mistral **not_separable**; chatgpt–deepseek **not_separable**;
   chatgpt–mistral **not_separable**; deepseek–mistral **not_separable**.
-  Five of ten accuracy pairs not separable.
-- Separability matrix (robustness): chatgpt–mistral **not_separable**;
-  claude–gemini **not_separable**; claude–deepseek **not_separable**;
-  gemini–deepseek **not_separable**. Both top robustness pairs
-  (mistral and chatgpt) have CIs spanning zero — within-noise of "no
-  perturbation effect." Cite Hochlehnert et al. (2025): single-question
-  swaps shift Pass@1 ≥ 3 pp — same noise scale observed here.
+  Seven of ten accuracy pairs not separable post Tier 1 (chatgpt–gemini,
+  gemini–deepseek, gemini–mistral remain separable). Top-1 (gemini) is
+  separable from #3+ but **no longer separable from #2 claude** under
+  corrected scoring — the lead is real but tighter.
+- Separability matrix (robustness): three of five models
+  (mistral, chatgpt, gemini) have CIs spanning zero — within-noise of
+  "no perturbation effect." Only claude and deepseek separate from
+  zero. Cite Hochlehnert et al. (2025): single-question swaps shift
+  Pass@1 ≥ 3 pp — same noise scale observed here.
 
 **Result vs hypotheses.** Reject H₀. The three rankings are not
 concordant — the top-ranked model differs across all three axes
@@ -437,9 +447,10 @@ many pairwise rank differences are noise-equivalent on each axis.
   `longjohn2025bayesian`. *Used to motivate the bootstrap-CI design.*
 
 **Limitations specific to RQ4.**
-- Robustness top-2 (mistral, chatgpt) have CIs containing zero — within
-  this sample size, neither model is statistically distinguishable
-  from "no perturbation effect." Cite Hochlehnert et al. (2025).
+- Robustness top-3 (mistral, chatgpt, gemini) have CIs containing zero
+  post Tier 1 — within this sample size, none of the three is
+  statistically distinguishable from "no perturbation effect." Cite
+  Hochlehnert et al. (2025).
 - Calibration ECE here is verbalized only (the "weakest baseline" per
   Wang et al. 2026, Multi-Answer Confidence). Consistency-based ECE
   yields a different ranking — see RQ5.
@@ -511,18 +522,29 @@ do their conclusions about overall calibration quality coincide?
 - Consistency: gemini < mistral < chatgpt < deepseek < claude
   (best → worst). All in [0.618, 0.734].
 - Verbalized: hedge-heavy default to "unstated" bucket; 0 records in
-  high (claimed p = 0.9) bucket across all 5 models. Gemini has 0
-  verbalized signals at all (all 246 unstated).
+  high (claimed p = 0.9) bucket across all 5 models. Verbalized
+  extraction is sensitive to hedging language — models with less
+  hedging produce fewer high-confidence signals.
 - Consistency: all 5 models severely overconfident (ECE > 0.6).
   Confident agreement does not predict accuracy.
-- Gemini reverses rank between methods: outlier "0 verbalized signals"
-  → BEST consistency ECE (0.618 vs 0.66–0.73 for others).
+- Cohort-wide finding: calibration is method-dependent. The two
+  measurements yield qualitatively different conclusions for every
+  model (hedge-heavy vs severely overconfident).
 
 **Result vs hypotheses.** Reject H₀. The two methods produce
 qualitatively different per-model conclusions and disagree on overall
 direction (verbalized: hedge-heavy / underconfident on populated buckets;
 consistency: severely overconfident across the board). Spearman ρ
-between the two ECE rankings is negative (gemini reverses).
+between the two ECE rankings is low.
+
+[Tier 1 update 2026-05-03: pre-fix versions of this section described
+"Gemini calibration inversion: 0 verbalized signals → BEST consistency
+ECE." That subclaim was an artifact of the runner schema gap +
+stale recompute path (`audit/gemini_forensic_2026-05-03.md`); Gemini
+post-fix has 127/246 verbalized signals and accuracy_calibration
+correlation r=0.337, in-band with the other four models. The cohort-wide
+method-dependence finding stands; the Gemini-specific inversion
+subclaim is FALSIFIED and removed.]
 
 **Citations used.**
 - **Nagarkar et al. (2026)** [arXiv:2601.14479] — confidence claims
@@ -574,10 +596,10 @@ between the two ECE rankings is negative (gemini reverses).
   reported.
 - Nagarkar et al. (2026) flag confidence-vs-accuracy decoupling on
   statistical-domain tasks; the accuracy-calibration correlation
-  reported here, Pearson r ∈ [0.35, 0.49], confirms decoupling is
-  moderate (not
-  catastrophic) where confidence is extractable, and total (Gemini)
-  where it is not.
+  reported here (post Tier 1), Pearson r ∈ [0.31, 0.43] across all five
+  models including Gemini (r = 0.337), confirms decoupling is moderate
+  (not catastrophic) — confidence tracks task difficulty more than
+  ground-truth correctness, but does so consistently across the cohort.
 
 **Source files.**
 - `experiments/results_v2/calibration.json` (verbalized ECE per model;
@@ -630,7 +652,7 @@ RQ formulations.
 | 3 | ~~Bibtex key `park2025judge` actually points to Yamauchi et al.~~ | **VERIFIED 2026-05-03 (no rename).** Bibtex key `park2025judge` retained for citation stability per Day-3 housekeeping convention; bibtex `author={...}` field correctly says "Yamauchi" so any LaTeX `\cite{park2025judge}` resolves to "Yamauchi et al." in printed references. All in-text references across project use "Yamauchi et al. (2025)". No further action needed pre-submission unless reviewer queries the key mismatch. |
 | 4 | ~~Boye & Moell — bibtex year 2026 vs arXiv Feb 2025…~~ | **RESOLVED 2026-05-03.** Bibtex key renamed `mathfail2026` → `mathfail2025`; year field updated `2026 → 2025`. Vault note `papers/13-new-math-reasoning-failures-2026.md` Year + Citation-in-poster + Citation-in-paper + Bibtex-key fields all aligned to 2025. Filename retains legacy `-2026` suffix for stability (logged in metadata). README + poster-citations + audit/literature_comparison.md + audit/personal_todo_status.md updated. static_data mirror synced. |
 | 5 | The 22.16% combined keyword-judge disagreement uses `pct_pass_flip` from `combined_pass_flip_analysis.json`; the older 25.02% uses base-only `keyword_vs_judge_agreement.json`. Both are canonical at their own scope. | Paper should pick one for the headline (recommend 22.16%, larger denominator) and footnote the other. Website currently shows both via the `useKeyFindings` hook. |
-| 6 | Gemini "all 246 base responses unstated" — verify this exactly matches `calibration.json` per_bucket counts (gemini.unstated.n = 246 expected). | Pre-paper sanity check: confirm gemini bucket totals sum to 246. |
+| 6 | ~~Gemini "all 246 base responses unstated" — verify…~~ | **RESOLVED 2026-05-03 (Tier 1).** Falsified by Fix B. Post-fix gemini bucket counts: low 9, medium 118, high 0, unstated 119 (sum 246). 127/246 extractable signals; correlation r = 0.337. See `audit/gemini_forensic_2026-05-03.md`. |
 | 7 | Phase 1C self-consistency cost reported as $11.688 in `recompute_log.md`; verify this matches the run-log artifacts before citing in paper. | Cross-check `experiments/results_v2/self_consistency_runs.jsonl` token counts against vendor-quoted $/M-token rates. |
 
 ---

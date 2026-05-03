@@ -40,10 +40,11 @@
       "mistral": 0.1724
     },
     "C": {
-      "claude": 0.0546,
-      "chatgpt": 0.0608,
-      "deepseek": 0.039,
-      "mistral": 0.0504
+      "claude": 0.0534,
+      "chatgpt": 0.0593,
+      "gemini": 0.0448,
+      "deepseek": 0.0393,
+      "mistral": 0.0474
     },
     "R": {
       "claude": 0.1125,

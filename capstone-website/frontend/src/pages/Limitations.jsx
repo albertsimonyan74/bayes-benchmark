@@ -57,12 +57,13 @@ const CAVEATS = [
     misleading: 0.33 → 0.73 (+0.40 ECE delta).`,
   },
   {
-    title: '135-task keyword-judge disagreement exclusion (CONCEPTUAL / MINIMAX / BAYES_RISK)',
+    title: '135-task keyword-judge disagreement exclusion (CONCEPTUAL / MINIMAX / BAYES_RISK + MARKOV_04)',
     body: `Keyword-judge disagreement is computed on 1,095 of 1,230 base runs. The 135 excluded runs come from
-    CONCEPTUAL/MINIMAX/BAYES_RISK task families with empty required_assumption_checks —
-    keyword and judge scoring of assumption articulation cannot be compared on tasks that don't
-    require assumption articulation. The same eligibility filter applies to the 2,100 of 2,365
-    perturbation runs in the combined denominator (3,195 / 3,595).`,
+    27 distinct task_ids × 5 models — CONCEPTUAL (10 tasks), MINIMAX (5 base + 3 MINIMAX_01 perturbations),
+    BAYES_RISK (5 base + 3 BAYES_RISK_01 perturbations), and the MARKOV_04 outlier — all sharing empty
+    required_assumption_checks. Keyword and judge scoring of assumption articulation cannot be compared
+    on tasks that don't require assumption articulation. The same eligibility filter applies to the
+    2,100 of 2,365 perturbation runs in the combined denominator (3,195 / 3,595).`,
   },
   {
     title: '10-task CONCEPTUAL exclusion from self-consistency',

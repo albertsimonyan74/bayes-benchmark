@@ -135,11 +135,10 @@
     "overall_accuracy": 0.590108401084011
   },
   "accuracy_calibration_correlation": {
-    "claude": 0.427,
-    "chatgpt": 0.3445,
-    "gemini": 0.3368,
-    "deepseek": 0.3107,
-    "mistral": 0.3782
+    "claude": 0.4905,
+    "chatgpt": 0.3712,
+    "deepseek": 0.3473,
+    "mistral": 0.4762
   },
   "accuracy_calibration_correlation_note": "Pearson r between per-task aggregate_new (literature-weighted NMACR) and per-task confidence proxy (dim_C). Positive = well-calibrated answers tend to be accurate; negative = overconfident wrong / underconfident right.",
   "formatting_failure_rate_per_model": {
