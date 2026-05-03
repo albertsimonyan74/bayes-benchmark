@@ -1,0 +1,31 @@
+{
+  "snapshot_date": "2026-05-03",
+  "context": "Approach A pre-flight baseline",
+  "experiments/results_v2/bootstrap_ci.json": {
+    "sha256": "3bebe58c64ce71768968327eb2a17e92d54f4910e6deeeb4fe9100213f4a9e68",
+    "size_bytes": 3418
+  },
+  "experiments/results_v2/robustness_v2.json": {
+    "sha256": "304a31072cdf3d11f826a71222cd426705b5f95bc567d6c2c0ea1bdcf5c129f8",
+    "size_bytes": 86465
+  },
+  "experiments/results_v2/nmacr_scores_v2.jsonl": {
+    "sha256": "415ba931b8cbb7d5d0a8b5a2061b9f71242e98e9c9de3dff799ba092ac814436",
+    "size_bytes": 1608285
+  },
+  "accuracy_means": {
+    "claude": 0.712221,
+    "chatgpt": 0.691285,
+    "gemini": 0.776253,
+    "deepseek": 0.662972,
+    "mistral": 0.675376
+  },
+  "robustness_means": {
+    "claude": 0.040085,
+    "chatgpt": 0.011431,
+    "gemini": 0.056769,
+    "deepseek": 0.042306,
+    "mistral": 0.006951
+  },
+  "weighting_scheme": "literature_v1"
+}

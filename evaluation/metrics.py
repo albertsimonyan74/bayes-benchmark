@@ -10,8 +10,14 @@ Per-task components in [0,1]:
   C = Confidence Calibration   — model is confident when correct, uncertain when wrong
   R = Reasoning Quality        — step-by-step derivation quality and interpretation
 
-Weights (reconciled with response_parser.py):
-  N 0.20, M 0.20, C 0.20, A 0.20, R 0.20  (all equal)
+NMACR weights — literature-derived (sole canonical scheme since Approach A,
+2026-05-03). Sum to 1.0.
+  A 0.30, R 0.25, M 0.20, C 0.15, N 0.10
+
+See audit/aggregation_locus.md for the single-path rationale and
+audit/methodology_continuity.md §"NMACR weighting" for the literature defense
+(Du 2025, Boye & Moell 2025, Yamauchi 2025, ReasonBench 2025, Wei 2022,
+Chen 2022, Bishop 2006, Nagarkar 2026, FermiEval 2025, Liu 2025).
 
 Stress-test multiplier:
   Tier 5 tasks have multiplier 1.50; others 1.00
@@ -28,7 +34,19 @@ import statistics
 
 
 # Scoring weights must match llm_runner/response_parser.py — see CLAUDE.md §7
-WEIGHTS: Dict[str, float] = {"N": 0.20, "M": 0.20, "C": 0.20, "A": 0.20, "R": 0.20}
+NMACR_WEIGHTS: Dict[str, float] = {
+    "A": 0.30,
+    "R": 0.25,
+    "M": 0.20,
+    "C": 0.15,
+    "N": 0.10,
+}
+assert abs(sum(NMACR_WEIGHTS.values()) - 1.0) < 1e-9, "NMACR weights must sum to 1.0"
+
+WEIGHTING_SCHEME = "literature_v1"
+
+# Backwards-compatible alias (no remaining importers, kept defensively)
+WEIGHTS = NMACR_WEIGHTS
 
 STRESS_TEST_TIER = 5
 STRESS_MULTIPLIER = 1.50
@@ -168,11 +186,11 @@ def conceptual_score(task: TaskSpec, run: TaskRun) -> float:
 
 def base_score_from_components(cs: ComponentScores) -> float:
     s = (
-        WEIGHTS["N"] * cs.N
-        + WEIGHTS["M"] * cs.M
-        + WEIGHTS["C"] * cs.C
-        + WEIGHTS["A"] * cs.A
-        + WEIGHTS["R"] * cs.R
+        NMACR_WEIGHTS["N"] * cs.N
+        + NMACR_WEIGHTS["M"] * cs.M
+        + NMACR_WEIGHTS["C"] * cs.C
+        + NMACR_WEIGHTS["A"] * cs.A
+        + NMACR_WEIGHTS["R"] * cs.R
     )
     return clamp01(s)
 

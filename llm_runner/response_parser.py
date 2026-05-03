@@ -3,29 +3,35 @@
 """
 Parse LLM responses and score them against ground truth.
 
-Five scoring dimensions (equal weights):
+Five scoring dimensions (NMACR — literature-derived weights, sole canonical
+scheme since Approach A, 2026-05-03):
   N = Numerical Accuracy   — extracted numbers match ground truth (within tolerance)
   M = Method Structure     — response demonstrates required reasoning steps
   A = Assumption Compliance — response mentions required statistical assumptions
   C = Confidence Calibration — model is confident when correct, uncertain when wrong
   R = Reasoning Quality    — step-by-step derivation quality and interpretation
 
-Combined final score (numeric tasks): 0.20*N + 0.20*M + 0.20*A + 0.20*C + 0.20*R
+Combined final score (numeric tasks):
+  0.10*N + 0.20*M + 0.30*A + 0.15*C + 0.25*R
 Conceptual tasks: 1.0 * rubric_score
 Pass threshold: final_score >= 0.5
+
+See audit/aggregation_locus.md (single-path rationale) and
+audit/methodology_continuity.md §"NMACR weighting" (literature defense).
 """
 from __future__ import annotations
 
 import re
 from typing import Any, Dict, List
 
-# ── Scoring weights (must match WEIGHTS in evaluation/metrics.py) ─────────────
+# ── NMACR weights — literature-derived (must match NMACR_WEIGHTS in evaluation/metrics.py) ──
 # Scoring weights must match evaluation/metrics.py — see CLAUDE.md §7
-W_N = 0.20  # Numerical Accuracy
-W_M = 0.20  # Method Structure
-W_A = 0.20  # Assumption Compliance
-W_C = 0.20  # Confidence Calibration
-W_R = 0.20  # Reasoning Quality
+W_N = 0.10  # Numerical Accuracy        — Liu 2025, Boye & Moell 2025
+W_M = 0.20  # Method Structure          — Wei 2022, Chen 2022, Bishop 2006
+W_A = 0.30  # Assumption Compliance     — Du 2025, Boye & Moell 2025, Yamauchi 2025
+W_C = 0.15  # Confidence Calibration    — Nagarkar 2026, FermiEval 2025, Multi-Answer 2026
+W_R = 0.25  # Reasoning Quality         — Yamauchi 2025, Boye & Moell 2025, ReasonBench 2025
+assert abs((W_N + W_M + W_A + W_C + W_R) - 1.0) < 1e-9, "NMACR weights must sum to 1.0"
 
 from llm_runner.prompt_builder import parse_answer, format_numeric_targets
 
@@ -436,7 +442,8 @@ def full_score(raw_response: str, task: dict) -> Dict[str, Any]:
     """
     Compute a combined score from all five components.
 
-    Weights (numeric tasks):  0.20*N + 0.20*M + 0.20*A + 0.20*C + 0.20*R
+    Weights (numeric tasks, literature-derived):
+        0.10*N + 0.20*M + 0.30*A + 0.15*C + 0.25*R
     Rubric-only tasks:        1.0 * rubric_score
     Mixed tasks:              0.6 * numeric + 0.4 * rubric
     Pass threshold: final_score >= 0.5
