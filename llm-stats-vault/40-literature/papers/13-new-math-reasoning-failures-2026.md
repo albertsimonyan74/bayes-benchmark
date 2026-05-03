@@ -2,7 +2,7 @@
 
 ## Metadata
 - Authors: Johan Boye, Birger Moell
-- Year: 2026 (February)
+- Year: 2025 (arXiv submission February 2025; filename retains legacy `-2026` suffix for stability)
 - Venue: arXiv preprint
 - arXiv ID: 2502.11574
 - URL: https://arxiv.org/abs/2502.11574
@@ -22,13 +22,13 @@ Catalogs LLM failure modes on mathematical reasoning, emphasizing unwarranted as
 Validates the N·M·A·C·R rubric design. The "unwarranted assumptions" failure mode is exactly what our assumption_compliance dimension measures (51.5% zeros in judge scores). Maps to evaluation/llm_judge_rubric.py and the assumption_compliance result.
 
 ## Citation in poster
-(Math Reasoning Failures, 2026)
+(Boye & Moell, 2025)
 
 ## Citation in paper
-Recent work (2026) identifies unwarranted assumptions and intuition-translation gaps as core LLM math-reasoning failures; our N·M·A·C·R rubric explicitly captures these dimensions.
+Boye & Moell (2025) identify unwarranted assumptions and intuition-translation gaps as core LLM math-reasoning failures; our N·M·A·C·R rubric explicitly captures these dimensions.
 
 ## Bibtex key
-mathfail2026
+mathfail2025
 
 ## Project artifacts that cite this
 - evaluation/llm_judge_rubric.py

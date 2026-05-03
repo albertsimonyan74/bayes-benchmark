@@ -221,8 +221,8 @@ flag for 3 hand-authored perts), [H-7] (rejudge 1 parse_error), [F-9] are minor 
 - Original equal-weight critique addressed: "narrative reduced to 'I built a Bayesian
   benchmark and Claude won.'"
 - New weights: **RQ1 40% (judge-validation methodology) | RQ2/3/4/5 15% each**.
-- Each RQ tied to literature (Park 2025, Liu 2025, Wang 2025, BrittleBench 2026,
-  ReasonBench 2025, FermiEval 2025, Multi-Answer 2026, Math-Failures 2026).
+- Each RQ tied to literature (Yamauchi 2025, Liu 2025, Du 2025, BrittleBench 2026,
+  ReasonBench 2025, FermiEval 2025, Multi-Answer 2026, Boye & Moell 2025).
 - "What this changes in the poster" section names the concrete poster edits required:
   abstract leads with judge-validation, RQ1 is largest block, Limitations cites
   Judgment-Becomes-Noise, Future Work names consistency-based confidence (MAC 2026)

@@ -24,7 +24,7 @@ Highlighted row: **THIS WORK** (DS 299 Bayesian benchmark).
 - **Closest neighbour**: StatEval — same statistical-reasoning lens, but limited to descriptive + frequentist methods and uses MC format. This benchmark extends StatEval to Bayesian inference and free-response.
 - **Closest methodology siblings**: MathEval (multi-dim rubric) for scoring design; ReasonBench + BrittleBench for the perturbation + variance framing; Park et al. (2025) for the agreement-metric upgrade.
 - **Closest discussion contrasts**: FermiEval (overconfidence on estimation) vs this work (hedge-heavy on Bayesian tasks).
-- **Closest failure-mode confirmation**: Wang et al. ("Ice Cream") and Math-Reasoning-Failures (2026) both report assumption-violation as the dominant L1 — matches our 46.9 % share.
+- **Closest failure-mode confirmation**: Du et al. ("Ice Cream", 2025) and Boye & Moell (Math-Reasoning-Failures, 2025) both report assumption-violation as the dominant L1 — matches our 46.9 % share.
 
 ## What is novel here
 

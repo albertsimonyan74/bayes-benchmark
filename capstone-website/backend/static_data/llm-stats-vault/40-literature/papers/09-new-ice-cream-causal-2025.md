@@ -1,7 +1,7 @@
 # Ice Cream Doesn't Cause Drowning: Benchmarking LLMs Against Statistical Pitfalls in Causal Inference
 
 ## Metadata
-- Authors: Jin Du, Li Chen, Xun Xian, An Luo, Fangqiao Tian, Ganghua Wang, Charles Doss, Xiaotong Shen, Jie Ding (note: bibtex key `wang2025icecream` is legacy — actual first author is Du)
+- Authors: Jin Du, Li Chen, Xun Xian, An Luo, Fangqiao Tian, Ganghua Wang, Charles Doss, Xiaotong Shen, Jie Ding
 - Year: 2025
 - Venue: arXiv preprint
 - arXiv ID: 2505.13770
@@ -22,13 +22,13 @@ Benchmarks LLMs on classic statistical-causal pitfalls (confounding, selection b
 Independent confirmation of our finding that ASSUMPTION_VIOLATION is the dominant failure mode (matches our 46.9%). Their "convincing yet misleading" framing mirrors our error taxonomy. Maps to experiments/results_v2/error_taxonomy_v2.json and report_materials/figures/error_taxonomy_hierarchical.png.
 
 ## Citation in poster
-(Wang et al., 2025)
+(Du et al., 2025)
 
 ## Citation in paper
-Wang et al. (2025) independently report assumption-violation as the dominant LLM failure mode in causal inference, mirroring our Bayesian-task taxonomy.
+Du et al. (2025) independently report assumption-violation as the dominant LLM failure mode in causal inference, mirroring our Bayesian-task taxonomy.
 
 ## Bibtex key
-wang2025icecream
+du2025icecream
 
 ## Project artifacts that cite this
 - scripts/error_taxonomy.py

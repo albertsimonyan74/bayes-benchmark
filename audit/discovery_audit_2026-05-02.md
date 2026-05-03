@@ -1162,7 +1162,7 @@ Methodology details for project:
 Cross-paper convergence: with Fragility, ReasonBench (above).
 Recommended website surface: RQ4 panel — quote "robustness deltas often within stochastic noise" as the direct anchor for chatgpt+mistral CIs crossing zero.
 
-#### Paper 13 — Math Reasoning Failures (Boye & Moell, 2026)
+#### Paper 13 — Math Reasoning Failures (Boye & Moell, 2025)
 Buried claims worth surfacing:
 - "Multi-dimensional rubrics expose more failures than answer-correctness alone" — anchor for full N·M·A·C·R rubric.
 - "Failures cluster on derivation correctness, NOT arithmetic" — direct anchor for our finding that 67/143 failures are ASSUMPTION_VIOLATION (a derivation issue) and only 48 are MATHEMATICAL_ERROR.

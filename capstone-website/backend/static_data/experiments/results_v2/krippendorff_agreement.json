@@ -1,15 +1,10 @@
 {
-  "_methodology_citation": "Methodology follows Park et al. (2025) [arxiv 2506.13639]; reliability concerns raised by 'When Judgment Becomes Noise' (arxiv 2509.20293).",
+  "_methodology_note": "Krippendorff alpha reported with bootstrap 95% CI. Interpretation: CI excluding zero from above = systematic positive agreement; CI excluding zero from below = systematic disagreement (worse than chance); CI containing zero = indistinguishable from chance. Original methodology: Krippendorff (2004, 2013). Single-judge limitations framed by Feuer et al. (2025) 'When Judgment Becomes Noise' [arxiv 2509.20293].",
   "n_joined": 1095,
   "n_excluded_empty_assumption": 135,
   "bootstrap_B": 1000,
   "bootstrap_seed": 42,
   "level_of_measurement": "ordinal (11-bin discretisation of [0,1])",
-  "thresholds": {
-    "questionable": "\u03b1 < 0.667",
-    "acceptable": "0.667 \u2264 \u03b1 \u2264 0.8",
-    "strong": "\u03b1 > 0.8"
-  },
   "overall": {
     "method_structure": {
       "alpha": -0.042038537012678345,
@@ -133,8 +128,8 @@
     }
   },
   "interpretation": {
-    "method_structure": "questionable",
-    "assumption_compliance": "questionable",
-    "reasoning_quality": "questionable"
+    "method_structure": "indistinguishable_from_chance (CI contains zero)",
+    "assumption_compliance": "positive_agreement (CI excludes zero from above)",
+    "reasoning_quality": "systematic_disagreement (CI excludes zero from below \u2014 worse than chance)"
   }
 }
