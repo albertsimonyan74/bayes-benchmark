@@ -363,11 +363,11 @@ export function PerModelFailuresPanel() {
 
 // ─── Panel 3: per-dim robustness deltas ──────────────────────────
 const STATIC_PER_DIM_DELTA = {
-  claude:   { N: 0.0026,  M: 0.019,   A: 0.0698,  C: 0.015,   R: 0.0111 },
-  chatgpt:  { N: -0.0099, M: 0.0106,  A: 0.0,     C: 0.0017,  R: 0.0032 },
-  gemini:   { N: 0.0058,  M: 0.0137,  A: 0.0243,  C: null,    R: 0.0034 },
-  deepseek: { N: -0.0435, M: 0.0053,  A: 0.1258,  C: -0.0393, R: 0.0225 },
-  mistral:  { N: 0.0278,  M: -0.0127, A: -0.0116, C: 0.019,   R: -0.0119 },
+  claude:   { N: 0.0026,  M: 0.019,   A: 0.0698,  C: 0.0046,  R: 0.0111 },
+  chatgpt:  { N: -0.0099, M: 0.0106,  A: 0.0,     C: -0.0003, R: 0.0032 },
+  gemini:   { N: 0.0058,  M: 0.0137,  A: 0.0243,  C: -0.0034, R: 0.0034 },
+  deepseek: { N: -0.0435, M: 0.0053,  A: 0.1258,  C: -0.0323, R: 0.0225 },
+  mistral:  { N: 0.0278,  M: -0.0127, A: -0.0116, C: 0.0151,  R: -0.0119 },
 }
 
 function shapeDimByModel(perModelByDim) {
@@ -458,7 +458,7 @@ const STATIC_PER_DIM_ECE = {
   N: { claude: 0.1612, chatgpt: 0.1669, gemini: 0.1541, deepseek: 0.1673, mistral: 0.1599 },
   M: { claude: 0.1443, chatgpt: 0.1419, gemini: 0.1484, deepseek: 0.1396, mistral: 0.1435 },
   A: { claude: 0.1657, chatgpt: 0.1654, gemini: 0.1677, deepseek: 0.1685, mistral: 0.1724 },
-  C: { claude: 0.0546, chatgpt: 0.0608, gemini: null,   deepseek: 0.039,  mistral: 0.0504 },
+  C: { claude: 0.0534, chatgpt: 0.0593, gemini: 0.0448, deepseek: 0.0393, mistral: 0.0474 },
   R: { claude: 0.1125, chatgpt: 0.0926, gemini: 0.1292, deepseek: 0.091,  mistral: 0.0999 },
 }
 
@@ -486,7 +486,7 @@ export function PerDimCalibrationPanel() {
       title="Calibration ECE by NMACR dimension"
       subtitle="Expected Calibration Error per dimension, by model (lower is better)"
       accent="#A78BFA"
-      caption="Models calibrate moderately well on M (method) and best on C (verbalized confidence, 0.04–0.06 ECE). A (assumption) is the weakest dimension across all models (≈0.16–0.17 ECE) — confidence in assumption articulation poorly tracks accuracy. R varies most (DeepSeek 0.09 vs Gemini 0.13). Gemini has no C value (zero verbalized signals). Dashed line = 0.10 reference threshold for well-calibrated. Source: experiments/results_v2/per_dim_calibration.json."
+      caption="Models calibrate moderately well on M (method) and best on C (verbalized confidence, 0.04–0.06 ECE across all five models). A (assumption) is the weakest dimension across all models (≈0.16–0.17 ECE) — confidence in assumption articulation poorly tracks accuracy. R varies most (DeepSeek 0.09 vs Gemini 0.13). Dashed line = 0.10 reference threshold for well-calibrated. Source: experiments/results_v2/per_dim_calibration.json."
     >
       <div style={{ width: '100%', height: 280 }}>
         <ResponsiveContainer>
@@ -531,10 +531,10 @@ export function PerDimCalibrationPanel() {
 
 // ─── Panel 5: accuracy vs calibration scatter ────────────────────
 const STATIC_ACC_CALIB = {
-  acc_calib_corr: { claude: 0.4905, chatgpt: 0.3712, deepseek: 0.3473, mistral: 0.4762 },
+  acc_calib_corr: { claude: 0.427, chatgpt: 0.3445, gemini: 0.3368, deepseek: 0.3107, mistral: 0.3782 },
   accuracy: {
-    claude: 0.712221, chatgpt: 0.691285, gemini: 0.776253,
-    deepseek: 0.662972, mistral: 0.675376,
+    claude: 0.694466, chatgpt: 0.673524, gemini: 0.732576,
+    deepseek: 0.650091, mistral: 0.658222,
   },
 }
 
@@ -576,7 +576,7 @@ export function AccCalibScatterPanel() {
       title="Accuracy vs calibration per model"
       subtitle="Pearson r between per-task aggregate (literature-weighted NMACR) and per-task confidence proxy (dim_C)"
       accent="#A78BFA"
-      caption="For each model (excluding Gemini, which produces 0 verbalized confidence signals), correlation between accuracy and calibration. Higher r = confidence tracks accuracy more closely. Claude (r=0.49) and Mistral (r=0.48) show the strongest tracking; ChatGPT (r=0.37) and DeepSeek (r=0.35) are weaker. All r values are positive — no model is inversely calibrated. Reference line at r=0 (no correlation)."
+      caption="For each model, Pearson correlation between accuracy and calibration. Higher r = confidence tracks accuracy more closely. Post Tier 1 (2026-05-03): Claude r=0.43, Mistral r=0.38, ChatGPT r=0.34, Gemini r=0.34, DeepSeek r=0.31 — all five models in a tight band (0.31–0.43), all positive. No model is inversely calibrated. Reference line at r=0 (no correlation)."
       subCaption="Source: experiments/results_v2/calibration.json (accuracy_calibration_correlation block) + bootstrap_ci.json (accuracy means)."
     >
       <div style={{ width: '100%', height: 300 }}>

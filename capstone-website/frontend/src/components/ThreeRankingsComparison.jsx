@@ -14,21 +14,21 @@ const MODEL_COLORS = {
   mistral:  '#A78BFA',
 }
 
-// Canonical Phase 1B/1C numbers from bootstrap_ci.json + robustness_v2.json + calibration.json
+// Canonical numbers post Tier 1 (2026-05-03) from bootstrap_ci.json + robustness_v2.json + calibration.json
 const STATIC_RANKINGS = {
   accuracy: [
-    { model: 'gemini',   value: 0.776 },
-    { model: 'claude',   value: 0.712 },
-    { model: 'chatgpt',  value: 0.691 },
-    { model: 'mistral',  value: 0.675 },
-    { model: 'deepseek', value: 0.663 },
+    { model: 'gemini',   value: 0.7326 },
+    { model: 'claude',   value: 0.6945 },
+    { model: 'chatgpt',  value: 0.6735 },
+    { model: 'mistral',  value: 0.6582 },
+    { model: 'deepseek', value: 0.6501 },
   ],
   robustness: [
-    { model: 'mistral',  value: 0.007 },
-    { model: 'chatgpt',  value: 0.011 },
-    { model: 'claude',   value: 0.040 },
-    { model: 'deepseek', value: 0.042 },
-    { model: 'gemini',   value: 0.057 },
+    { model: 'mistral',  value: -0.004 },
+    { model: 'chatgpt',  value: 0.002 },
+    { model: 'gemini',   value: 0.011 },
+    { model: 'claude',   value: 0.029 },
+    { model: 'deepseek', value: 0.035 },
   ],
   calibration: [
     { model: 'chatgpt',  value: 0.063 },

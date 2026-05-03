@@ -71,7 +71,7 @@ const JUDGE_FACTS = [
   { icon: ICON.Layers,        label: 'RUBRIC',            color: '#A78BFA', title: '4 dimensions per response', body: 'Numerical · Method · Assumption · Reasoning quality + Completeness. Each scored independently by judge.',                              cite: 'Yamauchi et al. (2025)' },
   { icon: ICON.CheckCheck,    label: 'VERIFICATION',      color: '#00B4D8', title: 'Cross-provider spot-check',  body: 'Agreement validated against Groq’s Llama endpoint to rule out vendor-specific bias in judge outputs.',                          cite: 'Feuer et al. (2025) framing' },
   { icon: ICON.Target,        label: 'AGREEMENT',         color: '#7FFFD4', title: 'α = 0.55',              body: 'Krippendorff α on assumption_compliance — moderate agreement between keyword scorer and judge.',                          cite: '95% CI [0.50, 0.60]' },
-  { icon: ICON.AlertTriangle, label: 'DIVERGENCE',        color: '#FF6B6B', title: 'α = −0.13 / −0.04', body: 'Krippendorff α on reasoning_quality and method_structure — NEGATIVE: the two scorers actively disagree, not just weakly agree.', cite: 'CI [−0.228, −0.039] excludes 0' },
+  { icon: ICON.AlertTriangle, label: 'DIVERGENCE',        color: '#FF6B6B', title: 'α = −0.099 / −0.042', body: 'Krippendorff α on reasoning_quality and method_structure (base, n=1,095) — NEGATIVE: the two scorers actively disagree, not just weakly agree.', cite: 'CI [−0.152, −0.045] excludes 0' },
   { icon: ICON.Shuffle,       label: 'UNDER PERTURBATION', color: '#F59E0B', title: '+3.7pp gap widens',         body: 'Keyword PASS drops 1.9pp under perturbation; judge PASS rises 1.8pp. The two methods move in opposite directions.',                cite: 'Largest divergence on semantic perturbations (5.96pp)' },
 ]
 
@@ -181,7 +181,7 @@ const LITERATURE_CONVERGENCE = [
   'Multi-dimensional rubrics (vs single accuracy) per Lu et al. (2025), Liu et al. (2025), and Boye & Moell (2025) — the N·M·A·C·R rubric extends this convention to Bayesian inference.',
   'Bootstrap CI separability of rankings is a methodological mandate per Longjohn et al. (2025), Hochlehnert et al. (2025), Au et al. (2025), and BrittleBench (2026) — the separability matrix follows this convention.',
   'Variance-as-first-class evaluation (not just accuracy) per Au et al. (2025), BrittleBench (2026), and Hochlehnert et al. (2025) — the three-rankings framework directly implements this framing.',
-  'Verbalized confidence is unreliable for calibration per Nagarkar et al. (2026), FermiEval (2025), and Multi-Answer Confidence (2026) — the Gemini-zero-verbalized-signals finding confirms this in the Bayesian setting.',
+  'Verbalized confidence is unreliable for calibration per Nagarkar et al. (2026), FermiEval (2025), and Multi-Answer Confidence (2026) — the empty high-confidence bucket across all five models, plus the cohort-wide divergence between verbalized and consistency extraction, confirms this in the Bayesian setting.',
   'Three-way convergence on assumption violations as primary failure mode: Du et al. (2025), Boye & Moell (2025), and the 46.9% empirical finding here independently agree.',
   'Single-judge limitations require multi-judge ensembling per Yamauchi et al. (2025) and Feuer et al. (2025) — explicitly disclosed as project limitation; multi-judge is paper-scope future work.',
 ]
@@ -415,13 +415,13 @@ export default function Methodology() {
                   <div key={t.pct} className="alpha-tick" style={{ left: `${t.pct}%` }}>{t.v}</div>
                 ))}
                 {/* Markers */}
-                <div className="alpha-marker alpha-marker-r" style={{ left: '43.5%' }}>
+                <div className="alpha-marker alpha-marker-r" style={{ left: '45.05%' }}>
                   <div className="alpha-marker-dot"/>
-                  <div className="alpha-marker-label">R · α=−0.13<br/><span className="ci-note">CI excludes zero</span></div>
+                  <div className="alpha-marker-label">R · α=−0.099<br/><span className="ci-note">CI excludes zero</span></div>
                 </div>
-                <div className="alpha-marker alpha-marker-m" style={{ left: '48%' }}>
+                <div className="alpha-marker alpha-marker-m" style={{ left: '47.9%' }}>
                   <div className="alpha-marker-dot"/>
-                  <div className="alpha-marker-label">M · α=−0.04<br/><span className="ci-note">CI contains zero</span></div>
+                  <div className="alpha-marker-label">M · α=−0.042<br/><span className="ci-note">CI contains zero</span></div>
                 </div>
                 <div className="alpha-marker alpha-marker-a" style={{ left: '77.5%' }}>
                   <div className="alpha-marker-dot"/>
@@ -450,7 +450,7 @@ export default function Methodology() {
             <div className="alpha-interpretation">
               When a chance-corrected metric goes <strong>below zero</strong>, the two methods
               aren't just disagreeing randomly — they're systematically pulling in opposite
-              directions. Reasoning quality's CI [−0.228, −0.039] excludes zero with 95%
+              directions. Reasoning quality's CI [−0.152, −0.045] excludes zero with 95%
               confidence, meaning this is <strong>structural disagreement, not noise</strong>.
               The keyword scorer and external judge are measuring different constructs on this
               dimension.
@@ -458,7 +458,7 @@ export default function Methodology() {
 
             {/* Footer */}
             <div className="alpha-footer">
-              N = 1,095 base eligible runs · α computed on 3 of 4 shared dimensions · N (numerical) and C (calibration) are judge-only and not included in α analysis
+              N = 1,095 base eligible runs (all three dimensions) · α also computed on the perturbation scope (n=2,100) and combined scope (n=3,195, matches the keyword-judge disagreement headline scope) — see krippendorff_agreement.json · N (numerical) and C (calibration) are judge-only and not included in α analysis
             </div>
           </div>
 
@@ -526,22 +526,27 @@ export default function Methodology() {
               <strong style={{ color: '#00FFE0', fontSize: 13 }}>Bootstrap CI separability.</strong>
               <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
                 10,000 bootstrap resamples per model, seed=42, percentile method. Under
-                literature-derived NMACR weights, accuracy means are Gemini 0.776 [0.753, 0.799],
-                Claude 0.712 [0.689, 0.736], ChatGPT 0.691 [0.668, 0.715], Mistral 0.675
-                [0.652, 0.699], DeepSeek 0.663 [0.639, 0.686]. Gemini is separable from #2 Claude
-                under literature weights. Robustness CIs cross zero for ChatGPT and Mistral only —
-                effectively noise-equivalent, statistically indistinguishable from "no robustness
-                deficit." (Hochlehnert et al., 2025, Statistical Fragility.)
+                literature-derived NMACR weights, accuracy means are Gemini 0.7326
+                [0.7117, 0.7532], Claude 0.6945 [0.6722, 0.7169], ChatGPT 0.6735
+                [0.6511, 0.6960], Mistral 0.6582 [0.6359, 0.6799], DeepSeek 0.6501
+                [0.6273, 0.6728]. Gemini is the cohort top with a 3.8pp lead over #2 Claude.
+                Robustness CIs cross zero for Mistral, ChatGPT, and Gemini —
+                three-of-five effectively noise-equivalent, statistically indistinguishable
+                from "no robustness deficit." Only Claude and DeepSeek separate from zero.
+                (Hochlehnert et al., 2025, Statistical Fragility.)
               </p>
             </div>
             <div style={{ marginBottom: 14 }}>
               <strong style={{ color: '#00FFE0', fontSize: 13 }}>Krippendorff α inter-rater reliability.</strong>
               <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
-                Adopted over Spearman ρ on the recommendation of Park et al. (2025): α handles
-                missing data, multiple raters, and ordinal-vs-nominal scales correctly. Bootstrap
-                B=1000, seed=42. Thresholds: α &gt; 0.8 strong, ≥ 0.667 acceptable, &lt; 0.667
-                questionable. All three shared dims (assumption, reasoning, method) score
-                "questionable"; reasoning and method specifically negative.
+                Adopted over Spearman ρ on the recommendation of Yamauchi et al. (2025): α
+                handles missing data, multiple raters, and ordinal-vs-nominal scales correctly.
+                Bootstrap B=1000, seed=42. Threshold-free interpretation: report α with bootstrap
+                CI; CI-vs-zero does the work. Base scope (n=1,095): assumption +0.55
+                [0.504, 0.595], reasoning −0.099 [−0.152, −0.045] (CI excludes zero —
+                systematic disagreement), method −0.042 [−0.097, +0.015] (CI contains zero —
+                indistinguishable from chance). Combined scope (n=3,195): assumption +0.605,
+                reasoning −0.080, method −0.016.
               </p>
             </div>
             <div>
@@ -567,19 +572,22 @@ export default function Methodology() {
               at T=0.7, n=161 numeric tasks × 5 models) reveals all 5 models severely overconfident
               under consistency: ECE 0.62–0.73.
             </p>
-            <Callout color="#FF6B6B" title="Gemini calibration inversion">
-              Gemini produces 0 verbalized confidence signals across 246 base runs (excluded from
-              accuracy-calibration correlation) but produces 58 high-consistency runs and has the
-              BEST consistency ECE (0.618). Same model, opposite calibration extremes depending on
-              extraction method. Calibration measurement is method-dependent.
+            <Callout color="#FF6B6B" title="Calibration is method-dependent cohort-wide">
+              All five models reverse direction between the two extraction methods —
+              hedge-heavy under verbalized (ECE 0.06–0.18, no high-confidence records),
+              severely overconfident under self-consistency (ECE 0.62–0.73, confident
+              agreement does not predict accuracy). The choice of extraction method
+              substantively changes the calibration conclusion for every model in the cohort.
             </Callout>
             <PerDimCalibrationPanel />
             <p style={{ color: 'rgba(232,244,248,0.7)', fontSize: 12, lineHeight: 1.7, margin: '14px 0 0' }}>
               <strong>Accuracy-calibration correlation (RQ5 Layer 4):</strong> Pearson r between
               per-task aggregate (literature-weighted NMACR) and per-task confidence (dim_C):
-              Claude 0.49, Mistral 0.48, ChatGPT 0.37, DeepSeek 0.35; Gemini not measurable
-              (all 246 verbalized responses unstated). Honest interpretation: well-calibrated does
-              not mean accurate; it means hedging behaviour tracks task difficulty.
+              Claude 0.43, Mistral 0.38, ChatGPT 0.34, Gemini 0.34, DeepSeek 0.31. All five
+              models in a tight band — confidence tracks task difficulty more than ground-truth
+              correctness, but does so consistently across the cohort. Honest interpretation:
+              well-calibrated does not mean accurate; it means hedging behaviour tracks task
+              difficulty.
             </p>
           </Card>
         </FadeIn>

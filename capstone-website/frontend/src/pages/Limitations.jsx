@@ -13,25 +13,29 @@ const CAVEATS = [
     numerical Bayesian problems.`,
   },
   {
-    title: 'Empty high-confidence bucket (verbalized) — Gemini specifically zero-signal',
+    title: 'Verbalized confidence is hedging-language-sensitive',
     body: `All five models produced 0 responses classified as high-confidence (claimed p ≥ 0.85)
     by the keyword-based extractor, leaving the 0.9 ECE bucket empty. Reported verbalized ECE
     values (0.06–0.18) are weighted MAEs over three populated buckets (0.3 / 0.5 / 0.6) — they
-    capture calibration across the low-to-moderate confidence range only. Gemini specifically
-    returned 0 verbalized confidence signals across 246 base runs and is excluded from the
-    accuracy-calibration correlation. Phase 1C consistency extraction recovers a calibration
-    estimate for Gemini (best of cohort, ECE 0.618). True probabilistic calibration requires
-    token-level logprobs, not uniformly available across the 5 vendor APIs.`,
+    capture calibration across the low-to-moderate confidence range only. Verbalized extraction
+    is sensitive to hedging language: models with less hedging produce fewer high-confidence
+    signals (Gemini, for instance, defaults 119 of 246 base responses to "unstated" and tends
+    toward moderate-bucket placement when it does hedge). Phase 1C consistency extraction
+    recovers a different calibration picture (all five models severely overconfident, ECE
+    0.62–0.73). True probabilistic calibration requires token-level logprobs, not uniformly
+    available across the 5 vendor APIs.`,
   },
   {
-    title: 'Robustness top-2 not separable (ChatGPT/Mistral only)',
-    body: `Robustness CIs cross zero for ChatGPT (Δ = 0.011 [−0.001, 0.024]) and Mistral
-    (Δ = 0.007 [−0.006, 0.019]) — these two models are statistically indistinguishable from
-    "no robustness deficit at all." The other three (Claude, Gemini, DeepSeek) have CIs
-    separable from zero. Under literature-derived NMACR weights, accuracy is now separable
-    on the top-2 (Gemini 0.776 vs Claude 0.712), so this caveat applies to robustness only.
-    Cite Statistical Fragility (Hochlehnert et al., 2025): single-question swaps shift Pass@1
-    ≥ 3 pp.`,
+    title: 'Robustness top-3 not separable (Mistral / ChatGPT / Gemini)',
+    body: `Robustness CIs cross zero for Mistral (Δ = −0.004 [−0.016, 0.008] — perturbations
+    slightly improve scores), ChatGPT (Δ = 0.002 [−0.011, 0.015]), and Gemini (Δ = 0.011
+    [−0.004, 0.026]) — three of five models are statistically indistinguishable from "no
+    robustness deficit at all." Only Claude (Δ = 0.029) and DeepSeek (Δ = 0.035) separate
+    from zero. Under literature-derived NMACR weights, accuracy means rank
+    Gemini 0.7326 > Claude 0.6945 > ChatGPT 0.6735 > Mistral 0.6582 > DeepSeek 0.6501;
+    the 3.8pp gap between #1 and #2 is real but bootstrap CIs overlap in the middle of
+    the cohort. Cite Statistical Fragility (Hochlehnert et al., 2025): single-question
+    swaps shift Pass@1 ≥ 3 pp.`,
   },
   {
     title: 'Single-judge limitation (model AND prompt template)',

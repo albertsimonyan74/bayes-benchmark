@@ -3,20 +3,21 @@ import { motion } from 'motion/react'
 
 const API = import.meta.env.VITE_API_URL || ''
 
-// Phase 1B/1C/1.5 canonical numbers — used as static fallback if API is unreachable.
+// Canonical numbers post Tier 1 (2026-05-03) — used as static fallback if API is unreachable.
 const STATIC_FALLBACK = {
-  pass_flip_rate: 0.222,
+  pass_flip_rate: 0.2216,
   pass_flip_n: 708,
   pass_flip_total: 3195,
   krippendorff_alpha_assumption: 0.55,
-  krippendorff_alpha_rq: -0.13,
-  krippendorff_alpha_method: -0.04,
+  krippendorff_alpha_rq: -0.099,
+  krippendorff_alpha_method: -0.042,
+  krippendorff_alpha_n: 1095,
   dominant_failure_pct: 0.469,
   dominant_failure_n: 67,
   dominant_failure_total: 143,
   rankings: {
     accuracy_top: 'gemini',
-    accuracy_top_score: 0.776,
+    accuracy_top_score: 0.7326,
     robustness_top: 'mistral',
     calibration_top: 'chatgpt',
   },
@@ -44,9 +45,9 @@ function buildCards(d, pf) {
       why: 'Most LLM benchmarks score by keyword-matching alone. Analysis across multiple prompt variants shows this approach systematically misses bad reasoning at a measurable rate.',
     },
     {
-      big: 'α = -0.13 to 0.55',
+      big: 'α = -0.099 to 0.55',
       label: 'Two scoring methods give different answers',
-      desc: `Krippendorff agreement on assumption articulation is ${alphaA}. On reasoning_quality and method_structure, the agreement is NEGATIVE (-0.13 and -0.04 respectively) — the two methods disagree more than they would by chance. The disagreement is not noise — it's structural.`,
+      desc: `Krippendorff agreement on assumption articulation is ${alphaA} (n=1,095). On reasoning_quality and method_structure, the agreement is NEGATIVE (-0.099 and -0.042 respectively) — the two methods disagree more than they would by chance. The 95% CI on reasoning [-0.152, -0.045] excludes zero. The disagreement is not noise — it's structural.`,
       why: "Confirms the 1-in-5 finding above isn't a fluke. The two scoring methods genuinely measure different things on three of four dimensions. Negative agreement cannot be explained by random rater error.",
     },
     {
@@ -58,19 +59,19 @@ function buildCards(d, pf) {
     {
       big: 'Gemini #1',
       label: "The 'best' model on accuracy under literature-weighted NMACR",
-      desc: 'Gemini ranks #1 on accuracy with mean 0.776 [0.753, 0.799] under the literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10%). Claude #2 at 0.712 [0.689, 0.736] — CIs do not overlap, the top-2 are statistically separable. The dimensional weighting follows Du 2025, Boye-Moell 2025, and Yamauchi 2025.',
+      desc: 'Gemini ranks #1 on accuracy with mean 0.7326 [0.7117, 0.7532] under the literature-weighted NMACR scheme (A=30%, R=25%, M=20%, C=15%, N=10%). Claude #2 at 0.6945 [0.6722, 0.7169] — a 3.8pp lead. The dimensional weighting follows Du 2025, Boye-Moell 2025, and Yamauchi 2025.',
       why: 'Benchmark rankings depend on the choice of dimensional weighting. The literature-derived scheme reflects what published research identifies as evaluation priorities for LLMs on Bayesian reasoning.',
     },
     {
       big: '3 different rankings',
       label: 'Accuracy, robustness, calibration disagree',
-      desc: 'Ranking models on accuracy, robustness, and calibration produces three completely different leaderboards. Gemini wins accuracy but is least robust. Mistral wins robustness. ChatGPT wins calibration. Only ChatGPT and Mistral are in the noise-equivalent band on robustness — others are statistically separable.',
+      desc: 'Ranking models on accuracy, robustness, and calibration produces three completely different leaderboards. Gemini wins accuracy (0.7326). Mistral wins robustness with NEGATIVE degradation delta (Δ=−0.004 — perturbations slightly improve its scores). ChatGPT wins calibration (verbalized ECE 0.063). Three of five models (Mistral, ChatGPT, Gemini) sit in the noise-equivalent band on robustness — only Claude and DeepSeek separate from zero.',
       why: "Single-number leaderboards mislead. The same data tells three different stories about which model is 'best.'",
     },
     {
       big: 'All overconfident',
       label: 'Models think they\'re right when they\'re wrong',
-      desc: "When a model gives the same answer 3 times in a row (confident agreement), it's still wrong about 60-70% of the time on hard tasks. Across 161 numerical-answer tasks, ECE scores range from 0.62 to 0.73 for all 5 models. Notably, Gemini — which produces zero verbalized confidence under keyword extraction — has the BEST consistency calibration (0.62), an outlier in both directions.",
+      desc: "When a model gives the same answer 3 times in a row (confident agreement), it's still wrong about 60-70% of the time on hard tasks. Across 161 numerical-answer tasks, ECE scores range from 0.62 to 0.73 for all 5 models. All five models are severely overconfident under self-consistency extraction, despite appearing well-calibrated by verbalized measurement (ECE 0.06–0.18). Calibration is method-dependent.",
       why: "'Confidence' doesn't mean 'correctness' for current LLMs on Bayesian reasoning. Calibration is method-dependent.",
     },
   ]
