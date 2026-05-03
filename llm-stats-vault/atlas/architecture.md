@@ -12,7 +12,7 @@ Task Generation ──► Benchmark Runner ──► Scoring Pipeline ──► 
        │                   │                    │                │
   tasks_all.json       runs.jsonl           results.json   React+FastAPI
        │                   │
-  perturbations.json  (append-only)
+  perturbations_all.json  (append-only)
 ```
 
 ## Module Roles
@@ -23,7 +23,13 @@ Task Generation ──► Benchmark Runner ──► Scoring Pipeline ──► 
 | `baseline/bayesian/build_tasks_bayesian.py` | `data/benchmark_v1/tasks.json` | 136 |
 | `baseline/bayesian/build_tasks_advanced.py` | `data/benchmark_v1/tasks_advanced.json` | 35 |
 | merge script (manual) | `data/benchmark_v1/tasks_all.json` | 171 |
-| `data/synthetic/build_perturbations.py` | `data/synthetic/perturbations.json` | 75 |
+| `scripts/generate_perturbations_full.py` | `data/synthetic/perturbations_all.json` | 473 |
+
+Note: `data/synthetic/perturbations.json` (75 hand-authored seed
+perturbations) was deprecated 2026-05-04. Records are preserved
+verbatim inside `perturbations_all.json` (75 hand-authored + 398
+LLM-generated = 473 total). The hand-authored generator
+`build_perturbations.py` is archived to `90-archive/scripts_deprecated/`.
 
 **Rule**: Never edit task JSON files manually — always regenerate.
 

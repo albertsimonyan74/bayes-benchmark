@@ -21,21 +21,37 @@ date: 2026-04-26
 
 ## Current leaderboard (literature-weighted NMACR — sole canonical scheme)
 
-Updated 2026-05-03 post Tier 1 coverage fixes.
+Updated 2026-05-04 post Phase 1.8 v1 perturbation deprecation.
 
 | Rank | Model | Score | 95% CI |
 |------|-------|-------|--------|
-| 1 | Gemini 2.5 Flash | 0.7326 | [0.7117, 0.7532] |
-| 2 | Claude Sonnet 4.5 | 0.6945 | [0.6722, 0.7169] |
-| 3 | GPT-4.1 | 0.6735 | [0.6511, 0.6960] |
-| 4 | Mistral Large | 0.6582 | [0.6359, 0.6799] |
-| 5 | DeepSeek V3 | 0.6501 | [0.6273, 0.6728] |
+| 1 | Gemini 2.5 Flash | 0.7314 | [0.7060, 0.7565] |
+| 2 | Claude Sonnet 4.5 | 0.6976 | [0.6694, 0.7249] |
+| 3 | GPT-4.1 | 0.6733 | [0.6449, 0.7012] |
+| 4 | DeepSeek V3 | 0.6686 | [0.6384, 0.6988] |
+| 5 | Mistral Large | 0.6676 | [0.6401, 0.6949] |
 
 Weighting scheme: A=0.30, R=0.25, M=0.20, C=0.15, N=0.10 (literature-derived per
 Du 2025, Boye-Moell 2025, Yamauchi 2025). Sole canonical scheme since
 Approach A (2026-05-03) consolidated runtime + post-hoc paths. Tier 1
 fixes (2026-05-03) corrected runner schema gap + stale recompute path
-that had inflated Gemini accuracy by ~4.4pp.
+that had inflated Gemini accuracy by ~4.4pp. Phase 1.8 (2026-05-04)
+deprecated the v1 perturbation set — base scope now reflects 855
+truly-base runs (was 1,230 with v1-perturbation contamination).
+
+### Robustness leaderboard (perturbation Δ, lower is better)
+
+| Rank | Model | Δ | 95% CI | Note |
+|------|-------|---|--------|------|
+| 1 | GPT-4.1 | +0.0003 | [−0.013, +0.014] | noise-equivalent |
+| 2 | Mistral Large | +0.0013 | [−0.012, +0.014] | noise-equivalent |
+| 3 | Gemini 2.5 Flash | +0.0129 | [−0.003, +0.029] | CI crosses zero |
+| 4 | Claude Sonnet 4.5 | +0.0305 | [+0.016, +0.044] | separates from zero |
+| 5 | DeepSeek V3 | +0.0388 | [+0.021, +0.056] | separates from zero |
+
+Top-2 (ChatGPT/Mistral) statistically tied — both noise-equivalent at the
+top of robustness. Top-3 (adds Gemini) all CI-crosses-zero. Only Claude
+and DeepSeek separate from zero.
 
 Historical comparison (paper appendix only): under the equal-weight scheme
 used in Phase 1A pilot (2026-04-26 to 2026-05-03), Claude ranked #1

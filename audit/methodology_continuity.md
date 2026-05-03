@@ -74,3 +74,25 @@ cohort-wide. The 22.16% combined keyword-judge disagreement headline was
 UNCHANGED (independent of fix scope). Full audit trail in
 [`audit/recompute_log.md`](recompute_log.md) §"Phase 1.7" and
 [`audit/gemini_forensic_2026-05-03.md`](gemini_forensic_2026-05-03.md).
+
+### History — Phase 1.8 V1 perturbation deprecation (2026-05-04)
+A diagnostic pass identified that `runs.jsonl` co-mingled 855 truly-base
+scoring rows with 375 v1-perturbation scoring rows (75 task_ids × 5
+models). Every "base scope" headline downstream was therefore measured
+on a contaminated denominator. The v1 perturbation set was byte-identical
+to a subset of `perturbations_all.json` (preserved verbatim by the v2
+generation script), making the v1 file redundant on top of contaminating.
+
+The deprecation re-pointed 11 scripts to `perturbations_all.json` and
+filtered v1-pert task_ids at `runs.jsonl` load in 5 consumer scripts +
+backend + R pipeline (Strategy C, consumer-side filter). The 0.01pp STOP
+gate triggered with 1,075 numerical changes across 7 canonical files.
+Headline shifts: combined disagreement 22.16% → 20.74% (n 3,195 → 2,850);
+α reasoning_quality −0.099 → −0.125 (negative finding STRENGTHENED);
+α method_structure −0.042 → −0.009 (now essentially chance-level — CI
+contains zero); ChatGPT/Mistral swap top-2 robustness (both noise-
+equivalent). The "Mistral uniquely improves under perturbation" claim was
+REMOVED (Δ flipped sign). Three-rankings story preserved with reframed
+top-2 robustness. Full audit trail in
+[`audit/recompute_log.md`](recompute_log.md) §"Phase 1.8" and
+[`audit/v1_deprecation_diff_report.md`](v1_deprecation_diff_report.md).

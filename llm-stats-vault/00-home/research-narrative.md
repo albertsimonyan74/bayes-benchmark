@@ -23,8 +23,11 @@ weighting + RQ4 Layer 2 / RQ5 Layer 4-5 enhancements).
    frequentist + 35 Phase 2 computational Bayes), 5 frontier LLMs (Claude
    Sonnet 4.5, Gemini 2.5 Flash, GPT-4.1, DeepSeek V4, Mistral Large), the
    N·M·A·C·R rubric, and an external Llama 3.3 70B Instruct judge.
-4. **Data collection.** 1,230 base runs + 2,365 perturbation runs = **3,595**
-   scored runs. 1,230 of those judged by the external Llama judge.
+4. **Data collection.** 855 base runs + 2,365 perturbation runs = **3,220**
+   scored runs (post Phase 1.8 v1-deprecation 2026-05-04; pre-deprecation
+   was 1,230 base + 2,365 perturbation = 3,595 with v1-perturbation rows
+   conflated into base scope). Same volume judged by the external Llama
+   judge.
 5. **Aggregate analysis.** Literature-derived NMACR weighting
    (A=0.30, R=0.25, M=0.20, C=0.15, N=0.10) with bootstrap-CI separability
    tests (B=10 000, seed=42) and Krippendorff α inter-rater reliability.
@@ -105,15 +108,16 @@ absent; the remaining four weights are renormalised to 1.0. Mirrors
 ### RQ1 (PRIMARY) — How does external-judge validation differ from keyword scoring?
 - **NMACR mapping:** RQ1 cross-validates **all 5** NMACR dimensions
   against the external Llama 3.3 70B judge.
-- **Headline:** 22.16% combined keyword-judge disagreement on
-  `assumption_compliance` (708 / 3,195 runs across base + perturbation).
-  Krippendorff α (post Tier 1, base scope n=1,095): assumption 0.55,
-  reasoning_quality −0.099 [−0.152, −0.045], method_structure −0.042.
-  Combined-scope α (n=3,195, matches headline scope): assumption 0.605,
-  reasoning −0.080, method −0.016. Both metrics agree: keyword and
-  judge are not interchangeable raters; reasoning and method
-  specifically show systematic disagreement (CI excludes zero on
-  reasoning).
+- **Headline (post Phase 1.8 2026-05-04):** 20.74% combined keyword-judge
+  disagreement on `assumption_compliance` (591 / 2,850 runs across
+  base + perturbation). Krippendorff α (base scope n=750): assumption
+  0.573 [0.516, 0.622], reasoning_quality −0.125 [−0.197, −0.059],
+  method_structure −0.009 [−0.072, +0.062]. Reasoning shows
+  systematic disagreement (CI excludes zero, point estimate more
+  negative than pre-deprecation). Method is essentially chance-level
+  (CI contains zero) — keyword and judge cannot be claimed to disagree
+  systematically on method, only that they fail to align. Only
+  assumption_compliance reaches positive agreement.
 - **Literature backbone:** Yamauchi et al. (2025) [arXiv:2506.13639]
   for the α-over-ρ recommendation; Liu et al. (2025) for the
   multi-dimensional rubric baseline.
@@ -142,14 +146,15 @@ absent; the remaining four weights are renormalised to 1.0. Mirrors
   - **Layer 2 (NEW Phase 1B):** per-dimension robustness Δ per model
     (5 models × 5 dims = 25 deltas), exposed in `robustness_v2.json` →
     `per_dim_delta`.
-- **Headline (post Tier 1 2026-05-03):** Three orthogonal rankings —
-  accuracy ≠ robustness ≠ calibration. Accuracy: gemini 0.7326 > claude
-  0.6945 > chatgpt 0.6735 > mistral 0.6582 > deepseek 0.6501.
-  Robustness: mistral (Δ=−0.004, uniquely improves under perturbation) >
-  chatgpt (0.002) > gemini (0.011) > claude (0.029) > deepseek (0.035) —
-  three of five models (mistral, chatgpt, gemini) noise-equivalent
-  (CI crosses zero); only claude and deepseek separable from zero.
-  Calibration: chatgpt (ECE 0.063) best.
+- **Headline (post Phase 1.8 2026-05-04):** Three orthogonal rankings —
+  accuracy ≠ robustness ≠ calibration. Accuracy: gemini 0.7314 > claude
+  0.6976 > chatgpt 0.6733 > deepseek 0.6686 > mistral 0.6676.
+  Robustness: chatgpt (Δ=+0.0003) ≈ mistral (+0.0013) — both
+  noise-equivalent at top of robustness — > gemini (+0.0129) > claude
+  (+0.0305) > deepseek (+0.0388). Three of five (chatgpt, mistral,
+  gemini) noise-equivalent (CI crosses zero); only claude and deepseek
+  separable from zero. Calibration: claude (ECE 0.033) ≈ chatgpt (0.034)
+  best, essentially tied at the top.
 - **Literature backbone:** ReasonBench (2025) variance-as-first-class;
   BrittleBench (2026) perturbation taxonomy; Statistical Fragility (2025,
   Hochlehnert et al., arXiv:2504.07086) for separability tests.
@@ -167,11 +172,11 @@ as supporting evidence.
 **Headline finding.** Method-dependent, with substantively different
 conclusions:
 
-- **Verbalized extraction** (keyword-based, n=1,230 base runs).
+- **Verbalized extraction** (keyword-based, n=855 base runs post Phase 1.8).
   Hedge-heavy. The high-confidence bucket (claimed p ≥ 0.85) is empty
   across all 5 models; verbalized extraction is sensitive to hedging
   language so models with less hedging produce fewer high-confidence
-  signals. ECE: 0.063–0.180.
+  signals. ECE: 0.033–0.198.
 - **Consistency extraction** (3-rerun agreement at T=0.7, n=2,415 across
   161 numeric-target tasks — Phase 1C). All 5 models severely
   overconfident. Confident agreement does NOT predict accuracy. ECE:
@@ -179,11 +184,11 @@ conclusions:
 
 | Model    | Verbalized ECE | Consistency ECE (full) |
 |----------|---------------:|-----------------------:|
-| claude   | 0.067          | 0.734                  |
-| chatgpt  | 0.063          | 0.721                  |
-| gemini   | 0.097          | 0.618                  |
-| deepseek | 0.180          | 0.726                  |
-| mistral  | 0.084          | 0.663                  |
+| claude   | 0.033          | 0.734                  |
+| chatgpt  | 0.034          | 0.721                  |
+| gemini   | 0.077          | 0.618                  |
+| deepseek | 0.198          | 0.726                  |
+| mistral  | 0.081          | 0.663                  |
 
 All five models reverse direction between methods — verbalized hedging
 to consistency overconfidence. Calibration measurement is
@@ -193,10 +198,18 @@ method-dependent across the cohort, not a per-model anomaly.
 "Gemini calibration inversion: 0 verbalized signals → BEST consistency
 ECE." That subclaim was an artifact of the runner schema gap + stale
 recompute path (`audit/gemini_forensic_2026-05-03.md`). Post-fix Gemini
-has 127/246 verbalized signals; ECE 0.097 (in-band with the cohort);
+has extractable verbalized signals; ECE in-band with the cohort;
 accuracy_calibration correlation r = 0.337. The cohort-wide
 method-dependence finding stands; the Gemini-specific inversion
 subclaim is FALSIFIED and removed.]
+
+[Phase 1.8 update 2026-05-04: post-v1-deprecation, all five verbalized
+ECE values shifted on the truly-base scope (855 runs, was 1,230 with
+v1-perturbation contamination). Claude and ChatGPT now lead calibration
+in a near-tie (0.033 / 0.034); DeepSeek's overconfidence in the
+verbalized track widened slightly (0.180 → 0.198). The
+method-dependence cohort-wide finding is unaffected — both methods
+still produce qualitatively different conclusions for every model.]
 
 **Why SUPPORTING and honest.** This RQ measures the C dimension across
 two methods and finds they disagree dramatically. Verbalized extraction

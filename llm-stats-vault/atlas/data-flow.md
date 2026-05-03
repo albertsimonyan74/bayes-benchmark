@@ -9,14 +9,15 @@ date: 2026-04-26
 
 ```
 1. TASK GENERATION
-   build_tasks_bayesian.py  →  tasks.json          (136 Phase 1 tasks)
-   build_tasks_advanced.py  →  tasks_advanced.json (35 Phase 2 tasks)
-   [manual merge]           →  tasks_all.json      (171 total)
-   build_perturbations.py   →  perturbations.json  (75 synthetic for RQ4)
+   build_tasks_bayesian.py            →  tasks.json          (136 Phase 1 tasks)
+   build_tasks_advanced.py            →  tasks_advanced.json (35 Phase 2 tasks)
+   [manual merge]                     →  tasks_all.json      (171 total)
+   generate_perturbations_full.py     →  perturbations_all.json
+                                          (473 = 75 hand-authored + 398 LLM-generated)
 
 2. BENCHMARK RUN
    run_all_tasks.py --models <name>
-     loads tasks_all.json (or perturbations.json with --synthetic)
+     loads tasks_all.json (or perturbations_all.json with --synthetic)
      calls model API via httpx
      response_parser.full_score() → component scores
      log_jsonl() → appends record to runs.jsonl
@@ -50,7 +51,7 @@ date: 2026-04-26
 | Phase 1 tasks | `data/benchmark_v1/tasks.json` | ✅ 136 tasks |
 | Phase 2 tasks | `data/benchmark_v1/tasks_advanced.json` | ✅ 35 tasks |
 | All tasks | `data/benchmark_v1/tasks_all.json` | ✅ 171 tasks |
-| Synthetic | `data/synthetic/perturbations.json` | ✅ 75 tasks |
+| Synthetic | `data/synthetic/perturbations_all.json` | ✅ 473 perturbations (75 hand-authored + 398 LLM-generated; v1 file deprecated 2026-05-04) |
 | Run log | `experiments/results_v1/runs.jsonl` | ⚠️ ~620+ (Gemini incomplete) |
 | Results | `experiments/results_v1/results.json` | ❌ EMPTY |
 | Website data | `capstone-website/frontend/src/data/` | ⚠️ 4 models only |

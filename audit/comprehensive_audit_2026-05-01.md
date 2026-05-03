@@ -325,6 +325,15 @@ Finding: All five canonical counts verified:
 - 1095 keyword-judge disagreement eligible: keyword_vs_judge_agreement.json:n_compared = 1095
 - 143 failure-analysis classified: error_taxonomy_v2.json:n_failures_classified
 
+[Phase 1.8 update 2026-05-04 — historical reference only.] The 1230
+base count in this audit row reflected the pre-deprecation scope:
+855 truly-base runs co-mingled with 375 v1-perturbation rows. After
+v1 deprecation (recompute_log §"Phase 1.8"), the canonical scope is
+855 base + 2,365 perturbation = 3,220 total scored runs; 750 base +
+2,100 perturbation = 2,850 keyword-judge eligible. This audit row is
+preserved as a historical snapshot — the up-to-date counts live in
+recompute_log §"Phase 1.8" and rq_ieee_formulations.md.
+
 Day 2 audit and Methodology.jsx use 1094 (off-by-one carry-over from earlier
 read). research-narrative.md correctly uses 1095 in the RQ1 headline.
 Cross-reference: F1.01

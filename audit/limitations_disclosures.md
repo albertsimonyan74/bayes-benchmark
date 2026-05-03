@@ -49,27 +49,37 @@ in-band with the other four models (0.31–0.43).]
 
 ### c) Robustness ranking — top-2 not statistically separable
 
-The Top-2 robustness ranking (under both equal-weight and the new
-literature-derived NMACR weighting) sits well inside one standard error
-of zero, so the ranking between adjacent models is not statistically
-distinguishable from noise. We report the point estimates for
-completeness but caution that any "model X is more robust than model Y"
-claim within the noise-equivalent band is unsupported at this sample
-size. Cite Hochlehnert et al. (2025, Statistical Fragility): single-question
-swaps shift Pass@1 ≥ 3 pp.
+Post-Phase-1.8, ChatGPT (Δ=+0.0003, CI [−0.013, +0.014]) and Mistral
+(Δ=+0.0013, CI [−0.012, +0.014]) hold the top two robustness slots
+and are noise-equivalent: both CIs cross zero, the pair is
+not_separable per bootstrap. Gemini (Δ=+0.013) is also CI-crosses-zero
+and not separable from ChatGPT or Mistral. Only Claude (Δ=+0.030) and
+DeepSeek (Δ=+0.039) clearly separate from zero. We report the point
+estimates for completeness but caution that any "model X is more
+robust than model Y" claim within the noise-equivalent top-3 band is
+unsupported at this sample size. Cite Hochlehnert et al. (2025,
+Statistical Fragility): single-question swaps shift Pass@1 ≥ 3 pp.
 
-### d) Single-judge caveat on the 25% keyword-judge disagreement headline
+### d) Single-judge caveat on the keyword-judge disagreement headline
 
-The 25.0% keyword-vs-judge keyword-judge disagreement on `assumption_compliance`
-(274 / 1095 runs) rests on a single external judge model — Llama 3.3
-70B Instruct via Together AI. We verified cross-provider agreement
-(Groq vs Together) and ran strictness spot-checks on borderline cases,
-but true cross-judge validation against an independent family (e.g.,
-GPT-4-class or Claude Opus as judge) is paper-scope future work. Cite
-Yamauchi et al. (2025) and Feuer et al. (2025) "Judgment Becomes Noise":
-single-judge benchmarks introduce systematic noise. The headline number
-should be read as evidence that keyword rubrics and a strong LLM judge
-disagree substantially, not as a calibrated estimate of "true"
+Keyword-judge disagreement is computed on 750 of 855 truly-base runs.
+The 105 excluded runs come from 21 distinct task_ids × 5 models
+(CONCEPTUAL / MINIMAX / BAYES_RISK families plus the MARKOV_04 outlier),
+all sharing empty `required_assumption_checks`. The same eligibility
+filter applies to perturbations (2,100 of 2,365 eligible), yielding
+2,850 / 3,220 combined eligibility (88.5%). Tasks that do not require
+assumption articulation cannot be compared across the two scoring
+methods. The combined headline (20.74% disagreement on
+assumption_compliance, 591 / 2,850 runs) rests on a single external
+judge model — Llama 3.3 70B Instruct via Together AI. We verified
+cross-provider agreement (Groq vs Together) and ran strictness
+spot-checks on borderline cases, but true cross-judge validation
+against an independent family (e.g., GPT-4-class or Claude Opus as
+judge) is paper-scope future work. Cite Yamauchi et al. (2025) and
+Feuer et al. (2025) "Judgment Becomes Noise": single-judge benchmarks
+introduce systematic noise. The headline number should be read as
+evidence that keyword rubrics and a strong LLM judge disagree
+substantially, not as a calibrated estimate of "true"
 assumption-compliance error.
 
 ### e) Stratified self-consistency caveat (RQ5) — RESOLVED via Phase 1C
@@ -110,3 +120,11 @@ coverage. Post-fix Gemini accuracy under literature-weighted NMACR is
 [0.6722, 0.7169]) narrows to 3.8pp but remains separable. Length-vs-RQ
 correlations themselves were not recomputed since Tier 1 fixes did not
 touch raw_response text.]
+
+[Phase 1.8 update 2026-05-04: post-v1-deprecation (truly-base scope),
+Gemini accuracy is 0.7314 [0.7060, 0.7565] and Claude is 0.6976 [0.6694,
+0.7249]. The lead narrows to 3.4pp and Gemini–Claude is now
+not_separable per bootstrap (CIs overlap); Gemini still separates
+from ChatGPT, DeepSeek, and Mistral. Length-vs-RQ correlations not
+recomputed; deprecation removed contaminating rows but did not modify
+raw_response text.]

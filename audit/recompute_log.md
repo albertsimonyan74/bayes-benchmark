@@ -515,3 +515,75 @@ ECE C=0.045 for Gemini (was missing).
 - `audit/tier1_diff_report.md` (NEW)
 
 Pre-fix `runs.jsonl` retained at `experiments/results_v1/runs.jsonl.pre_tier1_<timestamp>`.
+
+## Phase 1.8 — V1 Perturbation Deprecation (2026-05-04)
+
+### Context
+Diagnostic surfaced that `runs.jsonl` contained 855 truly-base scoring
+rows PLUS 375 v1-perturbation scoring rows (75 task_ids × 5 models).
+The "base scope" of every downstream analysis was therefore mixed:
+canonical tasks + v1 perturbations conflated. The v1 perturbation set
+is byte-identical to a subset of `perturbations_all.json` (preserved
+verbatim by v2 generation script for provenance), so v1 was redundant
+on top of contaminating base scope.
+
+### Action
+v1 perturbation set deprecated as redundant. Engineering changes (B-1):
+- 11 scripts re-pointed from `data/synthetic/perturbations.json` to
+  `data/synthetic/perturbations_all.json`
+- 5 scripts that read `runs.jsonl` filter v1-pert task_ids at load time
+  (Strategy C — consumer-side filter)
+- Production backend (`capstone-website/backend/main.py`) and R pipeline
+  apply same filter
+- `runs.jsonl` physically retained (Option a from diagnostic)
+
+### Numerical impact
+STOP gate at 0.01pp triggered with 1,075 changes across 7 canonical
+files. Headlines:
+
+| metric | baseline | new | delta |
+|---|---|---|---|
+| α assumption | 0.5502 | 0.5730 | +0.0228 |
+| α reasoning_quality | −0.0989 | −0.1246 | −0.0257 (more negative) |
+| α method_structure | −0.0420 | −0.0090 | +0.0331 (essentially chance) |
+| α n (all 3 dims, base) | 1,095 | 750 | −345 |
+| combined disagreement | 22.16% | 20.74% | −1.42pp |
+| combined n_eligible | 3,195 | 2,850 | −345 |
+| acc_claude | 0.6945 | 0.6976 | +0.0031 |
+| acc_chatgpt | 0.6735 | 0.6733 | −0.0003 |
+| acc_gemini | 0.7326 | 0.7314 | −0.0012 |
+| acc_deepseek | 0.6501 | 0.6686 | +0.0185 |
+| acc_mistral | 0.6582 | 0.6676 | +0.0094 |
+| ECE_chatgpt (verbalized) | 0.0626 | 0.0339 | −0.0287 (better) |
+| ECE_claude | 0.0666 | 0.0334 | −0.0332 |
+| ECE_gemini | 0.0973 | 0.0765 | −0.0208 |
+| ECE_deepseek | 0.1795 | 0.1977 | +0.0182 |
+| ECE_mistral | 0.0840 | 0.0811 | −0.0029 |
+
+Robustness ranking: ChatGPT and Mistral swap top-2 (ChatGPT Δ=+0.0003,
+Mistral Δ=+0.0013) — both noise-equivalent (CI crosses zero).
+
+### Findings impact
+- **Reasoning_quality negative-α STRENGTHENED.** Point estimate more
+  negative (−0.099 → −0.125), CI tightened, sample 1,095 → 750 but
+  effect size grew.
+- **Method_structure α now essentially chance.** −0.042 → −0.009,
+  CI [−0.072, +0.062] contains zero. Reframe required: was "actively
+  disagree" → now "cannot reject chance / essentially chance-level".
+- **"Mistral uniquely improves under perturbation" REMOVED.** Mistral Δ
+  flipped sign (−0.0040 → +0.0013). Now noise-equivalent with ChatGPT
+  at top of robustness ranking.
+- **Three-rankings story PRESERVED** with reframed top-2 robustness
+  (ChatGPT/Mistral noise-equivalent). Different #1s across accuracy /
+  robustness / calibration still holds.
+- **Combined disagreement headline still substantial:** 1-in-5 holds
+  (20.74%).
+
+### Files affected
+- 11 re-pointed scripts: `scripts/{analyze_perturbations,calibration_analysis,combined_pass_flip_analysis,inspect_judge_strictness,keyword_vs_judge_agreement,krippendorff_agreement,recompute_downstream,recompute_scores,score_perturbations}.py` + `llm_runner/run_all_tasks.py` + `evaluation/llm_judge_rubric.py`
+- Backend filter: `capstone-website/backend/main.py`
+- R pipeline: `report_materials/r_analysis/00_load_data.R`
+- Canonical regenerated (7 files): `experiments/results_v2/{krippendorff_agreement,keyword_vs_judge_agreement,combined_pass_flip_analysis,bootstrap_ci,robustness_v2,calibration,per_dim_calibration}.json`
+- Static_data mirror synced: `capstone-website/backend/static_data/experiments/results_v2/`
+- Baseline snapshot: `audit/v1_deprecation_baseline_20260504_001522/`
+- Diff report: `audit/v1_deprecation_diff_report.md`

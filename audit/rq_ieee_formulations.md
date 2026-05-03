@@ -18,10 +18,11 @@ of the Day-4 (2026-05-03) citation-honesty pass requested after the
   `llm-stats-vault/40-literature/bibtex.bib`.
 - **Numerical values.** Every quantitative claim cross-checked against the
   canonical JSON in `experiments/results_v2/` (verification logged below
-  each RQ as "Source file"). The 22.16% combined keyword-judge disagreement is preferred
-  over the 25.02% base-only headline because it pools base + perturbation
-  evidence (3,195 eligible runs vs 1,095) and is the canonical Phase 1.5
-  result.
+  each RQ as "Source file"). Post Phase 1.8 (v1 perturbation deprecation
+  2026-05-04), the canonical headline is **20.74% combined keyword-judge
+  disagreement** on 2,850 eligible runs; the older 22.16% / 3,195
+  numbers were measured on a base scope contaminated by v1-perturbation
+  rows and are superseded.
 - **Authorship convention.** Bibtex keys `du2025icecream` and
   `park2025judge` are legacy; actual first authors are **Du** and
   **Yamauchi** respectively. In-text citations use the actual first
@@ -73,49 +74,46 @@ concentrated on a particular dimension?
     `reasoning_completeness`.
   - *Keyword-judge disagreement* — keyword PASS (≥ 0.5) and judge FAIL (< 0.5) on the same
     (run_id, dimension), or vice versa.
-- Excluded population. 135 base runs whose tasks have empty
-  `required_assumption_checks` (CONCEPTUAL × 10, MINIMAX × 5, BAYES_RISK
-  × 5, MARKOV × 1, plus per-model expansions); these score 1.0 trivially
-  under both rubrics and would inflate agreement.
+- Excluded population. 105 base runs whose tasks have empty
+  `required_assumption_checks` — 21 distinct task_ids × 5 models
+  (CONCEPTUAL / MINIMAX / BAYES_RISK families plus the MARKOV_04
+  outlier); these score 1.0 trivially under both rubrics and would
+  inflate agreement.
 
 **Metrics.**
 - Krippendorff's α (ordinal, 11-bin discretization of [0, 1]) per
   dimension, with bootstrap CI (B = 1,000, seed = 42).
-- Combined keyword-judge disagreement rate over 3,195 eligible runs (base ∪ perturbation,
-  no run-id collisions verified).
+- Combined keyword-judge disagreement rate over 2,850 eligible runs
+  (base ∪ perturbation, no run-id collisions verified).
 - Per-perturbation-type keyword-judge disagreement rates.
 
-**Population.** 5 frontier LLMs × 171 base tasks (1,095 base eligible)
-plus 5 × 420 perturbation tasks (2,100 perturbation eligible) = 3,195
+**Population.** 5 frontier LLMs × 171 base tasks (750 base eligible)
+plus 5 × 473 perturbation tasks (2,100 perturbation eligible) = 2,850
 eligible (model, run) pairs. Sample size justified by the bootstrap-CI
 target (Longjohn et al. 2025; Hochlehnert et al. 2025).
 
-**Findings (canonical values).**
-- Combined keyword-judge disagreement: **708 / 3,195 = 22.16%** (Phase 1.5).
-  Inverse flip (keyword FAIL, judge PASS): 143 / 3,195 = 4.48%.
-  Net signal: keyword ≈ 5× more lenient than judge.
-- Per-perturbation-type keyword-judge disagreement: rephrase 21.6% (162 / 750), numerical
-  22.7% (136 / 600), semantic 18.1% (136 / 750). Disagreement is a
-  stable rubric property, not a base-prompt artifact.
-- Krippendorff α (ordinal, B = 1,000) — **base scope (n = 1,095) post Tier 1**:
-  - `assumption_compliance`: α = **0.55** [0.504, 0.595], n = 1,095.
-  - `method_structure`:      α = **−0.04** [−0.097, +0.015], n = 1,095.
-  - `reasoning_quality`:     α = **−0.099** [−0.152, −0.045], n = 1,095.
-- Combined-scope α (n = 3,195, matches keyword-judge disagreement
-  headline scope) — Tier 1 addition:
-  - `assumption_compliance`: α = **0.605** [0.580, 0.632], n = 3,195.
-  - `method_structure`:      α = **−0.016** [−0.048, +0.016], n = 3,195.
-  - `reasoning_quality`:     α = **−0.080** [−0.114, −0.046], n = 3,195.
+**Findings (canonical values, post Phase 1.8 2026-05-04).**
+- Combined keyword-judge disagreement: **591 / 2,850 = 20.74%**.
+  Inverse flip (keyword FAIL, judge PASS): 131 / 2,850 = 4.60%.
+  Net signal: keyword ≈ 4.5× more lenient than judge.
+- Per-perturbation-type keyword-judge disagreement: rephrase 21.6%
+  (162 / 750), numerical 22.7% (136 / 600), semantic 18.1% (136 / 750).
+  Disagreement is a stable rubric property, not a base-prompt artifact.
+- Krippendorff α (ordinal, B = 1,000) — **base scope (n = 750)
+  post Phase 1.8**:
+  - `assumption_compliance`: α = **0.573** [0.516, 0.622], n = 750.
+  - `method_structure`:      α = **−0.009** [−0.072, +0.062], n = 750.
+  - `reasoning_quality`:     α = **−0.125** [−0.197, −0.059], n = 750.
 - The CI for `reasoning_quality` excludes zero — agreement is
   systematically worse than chance. The CI for `method_structure`
-  contains zero — agreement is statistically indistinguishable from
-  chance. Only `assumption_compliance` reaches positive agreement, and
-  even there both rubrics find the dimension hard (judge mean 0.441,
-  keyword mean 0.565).
+  contains zero — agreement is essentially chance-level (cannot
+  reject H₀ of zero agreement). Only `assumption_compliance` reaches
+  positive agreement, and even there both rubrics find the dimension
+  hard (judge mean ≈ 0.44, keyword mean ≈ 0.57).
 
 **Result vs hypotheses.** Reject H₀ for `reasoning_quality` (CI excludes
-0). Cannot reject H₀ for `method_structure` (CI contains 0, but point
-estimate is negative — interpret as "no meaningful agreement"). H₀
+0). Cannot reject H₀ for `method_structure` (CI [−0.072, +0.062]
+contains 0; point estimate −0.009 is essentially chance-level). H₀
 holds positively for `assumption_compliance` (CI excludes 0 from
 *above*).
 
@@ -157,7 +155,7 @@ holds positively for `assumption_compliance` (CI excludes 0 from
   measurement (interval, ratio) yield slightly different α values; the
   ordinal choice is the most conservative for bounded rubric scales
   (Yamauchi et al. 2025).
-- Inverse flip (4.48%) and net flip (22.16%) are not symmetric; the
+- Inverse flip (4.60%) and net flip (20.74%) are not symmetric; the
   asymmetry could in principle reflect judge strictness rather than
   keyword leniency. We disclose this and report the 5-of-7 strictness
   spot-check (judge agrees with the rubric on the cases where it
@@ -173,13 +171,13 @@ holds positively for `assumption_compliance` (CI excludes 0 from
 
 **Source files.**
 - `experiments/results_v2/combined_pass_flip_analysis.json`
-  (`combined.pct_pass_flip = 0.221596…`,
-  `combined.n_pass_flip = 708`, `combined.n_eligible = 3195`).
+  (`combined.pct_pass_flip = 0.20737…`,
+  `combined.n_pass_flip = 591`, `combined.n_eligible = 2850`).
 - `experiments/results_v2/krippendorff_agreement.json`
-  (`overall.assumption_compliance.alpha = 0.5502`,
-  `overall.method_structure.alpha = -0.0420`,
-  `overall.reasoning_quality.alpha = -0.1330`).
-- `audit/recompute_log.md` §"Phase 1.5".
+  (`overall.assumption_compliance.alpha = 0.5730`,
+  `overall.method_structure.alpha = -0.0090`,
+  `overall.reasoning_quality.alpha = -0.1246`, `n_joined = 750`).
+- `audit/recompute_log.md` §"Phase 1.8".
 
 ---
 
@@ -386,43 +384,43 @@ significant under bootstrap-CI separability tests?
 - Per-axis ranking (1 → 5).
 - Pairwise separability label per axis (10 pairs × 3 axes = 30 calls).
 
-**Population.** 5 models × 246 base tasks (literature-weighted aggregate
-applies to base set). Robustness uses 5 × 473 perturbation pairs.
-Calibration uses 1,230 base runs.
+**Population.** 5 models × 171 base tasks (literature-weighted aggregate
+applies to base set; n = 855 base runs). Robustness uses 5 × 398
+matched base–perturbation pairs per bootstrap_ci. Calibration uses 855
+base runs.
 
 **Findings (canonical, `bootstrap_ci.json`, weighting_scheme =
-`literature_v1`, post Tier 1 2026-05-03).**
-- Accuracy: gemini 0.7326 [0.7117, 0.7532] > claude 0.6945
-  [0.6722, 0.7169] > chatgpt 0.6735 [0.6511, 0.6960] > mistral 0.6582
-  [0.6359, 0.6799] > deepseek 0.6501 [0.6273, 0.6728]. Top model:
-  **gemini**. Top-1 lead over Claude narrows to 3.8pp under corrected
-  scoring.
-- Robustness Δ: mistral **−0.0040** [−0.016, 0.008] < chatgpt 0.0019
-  [−0.011, 0.015] < gemini 0.0110 [−0.004, 0.026] < claude 0.0285
-  [0.015, 0.042] < deepseek 0.0352 [0.020, 0.051]. Top model:
-  **mistral** (uniquely improves under perturbation — negative delta).
-- Calibration ECE (verbalized): chatgpt 0.063 < claude 0.067 <
-  mistral 0.084 < gemini 0.097 < deepseek 0.180. Top model:
-  **chatgpt**.
+`literature_v1`, post Phase 1.8 2026-05-04).**
+- Accuracy: gemini 0.7314 [0.7060, 0.7565] > claude 0.6976
+  [0.6694, 0.7249] > chatgpt 0.6733 [0.6449, 0.7012] > deepseek 0.6686
+  [0.6384, 0.6988] > mistral 0.6676 [0.6401, 0.6949]. Top model:
+  **gemini**. Top-1 lead over Claude narrows to 3.4pp post-deprecation.
+- Robustness Δ: chatgpt **+0.0003** [−0.013, +0.014] < mistral
+  +0.0013 [−0.012, +0.014] < gemini +0.0129 [−0.003, +0.029] <
+  claude +0.0305 [+0.016, +0.044] < deepseek +0.0388 [+0.021, +0.056].
+  Top model: **chatgpt**, statistically tied with mistral
+  (noise-equivalent — both CIs cross zero, pair not_separable).
+- Calibration ECE (verbalized): claude 0.033 ≈ chatgpt 0.034 <
+  gemini 0.077 < mistral 0.081 < deepseek 0.198. Top model:
+  **claude/chatgpt** (essentially tied at the top of calibration).
 - Three different top models — H₀ rejected.
-- Separability matrix (accuracy): claude–chatgpt **not_separable**;
-  claude–gemini **not_separable**; claude–deepseek **not_separable**;
-  claude–mistral **not_separable**; chatgpt–deepseek **not_separable**;
-  chatgpt–mistral **not_separable**; deepseek–mistral **not_separable**.
-  Seven of ten accuracy pairs not separable post Tier 1 (chatgpt–gemini,
-  gemini–deepseek, gemini–mistral remain separable). Top-1 (gemini) is
-  separable from #3+ but **no longer separable from #2 claude** under
-  corrected scoring — the lead is real but tighter.
-- Separability matrix (robustness): three of five models
-  (mistral, chatgpt, gemini) have CIs spanning zero — within-noise of
-  "no perturbation effect." Only claude and deepseek separate from
-  zero. Cite Hochlehnert et al. (2025): single-question swaps shift
-  Pass@1 ≥ 3 pp — same noise scale observed here.
+- Separability matrix (accuracy): claude–chatgpt, claude–gemini,
+  claude–deepseek, claude–mistral, chatgpt–deepseek, chatgpt–mistral,
+  deepseek–mistral all **not_separable**. Three of ten remain separable
+  (chatgpt–gemini, gemini–deepseek, gemini–mistral). Top-1 (gemini) is
+  separable from #3+ but not separable from #2 claude.
+- Separability matrix (robustness): three of five models (chatgpt,
+  mistral, gemini) have CIs spanning zero — within-noise of "no
+  perturbation effect." Only claude and deepseek separate from zero.
+  Top-2 (chatgpt vs mistral) is not_separable. Cite Hochlehnert et al.
+  (2025): single-question swaps shift Pass@1 ≥ 3 pp — same noise
+  scale observed here.
 
 **Result vs hypotheses.** Reject H₀. The three rankings are not
 concordant — the top-ranked model differs across all three axes
-(gemini / mistral / chatgpt). Bootstrap-CI separability shows that
-many pairwise rank differences are noise-equivalent on each axis.
+(gemini / chatgpt / claude≈chatgpt). Bootstrap-CI separability shows
+that many pairwise rank differences are noise-equivalent on each axis,
+including the top-2 robustness pair (chatgpt / mistral).
 
 **Citations used.**
 - **Au et al. (2025)** ReasonBench [arXiv:2512.07795] — variance and
@@ -447,10 +445,11 @@ many pairwise rank differences are noise-equivalent on each axis.
   `longjohn2025bayesian`. *Used to motivate the bootstrap-CI design.*
 
 **Limitations specific to RQ4.**
-- Robustness top-3 (mistral, chatgpt, gemini) have CIs containing zero
-  post Tier 1 — within this sample size, none of the three is
-  statistically distinguishable from "no perturbation effect." Cite
-  Hochlehnert et al. (2025).
+- Robustness top-3 (chatgpt, mistral, gemini) have CIs containing zero
+  post Phase 1.8 — within this sample size, none of the three is
+  statistically distinguishable from "no perturbation effect." The
+  top-2 swap (chatgpt overtakes mistral) is itself noise-equivalent.
+  Cite Hochlehnert et al. (2025).
 - Calibration ECE here is verbalized only (the "weakest baseline" per
   Wang et al. 2026, Multi-Answer Confidence). Consistency-based ECE
   yields a different ranking — see RQ5.
@@ -502,23 +501,23 @@ do their conclusions about overall calibration quality coincide?
   p = 0.9; consistency: 3-of-3 agreement).
 
 **Population.**
-- Verbalized: 1,230 base runs (5 × 246).
+- Verbalized: 855 base runs (5 × 171).
 - Consistency: 161 numeric-target tasks × 5 models × 3 reruns = 2,415
   rerun outputs (10 CONCEPTUAL tasks excluded — no numerical answer
   against which 3-rerun agreement can be measured). Phase 1C cost:
   $11.69; 99.92% success (chatgpt 1, mistral 1 errored).
 
-**Findings.**
+**Findings (verbalized ECE post Phase 1.8 2026-05-04).**
 | Model    | Verbalized ECE | Consistency ECE (full) |
 |----------|---------------:|-----------------------:|
-| claude   | 0.067          | 0.734                  |
-| chatgpt  | 0.063          | 0.721                  |
-| gemini   | 0.097          | 0.618                  |
-| deepseek | 0.180          | 0.726                  |
-| mistral  | 0.084          | 0.663                  |
+| claude   | 0.033          | 0.734                  |
+| chatgpt  | 0.034          | 0.721                  |
+| gemini   | 0.077          | 0.618                  |
+| deepseek | 0.198          | 0.726                  |
+| mistral  | 0.081          | 0.663                  |
 
-- Verbalized: chatgpt < claude < mistral < gemini < deepseek
-  (best → worst). All in [0.063, 0.180].
+- Verbalized: claude ≈ chatgpt < gemini < mistral < deepseek
+  (best → worst). All in [0.033, 0.198].
 - Consistency: gemini < mistral < chatgpt < deepseek < claude
   (best → worst). All in [0.618, 0.734].
 - Verbalized: hedge-heavy default to "unstated" bucket; 0 records in
@@ -651,7 +650,7 @@ RQ formulations.
 | 2 | ~~Bibtex key `wang2025icecream` actually points to Du et al. (Ice Cream)…~~ | **RESOLVED 2026-05-03.** Bibtex key renamed `wang2025icecream` → `du2025icecream`. Vault note `papers/09-new-ice-cream-causal-2025.md` updated (bibtex key field, Citation-in-poster, Citation-in-paper, Authors comment). README + poster-citations updated to "Du et al. (2025)". static_data mirror synced. |
 | 3 | ~~Bibtex key `park2025judge` actually points to Yamauchi et al.~~ | **VERIFIED 2026-05-03 (no rename).** Bibtex key `park2025judge` retained for citation stability per Day-3 housekeeping convention; bibtex `author={...}` field correctly says "Yamauchi" so any LaTeX `\cite{park2025judge}` resolves to "Yamauchi et al." in printed references. All in-text references across project use "Yamauchi et al. (2025)". No further action needed pre-submission unless reviewer queries the key mismatch. |
 | 4 | ~~Boye & Moell — bibtex year 2026 vs arXiv Feb 2025…~~ | **RESOLVED 2026-05-03.** Bibtex key renamed `mathfail2026` → `mathfail2025`; year field updated `2026 → 2025`. Vault note `papers/13-new-math-reasoning-failures-2026.md` Year + Citation-in-poster + Citation-in-paper + Bibtex-key fields all aligned to 2025. Filename retains legacy `-2026` suffix for stability (logged in metadata). README + poster-citations + audit/literature_comparison.md + audit/personal_todo_status.md updated. static_data mirror synced. |
-| 5 | The 22.16% combined keyword-judge disagreement uses `pct_pass_flip` from `combined_pass_flip_analysis.json`; the older 25.02% uses base-only `keyword_vs_judge_agreement.json`. Both are canonical at their own scope. | Paper should pick one for the headline (recommend 22.16%, larger denominator) and footnote the other. Website currently shows both via the `useKeyFindings` hook. |
+| 5 | Post Phase 1.8 (2026-05-04), the 20.74% combined keyword-judge disagreement uses `pct_pass_flip` from `combined_pass_flip_analysis.json` (n_eligible 2,850); the base-only headline is 20.93% (n_eligible 750). Both are canonical at their own scope. | Paper picks 20.74% for the headline (larger denominator); base-only footnoted. Website surfaces both via the `useKeyFindings` hook. |
 | 6 | ~~Gemini "all 246 base responses unstated" — verify…~~ | **RESOLVED 2026-05-03 (Tier 1).** Falsified by Fix B. Post-fix gemini bucket counts: low 9, medium 118, high 0, unstated 119 (sum 246). 127/246 extractable signals; correlation r = 0.337. See `audit/gemini_forensic_2026-05-03.md`. |
 | 7 | Phase 1C self-consistency cost reported as $11.688 in `recompute_log.md`; verify this matches the run-log artifacts before citing in paper. | Cross-check `experiments/results_v2/self_consistency_runs.jsonl` token counts against vendor-quoted $/M-token rates. |
 
