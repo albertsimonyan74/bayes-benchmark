@@ -721,6 +721,18 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
   }
 }
 
+/* ─── Methodology §1 commitments grid (3+3 → 2 → 1) ─────────────── */
+@media (max-width: 900px) {
+  .commitments-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 600px) {
+  .commitments-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ─── Key Findings inside About — visual separator ───────────── */
 .kf-inside-about {
   margin-top: 48px;

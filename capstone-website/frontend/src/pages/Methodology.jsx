@@ -5,6 +5,52 @@ import {
   PerDimCalibrationPanel, AccCalibScatterPanel,
 } from '../components/MethodologyPanels'
 
+const ICON = {
+  MessageSquare: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  ),
+  Scale: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+      <path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+    </svg>
+  ),
+  BarChart3: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M12 16v-5"/><path d="M17 16V6"/>
+    </svg>
+  ),
+  Shuffle: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/>
+      <path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/>
+      <path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/>
+    </svg>
+  ),
+  LineChart: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+    </svg>
+  ),
+  Target: (p) => (
+    <svg width={p.size||20} height={p.size||20} viewBox="0 0 24 24" fill="none" stroke={p.color||'currentColor'} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+    </svg>
+  ),
+}
+
+const COMMITMENTS = [
+  { icon: ICON.MessageSquare, label: 'PROMPTING',    color: '#00FFE0', title: 'Zero-shot Chain-of-Thought',     body: 'Single shipped prompting strategy; PoT explored but not in scored runs.',                                       cite: 'Wei et al. (2022)' },
+  { icon: ICON.Scale,         label: 'SCORING',      color: '#A78BFA', title: 'External-judge validation',       body: 'Llama 3.3 70B Instruct via Together AI scores per-dimension, externally to the 5 evaluated models.',          cite: 'Yamauchi et al. (2025)' },
+  { icon: ICON.BarChart3,     label: 'SEPARABILITY', color: '#00B4D8', title: 'Bootstrap-CI on rankings',        body: '10,000 resamples per model; statistical separability tested rather than asserted.',                          cite: 'Hochlehnert et al. (2025) · Longjohn et al. (2025)' },
+  { icon: ICON.Shuffle,       label: 'ROBUSTNESS',   color: '#FFB347', title: 'Perturbation testing (3 types)',  body: 'Rephrase, numerical-substitution, semantic perturbations across 2,365 runs.',                                  cite: 'BrittleBench (2026)' },
+  { icon: ICON.LineChart,     label: 'VARIANCE',     color: '#FF6B6B', title: 'Variance as first-class metric',  body: 'Per-task variance and rank stability reported alongside point estimates.',                                     cite: 'Au et al. (2025) · ReasonBench' },
+  { icon: ICON.Target,        label: 'CALIBRATION',  color: '#7FFFD4', title: 'Dual-method calibration',         body: 'Verbalized confidence + self-consistency both measured; method-dependence disclosed.',                          cite: 'Nagarkar (2026) · Multi-Answer Confidence (2026)' },
+]
+
 const SCORE_DIMS = [
   { dim: 'A', name: 'Assumption Compliance',  weight: 0.30, color: '#7FFFD4', desc: 'Required assumption checks (prior_specified, iid_stated). Heaviest weight: Du 2025, Boye & Moell 2025, Yamauchi 2025 all identify assumption articulation as the primary failure mode in LLM statistical reasoning.' },
   { dim: 'R', name: 'Reasoning Quality',      weight: 0.25, color: '#A78BFA', desc: 'Four sub-criteria × 0.25: shows work, identifies model, states formula, interprets result. Yamauchi 2025: dimension where external-judge adds most over keyword scoring.' },
@@ -132,47 +178,90 @@ export default function Methodology() {
         {/* 1 — Continuity statement */}
         <FadeIn delay={50}>
           <Subhead>1 · Continuity Statement</Subhead>
-          <Card>
-            <p style={{ color: 'rgba(232,244,248,0.85)', fontSize: 14, lineHeight: 1.85, margin: 0 }}>
-              This benchmark extends StatEval (Lu et al., 2025) from descriptive and hypothesis-testing
-              statistics to Bayesian inference. Where StatEval uses multiple-choice format, this
-              benchmark adopts free-response with a 5-dimensional rubric (N·M·A·C·R) following the
-              multi-dimensional convention of MathEval (Liu et al., 2025). The prompting baseline is
-              the single shipped strategy: zero-shot Chain-of-Thought (Wei et al., 2022). Methodology
-              rigour combines external-judge validation via Llama 3.3 70B (Yamauchi et al., 2025),
-              bootstrap-CI separability motivated by Statistical Fragility (Hochlehnert et al., 2025)
-              and Longjohn et al. (2025), perturbation robustness adapted from BrittleBench (2026),
-              and the variance-as-first-class framing of ReasonBench (Au et al., 2025). Calibration
-              concerns are raised by Nagarkar et al. (2026); both verbalized and consistency-based
-              extraction (Multi-Answer Confidence, 2026) are measured, revealing that calibration is
-              method-dependent. Limitations around single-judge bias are framed by
-              Judgment-Becomes-Noise (Feuer et al., 2025); future work toward multi-judge ensembling
-              is explicitly scoped.
-            </p>
-          </Card>
+          <p style={{ color: 'rgba(232,244,248,0.82)', fontSize: 14, lineHeight: 1.8, margin: '0 0 20px' }}>
+            This benchmark extends StatEval (Lu et al., 2025) from descriptive and hypothesis-testing
+            statistics to Bayesian inference, adopting free-response with a 5-dimensional rubric
+            (N·M·A·C·R) per the convention of MathEval (Liu et al., 2025).
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 20 }} className="commitments-grid">
+            {COMMITMENTS.map((c) => {
+              const Icon = c.icon
+              return (
+                <div key={c.label} style={{
+                  background: `${c.color}06`,
+                  border: `1px solid ${c.color}33`,
+                  borderTop: `3px solid ${c.color}`,
+                  borderRadius: 10,
+                  padding: '14px 16px 12px',
+                  display: 'flex', flexDirection: 'column', gap: 8,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Icon size={18} color={c.color}/>
+                    <span style={{ color: c.color, fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.14em', fontWeight: 800 }}>
+                      {c.label}
+                    </span>
+                  </div>
+                  <div style={{ color: '#fff', fontSize: 13.5, fontWeight: 700, lineHeight: 1.35 }}>
+                    {c.title}
+                  </div>
+                  <div style={{ color: 'rgba(232,244,248,0.72)', fontSize: 12, lineHeight: 1.6 }}>
+                    {c.body}
+                  </div>
+                  <div style={{
+                    marginTop: 'auto',
+                    paddingTop: 8,
+                    borderTop: `1px solid ${c.color}22`,
+                    color: `${c.color}`,
+                    fontFamily: 'monospace',
+                    fontSize: 10,
+                    opacity: 0.85,
+                  }}>
+                    {c.cite}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <p style={{ color: 'rgba(232,244,248,0.65)', fontSize: 12.5, lineHeight: 1.7, fontStyle: 'italic', margin: '0 0 8px' }}>
+            Single-judge bias is acknowledged as a limitation per Feuer et al. (2025);
+            multi-judge ensembling is paper-scope future work.
+          </p>
         </FadeIn>
 
         {/* 2 — N·M·A·C·R Rubric */}
         <FadeIn delay={100}>
           <Subhead>2 · N·M·A·C·R Rubric (literature-derived weights)</Subhead>
           <Card>
-            <p style={{ color: 'rgba(232,244,248,0.78)', fontSize: 13, lineHeight: 1.85, margin: '0 0 14px' }}>
-              The N·M·A·C·R rubric uses literature-derived weights.
-              Assumption articulation (A=30%) is weighted highest because three independent literature
-              lines converge on assumption violations as the dominant failure mode in statistical
-              reasoning evaluation: Du et al. (2025) identifies assumption violations as the primary
-              failure mode in LLM causal-statistical reasoning; Boye &amp; Moell (2025) lists
-              "unwarranted assumptions" as failure mode #1; Yamauchi et al. (2025) finds
-              assumption_compliance is the dimension where keyword and external-judge raters diverge
-              most. Reasoning quality (R=25%) is weighted second because Yamauchi et al. (2025)
-              identifies it as the dimension where external-judge evaluation adds most value over
-              keyword scoring. Method selection (M=20%) is weighted moderately because Wei et al.
-              (2022) and Chen et al. (2022) establish method articulation as central but partially
-              redundant with reasoning quality. Confidence calibration (C=15%) and numerical
-              correctness (N=10%) are weighted lower because calibration is treated as a separate
-              evaluation track in the field (Nagarkar 2026, FermiEval 2025) and numerical correctness
-              is the dimension that needs least sophisticated evaluation (Liu 2025) — anyone with a
-              calculator can verify a number.
+            <p style={{ color: 'rgba(232,244,248,0.85)', fontSize: 14, lineHeight: 1.7, margin: '0 0 18px' }}>
+              Five dimensions, literature-derived weights, justified per dimension.
+            </p>
+            <div style={{
+              display: 'flex', width: '100%', height: 56, borderRadius: 8, overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.10)', marginBottom: 8,
+            }}>
+              {SCORE_DIMS.map(d => (
+                <div key={d.dim} title={`${d.dim}: ${(d.weight*100).toFixed(0)}%`} style={{
+                  width: `${d.weight*100}%`,
+                  background: `linear-gradient(180deg, ${d.color}, ${d.color}cc)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  position: 'relative',
+                  minWidth: 0,
+                  overflow: 'hidden',
+                  borderRight: '1px solid rgba(0,0,0,0.18)',
+                }}>
+                  <span style={{
+                    fontFamily: 'monospace', fontSize: 13, fontWeight: 800,
+                    color: 'rgba(0,0,0,0.82)', whiteSpace: 'nowrap', padding: '0 6px',
+                    letterSpacing: '0.04em',
+                  }}>
+                    {d.dim} · {(d.weight*100).toFixed(0)}%
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p style={{ color: 'rgba(232,244,248,0.55)', fontSize: 11.5, fontStyle: 'italic', textAlign: 'center', margin: '0 0 18px' }}>
+              Weights sum to 1.00. Dimensions weighted by literature convergence
+              (Du 2025, Boye-Moell 2025, Yamauchi 2025).
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14 }}>
               {SCORE_DIMS.map(d => (
