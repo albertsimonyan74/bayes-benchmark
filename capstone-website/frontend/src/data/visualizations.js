@@ -77,7 +77,7 @@ export const VISUALIZATIONS = [
     id: 'a4b_per_dim_robustness', category: 'robustness',
     title: 'Per-Dimension Robustness Δ (Phase 1B Layer 2)',
     subtitle: '5 models × 5 NMACR dims = 25 deltas',
-    caption: 'Layer 2 of RQ4. Claude / DeepSeek / Gemini lose most on the A dimension under perturbation — directly confirms the RQ3 assumption-violation finding. Cells annotated where |Δ| > 0.03.',
+    caption: 'Layer 2 of RQ4. DeepSeek / Claude / Gemini lose most on the A dimension under perturbation — directly confirms the RQ3 assumption-violation finding. Cells annotated where |Δ| > 0.03.',
     source: 'experiments/results_v2/robustness_v2.json (per_dim_delta)',
     png: '/visualizations/png/v2/a4b_per_dim_robustness.png',
   },

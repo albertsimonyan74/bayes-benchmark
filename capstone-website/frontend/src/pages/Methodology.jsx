@@ -707,11 +707,11 @@ export default function Methodology() {
             <p style={{ color: 'rgba(232,244,248,0.7)', fontSize: 12, lineHeight: 1.7, margin: '14px 0 0' }}>
               <strong>Accuracy-calibration correlation (RQ5 Layer 4):</strong> Pearson r between
               per-task aggregate (literature-weighted NMACR) and per-task confidence (dim_C):
-              Claude 0.43, Mistral 0.38, ChatGPT 0.34, Gemini 0.34, DeepSeek 0.31. All five
-              models in a tight band — confidence tracks task difficulty more than ground-truth
-              correctness, but does so consistently across the cohort. Honest interpretation:
-              well-calibrated does not mean accurate; it means hedging behaviour tracks task
-              difficulty.
+              Mistral 0.42, DeepSeek 0.42, Claude 0.42, Gemini 0.39, ChatGPT 0.36. All five
+              models in a tight band 0.36–0.42 — confidence tracks task difficulty more than
+              ground-truth correctness, but does so consistently across the cohort. Honest
+              interpretation: well-calibrated does not mean accurate; it means hedging behaviour
+              tracks task difficulty.
             </p>
           </Card>
         </FadeIn>

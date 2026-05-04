@@ -19,7 +19,7 @@ const CAVEATS = [
     values (0.06–0.18) are weighted MAEs over three populated buckets (0.3 / 0.5 / 0.6) — they
     capture calibration across the low-to-moderate confidence range only. Verbalized extraction
     is sensitive to hedging language: models with less hedging produce fewer high-confidence
-    signals (Gemini, for instance, defaults 119 of 246 base responses to "unstated" and tends
+    signals (Gemini, for instance, defaults 74 of 171 base responses to "unstated" and tends
     toward moderate-bucket placement when it does hedge). Phase 1C consistency extraction
     recovers a different calibration picture (all five models severely overconfident, ECE
     0.62–0.73). True probabilistic calibration requires token-level logprobs, not uniformly

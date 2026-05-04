@@ -2078,7 +2078,7 @@ const RQS = [
       'All five models reverse direction between methods — calibration is method-dependent cohort-wide',
     ],
     viewLink:'calibration',
-    detail:'Verbalized extraction (n=171 base/model): hedge-heavy, ECE 0.033–0.198. Consistency extraction (Phase 1C, n=161 numeric tasks × 3 reruns): all 5 models severely overconfident, ECE 0.62–0.73. The two methods yield qualitatively different conclusions across the cohort. Accuracy-calibration correlations (Pearson r): claude 0.43, mistral 0.38, chatgpt 0.34, gemini 0.34, deepseek 0.31 — moderate decoupling across all five models.',
+    detail:'Verbalized extraction (n=171 base/model): hedge-heavy, ECE 0.033–0.198. Consistency extraction (Phase 1C, n=161 numeric tasks × 3 reruns): all 5 models severely overconfident, ECE 0.62–0.73. The two methods yield qualitatively different conclusions across the cohort. Accuracy-calibration correlations (Pearson r): mistral 0.42, deepseek 0.42, claude 0.42, gemini 0.39, chatgpt 0.36 — moderate decoupling across all five models, tight band 0.36–0.42.',
     grounding:'FermiEval 2025 — overconfidence contrast. Multi-Answer Confidence 2026 — consistency-based path. Nagarkar et al. 2026.',
   },
 ]
