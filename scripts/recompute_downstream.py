@@ -1,7 +1,7 @@
 """
 Phase 1B Step 3 — recompute downstream analyses under literature-derived NMACR weights.
 
-Reads experiments/results_v2/nmacr_scores_v2.jsonl (produced by recompute_nmacr.py)
+Reads experiments/results_v2/nmacr_scores_v2.jsonl (produced by recompute_scores.py)
 and updates:
 
 3a. experiments/results_v2/bootstrap_ci.json

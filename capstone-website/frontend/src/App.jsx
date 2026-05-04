@@ -2410,8 +2410,6 @@ export default function App() {
             src={fullImg}
             alt="visualization"
             onClick={e => e.stopPropagation()}
-            onLoad={() => console.log('PNG loaded:', fullImg)}
-            onError={() => console.error('PNG failed:', fullImg)}
             style={{
               maxWidth: '90vw',
               maxHeight: '85vh',
