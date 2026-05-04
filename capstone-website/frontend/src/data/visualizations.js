@@ -107,7 +107,7 @@ export const VISUALIZATIONS = [
     id: 'self_consistency', category: 'calibration',
     title: 'Self-Consistency Calibration (Phase 1C full coverage, n=161 tasks)',
     subtitle: 'Verbalized vs consistency · cohort-wide method-dependence',
-    caption: 'Phase 1C expanded from 30 stratified-hard tasks to all 161 numeric-target tasks. All 5 models severely overconfident under consistency: ECE 0.62–0.73 (vs verbalized 0.06–0.18). The two methods yield qualitatively different conclusions for every model.',
+    caption: 'Phase 1C expanded from 30 stratified-hard tasks to all 161 numeric-target tasks. All 5 models severely overconfident under consistency: ECE 0.62–0.73 (vs verbalized 0.03–0.20 post-Phase-1.8). The two methods yield qualitatively different conclusions for every model.',
     source: 'experiments/results_v2/self_consistency_calibration.json',
     png: '/visualizations/png/v2/self_consistency_calibration.png',
   },
