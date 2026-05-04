@@ -2286,6 +2286,12 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
   .app-root {
     padding-right: 200px;
   }
+  /* Overview hero breaks out of the rail gutter — SideNav not visible on
+     hero (only after scrollY > 400) so the gutter served no purpose and
+     pulled hero centering left of viewport center */
+  #overview {
+    margin-right: -200px;
+  }
 }
 
 /* Hide inline rail on mobile/tablet — replaced by FAB + drawer */
