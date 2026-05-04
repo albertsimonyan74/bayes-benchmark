@@ -1159,7 +1159,7 @@ export function EligibilityFunnelPanel() {
     <div className="validation-panel">
       <div className="validation-panel-header">
         <span className="validation-label">ELIGIBILITY FILTERS · WHO COUNTS IN α</span>
-        <span className="validation-meta">methodologically-justified exclusion · matches Limitations L6</span>
+        <span className="validation-meta">methodologically-justified exclusion · matches Limitations L5</span>
       </div>
 
       <div className="eligibility-funnel">
