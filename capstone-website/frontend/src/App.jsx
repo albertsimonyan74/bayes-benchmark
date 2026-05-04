@@ -2591,6 +2591,9 @@ export default function App() {
               objectFit: 'contain',
               borderRadius: 8,
               display: 'block',
+              background: '#ffffff',
+              padding: 16,
+              boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
             }}
           />
           <div style={{
