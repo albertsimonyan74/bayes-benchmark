@@ -154,16 +154,17 @@ def plot_heatmap(heatmap, task_types, models):
     ax.set_yticks(range(len(ordered_types)))
     ax.set_yticklabels(ordered_types, fontsize=8.5, family="monospace")
 
-    SIGNIFICANCE_THRESHOLD = 0.08
     for i in range(len(ordered_types)):
         for j in range(len(models)):
             v = M[i, j]
             if np.isnan(v):
                 ax.text(j, i, "—", ha="center", va="center", fontsize=6, color="#888")
-            elif abs(v) >= SIGNIFICANCE_THRESHOLD:
-                txt_color = "#fff" if abs(v) > vmax * 0.55 else "#111"
-                ax.text(j, i, f"{v:+.2f}", ha="center", va="center",
-                        fontsize=8, color=txt_color, fontweight="bold")
+                continue
+            if v == 0:
+                continue
+            txt_color = "#fff" if abs(v) >= 0.18 else "#1a1a1a"
+            ax.text(j, i, f"{v:+.2f}", ha="center", va="center",
+                    fontsize=7, color=txt_color, fontweight="bold")
 
     # Horizontal dividers between category bands
     for _, _, end_row in cat_spans[:-1]:
