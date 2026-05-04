@@ -3,6 +3,7 @@ import { motion, useInView } from 'motion/react'
 import {
   PerModelPassFlipPanel, KeywordDegradationPanel, PerDimRobustnessPanel,
   PerDimCalibrationPanel, AccCalibScatterPanel, PerModelFailuresPanel,
+  BootstrapValidationPanel, AlphaValidationPanel, ToleranceValidationPanel,
 } from '../components/MethodologyPanels'
 
 const ICON = {
@@ -642,47 +643,12 @@ export default function Methodology() {
           <PerDimRobustnessPanel />
         </FadeIn>
 
-        {/* 5 — Statistical validation + tolerance */}
+        {/* 5 — Statistical validation (visualization-first) */}
         <FadeIn delay={210}>
           <Subhead>5 · Statistical Validation</Subhead>
-          <Card>
-            <div style={{ marginBottom: 14 }}>
-              <strong style={{ color: '#00FFE0', fontSize: 13 }}>Bootstrap CI separability.</strong>
-              <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
-                10,000 bootstrap resamples per model, seed=42, percentile method. Under
-                literature-derived NMACR weights, accuracy means are Gemini 0.7314
-                [0.7060, 0.7565], Claude 0.6976 [0.6694, 0.7249], ChatGPT 0.6733
-                [0.6449, 0.7012], DeepSeek 0.6686 [0.6384, 0.6988], Mistral 0.6676
-                [0.6401, 0.6949]. Gemini is the cohort top with a 3.4pp lead over #2 Claude
-                (CIs overlap — pair not_separable). Robustness CIs cross zero for ChatGPT,
-                Mistral, and Gemini — three-of-five effectively noise-equivalent,
-                statistically indistinguishable from "no robustness deficit"; the top-2
-                pair (ChatGPT vs Mistral) is itself not_separable. Only Claude and DeepSeek
-                separate from zero. (Hochlehnert et al., 2025, Statistical Fragility.)
-              </p>
-            </div>
-            <div style={{ marginBottom: 14 }}>
-              <strong style={{ color: '#00FFE0', fontSize: 13 }}>Krippendorff α inter-rater reliability.</strong>
-              <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
-                Adopted over Spearman ρ on the recommendation of Yamauchi et al. (2025): α
-                handles missing data, multiple raters, and ordinal-vs-nominal scales correctly.
-                Bootstrap B=1000, seed=42. Threshold-free interpretation: report α with bootstrap
-                CI; CI-vs-zero does the work. Base scope (n=750): assumption +0.573
-                [0.516, 0.622], reasoning −0.125 [−0.197, −0.059] (CI excludes zero —
-                systematic disagreement), method −0.009 [−0.072, +0.062] (CI contains zero —
-                essentially chance-level, neither aligned nor systematically opposed).
-              </p>
-            </div>
-            <div>
-              <strong style={{ color: '#00FFE0', fontSize: 13 }}>Tolerance sensitivity.</strong>
-              <p style={{ color: 'rgba(232,244,248,0.75)', fontSize: 13, lineHeight: 1.75, margin: '4px 0 0' }}>
-                Accuracy at task-specified tolerances vs tight (0.005, 0.025) / default (0.010,
-                0.050) / loose (0.020, 0.100) sweeps. Rankings shift across levels — Gemini swings
-                from worst at tight to mid at loose. Bayesian closed-form numerics are
-                tolerance-sensitive at the boundary, not numerically fragile within typical bounds.
-              </p>
-            </div>
-          </Card>
+          <BootstrapValidationPanel />
+          <AlphaValidationPanel />
+          <ToleranceValidationPanel />
         </FadeIn>
 
         {/* 6 — Calibration is method-dependent */}

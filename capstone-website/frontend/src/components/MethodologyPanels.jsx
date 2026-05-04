@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ReferenceLine, ResponsiveContainer, ScatterChart, Scatter, ZAxis,
-  LabelList, Cell,
+  LabelList, Cell, ErrorBar, LineChart, Line,
 } from 'recharts'
 
 const API = import.meta.env.VITE_API_URL || ''
@@ -628,5 +628,379 @@ export function AccCalibScatterPanel() {
         </ResponsiveContainer>
       </div>
     </PanelShell>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════
+// §5 — STATISTICAL VALIDATION (visualization-first restructure)
+// ═══════════════════════════════════════════════════════════════
+
+// Canonical post-Phase-1.8 (2026-05-04) — bootstrap_ci.json B=10000 seed=42
+const BOOTSTRAP_ACCURACY = [
+  { model: 'gemini',   mean: 0.7314, ci_low: 0.7060, ci_high: 0.7565 },
+  { model: 'claude',   mean: 0.6976, ci_low: 0.6694, ci_high: 0.7249 },
+  { model: 'chatgpt',  mean: 0.6733, ci_low: 0.6449, ci_high: 0.7012 },
+  { model: 'deepseek', mean: 0.6686, ci_low: 0.6384, ci_high: 0.6988 },
+  { model: 'mistral',  mean: 0.6676, ci_low: 0.6401, ci_high: 0.6949 },
+]
+
+const BOOTSTRAP_ROBUSTNESS = [
+  { model: 'chatgpt',  mean: 0.0003, ci_low: -0.0133, ci_high: 0.0144 },
+  { model: 'mistral',  mean: 0.0013, ci_low: -0.0116, ci_high: 0.0142 },
+  { model: 'gemini',   mean: 0.0129, ci_low: -0.0026, ci_high: 0.0288 },
+  { model: 'claude',   mean: 0.0305, ci_low:  0.0163, ci_high: 0.0445 },
+  { model: 'deepseek', mean: 0.0388, ci_low:  0.0215, ci_high: 0.0560 },
+]
+
+function shapeForestPoints(rows) {
+  return rows.map(r => ({
+    ...r,
+    err: [r.mean - r.ci_low, r.ci_high - r.mean],
+  }))
+}
+
+function ForestChart({ data, domain, refX = null, valueLabel = 'mean', height = 220 }) {
+  const points = shapeForestPoints(data)
+  return (
+    <div style={{ width: '100%', height }}>
+      <ResponsiveContainer>
+        <ScatterChart margin={{ top: 8, right: 60, bottom: 24, left: 8 }}>
+          <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.06)" horizontal={false} />
+          <XAxis
+            type="number"
+            dataKey="mean"
+            domain={domain}
+            tick={{ fill: 'rgba(232,244,248,0.6)', fontSize: 10, fontFamily: 'monospace' }}
+            tickFormatter={v => v.toFixed(3)}
+          />
+          <YAxis
+            type="category"
+            dataKey="model"
+            tick={{ fill: 'rgba(232,244,248,0.85)', fontSize: 11, fontFamily: 'monospace' }}
+            width={70}
+            interval={0}
+          />
+          <ZAxis range={[80, 80]} />
+          <Tooltip
+            cursor={{ stroke: 'rgba(0,255,224,0.3)', strokeDasharray: '3 3' }}
+            content={({ active, payload }) => {
+              if (!active || !payload?.[0]) return null
+              const p = payload[0].payload
+              return (
+                <TooltipBox>
+                  <div style={{ color: MODEL_COLORS[p.model], fontWeight: 700, marginBottom: 4 }}>{p.model}</div>
+                  <div>{valueLabel}: {p.mean.toFixed(4)}</div>
+                  <div>95% CI: [{p.ci_low.toFixed(4)}, {p.ci_high.toFixed(4)}]</div>
+                </TooltipBox>
+              )
+            }}
+          />
+          {refX !== null && (
+            <ReferenceLine
+              x={refX} stroke="#FFB347" strokeDasharray="4 4"
+              label={{ value: `Δ = ${refX}`, fill: '#FFB347', fontSize: 10, position: 'top' }}
+            />
+          )}
+          <Scatter data={points} shape="circle">
+            {points.map(p => (
+              <Cell key={p.model} fill={MODEL_COLORS[p.model]} stroke="#fff" strokeWidth={1.2} />
+            ))}
+            <ErrorBar
+              dataKey="err"
+              direction="x"
+              width={6}
+              strokeWidth={2}
+              stroke="rgba(232,244,248,0.55)"
+            />
+            <LabelList
+              dataKey="mean"
+              position="right"
+              formatter={(v) => v.toFixed(3)}
+              style={{ fill: 'rgba(232,244,248,0.7)', fontSize: 10, fontFamily: 'monospace' }}
+            />
+          </Scatter>
+        </ScatterChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+export function BootstrapValidationPanel() {
+  return (
+    <div className="validation-panel">
+      <div className="validation-panel-header">
+        <span className="validation-label">BOOTSTRAP CI SEPARABILITY</span>
+        <span className="validation-meta">B=10,000 · seed=42 · percentile method</span>
+      </div>
+
+      <div className="forest-row">
+        <div className="forest-section">
+          <div className="forest-section-title">Accuracy (literature-weighted NMACR)</div>
+          <ForestChart
+            data={BOOTSTRAP_ACCURACY}
+            domain={[0.60, 0.78]}
+            valueLabel="accuracy"
+          />
+          <div className="forest-caption">
+            Gemini #1 with 3.4pp lead over #2 Claude — pair <span className="mono-tag">not_separable</span> (CIs overlap).
+          </div>
+        </div>
+
+        <div className="forest-section">
+          <div className="forest-section-title">Robustness Δ (base − perturbation)</div>
+          <ForestChart
+            data={BOOTSTRAP_ROBUSTNESS}
+            domain={[-0.03, 0.07]}
+            refX={0}
+            valueLabel="Δ"
+          />
+          <div className="forest-caption">
+            ChatGPT, Mistral, Gemini CIs cross zero — three-of-five noise-equivalent. Only Claude & DeepSeek separate from Δ=0.
+          </div>
+        </div>
+      </div>
+
+      <div className="validation-panel-footer">
+        Hochlehnert et al. 2025 · Statistical Fragility framing
+      </div>
+    </div>
+  )
+}
+
+// ─── §5.2 — Krippendorff α point-and-error-bar ─────────────────
+const KRIPP_DIMS = [
+  {
+    key: 'A', name: 'assumption_compliance', label: 'A · assumption',
+    alpha:  0.5730, ci_low:  0.5155, ci_high:  0.6219,
+    interp: 'moderate agreement', tone: 'positive',
+  },
+  {
+    key: 'R', name: 'reasoning_quality', label: 'R · reasoning',
+    alpha: -0.1246, ci_low: -0.1967, ci_high: -0.0589,
+    interp: 'CI excludes 0 — systematic disagreement', tone: 'negative',
+  },
+  {
+    key: 'M', name: 'method_structure', label: 'M · method',
+    alpha: -0.0090, ci_low: -0.0723, ci_high:  0.0617,
+    interp: 'CI contains 0 — chance-level', tone: 'neutral',
+  },
+]
+
+const ALPHA_TONE_COLOR = {
+  positive: '#7FFFD4',
+  negative: '#FF6B6B',
+  neutral:  '#8BAFC0',
+}
+
+function AlphaForestChart() {
+  const data = KRIPP_DIMS.map(d => ({
+    label: d.label,
+    alpha: d.alpha,
+    ci_low: d.ci_low,
+    ci_high: d.ci_high,
+    err: [d.alpha - d.ci_low, d.ci_high - d.alpha],
+    tone: d.tone,
+  }))
+  return (
+    <div style={{ width: '100%', height: 200 }}>
+      <ResponsiveContainer>
+        <ScatterChart margin={{ top: 8, right: 60, bottom: 24, left: 8 }}>
+          <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.06)" horizontal={false} />
+          <XAxis
+            type="number"
+            dataKey="alpha"
+            domain={[-0.30, 0.70]}
+            tick={{ fill: 'rgba(232,244,248,0.6)', fontSize: 10, fontFamily: 'monospace' }}
+            tickFormatter={v => v.toFixed(2)}
+          />
+          <YAxis
+            type="category"
+            dataKey="label"
+            tick={{ fill: 'rgba(232,244,248,0.85)', fontSize: 11, fontFamily: 'monospace' }}
+            width={140}
+            interval={0}
+          />
+          <ZAxis range={[80, 80]} />
+          <Tooltip
+            cursor={{ stroke: 'rgba(0,255,224,0.3)', strokeDasharray: '3 3' }}
+            content={({ active, payload }) => {
+              if (!active || !payload?.[0]) return null
+              const p = payload[0].payload
+              return (
+                <TooltipBox>
+                  <div style={{ color: ALPHA_TONE_COLOR[p.tone], fontWeight: 700, marginBottom: 4 }}>{p.label}</div>
+                  <div>α = {p.alpha.toFixed(4)}</div>
+                  <div>95% CI: [{p.ci_low.toFixed(4)}, {p.ci_high.toFixed(4)}]</div>
+                </TooltipBox>
+              )
+            }}
+          />
+          <ReferenceLine
+            x={0} stroke="#FFB347" strokeDasharray="4 4"
+            label={{ value: 'α = 0', fill: '#FFB347', fontSize: 10, position: 'top' }}
+          />
+          <Scatter data={data} shape="circle">
+            {data.map(d => (
+              <Cell key={d.label} fill={ALPHA_TONE_COLOR[d.tone]} stroke="#fff" strokeWidth={1.2} />
+            ))}
+            <ErrorBar
+              dataKey="err"
+              direction="x"
+              width={6}
+              strokeWidth={2}
+              stroke="rgba(232,244,248,0.55)"
+            />
+            <LabelList
+              dataKey="alpha"
+              position="right"
+              formatter={(v) => v.toFixed(3)}
+              style={{ fill: 'rgba(232,244,248,0.7)', fontSize: 10, fontFamily: 'monospace' }}
+            />
+          </Scatter>
+        </ScatterChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+export function AlphaValidationPanel() {
+  const fmt = (v) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(3)
+  return (
+    <div className="validation-panel">
+      <div className="validation-panel-header">
+        <span className="validation-label">KRIPPENDORFF α · INTER-RATER RELIABILITY</span>
+        <span className="validation-meta">Base scope n=750 · B=1,000 · seed=42</span>
+      </div>
+
+      <AlphaForestChart />
+
+      <div className="validation-readout">
+        {KRIPP_DIMS.map(d => (
+          <div key={d.key} className="readout-row">
+            <span className="readout-tag" style={{ color: ALPHA_TONE_COLOR[d.tone] }}>{d.label}</span>
+            <span className="readout-value">
+              {fmt(d.alpha)} [{fmt(d.ci_low)}, {fmt(d.ci_high)}]
+            </span>
+            <span className={`readout-interpretation tone-${d.tone}`}>{d.interp}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="validation-panel-footer">
+        Adopted over Spearman ρ per Yamauchi 2025 · threshold-free framing (CI-vs-zero does the work)
+      </div>
+    </div>
+  )
+}
+
+// ─── §5.3 — Tolerance sensitivity slope chart ──────────────────
+// Canonical from experiments/results_v2/tolerance_sensitivity.json
+// Rankings (1 = top accuracy at level):
+//   tight   → chatgpt, claude, deepseek, mistral, gemini
+//   default → claude, chatgpt, deepseek, mistral, gemini
+//   loose   → claude, chatgpt, gemini, mistral, deepseek
+const TOLERANCE_RANKS = [
+  { level: 'tight',   claude: 2, chatgpt: 1, gemini: 5, deepseek: 3, mistral: 4 },
+  { level: 'default', claude: 1, chatgpt: 2, gemini: 5, deepseek: 3, mistral: 4 },
+  { level: 'loose',   claude: 1, chatgpt: 2, gemini: 3, deepseek: 5, mistral: 4 },
+]
+
+const TOLERANCE_ACCURACY = {
+  tight:   { claude: 0.5636, chatgpt: 0.5720, gemini: 0.5127, deepseek: 0.5339, mistral: 0.5212 },
+  default: { claude: 0.5847, chatgpt: 0.5720, gemini: 0.5297, deepseek: 0.5381, mistral: 0.5381 },
+  loose:   { claude: 0.6102, chatgpt: 0.5805, gemini: 0.5593, deepseek: 0.5508, mistral: 0.5593 },
+}
+
+export function ToleranceValidationPanel() {
+  return (
+    <div className="validation-panel">
+      <div className="validation-panel-header">
+        <span className="validation-label">TOLERANCE SENSITIVITY</span>
+        <span className="validation-meta">3 tolerance bands · n=236 numeric runs/level/model</span>
+      </div>
+
+      <div style={{ width: '100%', height: 280 }}>
+        <ResponsiveContainer>
+          <LineChart
+            data={TOLERANCE_RANKS}
+            margin={{ top: 16, right: 80, bottom: 24, left: 12 }}
+          >
+            <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.06)" />
+            <XAxis
+              dataKey="level"
+              tick={{ fill: 'rgba(232,244,248,0.85)', fontSize: 12, fontFamily: 'monospace' }}
+              padding={{ left: 30, right: 30 }}
+            />
+            <YAxis
+              type="number"
+              domain={[0.5, 5.5]}
+              ticks={[1, 2, 3, 4, 5]}
+              reversed
+              tick={{ fill: 'rgba(232,244,248,0.6)', fontSize: 11, fontFamily: 'monospace' }}
+              tickFormatter={v => `#${v}`}
+              label={{ value: 'rank', angle: -90, position: 'insideLeft', fill: 'rgba(232,244,248,0.55)', fontSize: 11 }}
+            />
+            <Tooltip
+              cursor={{ stroke: 'rgba(0,255,224,0.3)', strokeDasharray: '3 3' }}
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null
+                const accLevel = TOLERANCE_ACCURACY[label] || {}
+                return (
+                  <TooltipBox>
+                    <div style={{ marginBottom: 4, color: '#fff' }}>tolerance: {label}</div>
+                    {payload
+                      .slice()
+                      .sort((a, b) => a.value - b.value)
+                      .map(p => (
+                        <div key={p.dataKey}>
+                          <span style={{ color: MODEL_COLORS[p.dataKey] }}>#{p.value} {p.dataKey}</span>
+                          {' — acc '}{(accLevel[p.dataKey] ?? 0).toFixed(3)}
+                        </div>
+                      ))}
+                  </TooltipBox>
+                )
+              }}
+            />
+            {MODELS.map(m => (
+              <Line
+                key={m}
+                type="linear"
+                dataKey={m}
+                stroke={MODEL_COLORS[m]}
+                strokeWidth={2.2}
+                dot={{ r: 5, fill: MODEL_COLORS[m], stroke: '#fff', strokeWidth: 1 }}
+                activeDot={{ r: 6 }}
+                isAnimationActive={false}
+              >
+                <LabelList
+                  dataKey={m}
+                  content={({ x, y, index }) => {
+                    if (index !== TOLERANCE_RANKS.length - 1) return null
+                    return (
+                      <text
+                        x={x + 10} y={y} dy={4}
+                        fill={MODEL_COLORS[m]}
+                        fontSize={11}
+                        fontFamily="monospace"
+                      >{m}</text>
+                    )
+                  }}
+                />
+              </Line>
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="tolerance-bands">
+        <span className="band-tag">tight: (0.005, 0.025)</span>
+        <span className="band-tag">default: (0.010, 0.050)</span>
+        <span className="band-tag">loose: (0.020, 0.100)</span>
+      </div>
+
+      <div className="validation-panel-footer">
+        Gemini swings worst→mid (#5→#3); Claude #1 stable across default+loose. Bayesian closed-form numerics are tolerance-sensitive at the boundary, not numerically fragile within typical bounds.
+      </div>
+    </div>
   )
 }
