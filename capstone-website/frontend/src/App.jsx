@@ -7,6 +7,7 @@ import statsData from './data/stats.json'
 import resultsData from './data/results_summary.json'
 import GlobeBackground from './components/GlobeBackground'
 import Navbar          from './components/Navbar'
+import SideNav         from './components/SideNav'
 import NeuralNetwork   from './components/NeuralNetwork'
 import HeroNetworkBg   from './components/HeroNetworkBg'
 import KeyFindings, { useKeyFindings, KeyFindingCard } from './components/KeyFindings'
@@ -2496,6 +2497,7 @@ export default function App() {
       <GlobeBackground/>
       <ScrollProgress/>
       <Navbar/>
+      <SideNav/>
       <Overview/>
       <SectionDivider/>
       <Pipeline/>
