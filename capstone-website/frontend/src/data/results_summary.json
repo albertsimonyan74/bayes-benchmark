@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-26T18:21:53.438907+00:00",
-  "total_runs": 1230,
+  "generated_at": "2026-05-04T00:00:00+00:00",
+  "total_runs": 855,
   "benchmark_runs": 855,
-  "synthetic_runs": 375,
+  "synthetic_runs": 0,
   "models_complete": [
     "claude",
     "chatgpt",
@@ -16,7 +16,7 @@
     "claude": {
       "tasks": 171,
       "pass": 152,
-      "avg_score": 0.6791,
+      "avg_score": 0.6976,
       "avg_numeric_score": 0.5034,
       "avg_structure_score": 0.9488,
       "avg_assumption_score": 0.7261,
@@ -256,12 +256,13 @@
         "STATIONARY",
         "BOX_MULLER",
         "FISHER_INFO"
-      ]
+      ],
+      "_avg_score_scoring": "literature-NMACR"
     },
     "chatgpt": {
       "tasks": 171,
       "pass": 133,
-      "avg_score": 0.6139,
+      "avg_score": 0.6733,
       "avg_numeric_score": 0.4971,
       "avg_structure_score": 0.866,
       "avg_assumption_score": 0.6023,
@@ -501,12 +502,13 @@
         "BAYES_FACTOR",
         "BAYES_REG",
         "STATIONARY"
-      ]
+      ],
+      "_avg_score_scoring": "literature-NMACR"
     },
     "deepseek": {
       "tasks": 171,
       "pass": 135,
-      "avg_score": 0.6212,
+      "avg_score": 0.6686,
       "avg_numeric_score": 0.4688,
       "avg_structure_score": 0.8826,
       "avg_assumption_score": 0.6579,
@@ -746,12 +748,13 @@
         "STATIONARY",
         "BAYES_REG",
         "LOG_ML"
-      ]
+      ],
+      "_avg_score_scoring": "literature-NMACR"
     },
     "mistral": {
       "tasks": 171,
       "pass": 145,
-      "avg_score": 0.6323,
+      "avg_score": 0.6676,
       "avg_numeric_score": 0.4981,
       "avg_structure_score": 0.8957,
       "avg_assumption_score": 0.614,
@@ -991,12 +994,13 @@
         "BAYES_REG",
         "STATIONARY",
         "OPT_SCALED"
-      ]
+      ],
+      "_avg_score_scoring": "literature-NMACR"
     },
     "gemini": {
       "tasks": 171,
       "pass": 147,
-      "avg_score": 0.6736,
+      "avg_score": 0.7314,
       "avg_numeric_score": 0.4596,
       "avg_structure_score": 0.9293,
       "avg_assumption_score": 0.6959,
@@ -1236,7 +1240,8 @@
         "FISHER_INFO",
         "BAYES_FACTOR",
         "REGRESSION"
-      ]
+      ],
+      "_avg_score_scoring": "literature-NMACR"
     }
   },
   "synthetic_by_model": {
@@ -1268,421 +1273,421 @@
   },
   "task_type_stats": {
     "BETA_BINOM": {
-      "avg": 0.589,
+      "avg": 0.6892,
       "count": 5,
       "models": {
-        "claude": 0.538,
-        "chatgpt": 0.553,
-        "deepseek": 0.526,
-        "mistral": 0.526,
-        "gemini": 0.802
+        "claude": 0.4785,
+        "chatgpt": 0.7897,
+        "deepseek": 0.7695,
+        "mistral": 0.4695,
+        "gemini": 0.939
       }
     },
     "GAMMA_POISSON": {
-      "avg": 0.611,
+      "avg": 0.8133,
       "count": 5,
       "models": {
-        "claude": 0.55,
-        "chatgpt": 0.638,
-        "deepseek": 0.538,
-        "mistral": 0.541,
-        "gemini": 0.788
+        "claude": 0.7875,
+        "chatgpt": 0.7785,
+        "deepseek": 0.7785,
+        "mistral": 0.7808,
+        "gemini": 0.941
       }
     },
     "NORMAL_GAMMA": {
-      "avg": 0.6046,
+      "avg": 0.6384,
       "count": 5,
       "models": {
-        "claude": 0.565,
-        "chatgpt": 0.55,
-        "deepseek": 0.538,
-        "mistral": 0.55,
-        "gemini": 0.82
+        "claude": 0.4988,
+        "chatgpt": 0.4875,
+        "deepseek": 0.7785,
+        "mistral": 0.4875,
+        "gemini": 0.94
       }
     },
     "DIRICHLET": {
-      "avg": 0.572,
+      "avg": 0.5503,
       "count": 5,
       "models": {
-        "claude": 0.538,
-        "chatgpt": 0.5,
-        "deepseek": 0.526,
-        "mistral": 0.526,
-        "gemini": 0.77
+        "claude": 0.4472,
+        "chatgpt": 0.4562,
+        "deepseek": 0.4382,
+        "mistral": 0.7695,
+        "gemini": 0.64
       }
     },
     "DISC_MEDIAN": {
-      "avg": 0.6808,
+      "avg": 0.6214,
       "count": 25,
       "models": {
-        "claude": 0.7064,
-        "chatgpt": 0.6526,
-        "deepseek": 0.75,
-        "mistral": 0.6638,
-        "gemini": 0.6313
+        "claude": 0.6498,
+        "chatgpt": 0.5794,
+        "deepseek": 0.6388,
+        "mistral": 0.6291,
+        "gemini": 0.6097
       }
     },
     "UNIFORM_MLE": {
-      "avg": 0.8404,
+      "avg": 0.9013,
       "count": 25,
       "models": {
-        "claude": 0.879,
-        "chatgpt": 0.869,
-        "deepseek": 0.8815,
-        "mistral": 0.8764,
-        "gemini": 0.6963
+        "claude": 0.9467,
+        "chatgpt": 0.8867,
+        "deepseek": 0.9486,
+        "mistral": 0.8848,
+        "gemini": 0.8397
       }
     },
     "BINOM_FLAT": {
-      "avg": 0.7714,
+      "avg": 0.6343,
       "count": 25,
       "models": {
-        "claude": 0.7926,
-        "chatgpt": 0.7338,
-        "deepseek": 0.7485,
-        "mistral": 0.7685,
-        "gemini": 0.8138
+        "claude": 0.6419,
+        "chatgpt": 0.6179,
+        "deepseek": 0.6438,
+        "mistral": 0.6251,
+        "gemini": 0.6429
       }
     },
     "MINIMAX": {
-      "avg": 0.7903,
+      "avg": 0.866,
       "count": 25,
       "models": {
-        "claude": 0.7813,
-        "chatgpt": 0.8038,
-        "deepseek": 0.77,
-        "mistral": 0.77,
-        "gemini": 0.8264
+        "claude": 0.821,
+        "chatgpt": 0.9429,
+        "deepseek": 0.82,
+        "mistral": 0.9337,
+        "gemini": 0.8123
       }
     },
     "BAYES_RISK": {
-      "avg": 0.8217,
+      "avg": 0.6251,
       "count": 25,
       "models": {
-        "claude": 0.85,
-        "chatgpt": 0.8326,
-        "deepseek": 0.82,
-        "mistral": 0.8313,
-        "gemini": 0.7749
+        "claude": 0.6275,
+        "chatgpt": 0.6107,
+        "deepseek": 0.6088,
+        "mistral": 0.6097,
+        "gemini": 0.6687
       }
     },
     "BIAS_VAR": {
-      "avg": 0.6594,
+      "avg": 0.766,
       "count": 25,
       "models": {
-        "claude": 0.7526,
-        "chatgpt": 0.5697,
-        "deepseek": 0.6,
-        "mistral": 0.59,
-        "gemini": 0.7846
+        "claude": 0.9419,
+        "chatgpt": 0.6398,
+        "deepseek": 0.76,
+        "mistral": 0.64,
+        "gemini": 0.8484
       }
     },
     "FISHER_INFO": {
-      "avg": 0.4874,
+      "avg": 0.6483,
       "count": 25,
       "models": {
-        "claude": 0.521,
-        "chatgpt": 0.48,
-        "deepseek": 0.49,
-        "mistral": 0.5151,
-        "gemini": 0.4308
+        "claude": 0.6582,
+        "chatgpt": 0.6088,
+        "deepseek": 0.6575,
+        "mistral": 0.6251,
+        "gemini": 0.6918
       }
     },
     "RC_BOUND": {
-      "avg": 0.8404,
+      "avg": 0.9278,
       "count": 25,
       "models": {
-        "claude": 0.881,
-        "chatgpt": 0.8126,
-        "deepseek": 0.8268,
-        "mistral": 0.9051,
-        "gemini": 0.7766
+        "claude": 0.9407,
+        "chatgpt": 0.9419,
+        "deepseek": 0.9376,
+        "mistral": 0.9438,
+        "gemini": 0.8749
       }
     },
     "OPT_SCALED": {
-      "avg": 0.5475,
+      "avg": 0.8061,
       "count": 25,
       "models": {
-        "claude": 0.5356,
-        "chatgpt": 0.5,
-        "deepseek": 0.508,
-        "mistral": 0.458,
-        "gemini": 0.736
+        "claude": 0.7767,
+        "chatgpt": 0.7875,
+        "deepseek": 0.7785,
+        "mistral": 0.7785,
+        "gemini": 0.9095
       }
     },
     "MSE_COMPARE": {
-      "avg": 0.616,
+      "avg": 0.6683,
       "count": 25,
       "models": {
-        "claude": 0.8213,
-        "chatgpt": 0.45,
-        "deepseek": 0.49,
-        "mistral": 0.5664,
-        "gemini": 0.7526
+        "claude": 0.821,
+        "chatgpt": 0.64,
+        "deepseek": 0.64,
+        "mistral": 0.6448,
+        "gemini": 0.5957
       }
     },
     "MARKOV": {
-      "avg": 0.5934,
+      "avg": 0.6045,
       "count": 25,
       "models": {
-        "claude": 0.6462,
-        "chatgpt": 0.562,
-        "deepseek": 0.5451,
-        "mistral": 0.5709,
-        "gemini": 0.6427
+        "claude": 0.6571,
+        "chatgpt": 0.5665,
+        "deepseek": 0.5639,
+        "mistral": 0.5657,
+        "gemini": 0.6695
       }
     },
     "ORDER_STAT": {
-      "avg": 0.6396,
+      "avg": 0.7429,
       "count": 25,
       "models": {
-        "claude": 0.7938,
-        "chatgpt": 0.65,
-        "deepseek": 0.72,
-        "mistral": 0.65,
-        "gemini": 0.384
+        "claude": 0.8229,
+        "chatgpt": 0.7113,
+        "deepseek": 0.8737,
+        "mistral": 0.6813,
+        "gemini": 0.6255
       }
     },
     "REGRESSION": {
-      "avg": 0.2862,
+      "avg": 0.2919,
       "count": 25,
       "models": {
-        "claude": 0.34,
-        "chatgpt": 0.2496,
-        "deepseek": 0.2194,
-        "mistral": 0.178,
-        "gemini": 0.444
+        "claude": 0.3013,
+        "chatgpt": 0.2697,
+        "deepseek": 0.2621,
+        "mistral": 0.2535,
+        "gemini": 0.373
       }
     },
     "BOX_MULLER": {
-      "avg": 0.3802,
+      "avg": 0.5734,
       "count": 25,
       "models": {
-        "claude": 0.513,
-        "chatgpt": 0.302,
-        "deepseek": 0.258,
-        "mistral": 0.3267,
-        "gemini": 0.5013
+        "claude": 0.5635,
+        "chatgpt": 0.554,
+        "deepseek": 0.5447,
+        "mistral": 0.5487,
+        "gemini": 0.656
       }
     },
     "HPD": {
-      "avg": 0.7324,
+      "avg": 0.8415,
       "count": 25,
       "models": {
-        "claude": 0.7618,
-        "chatgpt": 0.73,
-        "deepseek": 0.637,
-        "mistral": 0.8157,
-        "gemini": 0.7173
+        "claude": 0.8789,
+        "chatgpt": 0.845,
+        "deepseek": 0.7465,
+        "mistral": 0.9093,
+        "gemini": 0.828
       }
     },
     "BAYES_FACTOR": {
-      "avg": 0.4644,
+      "avg": 0.6888,
       "count": 25,
       "models": {
-        "claude": 0.5628,
-        "chatgpt": 0.3076,
-        "deepseek": 0.4784,
-        "mistral": 0.538,
-        "gemini": 0.4352
+        "claude": 0.7158,
+        "chatgpt": 0.6957,
+        "deepseek": 0.6625,
+        "mistral": 0.586,
+        "gemini": 0.7839
       }
     },
     "JEFFREYS": {
-      "avg": 0.7577,
+      "avg": 0.5498,
       "count": 25,
       "models": {
-        "claude": 0.8102,
-        "chatgpt": 0.7726,
-        "deepseek": 0.7864,
-        "mistral": 0.8038,
-        "gemini": 0.6156
+        "claude": 0.6014,
+        "chatgpt": 0.5432,
+        "deepseek": 0.5335,
+        "mistral": 0.5241,
+        "gemini": 0.5467
       }
     },
     "PPC": {
-      "avg": 0.6944,
+      "avg": 0.8036,
       "count": 25,
       "models": {
-        "claude": 0.6803,
-        "chatgpt": 0.6818,
-        "deepseek": 0.5816,
-        "mistral": 0.715,
-        "gemini": 0.8134
+        "claude": 0.7777,
+        "chatgpt": 0.8214,
+        "deepseek": 0.7125,
+        "mistral": 0.7937,
+        "gemini": 0.9125
       }
     },
     "BAYES_REG": {
-      "avg": 0.3822,
+      "avg": 0.4564,
       "count": 25,
       "models": {
-        "claude": 0.39,
-        "chatgpt": 0.35,
-        "deepseek": 0.3733,
-        "mistral": 0.3943,
-        "gemini": 0.4036
+        "claude": 0.3463,
+        "chatgpt": 0.3312,
+        "deepseek": 0.4925,
+        "mistral": 0.4544,
+        "gemini": 0.6577
       }
     },
     "MLE_MAP": {
-      "avg": 0.7248,
+      "avg": 0.5779,
       "count": 25,
       "models": {
-        "claude": 0.7774,
-        "chatgpt": 0.7062,
-        "deepseek": 0.6918,
-        "mistral": 0.768,
-        "gemini": 0.6808
+        "claude": 0.6455,
+        "chatgpt": 0.5571,
+        "deepseek": 0.5139,
+        "mistral": 0.5948,
+        "gemini": 0.5781
       }
     },
     "CI_CREDIBLE": {
-      "avg": 0.7273,
+      "avg": 0.8965,
       "count": 25,
       "models": {
-        "claude": 0.8194,
-        "chatgpt": 0.7226,
-        "deepseek": 0.6616,
-        "mistral": 0.627,
-        "gemini": 0.8062
+        "claude": 0.8795,
+        "chatgpt": 0.9419,
+        "deepseek": 0.9137,
+        "mistral": 0.8478,
+        "gemini": 0.8997
       }
     },
     "LOG_ML": {
-      "avg": 0.542,
+      "avg": 0.5027,
       "count": 25,
       "models": {
-        "claude": 0.6874,
-        "chatgpt": 0.4869,
-        "deepseek": 0.448,
-        "mistral": 0.5724,
-        "gemini": 0.5152
+        "claude": 0.5443,
+        "chatgpt": 0.5164,
+        "deepseek": 0.4472,
+        "mistral": 0.5405,
+        "gemini": 0.4652
       }
     },
     "GAMBLER": {
-      "avg": 0.7127,
+      "avg": 0.6787,
       "count": 15,
       "models": {
-        "claude": 0.7721,
-        "chatgpt": 0.72,
-        "deepseek": 0.6575,
-        "mistral": 0.7533,
-        "gemini": 0.6607
+        "claude": 0.6416,
+        "chatgpt": 0.64,
+        "deepseek": 0.7848,
+        "mistral": 0.64,
+        "gemini": 0.6872
       }
     },
     "STATIONARY": {
-      "avg": 0.4347,
+      "avg": 0.5094,
       "count": 15,
       "models": {
-        "claude": 0.4341,
-        "chatgpt": 0.3622,
-        "deepseek": 0.3678,
-        "mistral": 0.4233,
-        "gemini": 0.5861
+        "claude": 0.5027,
+        "chatgpt": 0.5071,
+        "deepseek": 0.4863,
+        "mistral": 0.4425,
+        "gemini": 0.6084
       }
     },
     "RANGE_DIST": {
-      "avg": 0.7042,
+      "avg": 0.7598,
       "count": 15,
       "models": {
-        "claude": 0.7033,
-        "chatgpt": 0.7764,
-        "deepseek": 0.8452,
-        "mistral": 0.6452,
-        "gemini": 0.5509
+        "claude": 0.74,
+        "chatgpt": 0.7844,
+        "deepseek": 0.8964,
+        "mistral": 0.636,
+        "gemini": 0.7424
       }
     },
     "MLE_EFFICIENCY": {
-      "avg": 0.6243,
+      "avg": 0.8599,
       "count": 15,
       "models": {
-        "claude": 0.6355,
-        "chatgpt": 0.5931,
-        "deepseek": 0.6368,
-        "mistral": 0.5693,
-        "gemini": 0.6868
+        "claude": 0.835,
+        "chatgpt": 0.9448,
+        "deepseek": 0.886,
+        "mistral": 0.7353,
+        "gemini": 0.8985
       }
     },
     "CONCEPTUAL": {
-      "avg": 0.8,
+      "avg": 0.6605,
       "count": 50,
       "models": {
-        "claude": 0.825,
-        "chatgpt": 0.75,
-        "deepseek": 0.75,
-        "mistral": 0.75,
-        "gemini": 0.925
+        "claude": 0.6801,
+        "chatgpt": 0.7327,
+        "deepseek": 0.6424,
+        "mistral": 0.5954,
+        "gemini": 0.6517
       }
     },
     "GIBBS": {
-      "avg": 0.632,
+      "avg": 0.8152,
       "count": 25,
       "models": {
-        "claude": 0.6333,
-        "chatgpt": 0.603,
-        "deepseek": 0.6301,
-        "mistral": 0.6113,
-        "gemini": 0.6823
+        "claude": 0.8092,
+        "chatgpt": 0.7897,
+        "deepseek": 0.8184,
+        "mistral": 0.8193,
+        "gemini": 0.8392
       }
     },
     "MH": {
-      "avg": 0.6648,
+      "avg": 0.8264,
       "count": 25,
       "models": {
-        "claude": 0.613,
-        "chatgpt": 0.58,
-        "deepseek": 0.7115,
-        "mistral": 0.5952,
-        "gemini": 0.8242
+        "claude": 0.7897,
+        "chatgpt": 0.7875,
+        "deepseek": 0.8536,
+        "mistral": 0.7839,
+        "gemini": 0.9173
       }
     },
     "HMC": {
-      "avg": 0.6216,
+      "avg": 0.585,
       "count": 25,
       "models": {
-        "claude": 0.5976,
-        "chatgpt": 0.6006,
-        "deepseek": 0.6006,
-        "mistral": 0.5856,
-        "gemini": 0.7234
+        "claude": 0.4894,
+        "chatgpt": 0.4829,
+        "deepseek": 0.4917,
+        "mistral": 0.6092,
+        "gemini": 0.8517
       }
     },
     "RJMCMC": {
-      "avg": 0.606,
+      "avg": 0.6228,
       "count": 25,
       "models": {
-        "claude": 0.6,
-        "chatgpt": 0.603,
-        "deepseek": 0.5852,
-        "mistral": 0.6106,
-        "gemini": 0.6312
+        "claude": 0.7875,
+        "chatgpt": 0.4647,
+        "deepseek": 0.3726,
+        "mistral": 0.7005,
+        "gemini": 0.7884
       }
     },
     "VB": {
-      "avg": 0.5981,
+      "avg": 0.7011,
       "count": 25,
       "models": {
-        "claude": 0.6,
-        "chatgpt": 0.5852,
-        "deepseek": 0.613,
-        "mistral": 0.5782,
-        "gemini": 0.614
+        "claude": 0.6587,
+        "chatgpt": 0.7539,
+        "deepseek": 0.5535,
+        "mistral": 0.7862,
+        "gemini": 0.753
       }
     },
     "ABC": {
-      "avg": 0.7382,
+      "avg": 0.8529,
       "count": 25,
       "models": {
-        "claude": 0.637,
-        "chatgpt": 0.7817,
-        "deepseek": 0.7743,
-        "mistral": 0.7968,
-        "gemini": 0.7014
+        "claude": 0.7715,
+        "chatgpt": 0.8863,
+        "deepseek": 0.8807,
+        "mistral": 0.8726,
+        "gemini": 0.8535
       }
     },
     "HIERARCHICAL": {
-      "avg": 0.6242,
+      "avg": 0.5776,
       "count": 25,
       "models": {
-        "claude": 0.626,
-        "chatgpt": 0.599,
-        "deepseek": 0.6156,
-        "mistral": 0.58,
-        "gemini": 0.7003
+        "claude": 0.5583,
+        "chatgpt": 0.558,
+        "deepseek": 0.5242,
+        "mistral": 0.4825,
+        "gemini": 0.7648
       }
     }
   },
@@ -1731,5 +1736,6 @@
         "gemini": 0.7195
       }
     }
-  }
+  },
+  "_scoring_path": "Approach A literature-NMACR (A=0.30, R=0.25, M=0.20, C=0.15, N=0.10) \u2014 post Phase 1.8 v1-perturbation deprecation, true-base only (171 tasks \u00d7 5 models = 855)"
 }

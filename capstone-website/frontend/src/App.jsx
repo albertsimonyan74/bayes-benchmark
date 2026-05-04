@@ -2406,7 +2406,7 @@ function Research() {
           <p style={{ color:'var(--text-secondary)', fontSize:15, lineHeight:1.85, margin:'0 0 36px' }}>
             The first free-response Bayesian-inference benchmark with externally-validated rubric
             scoring. 171 tasks (136 Phase 1 + 35 Phase 2), 5 frontier LLMs, 5-dimensional
-            N·M·A·C·R rubric, external Llama 3.3 70B judge, 398 v2 perturbations, bootstrap-CI
+            N·M·A·C·R rubric, external Llama 3.3 70B judge, 473 perturbations, bootstrap-CI
             separability tests. Supervised by Dr. Vahe Movsisyan, AUA.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'28px 40px' }}>
