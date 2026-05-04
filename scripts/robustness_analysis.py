@@ -20,6 +20,7 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
+import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -107,47 +108,55 @@ def main():
 
 
 def plot_heatmap(heatmap, task_types, models):
-    # Cluster columns by category, in CATEGORY_ORDER, then alphabetical inside.
+    # Cluster rows by category, in CATEGORY_ORDER, alphabetical inside.
     grouped: dict[str, list[str]] = {c: [] for c in CATEGORY_ORDER}
     for tt in sorted(task_types):
         grouped.setdefault(category_of(tt), []).append(tt)
     ordered_types: list[str] = []
-    cat_spans: list[tuple[str, int, int]] = []  # (cat, start_col, end_col)
-    col = 0
+    cat_spans: list[tuple[str, int, int]] = []  # (cat, start_row, end_row)
+    row = 0
     for cat in CATEGORY_ORDER:
         items = grouped.get(cat, [])
         if not items:
             continue
-        cat_spans.append((cat, col, col + len(items) - 1))
+        cat_spans.append((cat, row, row + len(items) - 1))
         ordered_types.extend(items)
-        col += len(items)
+        row += len(items)
 
-    M = np.full((len(models), len(ordered_types)), np.nan)
-    for i, m in enumerate(models):
-        for j, tt in enumerate(ordered_types):
+    # Matrix shape: (n_task_types, n_models) — transposed from horizontal layout.
+    M = np.full((len(ordered_types), len(models)), np.nan)
+    for i, tt in enumerate(ordered_types):
+        for j, m in enumerate(models):
             cell = heatmap.get(m, {}).get(tt)
             if cell is not None:
                 M[i, j] = cell["delta"]
 
-    fig, ax = plt.subplots(figsize=(20, 6.5), dpi=150)
+    fig, ax = plt.subplots(figsize=(11, 14), dpi=150)
     fig.patch.set_alpha(0)
 
     vmax = float(np.nanmax(np.abs(M))) if np.isfinite(M).any() else 0.5
     vmax = max(vmax, 0.05)
+    norm = mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax)
     cmap = plt.get_cmap("RdBu_r")
 
-    im = ax.imshow(M, cmap=cmap, vmin=-vmax, vmax=vmax, aspect="auto")
+    im = ax.imshow(M, cmap=cmap, norm=norm, aspect="auto", origin="upper")
 
-    ax.set_xticks(range(len(ordered_types)))
-    ax.set_xticklabels(ordered_types, rotation=60, ha="right", fontsize=7)
-    ax.set_yticks(range(len(models)))
-    ax.set_yticklabels([m.upper() for m in models], fontsize=11, fontweight="bold")
-    for tick, m in zip(ax.get_yticklabels(), models):
+    # Models on TOP x-axis
+    ax.set_xticks(range(len(models)))
+    ax.set_xticklabels([m.upper() for m in models], fontsize=11, fontweight="bold")
+    ax.xaxis.tick_top()
+    ax.xaxis.set_label_position("top")
+    ax.tick_params(axis="x", which="major", pad=6)
+    for tick, m in zip(ax.get_xticklabels(), models):
         tick.set_color(MODEL_COLORS.get(m, "#111"))
 
+    # Task types on Y-axis, full row, monospace, no rotation
+    ax.set_yticks(range(len(ordered_types)))
+    ax.set_yticklabels(ordered_types, fontsize=8.5, family="monospace")
+
     SIGNIFICANCE_THRESHOLD = 0.08
-    for i in range(len(models)):
-        for j in range(len(ordered_types)):
+    for i in range(len(ordered_types)):
+        for j in range(len(models)):
             v = M[i, j]
             if np.isnan(v):
                 ax.text(j, i, "—", ha="center", va="center", fontsize=6, color="#888")
@@ -156,45 +165,54 @@ def plot_heatmap(heatmap, task_types, models):
                 ax.text(j, i, f"{v:+.2f}", ha="center", va="center",
                         fontsize=8, color=txt_color, fontweight="bold")
 
-    for _, _, end_col in cat_spans[:-1]:
-        ax.axvline(end_col + 0.5, color="#222", linewidth=1.4, alpha=0.85)
-    n_rows = len(models)
-    band_y_low, band_y_high = -1.15, -1.95
-    last_y = None
-    last_end = None
-    for cat, s, e in cat_spans:
-        # Stagger when adjacent header would visually overlap (heuristic: gap < 4 cols
-        # between current midpoint and previous label end column).
-        prefer_low = True
-        if last_y == band_y_low and last_end is not None and (s - last_end) < 4:
-            prefer_low = False
-        elif last_y == band_y_high and last_end is not None and (s - last_end) < 4:
-            prefer_low = True
-        band_y = band_y_low if prefer_low else band_y_high
-        mid = (s + e) / 2
-        ax.text(mid, band_y, CATEGORY_LABEL.get(cat, cat),
-                ha="center", va="center", fontsize=11, fontweight="bold",
-                color="#222")
-        ax.plot([s - 0.4, e + 0.4], [band_y + 0.42, band_y + 0.42],
-                color="#222", linewidth=1.0, transform=ax.transData)
-        last_y = band_y
-        last_end = e
+    # Horizontal dividers between category bands
+    for _, _, end_row in cat_spans[:-1]:
+        ax.axhline(end_row + 0.5, color="#222", linewidth=1.4, alpha=0.85)
 
-    ax.set_ylim(n_rows - 0.5, -2.5)
+    # Category labels in left margin: horizontal text + vertical bracket.
+    # Narrow categories (span ≤ 2 rows) use rotation=0 for legibility;
+    # wider spans rotate 90° to anchor visually with the bracket.
+    # All labels live left of the y-tick labels in axes-fraction coords
+    # so they don't overlap monospace task-type names.
+    n_models = len(models)
+    bracket_x = -1.95
+    label_horiz_x = -3.55
+    label_vert_x = -3.30
+    for cat, s, e in cat_spans:
+        span = e - s + 1
+        mid = (s + e) / 2
+        if span <= 2:
+            ax.text(label_horiz_x, mid, CATEGORY_LABEL.get(cat, cat),
+                    ha="left", va="center", rotation=0,
+                    fontsize=10, fontweight="bold", color="#222",
+                    clip_on=False)
+        else:
+            ax.text(label_vert_x, mid, CATEGORY_LABEL.get(cat, cat),
+                    ha="center", va="center", rotation=90,
+                    fontsize=11, fontweight="bold", color="#222",
+                    clip_on=False)
+        ax.plot([bracket_x, bracket_x], [s - 0.4, e + 0.4],
+                color="#444", linewidth=1.4, clip_on=False)
+        for y_cap in (s - 0.4, e + 0.4):
+            ax.plot([bracket_x, bracket_x + 0.20], [y_cap, y_cap],
+                    color="#444", linewidth=1.4, clip_on=False)
+
+    ax.set_xlim(-4.0, n_models - 0.5)
 
     ax.set_title(
-        "Robustness Heatmap · Δ (base − perturbation) per model × task type",
-        fontsize=13, fontweight="bold", pad=18,
+        "Robustness Heatmap · Δ (base − perturbation) per task type × model",
+        fontsize=12, fontweight="bold", pad=24,
     )
-    cbar = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.01)
+    cbar = fig.colorbar(im, ax=ax, fraction=0.035, pad=0.02)
     cbar.set_label("Δ score (base − perturbation)\npositive = drop under perturbation",
                    fontsize=9)
     cbar.ax.tick_params(labelsize=8)
 
-    ax.set_xticks(np.arange(-.5, len(ordered_types), 1), minor=True)
-    ax.set_yticks(np.arange(-.5, len(models), 1), minor=True)
+    ax.set_xticks(np.arange(-.5, len(models), 1), minor=True)
+    ax.set_yticks(np.arange(-.5, len(ordered_types), 1), minor=True)
     ax.grid(which="minor", color="#ddd", linewidth=0.4)
     ax.tick_params(which="minor", length=0)
+    ax.tick_params(which="major", length=0)
 
     OUT_FIG.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT_FIG, dpi=150, transparent=True, bbox_inches="tight")
