@@ -2241,3 +2241,225 @@ input::placeholder { color: rgba(0, 206, 209, 0.30); }
 @media (max-width: 900px) {
   .sidenav { display: none; }
 }
+
+/* ─── Judge Validation gallery panels (Panel 1: forest plot) ──── */
+.agreement-metrics-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.agreement-metrics-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 180, 216, 0.18);
+}
+
+.agreement-metrics-label {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #00B4D8;
+}
+
+.agreement-metrics-meta {
+  font-family: monospace;
+  font-size: 10.5px;
+  color: rgba(232, 244, 248, 0.55);
+  letter-spacing: 0.04em;
+}
+
+.alpha-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+}
+
+.alpha-readout .readout-row {
+  display: grid;
+  grid-template-columns: 130px 220px 1fr;
+  gap: 12px;
+  align-items: center;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.alpha-readout .readout-tag {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.alpha-readout .readout-value {
+  color: rgba(232, 244, 248, 0.92);
+  font-weight: 600;
+}
+
+.alpha-readout .readout-ci {
+  color: rgba(232, 244, 248, 0.55);
+  font-weight: 500;
+}
+
+.alpha-readout .readout-interp {
+  font-style: italic;
+  font-size: 10.5px;
+  opacity: 0.85;
+}
+
+@media (max-width: 700px) {
+  .alpha-readout .readout-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* ─── Judge Validation gallery panels (Panel 2: confusion matrix) */
+.confusion-matrix-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.confusion-matrix-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 180, 216, 0.18);
+}
+
+.confusion-matrix-label {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #00B4D8;
+}
+
+.confusion-matrix-meta {
+  font-family: monospace;
+  font-size: 10.5px;
+  color: rgba(232, 244, 248, 0.55);
+  letter-spacing: 0.04em;
+}
+
+.confusion-grid {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr;
+  gap: 6px;
+  font-family: monospace;
+}
+
+.confusion-grid .grid-corner {
+  background: transparent;
+}
+
+.confusion-grid .grid-col-header,
+.confusion-grid .grid-row-header {
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(232, 244, 248, 0.78);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confusion-grid .grid-cell {
+  padding: 16px 12px;
+  border-radius: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+.confusion-grid .grid-cell.agreement {
+  background: rgba(127, 255, 212, 0.08);
+  border: 1px solid rgba(127, 255, 212, 0.25);
+}
+
+.confusion-grid .grid-cell.flip {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.28);
+}
+
+.confusion-grid .cell-count {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.confusion-grid .cell-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(232, 244, 248, 0.78);
+}
+
+.confusion-grid .cell-label {
+  font-size: 9.5px;
+  color: rgba(232, 244, 248, 0.55);
+  font-style: italic;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.confusion-summary {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 6px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 12px;
+  color: rgba(232, 244, 248, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.confusion-summary .summary-stat strong {
+  color: #00FFE0;
+  font-weight: 700;
+}
+
+.confusion-footer {
+  font-size: 10.5px;
+  color: rgba(232, 244, 248, 0.5);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.confusion-footer strong {
+  color: rgba(232, 244, 248, 0.85);
+  font-weight: 700;
+  font-style: normal;
+}
+
+@media (max-width: 700px) {
+  .confusion-grid {
+    grid-template-columns: 90px 1fr 1fr;
+  }
+  .confusion-grid .grid-col-header,
+  .confusion-grid .grid-row-header {
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    padding: 6px 4px;
+  }
+  .confusion-grid .cell-count {
+    font-size: 20px;
+  }
+  .confusion-grid .cell-label {
+    font-size: 8.5px;
+  }
+}

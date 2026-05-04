@@ -1,6 +1,8 @@
 // Manifest of all v2 visualizations.
 // PNG files served from /visualizations/png/v2/
 // Source files referenced relative to repo root (experiments/results_v2/*).
+// Items with a `Component` field render as live React panels (no PNG).
+import { AgreementMetricsForestPanel, JudgeKeywordConfusionMatrix } from '../components/JudgeValidationPanels'
 
 export const VIZ_CATEGORIES = [
   { id: 'rankings',      label: 'The Three Rankings', subtitle: 'Hero — accuracy, robustness, calibration', color: '#00FFE0' },
@@ -35,17 +37,17 @@ export const VISUALIZATIONS = [
     id: 'agreement_metrics', category: 'judge', featured: true,
     title: 'Agreement Metrics — Keyword vs External Judge',
     subtitle: 'Krippendorff α = 0.57 (assumption) · −0.125 (RQ) · −0.009 (M)',
-    caption: 'Reasoning_quality α is NEGATIVE with CI [−0.197, −0.059] excluding zero (n=750) — structural disagreement. Method_structure α=−0.009 with CI [−0.072, +0.062] containing zero — essentially chance-level. Only assumption_compliance reaches positive agreement (α=+0.573, CI [0.516, 0.622]).',
-    source: 'experiments/results_v2/krippendorff_agreement.json + keyword_vs_judge_agreement.json',
-    png: '/visualizations/png/v2/agreement_metrics_comparison.png',
+    caption: 'Forest plot of Krippendorff α with 95% bootstrap CIs across the 3 shared dimensions (n=750, base scope). Reasoning_quality CI [−0.197, −0.059] excludes zero — structural disagreement. Method_structure CI [−0.072, +0.062] contains zero — essentially chance-level. Only assumption_compliance reaches positive agreement (α=+0.573).',
+    source: 'experiments/results_v2/krippendorff_agreement.json',
+    Component: AgreementMetricsForestPanel,
   },
   {
     id: 'judge_scatter', category: 'judge',
-    title: 'Judge vs Keyword — Per-Run Scatter',
-    subtitle: '157 / 750 base runs flip pass/fail',
-    caption: 'Each point is a single run scored by both raters. Off-diagonal mass = the 20.9% base keyword-judge disagreement; combined denominator (base + perturbation, n=2,850) holds at 20.74%.',
-    source: 'experiments/results_v2/keyword_vs_judge_agreement.json',
-    png: '/visualizations/png/v2/judge_validation_scatter.png',
+    title: 'Judge vs Keyword — Disagreement Matrix',
+    subtitle: '199 / 750 base runs disagree (157 directional pass-flips)',
+    caption: '2×2 confusion matrix on assumption_compliance (n=750 base eligible). Diagonal = agreement (376 both-pass + 175 both-fail = 73.5%). Off-diagonal = disagreement (157 keyword-only-pass + 42 judge-only-pass = 26.5%). Combined denominator (base + perturbation, n=2,850) holds at 20.74% directional pass-flip.',
+    source: 'experiments/results_v2/keyword_vs_judge_agreement.json + combined_pass_flip_analysis.json',
+    Component: JudgeKeywordConfusionMatrix,
   },
 
   // ── 3. ROBUSTNESS (RQ4) ───────────────────────────────────────

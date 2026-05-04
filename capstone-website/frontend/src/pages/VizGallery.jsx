@@ -20,6 +20,7 @@ function FadeIn({ children, delay = 0, style = {} }) {
 
 function VizCard({ viz, color, setFullImg }) {
   const [imgLoaded, setImgLoaded] = useState(false)
+  const Comp = viz.Component
 
   return (
     <motion.div
@@ -35,38 +36,50 @@ function VizCard({ viz, color, setFullImg }) {
         flexDirection: 'column',
       }}
     >
-      <button
-        onClick={() => setFullImg(viz.png)}
-        aria-label={`Open ${viz.title} full size`}
-        style={{
-          position: 'relative', aspectRatio: '16/10', background: '#fff',
-          border: 'none', padding: 0, cursor: 'zoom-in', overflow: 'hidden',
-          display: 'block',
-        }}
-      >
-        <img
-          src={viz.png}
-          alt={viz.title}
-          loading="lazy"
-          onLoad={() => setImgLoaded(true)}
+      {Comp ? (
+        <div
           style={{
-            width: '100%', height: '100%', objectFit: 'cover', display: 'block',
-            opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.35s ease',
+            background: 'rgba(8,12,24,0.4)',
+            padding: '18px 18px 8px',
+            borderBottom: `1px solid ${color}1A`,
           }}
-        />
-        {!imgLoaded && (
-          <div style={{
-            position: 'absolute', inset: 0, display: 'flex',
-            alignItems: 'center', justifyContent: 'center',
-          }}>
+        >
+          <Comp />
+        </div>
+      ) : (
+        <button
+          onClick={() => setFullImg(viz.png)}
+          aria-label={`Open ${viz.title} full size`}
+          style={{
+            position: 'relative', aspectRatio: '16/10', background: '#fff',
+            border: 'none', padding: 0, cursor: 'zoom-in', overflow: 'hidden',
+            display: 'block',
+          }}
+        >
+          <img
+            src={viz.png}
+            alt={viz.title}
+            loading="lazy"
+            onLoad={() => setImgLoaded(true)}
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+              opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.35s ease',
+            }}
+          />
+          {!imgLoaded && (
             <div style={{
-              width: 28, height: 28, border: '2px solid rgba(0,255,224,0.18)',
-              borderTop: `2px solid ${color}`, borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-            }} />
-          </div>
-        )}
-      </button>
+              position: 'absolute', inset: 0, display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+            }}>
+              <div style={{
+                width: 28, height: 28, border: '2px solid rgba(0,255,224,0.18)',
+                borderTop: `2px solid ${color}`, borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+              }} />
+            </div>
+          )}
+        </button>
+      )}
 
       <div style={{ padding: '16px 18px 18px', display: 'flex', flexDirection: 'column', flex: 1 }}>
         <div style={{ color: '#fff', fontSize: 14.5, fontWeight: 700, marginBottom: 4, lineHeight: 1.3 }}>
