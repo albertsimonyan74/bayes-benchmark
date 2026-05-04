@@ -80,22 +80,71 @@ const MODEL_META = Object.fromEntries(MODELS.map(m => [m.id, m]))
 const PIPELINE = [
   { label:'Task Generation',          title:'171 Statistical Tasks',
     stat:'38 task types · 4 tiers',
-    desc:'Tasks span 38 types across Phase 1 (136 tasks: conjugate Bayes, frequentist inference, Markov chains) and Phase 2 (35 tasks: MCMC, Variational Bayes, ABC). Each task has deterministic ground truth computed with numpy seed=42.' },
+    bullets:[
+      '171 base tasks across Bayesian inference, hypothesis testing, regression, MCMC, decision theory',
+      '38 distinct task types organized into 4 difficulty tiers — T1 basic (9) · T2 intermediate (58) · T3 advanced (84) · T4 expert (20)',
+      <>Each task is a JSON record: <code className="pl-mono">task_id</code> · <code className="pl-mono">prompt</code> · <code className="pl-mono">task_type</code> · <code className="pl-mono">tier</code> · <code className="pl-mono">numeric_targets</code> · <code className="pl-mono">required_assumption_checks</code></>,
+      'required_structure_checks + required_assumption_checks define regex patterns the keyword scorer matches',
+      <>Canonical: <code className="pl-mono">data/benchmark_v1/tasks_all.json</code> · ground truth seeded <code className="pl-mono">numpy.random.seed(42)</code></>,
+      'Designed to require explicit assumption articulation, not just numerical answers',
+    ],
+    visual: 'tier-mini',
+  },
   { label:'Standardized Prompting',   title:'Zero-Shot CoT Protocol',
     stat:'Zero-shot Chain-of-Thought',
-    desc:'Single prompting strategy: zero-shot Chain-of-Thought (Wei et al., 2022). All 5 models receive identical prompts requiring step-by-step reasoning, ending with a structured ANSWER: line.' },
+    bullets:[
+      'Zero-shot Chain-of-Thought framing (Wei et al., 2022) applied uniformly across all 5 models',
+      'Identical prompts dispatched to Anthropic · OpenAI · Google · DeepSeek · Mistral via httpx (no vendor SDKs)',
+      <>~6,010 raw responses collected: 855 base (171 × 5) + 2,365 perturbation (473 × 5) + self-consistency reruns</>,
+      <>Per-response metadata captured: <code className="pl-mono">raw_response</code> · <code className="pl-mono">input_tokens</code> · <code className="pl-mono">output_tokens</code> · <code className="pl-mono">latency_ms</code> · <code className="pl-mono">model</code> · <code className="pl-mono">task_id</code></>,
+      'Self-consistency: 3× reruns at T=0.7 for 161 numeric tasks × 5 models, used for Phase 1C ECE calibration',
+      'Program-of-Thoughts explored as exploratory; zero-shot CoT only is the canonical scored baseline',
+    ],
+  },
   { label:'Multi-Model Evaluation',   title:'5 Leading LLMs + 1 External Judge',
     stat:'855 base runs · Llama 3.3 70B judge',
-    desc:'Claude, ChatGPT, Mistral, DeepSeek, Gemini evaluated under identical conditions. External Llama 3.3 70B Instruct judge (Together AI) provides cross-provider validation following Yamauchi et al. (2025).' },
+    bullets:[
+      'Five frontier models: Claude · GPT-4.1 · Gemini · DeepSeek · Mistral',
+      'Dual scoring path runs in parallel for every response — keyword (regex, deterministic) and Llama judge (rubric)',
+      'Llama 3.3 70B Instruct via Together AI is deliberately external to the 5 evaluated — no self-preference bias',
+      <>Per-response output: <code className="pl-mono">keyword_scores</code> + <code className="pl-mono">judge_scores</code> stored per dimension (N · M · A · C · R)</>,
+      'Cross-provider validation following Yamauchi et al. (2025); Krippendorff α reported with bootstrap CI per dimension',
+    ],
+  },
   { label:'Five-Dimensional Scoring', title:'N·M·A·C·R Rubric',
     stat:'A=0.30 · R=0.25 · M=0.20 · C=0.15 · N=0.10',
-    desc:'Numerical Accuracy (N), Method Selection (M), Assumption Compliance (A), Confidence Calibration (C), Reasoning Quality (R). Literature-derived weights (Du 2025, Boye & Moell 2025, Yamauchi 2025). Pass threshold 0.50.' },
+    visual: 'nmacr-weights',
+    bullets:[
+      'NMACR composite = weighted sum across 5 rubric dimensions (single canonical scoring path, Approach A locked May 2026)',
+      'Weights literature-derived: A from Du 2025 / Yamauchi 2025 / Au 2025 · M from Chen 2022 · R from Wei 2022 · C from Nagarkar 2026 · N from Liu 2025',
+      <>Single source of truth: <code className="pl-mono">response_parser.py NMACR_WEIGHTS</code> constant; <code className="pl-mono">assert sum(NMACR_WEIGHTS.values()) == 1.0</code> guards rebalancing</>,
+      'PASS threshold: NMACR ≥ 0.50 (used downstream for pass/flip analysis under perturbation)',
+      <>Output: <code className="pl-mono">experiments/results_v2/nmacr_scores_v2.jsonl</code> — single source for all downstream RQ analyses</>,
+    ],
+  },
   { label:'Robustness Testing',       title:'RQ4: Perturbation Analysis',
     stat:'2,365 perturbation runs · 0 errors',
-    desc:'473 perturbations × 5 models. Three orthogonal types (rephrase / numerical / semantic) following BrittleBench (2026). Bootstrap-CI separability tests on per-model robustness Δ.' },
+    bullets:[
+      <>473 perturbations across 171 base tasks: rephrase 171 · numerical 131 · semantic 171 (canonical: <code className="pl-mono">perturbations_all.json</code>)</>,
+      'Three perturbation types preserve math while varying surface form — rephrase (same problem, reworded) · numerical (same structure, different numbers) · semantic (same math, different domain)',
+      '2,365 total perturbation runs (473 × 5 models) with 0 API failures',
+      <>Robustness Δ = base − perturbation per model · bootstrap CI (B=10,000, seed=42) for separability</>,
+      'ChatGPT, Mistral, Gemini CIs all cross zero — three-of-five models are noise-equivalent under perturbation',
+      'Per-perturbation-type disagreement: rephrase 21.6% · numerical 22.7% · semantic 18.1%',
+    ],
+    visual: 'pert-types',
+  },
   { label:'Error Taxonomy',           title:'Hierarchical L1 / L2 Taxonomy',
     stat:'143 failures · 4 L1 buckets',
-    desc:'L1: ASSUMPTION_VIOLATION 67 (46.9%) · MATHEMATICAL_ERROR 48 · FORMATTING 18 · CONCEPTUAL 10 · HALLUCINATION 0. Llama 3.3 70B judge classifies; only 4 of 9 L2 codes activate (E1, E3, E6, E7).' },
+    bullets:[
+      '143 failures hand-classified across all 5 models',
+      'Four L1 buckets: ASSUMPTION_VIOLATION 67 (46.9%) · MATHEMATICAL_ERROR 48 (33.6%) · FORMATTING 18 · CONCEPTUAL 10',
+      'HALLUCINATION bucket = 0 cases — every task has closed-form ground truth, real signal',
+      'Primary failure mode varies sharply per model: ChatGPT assumption-dominated (25/38) · Claude math-dominated (10/19) · Gemini balanced (10A + 9M of 24) · DeepSeek mixed (15A + 13M of 36) · Mistral math+assumption (12M + 8A of 26)',
+      'Llama 3.3 70B judge classifies; only 4 of 9 L2 codes activate (E1, E3, E6, E7)',
+    ],
+    visual: 'failure-mix',
+  },
 ]
 
 // ─── Pipeline SVG icons (monoline, no emoji) ─────────────────
@@ -1042,6 +1091,119 @@ const RQ_INTEGRATION_LINES = [
 // ═══════════════════════════════════════════════════════════════
 //  2. PIPELINE
 // ═══════════════════════════════════════════════════════════════
+const NMACR_BARS = [
+  { dim:'A', label:'Assumption',  weight:0.30, color:'#00FFE0' },
+  { dim:'R', label:'Reasoning',   weight:0.25, color:'#A78BFA' },
+  { dim:'M', label:'Method',      weight:0.20, color:'#00B4D8' },
+  { dim:'C', label:'Calibration', weight:0.15, color:'#7FFFD4' },
+  { dim:'N', label:'Numerical',   weight:0.10, color:'#FFB347' },
+]
+
+const TIER_BARS = [
+  { tier:'T1 BASIC',        n: 9, pct: 5,  color:'#5EEAD4' },
+  { tier:'T2 INTERMEDIATE', n:58, pct:34, color:'#22D3EE' },
+  { tier:'T3 ADVANCED',     n:84, pct:49, color:'#3B82F6' },
+  { tier:'T4 EXPERT',       n:20, pct:12, color:'#A855F7' },
+]
+
+const PERT_TYPES = [
+  { name:'rephrase',  count:171, color:'#00FFE0', note:'Same problem, reworded' },
+  { name:'numerical', count:131, color:'#FFB347', note:'Same structure, new numbers' },
+  { name:'semantic',  count:171, color:'#A78BFA', note:'Same math, new domain' },
+]
+
+const FAILURE_MIX = [
+  { model:'ChatGPT',  total:38, A:25, M:4,  F:6, C:3, color:'#7FFFD4' },
+  { model:'Claude',   total:19, A:9,  M:10, F:0, C:0, color:'#00CED1' },
+  { model:'DeepSeek', total:36, A:15, M:13, F:6, C:2, color:'#4A90D9' },
+  { model:'Mistral',  total:26, A:8,  M:12, F:5, C:1, color:'#A78BFA' },
+  { model:'Gemini',   total:24, A:10, M:9,  F:1, C:4, color:'#FF6B6B' },
+]
+
+function PipelineVisual({ kind }) {
+  if (kind === 'nmacr-weights') {
+    return (
+      <div className="pipeline-visual nmacr-visual">
+        <div className="pipeline-visual-title">Literature-derived dimension weights · sum = 1.0</div>
+        {NMACR_BARS.map(b => (
+          <div key={b.dim} className="nmacr-row">
+            <span className="nmacr-tag" style={{ color:b.color }}>{b.dim} · {b.label}</span>
+            <div className="nmacr-track">
+              <div className="nmacr-fill" style={{ width:`${b.weight*100}%`, background:b.color }} />
+            </div>
+            <span className="nmacr-weight">{b.weight.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  if (kind === 'tier-mini') {
+    return (
+      <div className="pipeline-visual tier-visual">
+        <div className="pipeline-visual-title">171 tasks across 4 difficulty tiers</div>
+        <div className="tier-stack">
+          {TIER_BARS.map(t => (
+            <div key={t.tier} className="tier-seg" style={{ flexGrow:t.pct, background:t.color }}>
+              <span className="tier-seg-label">{t.tier}</span>
+              <span className="tier-seg-n">{t.n}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+  if (kind === 'pert-types') {
+    return (
+      <div className="pipeline-visual pert-visual">
+        <div className="pipeline-visual-title">3 perturbation types · 473 total</div>
+        <div className="pert-grid">
+          {PERT_TYPES.map(p => (
+            <div key={p.name} className="pert-chip" style={{ borderTopColor:p.color }}>
+              <div className="pert-chip-head" style={{ color:p.color }}>{p.name}</div>
+              <div className="pert-chip-count">{p.count}</div>
+              <div className="pert-chip-note">{p.note}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+  if (kind === 'failure-mix') {
+    return (
+      <div className="pipeline-visual failure-visual">
+        <div className="pipeline-visual-title">Per-model failure-mode mix · 143 total</div>
+        {FAILURE_MIX.map(f => {
+          const segs = [
+            { k:'A', v:f.A, c:'#00FFE0', label:'Assumption' },
+            { k:'M', v:f.M, c:'#FFB347', label:'Math' },
+            { k:'F', v:f.F, c:'#A78BFA', label:'Format' },
+            { k:'C', v:f.C, c:'#FF6B6B', label:'Conceptual' },
+          ].filter(s => s.v > 0)
+          return (
+            <div key={f.model} className="failure-row">
+              <span className="failure-model" style={{ color:f.color }}>{f.model}</span>
+              <div className="failure-track">
+                {segs.map(s => (
+                  <div
+                    key={s.k}
+                    className="failure-seg"
+                    style={{ width:`${(s.v/f.total)*100}%`, background:s.c }}
+                    title={`${s.label}: ${s.v}`}
+                  >
+                    <span>{s.k} {s.v}</span>
+                  </div>
+                ))}
+              </div>
+              <span className="failure-total">{f.total}</span>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+  return null
+}
+
 function Pipeline() {
   const [expanded, setExpanded] = useState(null)
 
@@ -1191,19 +1353,32 @@ function Pipeline() {
               animate={{ opacity:1, y:0, height:'auto' }}
               exit={{ opacity:0, y:-8, height:0 }}
               transition={{ duration:0.28, ease:[0.22,1,0.36,1] }}
-              style={{ overflow:'hidden', maxWidth:600, margin:'0 auto 16px' }}
+              style={{ overflow:'hidden', maxWidth:720, margin:'0 auto 16px' }}
             >
-              <Card glow style={{ padding:'20px 28px', textAlign:'center' }}>
-                <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
-                <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, letterSpacing:'0.1em', marginBottom:4 }}>
-                  STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
+              <Card glow style={{ padding:'22px 28px' }}>
+                <div style={{ display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center' }}>
+                  <div style={{ marginBottom:8, color:'var(--aqua)', display:'flex', justifyContent:'center' }}>{PIPELINE_ICONS[expanded]}</div>
+                  <div style={{ color:'var(--aqua)', fontWeight:700, fontSize:10, letterSpacing:'0.1em', marginBottom:4 }}>
+                    STEP {expanded+1} — {PIPELINE[expanded].label.toUpperCase()}
+                  </div>
+                  <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:15, marginBottom:14 }}>
+                    {PIPELINE[expanded].title}
+                  </div>
                 </div>
-                <div style={{ color:'var(--text-primary)', fontWeight:700, fontSize:15, marginBottom:10 }}>
-                  {PIPELINE[expanded].title}
-                </div>
-                <p style={{ color:'var(--text-secondary)', fontSize:12.5, lineHeight:1.75, margin:0 }}>
-                  {PIPELINE[expanded].desc}
-                </p>
+                {PIPELINE[expanded].visual && (
+                  <PipelineVisual kind={PIPELINE[expanded].visual} />
+                )}
+                {PIPELINE[expanded].bullets ? (
+                  <ul className="pipeline-bullets">
+                    {PIPELINE[expanded].bullets.map((b, idx) => (
+                      <li key={idx}>{b}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color:'var(--text-secondary)', fontSize:12.5, lineHeight:1.75, margin:0, textAlign:'center' }}>
+                    {PIPELINE[expanded].desc}
+                  </p>
+                )}
               </Card>
             </motion.div>
           )}
