@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 const SECTIONS = [
@@ -18,6 +18,8 @@ const SECTIONS = [
 export default function SideNav() {
   const [visible, setVisible] = useState(false)
   const [active, setActive] = useState(SECTIONS[0].id)
+  const [expanded, setExpanded] = useState(false)
+  const collapseTimerRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,48 @@ export default function SideNav() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    return () => {
+      if (collapseTimerRef.current) {
+        clearTimeout(collapseTimerRef.current)
+        collapseTimerRef.current = null
+      }
+    }
+  }, [])
+
+  const cancelCollapse = () => {
+    if (collapseTimerRef.current) {
+      clearTimeout(collapseTimerRef.current)
+      collapseTimerRef.current = null
+    }
+  }
+
+  const triggerCollapseAfterDelay = (delay = 3000) => {
+    cancelCollapse()
+    collapseTimerRef.current = setTimeout(() => {
+      setExpanded(false)
+      collapseTimerRef.current = null
+    }, delay)
+  }
+
+  const handleNavMouseEnter = () => {
+    cancelCollapse()
+    setExpanded(true)
+  }
+
+  const handleNavMouseLeave = () => {
+    triggerCollapseAfterDelay(800)
+  }
+
+  const handleNavTouchStart = () => {
+    cancelCollapse()
+    setExpanded(true)
+  }
+
+  const handleNavTouchEnd = () => {
+    triggerCollapseAfterDelay(3000)
+  }
+
   const handleClick = (id, e) => {
     e.preventDefault()
     const el = document.getElementById(id)
@@ -46,12 +90,17 @@ export default function SideNav() {
     const offset = 80
     const top = el.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
+    triggerCollapseAfterDelay(500)
   }
 
   const nav = (
     <nav
-      className={`sidenav${visible ? ' sidenav--visible' : ''}`}
+      className={`sidenav${visible ? ' sidenav--visible' : ''}${expanded ? ' sidenav--expanded' : ''}`}
       aria-label="Section navigation"
+      onMouseEnter={handleNavMouseEnter}
+      onMouseLeave={handleNavMouseLeave}
+      onTouchStart={handleNavTouchStart}
+      onTouchEnd={handleNavTouchEnd}
     >
       <div className="sidenav__track" aria-hidden="true" />
       <ul className="sidenav__list">
