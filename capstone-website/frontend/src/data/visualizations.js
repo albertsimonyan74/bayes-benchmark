@@ -98,8 +98,8 @@ export const VISUALIZATIONS = [
   {
     id: 'calibration_reliability', category: 'calibration', featured: true,
     title: 'Calibration Reliability — Verbalized',
-    subtitle: '3-bucket ECE (0.3 / 0.5 / 0.6) · empty 0.9 bucket',
-    caption: 'Hedge-heavy default-to-medium behaviour. No high-confidence records across any model. Verbalized extraction is sensitive to hedging language — models with less hedging produce fewer high-confidence signals.',
+    subtitle: '3 active buckets (0.3 / 0.5 / 0.6) · 0.9 bucket empty across all models',
+    caption: 'Per-model accuracy at each verbalized confidence bucket. Diagonal = perfect calibration. Points below: overconfidence (claimed > actual). Points above: underconfidence (claimed < actual). Dot size ∝ bucket sample count. No high-confidence (0.9) records across any model — hedge-heavy default-to-medium behaviour.',
     source: 'experiments/results_v2/calibration.json',
     png: '/visualizations/png/v2/calibration_reliability.png',
   },
