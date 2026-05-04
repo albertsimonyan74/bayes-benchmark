@@ -326,11 +326,31 @@ def figure_a2():
 def figure_a3():
     """Failure heatmap — portrait (task_types as rows, models as columns).
 
-    Matches the robustness_heatmap pattern: category bands on left margin
-    with bracket connectors, model labels at top color-coded, significance-
-    thresholded labels (cells with failure rate ≥15% labeled).
+    Site-palette dark theme: figure background SITE_BG (#0f1118), custom
+    site-harmonized colormap (dark→coral gradient), cell labels in decimal
+    format (0.30, 0.66 — not raw integers). Category bands on left with
+    bracket connectors, model labels at top color-coded, significance-
+    thresholded labels (cells with failure rate ≥0.15 labeled).
     """
+    import matplotlib.colors as mcolors
+
     out = FIG_DIR / "a3_failure_heatmap.png"
+
+    SITE_BG = "#0f1118"
+    SITE_FG = "#e2e8f0"
+    SITE_FG_MUTED = "#94a3b8"
+
+    # Site-harmonized colormap: dark (blends with bg) → coral-red
+    custom_cmap = mcolors.LinearSegmentedColormap.from_list(
+        "site_failure",
+        [
+            (0.00, "#1a1f2e"),  # near site bg — no failure
+            (0.15, "#2a1f2e"),  # subtle dark coral tint
+            (0.35, "#7c2d3d"),  # muted coral
+            (0.60, "#dc2626"),  # red
+            (1.00, "#ef4444"),  # bright coral-red
+        ],
+    )
 
     base_runs = list(load_base_runs())
     cell_scores: dict[tuple[str, str], list[float]] = defaultdict(list)
@@ -366,41 +386,42 @@ def figure_a3():
             if scores:
                 M[i, j] = 1.0 - float(np.mean(scores))
 
-    fig, ax = plt.subplots(figsize=(8, 14), dpi=150)
-    fig.patch.set_alpha(0)
+    fig, ax = plt.subplots(figsize=(8, 14), dpi=150, facecolor=SITE_BG)
+    ax.set_facecolor(SITE_BG)
 
-    cmap = plt.get_cmap("Reds")
-    im = ax.imshow(M, cmap=cmap, vmin=0.0, vmax=1.0, aspect="auto", origin="upper")
+    im = ax.imshow(M, cmap=custom_cmap, vmin=0.0, vmax=1.0, aspect="auto", origin="upper")
 
     # Models on TOP x-axis, color-coded
     ax.set_xticks(range(len(MODELS)))
     ax.set_xticklabels([MODEL_LABEL[m] for m in MODELS], fontsize=11, fontweight="bold")
     ax.xaxis.tick_top()
     ax.xaxis.set_label_position("top")
-    ax.tick_params(axis="x", which="major", pad=6)
+    ax.tick_params(axis="x", which="major", pad=6, colors=SITE_FG)
     for tick, m in zip(ax.get_xticklabels(), MODELS):
-        tick.set_color(MODEL_COLORS.get(m, "#111"))
+        tick.set_color(MODEL_COLORS.get(m, SITE_FG))
 
     # Task types on Y-axis, monospace
     ax.set_yticks(range(len(ordered_types)))
-    ax.set_yticklabels(ordered_types, fontsize=8.5, family="monospace")
+    ax.set_yticklabels(ordered_types, fontsize=8.5, family="monospace",
+                       color=SITE_FG_MUTED)
+    ax.tick_params(axis="y", colors=SITE_FG_MUTED)
 
-    # Significance-thresholded labels (cells with failure rate ≥15% — color
-    # carries the rest, removes label clutter on near-zero cells).
+    # Significance-thresholded labels — DECIMAL format (0.30, 0.66, etc.)
     SIG_THRESHOLD = 0.15
     for i in range(len(ordered_types)):
         for j in range(len(MODELS)):
             v = M[i, j]
             if np.isnan(v):
-                ax.text(j, i, "—", ha="center", va="center", fontsize=7, color="#888")
+                ax.text(j, i, "—", ha="center", va="center", fontsize=7,
+                        color=SITE_FG_MUTED)
             elif v >= SIG_THRESHOLD:
-                txt_color = "#fff" if v > 0.6 else "#111"
-                ax.text(j, i, f"{v*100:.0f}", ha="center", va="center",
-                        fontsize=8, color=txt_color, fontweight="bold")
+                txt_color = "#fff" if v >= 0.45 else SITE_FG
+                ax.text(j, i, f"{v:.2f}", ha="center", va="center",
+                        fontsize=7.5, color=txt_color, fontweight="600")
 
     # Horizontal dividers between category bands
     for _, _, end_row in cat_spans[:-1]:
-        ax.axhline(end_row + 0.5, color="#222", linewidth=1.4, alpha=0.85)
+        ax.axhline(end_row + 0.5, color=SITE_FG_MUTED, linewidth=0.8, alpha=0.3)
 
     # Category labels in left margin: bracket + label (mirrors robustness_heatmap)
     n_models = len(MODELS)
@@ -413,37 +434,51 @@ def figure_a3():
         if span <= 2:
             ax.text(label_horiz_x, mid, CATEGORY_LABEL.get(cat, cat),
                     ha="left", va="center", rotation=0,
-                    fontsize=10, fontweight="bold", color="#222",
+                    fontsize=10, fontweight="bold", color=SITE_FG,
                     clip_on=False)
         else:
             ax.text(label_vert_x, mid, CATEGORY_LABEL.get(cat, cat),
                     ha="center", va="center", rotation=90,
-                    fontsize=11, fontweight="bold", color="#222",
+                    fontsize=11, fontweight="bold", color=SITE_FG,
                     clip_on=False)
         ax.plot([bracket_x, bracket_x], [s - 0.4, e + 0.4],
-                color="#444", linewidth=1.4, clip_on=False)
+                color=SITE_FG_MUTED, linewidth=1.0, alpha=0.5, clip_on=False)
         for y_cap in (s - 0.4, e + 0.4):
             ax.plot([bracket_x, bracket_x + 0.20], [y_cap, y_cap],
-                    color="#444", linewidth=1.4, clip_on=False)
+                    color=SITE_FG_MUTED, linewidth=1.0, alpha=0.5, clip_on=False)
 
     ax.set_xlim(-4.0, n_models - 0.5)
 
+    # Spines site-coordinated
+    for spine in ax.spines.values():
+        spine.set_color(SITE_FG_MUTED)
+        spine.set_alpha(0.3)
+        spine.set_linewidth(0.8)
+
     ax.set_title(
         "Failure Heatmap · per-model failure rate by task type",
-        fontsize=12, fontweight="bold", pad=24,
+        fontsize=12, fontweight="bold", pad=24, color=SITE_FG,
     )
     cbar = fig.colorbar(im, ax=ax, fraction=0.035, pad=0.02)
-    cbar.set_label("Failure rate (1 − mean(final_score))\n labels show % for cells ≥ 15%",
-                   fontsize=9)
-    cbar.ax.tick_params(labelsize=8)
+    cbar.set_label("Failure rate (1 − mean(final_score))",
+                   fontsize=9, color=SITE_FG_MUTED, rotation=270, labelpad=22)
+    cbar.set_ticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    cbar.ax.tick_params(labelsize=8, colors=SITE_FG_MUTED)
+    cbar.outline.set_edgecolor(SITE_FG_MUTED)
+    cbar.outline.set_alpha(0.3)
+
+    # Footnote: significance threshold annotation
+    fig.text(0.5, 0.01, f"Labels shown for cells ≥{SIG_THRESHOLD:.2f}",
+             ha="center", va="bottom", fontsize=8, color=SITE_FG_MUTED,
+             style="italic")
 
     ax.set_xticks(np.arange(-.5, len(MODELS), 1), minor=True)
     ax.set_yticks(np.arange(-.5, len(ordered_types), 1), minor=True)
-    ax.grid(which="minor", color="#ddd", linewidth=0.4)
+    ax.grid(which="minor", color=SITE_FG_MUTED, linewidth=0.3, alpha=0.15)
     ax.tick_params(which="minor", length=0)
     ax.tick_params(which="major", length=0)
 
-    fig.savefig(out, dpi=150, transparent=True, bbox_inches="tight")
+    fig.savefig(out, dpi=150, facecolor=SITE_BG, bbox_inches="tight")
     plt.close(fig)
 
     fail_rate_by_tt = {
